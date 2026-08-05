@@ -32,13 +32,15 @@ The snippet looks like this:
   ></iframe>
   <p style="font-size:13px;margin-top:6px;">
     Made with
-    <a href="https://ykfrkw.github.io/coauthor-map/">coauthor-map</a> by
-    <a href="https://yukifurukawa.jp/coauthor-map/">Yuki Furukawa</a>
+    <a href="https://yukifurukawa.jp/coauthor-map/">coauthor-map</a> by Yuki
+    Furukawa
   </p>
 </div>
 ```
 
-Please keep the credit line. It is the only thing the tool asks for in return.
+The credit line is appreciated but entirely optional: the MIT license does not ask for a
+link back, and you are free to delete that paragraph or reword it. It carries a single
+link, to the page that documents the tool.
 
 > **WordPress note.** The `<style>` block deliberately contains no CSS comments and no
 > child combinator (`>`). Some WordPress firewalls reject a request that contains either
@@ -54,7 +56,7 @@ Please keep the credit line. It is the only thing the tool asks for in return.
 | `from`, `to` | publication years                                                           | the full range in the data           |
 | `proj`       | `equalEarth`, `naturalEarth`, `equirectangular`, `mercator`, `orthographic` | `equalEarth`                         |
 | `center`     | center longitude, `-180`…`180`                                              | `140`                                |
-| `grain`      | `country`, or a merge radius in pixels `0`…`64`                             | `0` (one pin per city)               |
+| `grain`      | `country`, or a merge radius in pixels `0`…`64`                             | `10` (`0` = one pin per city)        |
 | `size`       | `papers`, `coauthors`, `uniform`                                            | `papers`                             |
 | `theme`      | `minimal`, `dark`, `blueprint`, `paper`                                     | follows the visitor's system setting |
 
@@ -115,4 +117,6 @@ Publication lists come from [ORCID](https://orcid.org/) and
 Pins are cities, not organizations. OpenAlex stores institution coordinates at city
 level, so every organization in one city shares a single point — Tokyo alone covers 15 of
 them. The **Grouping** slider changes how much the map merges nearby points on screen; it
-cannot go finer than one pin per city, because the data does not.
+cannot go finer than one pin per city, because the data does not. It starts at a 10 px
+merge radius, which keeps dense regions readable; slide it all the way to City, or pass
+`grain=0`, to get every city as its own pin.

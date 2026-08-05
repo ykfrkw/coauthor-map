@@ -6,13 +6,20 @@
  * 絶対に入れないこと。** WordPress の WAF がその2つを見て 403 を返す。
  * assertSnippetIsSafe() で毎回検査してから表示する。
  *
- * クレジット行は必ず含める。ここが被リンクの経路なので外さない。
+ * クレジット行の外部リンクは**ちょうど1本**に保つ。
+ * Google のリンクスパム方針が名指ししているのは「ウィジェットに埋めて配布するリンク」で、
+ * 可視のブランド名アンカー1本は違反ではない。ただし配布先が増えたときに
+ * 同一パターンの外部リンクが2本並ぶフットプリントは避けたいので TOOL_URL は載せない。
+ * アンカーテキストは `coauthor-map`、リンク先は AUTHOR_URL に統一する
+ * （人名がツールページを指すねじれもこれで消える）。
  */
 import { h, copyText } from './dom.js';
 import { stateToQuery } from './controls.js';
 
 export const WIDGET_BASE = 'https://ykfrkw.github.io/coauthor-map/widget.html';
+/** 自サイト内の表示（index.html のフッタなど）用。スニペットには載せない */
 export const TOOL_URL = 'https://ykfrkw.github.io/coauthor-map/';
+/** スニペットのクレジット行が指す唯一のリンク先 */
 export const AUTHOR_URL = 'https://yukifurukawa.jp/coauthor-map/';
 
 const CLASS_NAME = 'coauthor-map-embed';
@@ -56,7 +63,7 @@ export function buildSnippet(src, height = 720) {
     .${CLASS_NAME}{display:block;width:100%;border:none;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.08);}
   </style>
   <iframe class="${CLASS_NAME}" title="Co-author map" src="${src}" style="height:${px}px" loading="lazy"></iframe>
-  <p style="font-size:13px;margin-top:6px;">Made with <a href="${TOOL_URL}">coauthor-map</a> by <a href="${AUTHOR_URL}">Yuki Furukawa</a></p>
+  <p style="font-size:13px;margin-top:6px;">Made with <a href="${AUTHOR_URL}">coauthor-map</a> by Yuki Furukawa</p>
 </div>`;
   return assertSnippetIsSafe(snippet);
 }
