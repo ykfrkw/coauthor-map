@@ -17,6 +17,7 @@ const PROGRESS_KEYS = [
   'seeds:researchmap',
   'seeds:openalex',
   'works',
+  'orcid-affiliations',
   'institutions',
   'aggregate',
 ];

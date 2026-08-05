@@ -40,6 +40,7 @@ export function jsonResponse(body, status = 200) {
  * @param {any} [overrides.researchmap]
  * @param {any[]} [overrides.works]
  * @param {any[]} [overrides.institutions]
+ * @param {any[]} [overrides.orcidAffiliations]  expanded-search の応答（リクエスト順）
  * @returns {{ fetchImpl: typeof fetch, calls: string[] }}
  */
 export function createFixtureFetch(overrides = {}) {
@@ -49,16 +50,29 @@ export function createFixtureFetch(overrides = {}) {
   const workPages = overrides.works ?? loadFixture('openalex-works-pages.json');
   const institutionPages =
     overrides.institutions ?? loadFixture('openalex-institutions-pages.json');
+  const affiliationPages =
+    overrides.orcidAffiliations ??
+    loadFixture('orcid-expanded-search-pages.json');
 
   /** @type {string[]} */
   const calls = [];
   let workPageIndex = 0;
   let institutionPageIndex = 0;
+  let affiliationPageIndex = 0;
 
   const fetchImpl = async (url) => {
     const target = String(url);
     calls.push(target);
 
+    // 所属の一括検索は works より先に振り分ける（同じホストなので順序が効く）。
+    if (target.startsWith('https://pub.orcid.org/v3.0/expanded-search')) {
+      const page = affiliationPages[affiliationPageIndex] ?? {
+        'expanded-result': [],
+        'num-found': 0,
+      };
+      affiliationPageIndex += 1;
+      return jsonResponse(page);
+    }
     if (target.startsWith('https://pub.orcid.org/')) {
       return jsonResponse(orcid);
     }

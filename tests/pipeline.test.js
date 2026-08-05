@@ -45,11 +45,14 @@ describe('buildDataset', () => {
       coauthorsMerged: 21,
       institutions: 119,
       geoResolved: 119,
-      cities: 69,
-      countries: 15,
+      // 1 人 1 都市に置くようになって 69 → 47（誰の主所属でもない都市が消える）。
+      cities: 47,
+      countries: 14,
       authorshipRows: 315,
       authorshipsWithoutInstitution: 5,
       coauthorsWithoutInstitution: 2,
+      // 主所属の内訳。ORCID の所属名は「先頭所属」で決まらなかった人にしか使わない。
+      primaryBy: { firstListed: 139, orcid: 0, fallback: 4, none: 2 },
       yearMin: 2019,
       yearMax: 2026,
     });
@@ -72,40 +75,94 @@ describe('buildDataset', () => {
 
     expect(byCity.get('JP|Tokyo')).toMatchObject({
       city: 'Tokyo',
-      paperCount: 20,
-      coauthorCount: 24,
-    });
-    expect(byCity.get('JP|Tokyo').institutions).toHaveLength(15);
-
-    expect(byCity.get('JP|Kyoto')).toMatchObject({
-      paperCount: 17,
+      paperCount: 15,
       coauthorCount: 19,
     });
-    expect(byCity.get('JP|Kyoto').institutions).toHaveLength(3);
+    expect(byCity.get('JP|Tokyo').institutions).toHaveLength(9);
+
+    expect(byCity.get('JP|Kyoto')).toMatchObject({
+      paperCount: 16,
+      coauthorCount: 17,
+    });
+    // 京都を主所属とする 17 人はいずれも京都大学。
+    expect(byCity.get('JP|Kyoto').institutions).toHaveLength(1);
 
     expect(byCity.get('CH|Bern')).toMatchObject({
       paperCount: 14,
       coauthorCount: 3,
     });
-    expect(byCity.get('CH|Bern').institutions).toHaveLength(2);
-
-    expect(byCity.get('CH|Lausanne')).toMatchObject({
-      paperCount: 14,
-      coauthorCount: 3,
-    });
-    expect(byCity.get('CH|Lausanne').institutions).toHaveLength(1);
-
-    expect(byCity.get('JP|Saitama')).toMatchObject({
-      paperCount: 14,
-      coauthorCount: 1,
-    });
-    expect(byCity.get('JP|Saitama').institutions).toHaveLength(1);
+    expect(byCity.get('CH|Bern').institutions).toHaveLength(1);
 
     expect(byCity.get('DE|Munich')).toMatchObject({
       paperCount: 13,
-      coauthorCount: 27,
+      coauthorCount: 11,
     });
-    expect(byCity.get('DE|Munich').institutions).toHaveLength(6);
+    expect(byCity.get('DE|Munich').institutions).toHaveLength(4);
+
+    // 誰の主所属でもない都市は地図から消える（共著者は主所属の都市に 1 度だけ出る）。
+    expect(byCity.has('CH|Lausanne')).toBe(false);
+    expect(byCity.has('JP|Saitama')).toBe(false);
+  });
+
+  it('1 人が 2 つ以上の都市に現れない', async () => {
+    const { dataset } = await build();
+    /** @type {Map<string, string[]>} */
+    const citiesOf = new Map();
+    for (const city of dataset.cities) {
+      for (const coauthor of city.coauthors) {
+        if (!citiesOf.has(coauthor.id)) citiesOf.set(coauthor.id, []);
+        citiesOf.get(coauthor.id).push(city.key);
+      }
+    }
+    const duplicated = [...citiesOf.entries()].filter(
+      ([, keys]) => keys.length > 1,
+    );
+    expect(duplicated).toEqual([]);
+    // 主所属が決まった 143 人がちょうど 1 度ずつ地図に出る。
+    expect(citiesOf.size).toBe(143);
+  });
+
+  it('min= の下限で残る共著者数が既知解と一致する', async () => {
+    const { dataset } = await build();
+    const atLeast = (n) =>
+      [...dataset.coauthors.values()].filter((c) => c.paperCount >= n).length;
+    expect(atLeast(1)).toBe(145);
+    expect(atLeast(2)).toBe(53);
+    expect(atLeast(3)).toBe(27);
+  });
+
+  it('pin=all なら旧来の 69 都市 15 か国に戻せる', async () => {
+    const { fetchImpl } = createFixtureFetch();
+    const dataset = await buildDataset({
+      seeds: [
+        { kind: 'orcid', value: '0000-0003-1317-0220' },
+        { kind: 'researchmap', value: 'yk_frkw' },
+      ],
+      mailto: 'test@example.org',
+      fetchImpl,
+      useCache: false,
+      pinMode: 'all',
+    });
+    expect(dataset.stats.cities).toBe(69);
+    expect(dataset.stats.countries).toBe(15);
+  });
+
+  it('ORCID の所属取得が落ちても地図は同じように出る', async () => {
+    const { fetchImpl } = createFixtureFetch({
+      // 全バッチ失敗させる。
+      orcidAffiliations: [],
+    });
+    const dataset = await buildDataset({
+      seeds: [
+        { kind: 'orcid', value: '0000-0003-1317-0220' },
+        { kind: 'researchmap', value: 'yk_frkw' },
+      ],
+      mailto: 'test@example.org',
+      fetchImpl,
+      useCache: false,
+    });
+    expect(dataset.stats.cities).toBe(47);
+    expect(dataset.stats.primaryBy.orcid).toBe(0);
   });
 
   it('Oxford が 1 ノードにまとまる（座標丸めだと 3 分割される回帰）', async () => {
@@ -115,7 +172,7 @@ describe('buildDataset', () => {
     expect(oxford[0].key).toBe('GB|Oxford');
     expect(oxford[0].paperCount).toBe(10);
     expect(oxford[0].coauthorCount).toBe(4);
-    expect(oxford[0].institutions).toHaveLength(4);
+    expect(oxford[0].institutions).toHaveLength(3);
     // 代表座標は最も多くの機関が共有する丸め座標（論文数ではない）。
     expect([oxford[0].lat, oxford[0].lng]).toEqual([51.75222, -1.25596]);
   });
@@ -125,16 +182,12 @@ describe('buildDataset', () => {
     const kyoto = dataset.cities.filter((city) => city.city === 'Kyoto');
     expect(kyoto).toHaveLength(1);
     expect(kyoto[0].key).toBe('JP|Kyoto');
-    expect(kyoto[0].paperCount).toBe(17);
-    expect(kyoto[0].coauthorCount).toBe(19);
-    expect(kyoto[0].institutions).toHaveLength(3);
-    // country_code が null の機関も同じノードに入る。
-    const asukai = kyoto[0].institutions.find(
-      (institution) => institution.name === 'Kyoto Min-iren Asukai Hospital',
-    );
-    expect(asukai).toBeDefined();
-    expect(asukai.countryCode).toBeNull();
-    // グループの国コードは非 null の機関から埋まる。
+    expect(kyoto[0].paperCount).toBe(16);
+    expect(kyoto[0].coauthorCount).toBe(17);
+    // 京都を主所属とする人はいずれも京都大学なので、載る機関は 1 つ。
+    expect(kyoto[0].institutions).toHaveLength(1);
+    // グループの国コードは非 null の機関から埋まる（country_code が null の
+    // Kyoto Min-iren Asukai Hospital も同じノードに束ねられている）。
     expect(kyoto[0].countryCode).toBe('JP');
   });
 
@@ -144,7 +197,7 @@ describe('buildDataset', () => {
     expect(osaka).toHaveLength(1);
     expect(osaka[0].key).toBe('JP|Osaka');
     expect(osaka[0].paperCount).toBe(5);
-    expect(osaka[0].coauthorCount).toBe(7);
+    expect(osaka[0].coauthorCount).toBe(3);
     expect(osaka[0].institutions).toHaveLength(3);
     expect(osaka[0].countryCode).toBe('JP');
   });
@@ -273,6 +326,7 @@ describe('onProgress', () => {
     expect([...new Set(events.map(([key]) => key))].sort()).toEqual([
       'aggregate',
       'institutions',
+      'orcid-affiliations',
       'seeds',
       'seeds:orcid',
       'seeds:researchmap',

@@ -15,6 +15,7 @@ import {
   saveLocalCuration,
   exportCuration,
   importCuration,
+  normalizeCuration,
 } from '../curation.js';
 import { normalizeDoi, isDoiLike } from '../doi.js';
 
@@ -383,6 +384,17 @@ export function createCurationPanel({
   return {
     rebuildLists,
     get curation() {
+      return curation;
+    },
+    /**
+     * 外から手直しを差し込む（URL で運ばれてきた除外を重ねたときなど）。
+     * localStorage にも書いて、次に開いたときに食い違わないようにする。
+     * @param {Object} next
+     */
+    setCuration(next) {
+      curation = normalizeCuration(next);
+      saveLocalCuration(seedKey, curation);
+      rebuildLists();
       return curation;
     },
     /** seed が変わったら別の保存領域に切り替える */

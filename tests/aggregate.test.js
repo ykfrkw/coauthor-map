@@ -3,11 +3,15 @@ import { describe, expect, it } from 'vitest';
 import {
   aggregate,
   applyWorkCuration,
+  assignPrimaryAffiliations,
   cityKey,
   detectSeedAuthorIds,
   filterWorksByYear,
   groupInstitutionsIntoCities,
   haversineKm,
+  matchesOrcidAffiliation,
+  normalizeInstitutionName,
+  normalizePinMode,
   pickCityAnchor,
   toInstitution,
   unionSeedWorks,
@@ -376,7 +380,11 @@ describe('aggregate', () => {
     expect(tokyo.institutions.map((i) => i.id)).not.toContain(
       'https://openalex.org/I74801974',
     );
-    expect(tokyo.institutions).toHaveLength(14);
+    // 都市に載るのは「そこを主所属とする人の主所属機関」だけなので 9 → 8。
+    expect(
+      base.cities.find((city) => city.key === 'JP|Tokyo').institutions,
+    ).toHaveLength(9);
+    expect(tokyo.institutions).toHaveLength(8);
   });
 
   it('paperCount は authorship の行数ではなく相異なる DOI 数', () => {
@@ -412,7 +420,8 @@ describe('aggregate', () => {
         .filter((code) => code != null),
     );
     expect(dataset.stats.countries).toBe(codes.size);
-    expect(dataset.stats.countries).toBe(15);
+    // 主所属で置くようになって 15 → 14（誰の主所属でもない国が消える）。
+    expect(dataset.stats.countries).toBe(14);
     // country_code が null の機関はグループ内の他機関から国コードを引き継ぐので、
     // 都市ノード側に null は残らない。
     expect(dataset.cities.every((city) => city.countryCode !== null)).toBe(
@@ -435,6 +444,147 @@ describe('aggregate', () => {
     expect(dataset.stats.unmatchedDois).toEqual(['10.9999/ghost']);
   });
 
+  it('1 人はちょうど 1 つの主所属を持ち、2 つ以上の都市に現れない', () => {
+    const dataset = aggregate({
+      seedWorks,
+      openAlexWorks,
+      institutions: rawInstitutions,
+      seedOrcid: SEED_ORCID,
+    });
+
+    /** 著者 ID → 現れた都市キー */
+    const citiesOf = new Map();
+    for (const city of dataset.cities) {
+      for (const coauthor of city.coauthors) {
+        if (!citiesOf.has(coauthor.id)) citiesOf.set(coauthor.id, new Set());
+        citiesOf.get(coauthor.id).add(city.key);
+      }
+    }
+    for (const [id, keys] of citiesOf) {
+      expect(`${id}: ${[...keys].join(', ')}`).toBe(`${id}: ${[...keys][0]}`);
+      expect(keys.size).toBe(1);
+    }
+
+    // 主所属が決まった人は必ずどこかの都市に 1 度だけ出る（座標が取れる限り）。
+    const placed = [...dataset.coauthors.values()].filter(
+      (c) => c.primaryInstitutionId !== null,
+    );
+    expect(citiesOf.size).toBe(placed.length);
+    for (const coauthor of dataset.coauthors.values()) {
+      if (coauthor.primaryInstitutionId === null) {
+        expect(coauthor.primaryBy).toBeNull();
+        continue;
+      }
+      expect(['first-listed', 'orcid', 'fallback']).toContain(
+        coauthor.primaryBy,
+      );
+      // 主所属は必ずその人の所属一覧に含まれる。
+      expect(coauthor.institutionIds).toContain(coauthor.primaryInstitutionId);
+    }
+  });
+
+  it('主所属の既知解（先頭に印字された所属で決まる）', () => {
+    const dataset = aggregate({
+      seedWorks,
+      openAlexWorks,
+      institutions: rawInstitutions,
+      seedOrcid: SEED_ORCID,
+    });
+    const cityOf = (name) => {
+      const coauthor = [...dataset.coauthors.values()].find(
+        (c) => c.name === name,
+      );
+      const city = dataset.cities.find((c) =>
+        c.coauthors.some((x) => x.id === coauthor.id),
+      );
+      return { city: city?.city ?? null, by: coauthor.primaryBy };
+    };
+
+    expect(cityOf('Toshi A. Furukawa')).toEqual({
+      city: 'Kyoto',
+      by: 'first-listed',
+    });
+    expect(cityOf('Stefan Leucht')).toEqual({
+      city: 'Munich',
+      by: 'first-listed',
+    });
+    expect(cityOf('Edoardo G. Ostinelli')).toEqual({
+      city: 'Oxford',
+      by: 'first-listed',
+    });
+    expect(cityOf('Orestis Efthimiou')).toEqual({
+      city: 'Bern',
+      by: 'first-listed',
+    });
+    expect(cityOf('Masatsugu Sakata')).toEqual({
+      city: 'Kyoto',
+      by: 'first-listed',
+    });
+  });
+
+  it('主所属の内訳が既知解と一致する', () => {
+    const dataset = aggregate({
+      seedWorks,
+      openAlexWorks,
+      institutions: rawInstitutions,
+      seedOrcid: SEED_ORCID,
+    });
+    // ORCID の所属名を渡していないので orcid は 0。
+    expect(dataset.stats.primaryBy).toEqual({
+      firstListed: 139,
+      orcid: 0,
+      fallback: 4,
+      none: 2,
+    });
+    const sum = Object.values(dataset.stats.primaryBy).reduce(
+      (a, b) => a + b,
+      0,
+    );
+    expect(sum).toBe(dataset.stats.coauthors);
+  });
+
+  it('pin=all（旧来の挙動）では 1 人が複数都市に現れる', () => {
+    const dataset = aggregate({
+      seedWorks,
+      openAlexWorks,
+      institutions: rawInstitutions,
+      seedOrcid: SEED_ORCID,
+      pinMode: 'all',
+    });
+    const citiesOf = new Map();
+    for (const city of dataset.cities) {
+      for (const coauthor of city.coauthors) {
+        citiesOf.set(coauthor.id, (citiesOf.get(coauthor.id) ?? 0) + 1);
+      }
+    }
+    const multi = [...citiesOf.values()].filter((n) => n > 1);
+    expect(multi.length).toBe(55);
+    expect(dataset.stats.cities).toBe(69);
+    expect(dataset.stats.countries).toBe(15);
+  });
+
+  it('決定的: 同じ入力を 3 回まわしても主所属が変わらない', () => {
+    const runs = [];
+    for (let i = 0; i < 3; i += 1) {
+      const dataset = aggregate({
+        seedWorks,
+        openAlexWorks,
+        institutions: rawInstitutions,
+        seedOrcid: SEED_ORCID,
+      });
+      runs.push(
+        JSON.stringify(
+          [...dataset.coauthors.values()].map((c) => [
+            c.id,
+            c.primaryInstitutionId,
+            c.primaryBy,
+          ]),
+        ),
+      );
+    }
+    expect(new Set(runs).size).toBe(1);
+  });
+
   it('空 seed でも落ちない', () => {
     const dataset = aggregate({
       seedWorks: [],
@@ -445,5 +595,186 @@ describe('aggregate', () => {
     expect(dataset.stats.yearMin).toBe(0);
     expect(dataset.cities).toEqual([]);
     expect(dataset.coauthors.size).toBe(0);
+  });
+});
+
+/**
+ * 主所属の決定規則そのものの単体テスト。
+ * 実データでは規則 1 がほぼ全部決めてしまうので、規則 2 と 3 はここで凍結する。
+ */
+describe('assignPrimaryAffiliations', () => {
+  const master = new Map([
+    [
+      'https://openalex.org/I1',
+      { id: 'https://openalex.org/I1', name: 'Kyoto University' },
+    ],
+    [
+      'https://openalex.org/I2',
+      { id: 'https://openalex.org/I2', name: 'Technical University of Munich' },
+    ],
+    [
+      'https://openalex.org/I3',
+      { id: 'https://openalex.org/I3', name: 'The University of Tokyo' },
+    ],
+  ]);
+  const cityKeyByInstitution = new Map([
+    ['https://openalex.org/I1', 'JP|Kyoto'],
+    ['https://openalex.org/I2', 'DE|Munich'],
+    ['https://openalex.org/I3', 'JP|Tokyo'],
+  ]);
+
+  /** @param {Object} [over] */
+  function person(over = {}) {
+    return {
+      id: 'https://openalex.org/A1',
+      name: 'Someone',
+      orcid: null,
+      institutionIds: [],
+      dois: [],
+      paperCount: 0,
+      ...over,
+    };
+  }
+
+  function run(coauthor, events, orcidAffiliations = {}) {
+    const counts = assignPrimaryAffiliations({
+      coauthors: [coauthor],
+      eventsOf: () => events,
+      cityKeyByInstitution,
+      institutionMaster: master,
+      orcidAffiliations,
+    });
+    return { coauthor, counts };
+  }
+
+  it('規則 1: 先頭に来た回数が多い都市を採る', () => {
+    const { coauthor } = run(
+      person({
+        institutionIds: ['https://openalex.org/I1', 'https://openalex.org/I2'],
+      }),
+      [
+        { institutionId: 'https://openalex.org/I1', year: 2020, order: 0 },
+        { institutionId: 'https://openalex.org/I1', year: 2021, order: 1 },
+        { institutionId: 'https://openalex.org/I2', year: 2026, order: 2 },
+      ],
+    );
+    expect(coauthor.primaryInstitutionId).toBe('https://openalex.org/I1');
+    expect(coauthor.primaryBy).toBe('first-listed');
+  });
+
+  it('規則 1: 同数なら最も新しい論文のもの', () => {
+    const { coauthor } = run(
+      person({
+        institutionIds: ['https://openalex.org/I1', 'https://openalex.org/I2'],
+      }),
+      [
+        { institutionId: 'https://openalex.org/I1', year: 2019, order: 0 },
+        { institutionId: 'https://openalex.org/I2', year: 2026, order: 1 },
+      ],
+    );
+    expect(coauthor.primaryInstitutionId).toBe('https://openalex.org/I2');
+    expect(coauthor.primaryBy).toBe('first-listed');
+  });
+
+  it('規則 2: 件数も年も同じなら ORCID の所属名で決める', () => {
+    const { coauthor } = run(
+      person({
+        orcid: 'https://orcid.org/0000-0002-1825-0097',
+        institutionIds: ['https://openalex.org/I1', 'https://openalex.org/I2'],
+      }),
+      [
+        { institutionId: 'https://openalex.org/I1', year: 2024, order: 0 },
+        { institutionId: 'https://openalex.org/I2', year: 2024, order: 1 },
+      ],
+      { '0000-0002-1825-0097': ['Technical University of Munich'] },
+    );
+    expect(coauthor.primaryInstitutionId).toBe('https://openalex.org/I2');
+    expect(coauthor.primaryBy).toBe('orcid');
+  });
+
+  it('規則 2: 所属名が 2 都市に当たるときは決めない（規則 3 に落ちる）', () => {
+    const { coauthor } = run(
+      person({
+        orcid: 'https://orcid.org/0000-0002-1825-0097',
+        institutionIds: ['https://openalex.org/I1', 'https://openalex.org/I2'],
+      }),
+      [
+        { institutionId: 'https://openalex.org/I1', year: 2024, order: 0 },
+        { institutionId: 'https://openalex.org/I2', year: 2024, order: 1 },
+      ],
+      {
+        '0000-0002-1825-0097': [
+          'Kyoto University',
+          'Technical University of Munich',
+        ],
+      },
+    );
+    expect(coauthor.primaryInstitutionId).toBe('https://openalex.org/I1');
+    expect(coauthor.primaryBy).toBe('fallback');
+  });
+
+  it('規則 2: OpenAlex の所属が 1 つも無い人は機関マスタ全体から引く', () => {
+    const { coauthor } = run(
+      person({ orcid: '0000-0002-1825-0097', institutionIds: [] }),
+      [],
+      { '0000-0002-1825-0097': ['University of Tokyo'] },
+    );
+    // OpenAlex 側の `The University of Tokyo` と部分一致する。
+    expect(coauthor.primaryInstitutionId).toBe('https://openalex.org/I3');
+    expect(coauthor.primaryBy).toBe('orcid');
+  });
+
+  it('所属も ORCID も無ければ主所属は null（所属不明のまま数える）', () => {
+    const { coauthor, counts } = run(person(), []);
+    expect(coauthor.primaryInstitutionId).toBeNull();
+    expect(coauthor.primaryBy).toBeNull();
+    expect(counts.none).toBe(1);
+  });
+
+  it('規則 3: 決め手が無ければ機関 ID の昇順で決定的に決める', () => {
+    const { coauthor } = run(
+      person({
+        institutionIds: ['https://openalex.org/I2', 'https://openalex.org/I1'],
+      }),
+      [
+        { institutionId: 'https://openalex.org/I2', year: 2024, order: 0 },
+        { institutionId: 'https://openalex.org/I1', year: 2024, order: 1 },
+      ],
+    );
+    expect(coauthor.primaryInstitutionId).toBe('https://openalex.org/I1');
+    expect(coauthor.primaryBy).toBe('fallback');
+  });
+});
+
+describe('機関名の照合', () => {
+  it('英数字以外を落として小文字化する', () => {
+    expect(normalizeInstitutionName('The University of Tokyo')).toBe(
+      'theuniversityoftokyo',
+    );
+    expect(normalizeInstitutionName(null)).toBe('');
+  });
+
+  it('部分一致で拾う（The が付く / 付かないを吸収する）', () => {
+    expect(
+      matchesOrcidAffiliation('University of Tokyo', [
+        'The University of Tokyo',
+      ]),
+    ).toBe(true);
+    expect(
+      matchesOrcidAffiliation('Kyoto University', ['University of Bern']),
+    ).toBe(false);
+  });
+
+  it('短すぎる名前では当たらない（誤爆防止）', () => {
+    expect(matchesOrcidAffiliation('MIT', ['MIT'])).toBe(false);
+  });
+});
+
+describe('normalizePinMode', () => {
+  it('既定は primary、all だけ旧来の挙動', () => {
+    expect(normalizePinMode(undefined)).toBe('primary');
+    expect(normalizePinMode('primary')).toBe('primary');
+    expect(normalizePinMode('wat')).toBe('primary');
+    expect(normalizePinMode('all')).toBe('all');
   });
 });

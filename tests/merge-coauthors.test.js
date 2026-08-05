@@ -4,7 +4,9 @@
  * OpenAlex は同一人物に複数の著者レコードを作る。実測では共著者が 13% 水増しされ、
  * 地図の丸の大きさ（size=coauthors）が最大 27% 狂っていた。
  * ここで凍結するのは 2 つ:
- *   1. 統合しても**論文・機関・都市・国は 1 つも動かない**（変わるのは人の同一性だけ）
+ *   1. 統合しても**論文・機関・国は動かない**（変わるのは人の同一性と、その人を
+ *      どの都市に置くか）。地図の主役が人になったので、分裂したレコードを 1 人に
+ *      まとめると主所属も 1 つに決まり直す。都市の集合はそのぶんだけ動きうる
  *   2. 統合の判定は同姓同名の別人を潰さない（同一論文への同居を先に見る）
  */
 import { describe, expect, it } from 'vitest';
@@ -47,22 +49,30 @@ function cityByKey(dataset) {
 }
 
 describe('共著者の統合（既定 ON）', () => {
-  it('統合前後で論文・機関・都市・国が動かない', () => {
-    for (const key of ['cities', 'institutions', 'countries', 'matchedWorks'])
+  it('統合前後で論文・機関・国が動かない', () => {
+    for (const key of ['institutions', 'countries', 'matchedWorks'])
       expect(merged.stats[key]).toBe(unmerged.stats[key]);
     // 既知解そのもの。ここが動いたら統合ロジックの誤り。
-    expect(merged.stats.cities).toBe(69);
+    expect(merged.stats.cities).toBe(47);
     expect(merged.stats.institutions).toBe(119);
-    expect(merged.stats.countries).toBe(15);
+    expect(merged.stats.countries).toBe(14);
     expect(merged.stats.matchedWorks).toBe(34);
     expect(merged.stats.seedWorks).toBe(34);
   });
 
-  it('都市の集合と代表座標が動かない', () => {
+  it('統合で消える都市は「分裂レコードだけが主所属にしていた都市」に限る', () => {
     const before = cityByKey(unmerged);
     const after = cityByKey(merged);
-    expect([...after.keys()].sort()).toEqual([...before.keys()].sort());
-    for (const [key, city] of after) {
+    // 統合すると都市が増えることは無い（人は減りこそすれ増えない）。
+    expect([...after.keys()].filter((key) => !before.has(key))).toEqual([]);
+    expect([...before.keys()].filter((key) => !after.has(key))).toEqual([
+      'US|Chicago',
+    ]);
+  });
+
+  it('残った都市の代表座標は動かない', () => {
+    const before = cityByKey(unmerged);
+    for (const [key, city] of cityByKey(merged)) {
       expect([city.lat, city.lng]).toEqual([
         before.get(key).lat,
         before.get(key).lng,
@@ -70,20 +80,20 @@ describe('共著者の統合（既定 ON）', () => {
     }
   });
 
-  it('都市の paperCount と DOI 一覧が 1 件も動かない', () => {
-    const before = cityByKey(unmerged);
+  it('都市の DOI はその都市を主所属とする人の和集合', () => {
     for (const city of merged.cities) {
-      expect(city.paperCount).toBe(before.get(city.key).paperCount);
-      expect(city.dois).toEqual(before.get(city.key).dois);
+      const union = new Set(city.coauthors.flatMap((c) => c.dois));
+      expect(new Set(city.dois)).toEqual(union);
+      expect(city.paperCount).toBe(city.dois.length);
     }
   });
 
-  it('都市に載る機関の一覧と並びが動かない', () => {
-    const before = cityByKey(unmerged);
+  it('都市に載る機関はその都市を主所属とする人の主所属だけ', () => {
     for (const city of merged.cities) {
-      expect(city.institutions.map((i) => i.id)).toEqual(
-        before.get(city.key).institutions.map((i) => i.id),
+      const primaries = new Set(
+        city.coauthors.map((c) => c.primaryInstitutionId),
       );
+      expect(new Set(city.institutions.map((i) => i.id))).toEqual(primaries);
     }
   });
 
@@ -97,10 +107,16 @@ describe('共著者の統合（既定 ON）', () => {
 
   it('水増しが大きかった都市の共著者数が下がる', () => {
     const after = cityByKey(merged);
-    expect(after.get('DE|Munich').coauthorCount).toBe(27);
-    expect(after.get('DE|Berlin').coauthorCount).toBe(17);
-    expect(after.get('JP|Kyoto').coauthorCount).toBe(19);
-    expect(after.get('JP|Tokyo').coauthorCount).toBe(24);
+    const before = cityByKey(unmerged);
+    for (const [key, expected, was] of [
+      ['DE|Munich', 11, 13],
+      ['DE|Berlin', 4, 7],
+      ['JP|Kyoto', 17, 21],
+      ['JP|Tokyo', 19, 21],
+    ]) {
+      expect(after.get(key).coauthorCount).toBe(expected);
+      expect(before.get(key).coauthorCount).toBe(was);
+    }
   });
 
   it('分裂していなかった都市の共著者数は動かない', () => {
@@ -108,8 +124,8 @@ describe('共著者の統合（既定 ON）', () => {
     const before = cityByKey(unmerged);
     for (const [key, expected] of [
       ['CH|Bern', 3],
-      ['CH|Lausanne', 3],
-      ['JP|Saitama', 1],
+      ['GB|Oxford', 4],
+      ['JP|Osaka', 3],
     ]) {
       expect(after.get(key).coauthorCount).toBe(expected);
       expect(before.get(key).coauthorCount).toBe(expected);

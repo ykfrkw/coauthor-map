@@ -60,8 +60,27 @@ link, to the page that documents the tool.
 | `grain`      | `country`, or a merge radius in pixels `0`…`64`                             | `10` (`0` = one pin per city)        |
 | `size`       | `papers`, `coauthors`, `uniform`                                            | `papers`                             |
 | `theme`      | `minimal`, `dark`, `blueprint`, `paper`                                     | follows the visitor's system setting |
+| `min`        | keep co-authors with at least this many shared papers                       | `1` (everyone)                       |
+| `xa`         | co-authors to leave out, e.g. `xa=5085050194.5002251483`                    | none                                 |
+| `xi`         | organizations to leave out, e.g. `xi=62916508`                              | none                                 |
+| `xd`         | papers to leave out, e.g. `xd=1016/j.eclinm.2026.103988`                    | none                                 |
+| `pin`        | `primary`, `all`                                                            | `primary`                            |
+| `orcidaff`   | `off` to skip the ORCID affiliation lookup                                  | on                                   |
 
 `orcid` and `rm` can be given together; the two publication lists are merged.
+
+Every co-author sits at **one** primary affiliation, so nobody appears in two cities.
+The primary affiliation is the one printed first on their papers with you
+(`authorships[].institutions[0]` in OpenAlex); ties go to the most recent paper, then to
+the affiliation named on their ORCID record. `pin=all` restores the older behavior, where
+a person appears in every city they have ever been affiliated with.
+
+`min`, `xa`, `xi`, and `xd` are what the Corrections and “Who is on the map” panels write.
+Whatever you fix on the page ends up in the snippet the page generates, so the embedded
+map shows exactly what you were looking at. The IDs are shortened: OpenAlex IDs lose the
+`https://openalex.org/A` prefix, DOIs lose the leading `10.`, and `.` (or `*` for DOIs)
+separates them. Long correction lists make long URLs; the embed panel warns past about
+1,800 characters and suggests raising `min` instead.
 
 `scope=auto` picks the extent from where the co-authors actually are: one country if
 they are all in the same country, one region if they are all on the same continent,

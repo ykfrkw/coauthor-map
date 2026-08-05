@@ -3,6 +3,11 @@
  *
  * 表示状態はすべて URL クエリに載せる。リロードで復元でき、そのまま共有もできる:
  *   ?orcid=&rm=&from=&to=&proj=&center=&grain=&theme=&size=&scope=&merge=
+ *   &min=&xa=&xi=&xd=&pin=&orcidaff=
+ *
+ * **手直し（除外）も URL に載せる。** localStorage にしか無いと埋め込みウィジェットに
+ * 伝わらず、「画面で直した状態」と「配布した地図」が食い違う。
+ * ID は接頭辞を落として短縮する（`xa=5030252459.5122799223`）。
  *
  * UI は US 英語 1 言語なので `lang` は持たない。
  *
@@ -33,7 +38,11 @@ import {
   sliderToGrain,
 } from '../map/cluster.js';
 import { SCOPE_OPTIONS, DEFAULT_SCOPE, parseScope } from '../map/scope.js';
-import { normalizeMergeMode } from '../aggregate.js';
+import {
+  normalizeMergeMode,
+  normalizePinMode,
+  DEFAULT_PIN_MODE,
+} from '../aggregate.js';
 
 /** パラメータ無しで開いたときの既定 = オーナー自身の地図 */
 export const DEFAULTS = Object.freeze({
@@ -49,7 +58,128 @@ export const DEFAULTS = Object.freeze({
   scope: DEFAULT_SCOPE, // auto = 国 / 地域 / 全世界を共著者の分布から決める
   // OpenAlex の名寄せが分裂させた共著者レコードを統合するか。既定 ON
   merge: true,
+  // 共著論文数の下限。1 = 全員。Main collaborations の絞り込み
+  min: 1,
+  // 1 人を主所属の 1 都市だけに置くか。既定 primary（`pin=all` で旧来の挙動）
+  pin: DEFAULT_PIN_MODE,
+  // ORCID の所属名を主所属の判定に使うか。既定 ON（`orcidaff=off` で切る）
+  orcidaff: true,
+  // 手直し（除外）。URL に載せて埋め込み先まで運ぶ
+  xa: [], // 除外した共著者の OpenAlex 著者 ID
+  xi: [], // 除外した機関の OpenAlex 機関 ID
+  xd: [], // 除外した DOI
 });
+
+/** OpenAlex の ID 接頭辞。URL では落として数字だけ載せる。 */
+const OPENALEX_PREFIX = 'https://openalex.org/';
+
+/** ID を並べる区切り。数字しか入らないので `.` で衝突しない。 */
+const ID_SEPARATOR = '.';
+
+/** DOI を並べる区切り。DOI に現れず、URL エンコードもされない文字を選ぶ。 */
+const DOI_SEPARATOR = '*';
+
+/** ORCID をキーにしている共著者（OpenAlex の著者 ID が null の行）用の接頭辞。 */
+const ORCID_MARK = 'o';
+
+/** `0000-0000-0000-000X`。 */
+const ORCID_ID = /^(\d{4}-\d{4}-\d{4}-\d{3}[\dX])$/i;
+
+/**
+ * OpenAlex ID を短縮形にする。`https://openalex.org/A5030252459` → `5030252459`。
+ * OpenAlex が著者 ID を持たない行は ORCID がキーになるので `o0000-...` で載せる。
+ * どちらでもない（氏名しか手がかりが無い）キーは URL に載せられないので落とす。
+ * @param {string[]} ids
+ * @param {'A'|'I'} letter
+ * @returns {string}
+ */
+export function shortenOpenAlexIds(ids, letter) {
+  const pattern = new RegExp(`^${OPENALEX_PREFIX}${letter}(\\d+)$`);
+  const parts = [];
+  for (const raw of ids ?? []) {
+    const id = String(raw ?? '');
+    const openAlex = pattern.exec(id);
+    if (openAlex) {
+      parts.push(openAlex[1]);
+      continue;
+    }
+    if (letter !== 'A') continue;
+    const orcid = ORCID_ID.exec(
+      id.replace(/^https?:\/\/(www\.)?orcid\.org\//i, ''),
+    );
+    if (orcid) parts.push(`${ORCID_MARK}${orcid[1].toUpperCase()}`);
+  }
+  return parts.join(ID_SEPARATOR);
+}
+
+/**
+ * 短縮形を復元する。`shortenOpenAlexIds` の逆。
+ * @param {string|null} raw
+ * @param {'A'|'I'} letter
+ * @returns {string[]}
+ */
+export function expandOpenAlexIds(raw, letter) {
+  const out = [];
+  for (const part of String(raw ?? '').split(ID_SEPARATOR)) {
+    const value = part.trim();
+    if (/^\d+$/.test(value)) {
+      out.push(`${OPENALEX_PREFIX}${letter}${value}`);
+      continue;
+    }
+    if (letter !== 'A') continue;
+    const orcid = ORCID_ID.exec(value.slice(ORCID_MARK.length));
+    if (value.startsWith(ORCID_MARK) && orcid)
+      out.push(`https://orcid.org/${orcid[1].toUpperCase()}`);
+  }
+  return out;
+}
+
+/**
+ * URL に載せられない除外キーの数。**黙って落とさない**ために数えて UI に出す。
+ * @param {string[]} ids
+ * @param {'A'|'I'} letter
+ * @returns {number}
+ */
+export function countUnencodableIds(ids, letter) {
+  const encoded = shortenOpenAlexIds(ids, letter);
+  const kept = encoded ? encoded.split(ID_SEPARATOR).length : 0;
+  return Math.max(0, (ids ?? []).length - kept);
+}
+
+/**
+ * DOI を短縮形にする。共通の `10.` を落として並べる。
+ * @param {string[]} dois
+ * @returns {string}
+ */
+export function shortenDois(dois) {
+  return (dois ?? [])
+    .filter((doi) => typeof doi === 'string' && doi.startsWith('10.'))
+    .map((doi) => doi.slice(3))
+    .join(DOI_SEPARATOR);
+}
+
+/**
+ * 短縮形を DOI に戻す。
+ * @param {string|null} raw
+ * @returns {string[]}
+ */
+export function expandDois(raw) {
+  return String(raw ?? '')
+    .split(DOI_SEPARATOR)
+    .map((part) => part.trim())
+    .filter(Boolean)
+    .map((part) => `10.${part}`.toLowerCase());
+}
+
+/**
+ * `min=` を読む。1 未満と数字でないものは 1（= 全員）に落とす。
+ * @param {unknown} raw
+ * @returns {number}
+ */
+export function parseMinPapers(raw) {
+  const n = Number.parseInt(String(raw ?? ''), 10);
+  return Number.isFinite(n) && n > 1 ? n : 1;
+}
 
 /**
  * `merge=` の値を URL に載せる形にする。既定（true）は書かない。
@@ -116,8 +246,42 @@ export function readStateFromUrl(search = window.location.search) {
     size: SIZE_IDS.has(size) ? size : DEFAULTS.size,
     scope: q.has('scope') ? parseScope(q.get('scope')) : DEFAULTS.scope,
     merge: q.has('merge') ? normalizeMergeMode(q.get('merge')) : DEFAULTS.merge,
+    min: parseMinPapers(q.get('min')),
+    pin: q.has('pin') ? normalizePinMode(q.get('pin')) : DEFAULTS.pin,
+    orcidaff: q.get('orcidaff') !== 'off',
+    xa: expandOpenAlexIds(q.get('xa'), 'A'),
+    xi: expandOpenAlexIds(q.get('xi'), 'I'),
+    xd: expandDois(q.get('xd')),
     rotateLat: 0, // 回転は共有しない（center だけ URL に載せる）
   };
+}
+
+/**
+ * 状態の除外一覧を `Curation` の形にする。URL で運ばれてきた手直しを
+ * commit 済み・localStorage のものと同じ土俵に乗せるため。
+ * @param {Object} state
+ * @returns {import('../types.js').Curation}
+ */
+export function curationFromState(state) {
+  return {
+    excludeDois: [...(state.xd ?? [])],
+    excludeAuthorIds: [...(state.xa ?? [])],
+    excludeInstitutionIds: [...(state.xi ?? [])],
+    addDois: [],
+    mergeInstitutions: {},
+  };
+}
+
+/**
+ * 手直しの結果を state に書き戻す。**埋め込みスニペットに反映させるための唯一の経路**。
+ * @param {Object} state
+ * @param {import('../types.js').Curation} curation
+ */
+export function applyCurationToState(state, curation) {
+  state.xd = [...(curation?.excludeDois ?? [])];
+  state.xa = [...(curation?.excludeAuthorIds ?? [])];
+  state.xi = [...(curation?.excludeInstitutionIds ?? [])];
+  return state;
 }
 
 /**
@@ -145,6 +309,16 @@ export function stateToQuery(state, bounds) {
     q.set('scope', state.scope);
   if (state.merge !== undefined && state.merge !== DEFAULTS.merge)
     q.set('merge', mergeToParam(state.merge));
+  if (parseMinPapers(state.min) > 1) q.set('min', String(state.min));
+  if (state.pin && state.pin !== DEFAULTS.pin) q.set('pin', state.pin);
+  if (state.orcidaff === false) q.set('orcidaff', 'off');
+  // 手直しは短縮形で載せる。1 件も無ければ書かない
+  const authors = shortenOpenAlexIds(state.xa ?? [], 'A');
+  if (authors) q.set('xa', authors);
+  const institutions = shortenOpenAlexIds(state.xi ?? [], 'I');
+  if (institutions) q.set('xi', institutions);
+  const dois = shortenDois(state.xd ?? []);
+  if (dois) q.set('xd', dois);
   return q.toString();
 }
 

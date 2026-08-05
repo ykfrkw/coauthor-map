@@ -21,6 +21,21 @@ function round(value, digits) {
 /** 同名都市を同一とみなす距離の上限（km）。 */
 export const CITY_MERGE_DISTANCE_KM = 100;
 
+/**
+ * 既定のピン配置。`'primary'` は 1 人を主所属の 1 都市だけに置く。
+ * `'all'` は旧来の挙動（所属した全都市に同じ人が現れる）で、URL の `pin=all` 用の逃げ道。
+ */
+export const DEFAULT_PIN_MODE = 'primary';
+
+/**
+ * `pin=` の値を正規化する。既定は `'primary'`。
+ * @param {unknown} value
+ * @returns {'primary'|'all'}
+ */
+export function normalizePinMode(value) {
+  return value === 'all' ? 'all' : DEFAULT_PIN_MODE;
+}
+
 /** 地球の平均半径（km）。 */
 const EARTH_RADIUS_KM = 6371;
 
@@ -556,6 +571,211 @@ export function mergeCoauthors(coauthors, mode = true) {
 }
 
 /**
+ * 機関名の照合キー。英数字以外を落として小文字化する。
+ * ORCID の所属名（`The University of Tokyo`）と OpenAlex の表示名
+ * （`University of Tokyo`）を突き合わせるための正規化。
+ * @param {unknown} name
+ * @returns {string}
+ */
+export function normalizeInstitutionName(name) {
+  return String(name ?? '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '');
+}
+
+/** 部分一致で拾うには短すぎる名前の下限。`the` だけで当たるのを防ぐ。 */
+const MIN_NAME_MATCH_LENGTH = 5;
+
+/**
+ * 機関名が ORCID 側の所属名のどれかと一致するか。正規化した部分一致で見る。
+ * @param {string|null|undefined} institutionName
+ * @param {string[]} orcidNames
+ * @returns {boolean}
+ */
+export function matchesOrcidAffiliation(institutionName, orcidNames) {
+  const target = normalizeInstitutionName(institutionName);
+  if (target.length < MIN_NAME_MATCH_LENGTH) return false;
+  for (const raw of orcidNames ?? []) {
+    const candidate = normalizeInstitutionName(raw);
+    if (candidate.length < MIN_NAME_MATCH_LENGTH) continue;
+    if (target.includes(candidate) || candidate.includes(target)) return true;
+  }
+  return false;
+}
+
+/**
+ * 各共著者に**ちょうど 1 つ**の主所属を割り当てる。決定は完全に決定的。
+ *
+ * 優先順:
+ * 1. **論文に印字された先頭の所属**（`authorships[].institutions[0]`）。
+ *    その人の論文ごとに先頭所属を取り、最も多く先頭に来た都市を採る。
+ *    同数なら最も新しい論文のもの
+ * 2. それでも決まらないとき、**ORCID の所属名と一致するもの**
+ * 3. なお決まらなければ機関 ID の昇順で決定的に決める
+ *
+ * 「先頭が主所属」は学術界の慣行で、OpenAlex は論文上の所属の順序を保っている。
+ *
+ * @param {Object} input
+ * @param {import('./types.js').Coauthor[]} input.coauthors  破壊的に書き込む
+ * @param {(c: import('./types.js').Coauthor) => Array<{institutionId: string, year: number|null, order: number}>} input.eventsOf
+ *   その人の「先頭に印字された所属」の一覧（論文ごと 1 件）
+ * @param {Map<string, string>} input.cityKeyByInstitution  機関 ID → 都市キー
+ * @param {Map<string, import('./types.js').Institution>} input.institutionMaster
+ * @param {Record<string, string[]>} [input.orcidAffiliations]  ORCID → 所属名（過去を含む）
+ * @returns {{'first-listed': number, orcid: number, fallback: number, none: number}} 規則ごとの人数
+ */
+export function assignPrimaryAffiliations({
+  coauthors,
+  eventsOf,
+  cityKeyByInstitution,
+  institutionMaster,
+  orcidAffiliations = {},
+}) {
+  const counts = { 'first-listed': 0, orcid: 0, fallback: 0, none: 0 };
+  // 座標が無い機関は都市に属さない。同一機関を 1 つのバケツとして扱う。
+  const bucketOf = (institutionId) =>
+    cityKeyByInstitution.get(institutionId) ?? `institution:${institutionId}`;
+
+  for (const coauthor of coauthors) {
+    const events = eventsOf(coauthor) ?? [];
+    const decided = decidePrimary({
+      coauthor,
+      events,
+      bucketOf,
+      institutionMaster,
+      orcidAffiliations,
+    });
+    coauthor.primaryInstitutionId = decided.institutionId;
+    coauthor.primaryBy = decided.by;
+    counts[decided.by ?? 'none'] += 1;
+  }
+  return counts;
+}
+
+/**
+ * 1 人分の主所属を決める。`assignPrimaryAffiliations` の本体。
+ * @param {Object} input
+ * @returns {{institutionId: string|null, by: 'first-listed'|'orcid'|'fallback'|null}}
+ */
+function decidePrimary({
+  coauthor,
+  events,
+  bucketOf,
+  institutionMaster,
+  orcidAffiliations,
+}) {
+  // --- 規則 1: 先頭に印字された所属 ---
+  /** @type {Map<string, {count: number, newestYear: number, events: typeof events}>} */
+  const buckets = new Map();
+  for (const event of events) {
+    const key = bucketOf(event.institutionId);
+    if (!buckets.has(key))
+      buckets.set(key, { count: 0, newestYear: -Infinity, events: [] });
+    const bucket = buckets.get(key);
+    bucket.count += 1;
+    bucket.events.push(event);
+    if (Number.isFinite(event.year) && event.year > bucket.newestYear)
+      bucket.newestYear = event.year;
+  }
+
+  const chosen = pickBucket([...buckets.values()]);
+  if (chosen)
+    return {
+      institutionId: pickInstitution(chosen.events),
+      by: 'first-listed',
+    };
+
+  // --- 規則 2: ORCID の所属名と突合 ---
+  const orcidNames = orcidAffiliations[normalizeOrcid(coauthor.orcid)] ?? [];
+  if (orcidNames.length > 0) {
+    // OpenAlex 側の所属が 1 つも無い人は、機関マスタ全体から名前で引く。
+    const candidateIds =
+      events.length > 0
+        ? uniqueInOrder(events.map((event) => event.institutionId))
+        : coauthor.institutionIds.length > 0
+          ? [...coauthor.institutionIds]
+          : [...institutionMaster.keys()];
+    const matched = candidateIds.filter((id) =>
+      matchesOrcidAffiliation(institutionMaster.get(id)?.name, orcidNames),
+    );
+    const matchedBuckets = new Set(matched.map(bucketOf));
+    if (matchedBuckets.size === 1) {
+      const matchedEvents = events.filter((event) =>
+        matched.includes(event.institutionId),
+      );
+      const institutionId =
+        matchedEvents.length > 0
+          ? pickInstitution(matchedEvents)
+          : [...matched].sort(compareText)[0];
+      return { institutionId, by: 'orcid' };
+    }
+  }
+
+  // --- 規則 3: 機関 ID の昇順 ---
+  const fallbackIds =
+    events.length > 0
+      ? uniqueInOrder(events.map((event) => event.institutionId))
+      : [...coauthor.institutionIds];
+  if (fallbackIds.length === 0) return { institutionId: null, by: null };
+  return {
+    institutionId: [...fallbackIds].sort(compareText)[0],
+    by: 'fallback',
+  };
+}
+
+/**
+ * 先頭所属のバケツ（= 都市）を 1 つ選ぶ。件数が最大のもの、同数なら最も新しい論文を
+ * 含むもの。どちらでも割れなければ `null`（規則 2 に譲る）。
+ * @param {Array<{count: number, newestYear: number, events: Array<{institutionId: string, year: number|null, order: number}>}>} buckets
+ */
+function pickBucket(buckets) {
+  if (buckets.length === 0) return null;
+  if (buckets.length === 1) return buckets[0];
+
+  const maxCount = Math.max(...buckets.map((bucket) => bucket.count));
+  const top = buckets.filter((bucket) => bucket.count === maxCount);
+  if (top.length === 1) return top[0];
+
+  const newest = Math.max(...top.map((bucket) => bucket.newestYear));
+  if (!Number.isFinite(newest)) return null;
+  const newestTop = top.filter((bucket) => bucket.newestYear === newest);
+  return newestTop.length === 1 ? newestTop[0] : null;
+}
+
+/**
+ * バケツの中から機関を 1 つ選ぶ。先頭に来た回数 → 最新の論文 → 機関 ID 昇順。
+ * @param {Array<{institutionId: string, year: number|null, order: number}>} events
+ * @returns {string}
+ */
+function pickInstitution(events) {
+  /** @type {Map<string, {count: number, newestYear: number}>} */
+  const byId = new Map();
+  for (const event of events) {
+    if (!byId.has(event.institutionId))
+      byId.set(event.institutionId, { count: 0, newestYear: -Infinity });
+    const entry = byId.get(event.institutionId);
+    entry.count += 1;
+    if (Number.isFinite(event.year) && event.year > entry.newestYear)
+      entry.newestYear = event.year;
+  }
+  let best = null;
+  for (const [id, entry] of byId) {
+    if (
+      best === null ||
+      entry.count > best.entry.count ||
+      (entry.count === best.entry.count &&
+        entry.newestYear > best.entry.newestYear) ||
+      (entry.count === best.entry.count &&
+        entry.newestYear === best.entry.newestYear &&
+        compareText(id, best.id) < 0)
+    ) {
+      best = { id, entry };
+    }
+  }
+  return best.id;
+}
+
+/**
  * 重複を落として登場順を保つ。
  * @param {string[]} values
  * @returns {string[]}
@@ -580,6 +800,8 @@ function uniqueInOrder(values) {
  * @param {import('./types.js').Curation} [input.curation]
  * @param {string[]} [input.warnings]
  * @param {true|'orcid'|false} [input.mergeCoauthors] 分裂した著者レコードの統合（既定 true）
+ * @param {'primary'|'all'} [input.pinMode] 主所属の 1 都市だけに置くか（既定 `'primary'`）
+ * @param {Record<string, string[]>} [input.orcidAffiliations] ORCID → 所属名。主所属の判定に使う
  * @returns {import('./types.js').Dataset & { seedAuthorIds: string[] }}
  */
 export function aggregate(input) {
@@ -590,6 +812,8 @@ export function aggregate(input) {
     seedOrcid = null,
     warnings = [],
     mergeCoauthors: mergeMode = true,
+    pinMode = DEFAULT_PIN_MODE,
+    orcidAffiliations = {},
   } = input;
   const curation = normalizeCuration(input.curation);
 
@@ -652,10 +876,16 @@ export function aggregate(input) {
   const coauthorMap = new Map();
   /** @type {Map<import('./types.js').Coauthor, string>} レコード → 除外照合用のキー */
   const keyByCoauthor = new Map();
+  /**
+   * レコード → 「論文に印字された先頭の所属」の一覧（論文ごと 1 件）。
+   * 主所属の判定に使う。Coauthor 自体には載せない（Dataset を膨らませないため）。
+   * @type {Map<import('./types.js').Coauthor, Array<{institutionId: string, year: number|null, order: number}>>}
+   */
+  const firstListedByRecord = new Map();
   let authorshipRows = 0;
   let authorshipsWithoutInstitution = 0;
 
-  for (const work of works) {
+  for (const [workIndex, work] of works.entries()) {
     const raw = worksByDoi.get(work.doi);
     if (!raw) continue;
 
@@ -705,11 +935,24 @@ export function aggregate(input) {
         coauthor.orcid = author.orcid;
       if (!coauthor.dois.includes(work.doi)) coauthor.dois.push(work.doi);
 
-      for (const rawId of rawInstitutionIds) {
-        const mergedId = mergeMap[rawId] ?? rawId;
-        if (excludedInstitutionIds.has(mergedId)) continue;
-        if (!coauthor.institutionIds.includes(mergedId))
-          coauthor.institutionIds.push(mergedId);
+      // 統合と除外を当てたうえで、論文に印字された順序を保つ。
+      const listedIds = uniqueInOrder(
+        rawInstitutionIds
+          .map((rawId) => mergeMap[rawId] ?? rawId)
+          .filter((id) => !excludedInstitutionIds.has(id)),
+      );
+      for (const id of listedIds) {
+        if (!coauthor.institutionIds.includes(id))
+          coauthor.institutionIds.push(id);
+      }
+      if (listedIds.length > 0) {
+        if (!firstListedByRecord.has(coauthor))
+          firstListedByRecord.set(coauthor, []);
+        firstListedByRecord.get(coauthor).push({
+          institutionId: listedIds[0],
+          year: work.year ?? null,
+          order: workIndex,
+        });
       }
     }
   }
@@ -778,16 +1021,50 @@ export function aggregate(input) {
     compareByPaperCountThenName,
   );
 
-  // 7. 都市ノード。緯度経度が無い機関は都市に入れない（stats には数える）。
-  //    論文と機関の結び付きは**統合前のレコード**で数える。統合が変えてよいのは
-  //    共著者の同一性だけで、都市の論文数を動かしてはいけない。
-  const cities = buildCities({
-    master: institutionMaster,
-    institutions,
+  // 6.5. 主所属。**地図の主役は機関ではなく人**なので、1 人につき 1 機関＝1 都市に決める。
+  //      都市のまとまりは機関マスタ全体（座標があるもの）から先に作る。
+  const { groups: cityGroups, cityKeyByInstitution } =
+    buildCityGroups(institutionMaster);
+  const primaryCounts = assignPrimaryAffiliations({
     coauthors: sortedCoauthors,
-    records: rawCoauthorList,
-    works,
+    eventsOf: (coauthor) =>
+      (membersOf.get(coauthor) ?? []).flatMap(
+        (record) => firstListedByRecord.get(record) ?? [],
+      ),
+    cityKeyByInstitution,
+    institutionMaster,
+    orcidAffiliations,
   });
+
+  // 6.6. ORCID の所属名から引き当てた主所属は、まだ「参照された機関」に入っていない
+  //      （OpenAlex 側の所属が 1 つも無い人の分）。ここで拾って地図と表に載せる。
+  for (const coauthor of sortedCoauthors) {
+    const id = coauthor.primaryInstitutionId;
+    if (!id) continue;
+    if (!coauthor.institutionIds.includes(id)) coauthor.institutionIds.push(id);
+    if (!institutions.has(id) && institutionMaster.has(id))
+      institutions.set(id, institutionMaster.get(id));
+  }
+
+  // 7. 都市ノード。緯度経度が無い機関は都市に入れない（stats には数える）。
+  const mode = normalizePinMode(pinMode);
+  const cities =
+    mode === 'all'
+      ? buildCitiesByAffiliation({
+          groups: cityGroups,
+          cityKeyByInstitution,
+          institutions,
+          coauthors: sortedCoauthors,
+          records: rawCoauthorList,
+          works,
+        })
+      : buildCitiesByPrimary({
+          groups: cityGroups,
+          cityKeyByInstitution,
+          institutions,
+          coauthors: sortedCoauthors,
+          works,
+        });
 
   // 8. 統計。
   const years = works
@@ -813,8 +1090,15 @@ export function aggregate(input) {
     authorshipRows,
     authorshipsWithoutInstitution,
     coauthorsWithoutInstitution: sortedCoauthors.filter(
-      (c) => c.institutionIds.length === 0,
+      (c) => c.primaryInstitutionId === null,
     ).length,
+    // 主所属をどの規則で決めたかの内訳。集計の質をそのまま出す。
+    primaryBy: {
+      firstListed: primaryCounts['first-listed'],
+      orcid: primaryCounts.orcid,
+      fallback: primaryCounts.fallback,
+      none: primaryCounts.none,
+    },
     yearMin: years.length ? Math.min(...years) : 0,
     yearMax: years.length ? Math.max(...years) : 0,
   };
@@ -869,19 +1153,12 @@ function firstNonNull(members, field) {
 }
 
 /**
- * 機関を都市にまとめて `CityNode[]` にする。
- * グループ分けは fetch できた機関全体（`master`）で行い、ノードに載せる `institutions`
- * だけを「共著者から参照されたもの」に絞る。
- * @param {Object} input
- * @param {Map<string, import('./types.js').Institution>} input.master       fetch できた全機関
- * @param {Map<string, import('./types.js').Institution>} input.institutions 参照された機関だけ
- * @param {import('./types.js').Coauthor[]} input.coauthors  統合後。既に paperCount 降順
- * @param {import('./types.js').Coauthor[]} input.records    統合前のレコード（登場順）
- * @param {import('./types.js').SeedWork[]} input.works      DOI 昇順
- * @returns {import('./types.js').CityNode[]}
+ * 機関を都市にまとめる。**ここは幾何だけ**で、共著者も論文も見ない。
+ * 緯度経度が無い機関は地図に置けないので都市に入れない（stats には数える）。
+ * @param {Map<string, import('./types.js').Institution>} master fetch できた全機関
+ * @returns {{groups: Map<string, Object>, cityKeyByInstitution: Map<string, string>}}
  */
-function buildCities({ master, institutions, coauthors, records, works }) {
-  // 緯度経度が無い機関は地図に置けないので都市ノードに入れない（stats には数える）。
+function buildCityGroups(master) {
   const located = [...master.values()].filter(
     (institution) => institution.lat != null && institution.lng != null,
   );
@@ -912,7 +1189,117 @@ function buildCities({ master, institutions, coauthors, records, works }) {
     for (const institution of members)
       cityKeyByInstitution.set(institution.id, group.key);
   }
+  return { groups, cityKeyByInstitution };
+}
 
+/**
+ * 主所属で都市ノードを組む（既定）。**1 人は 1 都市にしか現れない。**
+ *
+ * `coauthors` はその都市を主所属とする人だけ、`dois` はその人たちの DOI の和集合、
+ * `institutions` はその人たちの主所属機関だけ。誰の主所属でもない都市は消える。
+ *
+ * @param {Object} input
+ * @param {Map<string, Object>} input.groups
+ * @param {Map<string, string>} input.cityKeyByInstitution
+ * @param {Map<string, import('./types.js').Institution>} input.institutions 参照された機関だけ
+ * @param {import('./types.js').Coauthor[]} input.coauthors 統合後。既に paperCount 降順
+ * @param {import('./types.js').SeedWork[]} input.works DOI 昇順
+ * @returns {import('./types.js').CityNode[]}
+ */
+function buildCitiesByPrimary({
+  groups,
+  cityKeyByInstitution,
+  institutions,
+  coauthors,
+  works,
+}) {
+  /** @type {Map<string, import('./types.js').Coauthor[]>} */
+  const coauthorsByCity = new Map();
+  /** @type {Map<string, Set<string>>} */
+  const doisByInstitution = new Map();
+
+  for (const coauthor of coauthors) {
+    const institutionId = coauthor.primaryInstitutionId;
+    if (!institutionId) continue;
+    const key = cityKeyByInstitution.get(institutionId);
+    if (!key) continue; // 座標が無い機関は地図に置けない
+    if (!coauthorsByCity.has(key)) coauthorsByCity.set(key, []);
+    // coauthors は既に paperCount 降順 → 名前昇順なので順序を引き継げる。
+    coauthorsByCity.get(key).push(coauthor);
+
+    if (!doisByInstitution.has(institutionId))
+      doisByInstitution.set(institutionId, new Set());
+    const bucket = doisByInstitution.get(institutionId);
+    for (const doi of coauthor.dois) bucket.add(doi);
+  }
+
+  const doiOrder = new Map(works.map((work, index) => [work.doi, index]));
+  const cities = [];
+
+  for (const group of groups.values()) {
+    const cityCoauthors = coauthorsByCity.get(group.key) ?? [];
+    // 誰の主所属でもない都市は地図に出さない。
+    if (cityCoauthors.length === 0) continue;
+
+    const doiSet = new Set();
+    for (const coauthor of cityCoauthors) {
+      for (const doi of coauthor.dois) doiSet.add(doi);
+    }
+    // 和集合の並びは works（DOI 昇順）に合わせる。
+    const dois = [...doiSet].sort(
+      (a, b) => (doiOrder.get(a) ?? 0) - (doiOrder.get(b) ?? 0),
+    );
+
+    const cityInstitutions = uniqueInOrder(
+      cityCoauthors.map((coauthor) => coauthor.primaryInstitutionId),
+    )
+      .map((id) => institutions.get(id))
+      .filter(Boolean)
+      .sort((a, b) => {
+        const countA = doisByInstitution.get(a.id)?.size ?? 0;
+        const countB = doisByInstitution.get(b.id)?.size ?? 0;
+        if (countB !== countA) return countB - countA;
+        return compareText(a.name, b.name);
+      });
+
+    cities.push({
+      key: group.key,
+      lat: group.lat,
+      lng: group.lng,
+      city: group.city,
+      countryCode: group.countryCode,
+      country: group.country,
+      institutions: cityInstitutions,
+      coauthors: cityCoauthors,
+      dois,
+      paperCount: dois.length,
+      coauthorCount: cityCoauthors.length,
+    });
+  }
+
+  return sortCities(cities);
+}
+
+/**
+ * 旧来の都市ノード（`pin=all`）。1 人が所属した全都市に現れる。
+ * 主所属の規則を入れる前の挙動をそのまま残してある。
+ * @param {Object} input
+ * @param {Map<string, Object>} input.groups
+ * @param {Map<string, string>} input.cityKeyByInstitution
+ * @param {Map<string, import('./types.js').Institution>} input.institutions 参照された機関だけ
+ * @param {import('./types.js').Coauthor[]} input.coauthors  統合後。既に paperCount 降順
+ * @param {import('./types.js').Coauthor[]} input.records    統合前のレコード（登場順）
+ * @param {import('./types.js').SeedWork[]} input.works      DOI 昇順
+ * @returns {import('./types.js').CityNode[]}
+ */
+function buildCitiesByAffiliation({
+  groups,
+  cityKeyByInstitution,
+  institutions,
+  coauthors,
+  records,
+  works,
+}) {
   // 機関 → 相異なる DOI 集合、都市 → 相異なる DOI 集合。
   // **統合前のレコード**で数える。統合すると 1 人が複数都市の DOI を持つので、
   // 統合後のレコードで数えると「その都市に居ない論文」が都市に混ざる。
@@ -997,6 +1384,15 @@ function buildCities({ master, institutions, coauthors, records, works }) {
     });
   }
 
+  return sortCities(cities);
+}
+
+/**
+ * 都市ノードの並び。paperCount 降順 → coauthorCount 降順 → key 昇順。
+ * @param {import('./types.js').CityNode[]} cities
+ * @returns {import('./types.js').CityNode[]}
+ */
+function sortCities(cities) {
   cities.sort((a, b) => {
     if (b.paperCount !== a.paperCount) return b.paperCount - a.paperCount;
     if (b.coauthorCount !== a.coauthorCount)
