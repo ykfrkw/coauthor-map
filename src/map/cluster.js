@@ -23,7 +23,14 @@ import { geoCentroid } from 'd3-geo';
 export const GRAIN_MAX = 65;
 /** スライダーの左端。国単位 */
 export const GRAIN_COUNTRY = 'country';
-export const DEFAULT_GRAIN = 0;
+/**
+ * 既定の粒度。
+ *
+ * 0（1都市1ピン）だと欧州が団子になって初見の印象が悪い。
+ * 10px でまとめると 27〜30 ピンまで落ちて `Tokyo +13 more` のような
+ * 集約ラベルが出る。生の都市単位が要るときは URL で `grain=0` を指定する。
+ */
+export const DEFAULT_GRAIN = 10;
 
 /**
  * URL の `grain=` を内部表現に直す。

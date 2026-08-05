@@ -15,12 +15,10 @@ const src = resolve(root, 'node_modules/world-atlas/countries-110m.json');
 const dest = resolve(root, 'public/countries-110m.json');
 
 if (!existsSync(src)) {
-  console.error(
-    '[copy-atlas] world-atlas が見つからない。npm install を先に実行する。',
-  );
+  console.error('[copy-atlas] world-atlas not found. Run npm install first.');
   process.exit(1);
 }
 
 mkdirSync(dirname(dest), { recursive: true });
 copyFileSync(src, dest);
-console.log('[copy-atlas] public/countries-110m.json を更新した。');
+console.log('[copy-atlas] Updated public/countries-110m.json.');

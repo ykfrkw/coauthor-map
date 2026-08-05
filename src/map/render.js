@@ -26,7 +26,12 @@ import {
   clampRotateLat,
   getProjectionSpec,
 } from './projections.js';
-import { buildCountryNodes, clusterPlaced, GRAIN_COUNTRY } from './cluster.js';
+import {
+  buildCountryNodes,
+  clusterPlaced,
+  GRAIN_COUNTRY,
+  DEFAULT_GRAIN,
+} from './cluster.js';
 
 const SPHERE = { type: 'Sphere' };
 const GRATICULE = geoGraticule10();
@@ -115,7 +120,7 @@ export function createMapRenderer({ container, t, compact = false }) {
   /** 現在の状態 */
   const state = {
     cities: [],
-    grain: 0,
+    grain: DEFAULT_GRAIN,
     projectionId: 'equalEarth',
     centerLon: 0,
     rotateLat: 0,
