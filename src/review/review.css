@@ -1,0 +1,278 @@
+/* レビューモードのスタイル。
+ *
+ * mode.js からだけ import するので、?review=1 が無ければこの CSS も配信されない。
+ * 色は必ず src/css/tokens.css のカスタムプロパティを使う（4 テーマで読めること）。
+ * 配置は position: fixed の浮遊層。ページ本体のレイアウトには一切触らない。
+ */
+
+/* ---------- カーソル ---------- */
+
+:root.review-armed * {
+  cursor: crosshair;
+}
+
+/* レビュー用 UI の中だけは普通のカーソルに戻す */
+:root.review-armed .review-layer,
+:root.review-armed .review-layer * {
+  cursor: auto;
+}
+
+:root.review-armed .review-layer button,
+:root.review-armed .review-layer summary {
+  cursor: pointer;
+}
+
+/* ---------- 浮遊層 ---------- */
+
+.review-layer {
+  position: fixed;
+  inset: 0;
+  /* 地図より前。ただし層そのものはクリックを透かすので下の操作は塞がない */
+  z-index: 2147483000;
+  pointer-events: none;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--fg);
+}
+
+.review-layer .review-pin,
+.review-layer .review-panel,
+.review-layer .review-editor {
+  pointer-events: auto;
+}
+
+/* ---------- ピン ---------- */
+
+.review-pin {
+  position: fixed;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 var(--space-1);
+  border: 2px solid var(--pin-stroke);
+  border-radius: 999px;
+  background: var(--pin);
+  color: var(--pin-stroke);
+  font: inherit;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.review-pin--orphan {
+  background: var(--danger);
+  color: var(--bg);
+  border-color: var(--bg);
+}
+
+.review-pin--active {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* ---------- 一覧パネル ---------- */
+
+.review-panel {
+  position: fixed;
+  inset-block-start: var(--space-3);
+  inset-inline-end: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: min(320px, calc(100vw - 2 * var(--space-3)));
+  max-height: min(70vh, 640px);
+  padding: var(--space-3);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  background: var(--panel);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+
+.review-panel[data-collapsed='true'] {
+  gap: 0;
+  padding: var(--space-2);
+  width: auto;
+}
+
+.review-panel[data-collapsed='true'] .review-panel-body {
+  display: none;
+}
+
+.review-panel-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.review-panel-title {
+  margin: 0;
+  font-size: var(--fs-sm);
+  font-weight: 650;
+}
+
+.review-panel-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-height: 0;
+}
+
+.review-state {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.review-hint,
+.review-status {
+  margin: 0;
+  font-size: var(--fs-xs);
+  color: var(--muted);
+}
+
+.review-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.review-layer button {
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--fg);
+  font: inherit;
+  font-size: var(--fs-xs);
+}
+
+.review-layer button:hover {
+  border-color: var(--accent);
+}
+
+.review-layer button[aria-pressed='true'] {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.review-layer :where(button, select, textarea):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.review-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.review-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-2);
+  align-items: start;
+  width: 100%;
+  text-align: start;
+  padding: var(--space-1) var(--space-2);
+}
+
+.review-row-n {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+}
+
+.review-row-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.review-row-body {
+  overflow-wrap: anywhere;
+}
+
+.review-row-meta {
+  font-size: var(--fs-xs);
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+/* ---------- 編集ポップオーバー ---------- */
+
+.review-editor {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: min(300px, calc(100vw - 2 * var(--space-3)));
+  padding: var(--space-3);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  background: var(--panel);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+
+.review-editor[hidden] {
+  display: none;
+}
+
+.review-editor label {
+  display: block;
+  font-size: var(--fs-xs);
+  color: var(--muted);
+}
+
+.review-editor textarea {
+  width: 100%;
+  min-height: 96px;
+  padding: var(--space-2);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--fg);
+  font: inherit;
+  font-size: var(--fs-sm);
+  resize: vertical;
+}
+
+.review-editor select {
+  width: 100%;
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--fg);
+  font: inherit;
+  font-size: var(--fs-sm);
+}
+
+.review-editor-target {
+  margin: 0;
+  font-size: var(--fs-xs);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  overflow-wrap: anywhere;
+}
+
+/* 幅の狭い画面ではパネルを下に敷く */
+@media (max-width: 560px) {
+  .review-panel {
+    inset-block-start: auto;
+    inset-block-end: var(--space-2);
+    inset-inline: var(--space-2);
+    width: auto;
+    max-height: 50vh;
+  }
+}
