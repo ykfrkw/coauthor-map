@@ -1,0 +1,28 @@
+{
+  "name": "coauthor-map",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Map your co-author network on a world map from an ORCID iD or a researchmap permalink.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "d3-drag": "^3.0.0",
+    "d3-geo": "^3.1.1",
+    "d3-scale": "^4.0.2",
+    "d3-selection": "^3.0.0",
+    "d3-zoom": "^3.0.0",
+    "topojson-client": "^3.1.0",
+    "world-atlas": "^2.0.2"
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3",
+    "vite": "^5.4.0",
+    "vitest": "^2.1.0"
+  }
+}
