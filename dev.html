@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Co-author map — dev</title>
+    <meta name="robots" content="noindex" />
+  </head>
+  <body>
+    <main class="page">
+      <header class="page-header">
+        <h1 data-i18n="app.title">Co-author map</h1>
+        <p class="notice">
+          Development page. It renders
+          <code>tests/fixtures/dataset-snapshot.json</code> directly, so the map
+          can be built and checked before the data pipeline is wired up. This
+          page is not part of the production build.
+        </p>
+      </header>
+
+      <section class="section">
+        <div class="card" id="controls"></div>
+      </section>
+
+      <div id="status" role="status" aria-live="polite"></div>
+
+      <section class="section">
+        <div class="map-wrap" id="map"></div>
+        <div class="map-legend" id="legend"></div>
+        <p class="hint" data-i18n="map.keyboardHint"></p>
+        <div class="stat-grid" id="stats"></div>
+      </section>
+
+      <section class="section">
+        <h2 data-i18n="table.heading"></h2>
+        <div class="section" id="table"></div>
+      </section>
+
+      <details class="card">
+        <summary data-i18n="cur.heading"></summary>
+        <div id="curation"></div>
+      </details>
+
+      <section class="section">
+        <h2 data-i18n="exp.heading"></h2>
+        <div id="export"></div>
+      </section>
+
+      <section class="section">
+        <h2 data-i18n="embed.heading"></h2>
+        <div class="card" id="embed"></div>
+      </section>
+    </main>
+
+    <script type="module" src="/src/dev.js"></script>
+  </body>
+</html>

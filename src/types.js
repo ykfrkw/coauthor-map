@@ -24,6 +24,7 @@
  * @property {number|null} lng
  * @property {string|null} city
  * @property {string|null} country 表示用の国名
+ * @property {string|null} ror     ROR の URL。表示・名寄せの手がかり。取れない機関もある
  */
 
 /**
@@ -39,14 +40,19 @@
 /**
  * 地図上のピン1つ。**機関ではなく都市**が単位（OpenAlex の geo が都市粒度のため、
  * 同一座標に複数機関が重なる。東京は 13 機関が同じ座標を持つ）。
+ * 機関は union-find でまとめる。同一都市とみなすのは
+ * (1) 小数第 2 位に丸めた座標が一致するか、
+ * (2) 都市名が一致し（前後空白を除き大小無視）かつ大円距離が 100km 未満のとき。
+ *
  * @typedef {Object} CityNode
- * @property {string} key           `${lat.toFixed(2)},${lng.toFixed(2)}`
- * @property {number} lat
- * @property {number} lng
+ * @property {string} key           `${countryCode ?? country ?? '?'}|${city ?? '@lat,lng'}`
+ * @property {number} lat           代表座標。**論文数では選ばない**（年フィルタで揺れると
+ * @property {number} lng           d3 の join が壊れる）。グループ内で最も多くの機関が
+ *                                  共有する丸め座標を採り、同数なら機関 ID 最小のもの
  * @property {string|null} city
  * @property {string|null} countryCode
  * @property {string|null} country
- * @property {Institution[]} institutions  論文数の多い順
+ * @property {Institution[]} institutions  論文数の多い順。共著者から参照されたものだけ
  * @property {Coauthor[]} coauthors        論文数の多い順
  * @property {string[]} dois               この都市が関わった DOI（重複なし）
  * @property {number} paperCount           `dois.length`
@@ -77,7 +83,10 @@
  * @property {Map<string, Institution>} institutions
  * @property {CityNode[]} cities         paperCount の降順
  * @property {DatasetStats} stats
- * @property {string[]} warnings         UI にそのまま出せる日本語/英語キー
+ * @property {string[]} warnings         UI にそのまま出せる文言（US 英語）
+ * @property {string[]} seedAuthorIds    seed 本人と判定した OpenAlex 著者 ID。
+ * ORCID 一致で決める。ORCID が分からない seed では最多登場の著者 ID を 1 件返す。
+ * 同一人物に著者レコードが複数ぶら下がることがあるので配列
  */
 
 /**
@@ -105,7 +114,17 @@
  * @property {number} [yearTo]
  * @property {string} [mailto]        OpenAlex の polite pool 用
  * @property {typeof fetch} [fetchImpl]  テストで fixture に差し替えるための注入口
- * @property {(msg: string, done: number, total: number) => void} [onProgress]
+ * @property {(key: string, done: number, total: number) => void} [onProgress]
+ *   第1引数は**表示用の文字列ではなく安定キー**（ASCII・翻訳しない識別子）。
+ *   データ層は文言を持たず、対応する英語は src/ui/i18n.js の `PROGRESS_STRINGS` が持つ。
+ *   `buildDataset` が発火するのは次のキーだけ:
+ *   `'seeds'`（seed 取得の開始・進行・完了。完了は `done === total`）、
+ *   `` `seeds:${kind}` ``（`'seeds:orcid'` / `'seeds:researchmap'` / `'seeds:openalex'`）、
+ *   `'works'`（OpenAlex の論文取得）、`'institutions'`（機関取得）、`'aggregate'`（集計）。
+ *   受け手は未知のキーが来ても壊れないこと（`progressLabel` が汎用文言に落とす）。
+ * @property {boolean} [useCache]     sessionStorage の 24 時間キャッシュを使うか（既定 true）
+ * @property {(ms: number) => Promise<void>} [sleepImpl]  リトライの待機。テストで実時間を消さないため
+ * @property {number} [maxRetries]    429 / 5xx のリトライ上限（既定 3）
  */
 
 export {};

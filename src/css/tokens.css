@@ -1,0 +1,144 @@
+/* デザイントークン。
+ *
+ * 地図の見た目はすべてここのカスタムプロパティで決まる。
+ * テーマ切替は <html data-theme="..."> の付け替えだけで完結させる
+ * （JS 側は値を持たない。値の出どころはこの1ファイル）。
+ */
+
+:root {
+  /* 余白・寸法 */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --radius: 10px;
+  --radius-sm: 6px;
+
+  /* タイポグラフィ */
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'Hiragino Sans',
+    'Noto Sans JP', sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --fs-xs: 11px;
+  --fs-sm: 13px;
+  --fs-md: 15px;
+  --fs-lg: 19px;
+  --fs-xl: 25px;
+
+  /* 既定テーマ = Minimal。data-theme 未設定でも成立させる */
+  color-scheme: light;
+  --bg: #ffffff;
+  --panel: #f7f8f9;
+  --panel-border: #e2e5e9;
+  --fg: #1b1e22;
+  --muted: #5c646d;
+  --accent: #1f6feb;
+  --focus: #1f6feb;
+  --danger: #b42318;
+
+  --ocean: #ffffff;
+  --land: #e6e9ec;
+  --border: #ffffff;
+  --graticule: #d8dde2;
+  --sphere-stroke: #cfd5db;
+  --pin: #d9480f;
+  --pin-stroke: #ffffff;
+  --pin-hover: #f76707;
+  --pin-glow: none;
+  --label: #2b3138;
+  --label-halo: #ffffff;
+
+  --land-opacity: 1;
+  --graticule-width: 0.5;
+  --border-width: 0.6;
+}
+
+/* Minimal（明・グレーの陸・細い境界）: :root の既定と同じ値を明示しておく */
+:root[data-theme='minimal'] {
+  color-scheme: light;
+}
+
+/* Dark（暗い海・くすんだ陸・発光するピン） */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #12151a;
+  --panel: #1a1f26;
+  --panel-border: #2b323c;
+  --fg: #e6eaf0;
+  --muted: #99a3b0;
+  --accent: #64b5ff;
+  --focus: #64b5ff;
+  --danger: #ff8a80;
+
+  --ocean: #0d1117;
+  --land: #262d38;
+  --border: #12161d;
+  --graticule: #1f2732;
+  --sphere-stroke: #2b3542;
+  --pin: #ffb020;
+  --pin-stroke: #12151a;
+  --pin-hover: #ffd166;
+  /* 発光。テーマ固有なので CSS 変数で filter ごと差し替える */
+  --pin-glow: drop-shadow(0 0 3px rgba(255, 176, 32, 0.85))
+    drop-shadow(0 0 9px rgba(255, 176, 32, 0.45));
+  --label: #d7dee7;
+  --label-halo: #0d1117;
+}
+
+/* Blueprint（紺地＋シアンの経緯線、製図風） */
+:root[data-theme='blueprint'] {
+  color-scheme: dark;
+  --bg: #0b2a52;
+  --panel: #0e3160;
+  --panel-border: #1d4f8f;
+  --fg: #dbeaff;
+  --muted: #8fb6e6;
+  --accent: #57e0ff;
+  --focus: #57e0ff;
+  --danger: #ffb4a2;
+
+  --ocean: #0b2a52;
+  --land: #114079;
+  --border: #57e0ff;
+  --graticule: #2f7fc4;
+  --sphere-stroke: #57e0ff;
+  --pin: #7cf7ff;
+  --pin-stroke: #06203f;
+  --pin-hover: #ffffff;
+  --pin-glow: drop-shadow(0 0 4px rgba(124, 247, 255, 0.6));
+  --label: #cdefff;
+  --label-halo: #0b2a52;
+
+  --land-opacity: 0.85;
+  --graticule-width: 0.45;
+  --border-width: 0.7;
+}
+
+/* Paper（セピア、紙の質感） */
+:root[data-theme='paper'] {
+  color-scheme: light;
+  --bg: #f3ead7;
+  --panel: #eee2c9;
+  --panel-border: #d8c8a6;
+  --fg: #3b3024;
+  --muted: #6f6250;
+  --accent: #8a5a2b;
+  --focus: #8a5a2b;
+  --danger: #9c3b1b;
+
+  --ocean: #efe3c9;
+  --land: #ddcba4;
+  --border: #b9a074;
+  --graticule: #cbb68f;
+  --sphere-stroke: #a8906a;
+  --pin: #8c3b1e;
+  --pin-stroke: #f3ead7;
+  --pin-hover: #c0561f;
+  --pin-glow: none;
+  --label: #4a3a28;
+  --label-halo: #f3ead7;
+
+  --border-width: 0.7;
+}
