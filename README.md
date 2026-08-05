@@ -60,7 +60,7 @@ No API key is required for any of them. Requests to OpenAlex identify themselves
 ```bash
 npm install
 npm run dev      # http://localhost:5173
-npm test         # 90 tests, entirely offline
+npm test         # 111 tests, entirely offline
 npm run build
 ```
 
