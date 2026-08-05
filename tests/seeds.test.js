@@ -68,10 +68,10 @@ describe('fetchOrcidWorks', () => {
     );
     expect(normalizeOrcid(' 0000-0002-1825-009x ')).toBe('0000-0002-1825-009X');
 
-    expect(() => assertValidOrcid('0000-0003-1317-022')).toThrow(/形式が不正/);
-    expect(() => assertValidOrcid('0000000313170220')).toThrow(/形式が不正/);
-    expect(() => assertValidOrcid('0000-0003-1317-02X0')).toThrow(/形式が不正/);
-    expect(() => assertValidOrcid('')).toThrow(/形式が不正/);
+    expect(() => assertValidOrcid('0000-0003-1317-022')).toThrow(/not a valid ORCID iD/);
+    expect(() => assertValidOrcid('0000000313170220')).toThrow(/not a valid ORCID iD/);
+    expect(() => assertValidOrcid('0000-0003-1317-02X0')).toThrow(/not a valid ORCID iD/);
+    expect(() => assertValidOrcid('')).toThrow(/not a valid ORCID iD/);
   });
 });
 

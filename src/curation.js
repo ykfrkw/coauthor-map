@@ -196,12 +196,12 @@ export function importCuration(json) {
       parsed = JSON.parse(json);
     } catch (error) {
       throw new Error(
-        `curation JSON を解釈できません: ${/** @type {Error} */ (error).message}`,
+        `Could not parse the corrections JSON: ${/** @type {Error} */ (error).message}`,
       );
     }
   }
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
-    throw new Error('curation JSON はオブジェクトである必要があります');
+    throw new Error('The corrections JSON must be an object.');
   }
   return normalizeCuration(parsed);
 }

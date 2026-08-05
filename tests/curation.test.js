@@ -136,9 +136,9 @@ describe('JSON 入出力の往復', () => {
   });
 
   it('壊れた JSON・配列は Error', () => {
-    expect(() => importCuration('{')).toThrow(/解釈できません/);
-    expect(() => importCuration('[]')).toThrow(/オブジェクト/);
-    expect(() => importCuration(null)).toThrow(/オブジェクト/);
+    expect(() => importCuration('{')).toThrow(/Could not parse/);
+    expect(() => importCuration('[]')).toThrow(/must be an object/);
+    expect(() => importCuration(null)).toThrow(/must be an object/);
   });
 });
 

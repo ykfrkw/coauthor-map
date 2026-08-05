@@ -33,12 +33,12 @@ export function assertSnippetIsSafe(snippet) {
   const body = style[1];
   if (body.includes('/*') || body.includes('*/')) {
     throw new Error(
-      'style ブロックに CSS コメントが入っている（WAF が 403 を返す）',
+      'The style block contains a CSS comment; a WAF would answer 403.',
     );
   }
   if (body.includes('>')) {
     throw new Error(
-      'style ブロックに子結合子が入っている（WAF が 403 を返す）',
+      'The style block contains a child combinator; a WAF would answer 403.',
     );
   }
   return snippet;

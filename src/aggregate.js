@@ -652,7 +652,7 @@ function buildCities({ master, institutions, coauthors, works }) {
     };
     group.key = cityKey(group);
     if (groups.has(group.key)) {
-      throw new Error(`都市ノードのキーが衝突しました: ${group.key}`);
+      throw new Error(`Duplicate city node key: ${group.key}`);
     }
     groups.set(group.key, group);
     for (const institution of members)

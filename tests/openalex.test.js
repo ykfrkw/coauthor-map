@@ -240,18 +240,18 @@ describe('リトライ', () => {
 });
 
 describe('onProgress', () => {
-  it('バッチごとに呼ばれる', async () => {
+  it('バッチごとに安定キーで呼ばれる', async () => {
     const { fetchImpl } = createFixtureFetch();
     /** @type {Array<[string, number, number]>} */
     const events = [];
     await fetchWorksByDois(dois, {
       fetchImpl,
-      onProgress: (msg, done, total) => events.push([msg, done, total]),
+      onProgress: (key, done, total) => events.push([key, done, total]),
     });
     expect(events).toEqual([
-      ['OpenAlex から論文情報を取得中', 0, 2],
-      ['OpenAlex から論文情報を取得中', 1, 2],
-      ['OpenAlex から論文情報を取得中', 2, 2],
+      ['works', 0, 2],
+      ['works', 1, 2],
+      ['works', 2, 2],
     ]);
   });
 });

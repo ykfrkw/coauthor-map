@@ -166,6 +166,37 @@ const STRINGS = {
   'footer.by': 'Yuki Furukawa - yukifurukawa.jp',
 };
 
+/**
+ * 進捗キー → 表示文言。
+ *
+ * データ層（pipeline / openalex / seeds）は**表示用の文字列を持たない**。
+ * 発火するのは ASCII の安定キーだけで、それを英語に直すのはこの表の仕事。
+ * キーを足したらここにも足す（tests/i18n.test.js がキー集合の一致を見ている）。
+ */
+const PROGRESS_STRINGS = {
+  seeds: 'Reading claimed works',
+  'seeds:orcid': 'Reading works from ORCID',
+  'seeds:researchmap': 'Reading papers from researchmap',
+  'seeds:openalex': 'Searching OpenAlex for author records',
+  works: 'Fetching papers from OpenAlex',
+  institutions: 'Resolving affiliations',
+  aggregate: 'Building the map',
+};
+
+/** 未知のキーが来たときの逃げ場。キー文字列を生で画面に出さないため。 */
+const PROGRESS_FALLBACK = 'Loading…';
+
+/**
+ * 進捗キーを表示文言に直す。知らないキーは汎用文言に落とす。
+ * @param {string} key
+ * @returns {string}
+ */
+export function progressLabel(key) {
+  return Object.prototype.hasOwnProperty.call(PROGRESS_STRINGS, key)
+    ? PROGRESS_STRINGS[key]
+    : PROGRESS_FALLBACK;
+}
+
 /** 数値は en-US 表記に統一する（1,234） */
 const NUMBER_FORMAT = new Intl.NumberFormat('en-US');
 
@@ -200,4 +231,4 @@ export function createTranslator() {
   };
 }
 
-export { STRINGS };
+export { STRINGS, PROGRESS_STRINGS, PROGRESS_FALLBACK };

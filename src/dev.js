@@ -14,11 +14,12 @@ const SNAPSHOT_URL = './tests/fixtures/dataset-snapshot.json';
 createApp({
   mode: 'full',
   loadDataset: async ({ onProgress }) => {
-    onProgress?.('dev: loading dataset-snapshot.json', 0, 1);
+    // onProgress は本番と同じ安定キーの契約に乗せる（文言は app.js が引く）
+    onProgress?.('seeds', 0, 1);
     const res = await fetch(SNAPSHOT_URL);
     if (!res.ok) throw new Error(`${SNAPSHOT_URL}: HTTP ${res.status}`);
     const snapshot = await res.json();
-    onProgress?.('dev: snapshot loaded', 1, 1);
+    onProgress?.('aggregate', 1, 1);
     return snapshot;
   },
 });
