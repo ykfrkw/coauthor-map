@@ -3751,7 +3751,7 @@
  ],
  "cities": [
   {
-   "key": "35.69,139.69",
+   "key": "JP|Tokyo",
    "lat": 35.6895,
    "lng": 139.69171,
    "city": "Tokyo",
@@ -3795,6 +3795,16 @@
      "type": "healthcare",
      "lat": 35.68949890136719,
      "lng": 139.69171142578125,
+     "city": "Tokyo",
+     "country": "Japan"
+    },
+    {
+     "id": "https://openalex.org/I4210092627",
+     "name": "San-ikukai Hospital",
+     "countryCode": "JP",
+     "type": "healthcare",
+     "lat": 35.70253372192383,
+     "lng": 139.81396484375,
      "city": "Tokyo",
      "country": "Japan"
     },
@@ -3845,6 +3855,16 @@
      "type": "other",
      "lat": 35.68949890136719,
      "lng": 139.69171142578125,
+     "city": "Tokyo",
+     "country": "Japan"
+    },
+    {
+     "id": "https://openalex.org/I34077901",
+     "name": "Juntendo University",
+     "countryCode": "JP",
+     "type": "education",
+     "lat": 35.70222091674805,
+     "lng": 139.76083374023438,
      "city": "Tokyo",
      "country": "Japan"
     },
@@ -3925,6 +3945,27 @@
       "10.1136/bmjopen-2022-061023"
      ],
      "paperCount": 5
+    },
+    {
+     "id": "https://openalex.org/A5039593848",
+     "name": "Yuki Kataoka",
+     "orcid": "https://orcid.org/0000-0001-7982-5213",
+     "institutionIds": [
+      "https://openalex.org/I201537933",
+      "https://openalex.org/I22299242",
+      "https://openalex.org/I4210092627",
+      "https://openalex.org/I4396570521",
+      "https://openalex.org/I149737975",
+      "https://openalex.org/I4396570538",
+      "https://openalex.org/I4210134765"
+     ],
+     "dois": [
+      "10.1017/rsm.2025.10030",
+      "10.1101/2021.12.09.21267441",
+      "10.1136/bmjopen-2022-061023",
+      "10.21037/atm.2019.10.65"
+     ],
+     "paperCount": 4
     },
     {
      "id": "https://openalex.org/A5009377868",
@@ -4251,13 +4292,14 @@
     "10.1111/pcn.13438",
     "10.1136/bmjment-2023-300654",
     "10.1136/bmjopen-2022-061023",
-    "10.12688/f1000research.169873.1"
+    "10.12688/f1000research.169873.1",
+    "10.21037/atm.2019.10.65"
    ],
-   "paperCount": 19,
-   "coauthorCount": 25
+   "paperCount": 20,
+   "coauthorCount": 26
   },
   {
-   "key": "35.02,135.75",
+   "key": "JP|Kyoto",
    "lat": 35.02107,
    "lng": 135.75385,
    "city": "Kyoto",
@@ -4281,16 +4323,6 @@
      "type": "education",
      "lat": 35.02107,
      "lng": 135.75385,
-     "city": "Kyoto",
-     "country": "Japan"
-    },
-    {
-     "id": "https://openalex.org/I4396570538",
-     "name": "Kyoto Min-iren Asukai Hospital",
-     "countryCode": null,
-     "type": "healthcare",
-     "lat": 35.02106857299805,
-     "lng": 135.75384521484375,
      "city": "Kyoto",
      "country": "Japan"
     }
@@ -4655,101 +4687,7 @@
    "coauthorCount": 23
   },
   {
-   "key": "46.52,6.63",
-   "lat": 46.516,
-   "lng": 6.63282,
-   "city": "Lausanne",
-   "countryCode": "CH",
-   "country": "Switzerland",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I4210135124",
-     "name": "Institute of Social and Preventive Medicine",
-     "countryCode": "CH",
-     "type": "facility",
-     "lat": 46.51599884033203,
-     "lng": 6.632820129394531,
-     "city": "Lausanne",
-     "country": "Switzerland"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5065638475",
-     "name": "Orestis Efthimiou",
-     "orcid": "https://orcid.org/0000-0002-0955-7572",
-     "institutionIds": [
-      "https://openalex.org/I118564535",
-      "https://openalex.org/I4210135124",
-      "https://openalex.org/I130692619"
-     ],
-     "dois": [
-      "10.1001/jamapsychiatry.2023.5060",
-      "10.1093/schbul/sbae098",
-      "10.1101/2022.06.02.22275890",
-      "10.1101/2023.05.19.23290084",
-      "10.1101/2024.03.06.24303827",
-      "10.1101/2024.04.24.24306311",
-      "10.1111/pcn.13730",
-      "10.1136/bmjopen-2025-102696",
-      "10.12688/f1000research.169873.1"
-     ],
-     "paperCount": 9
-    },
-    {
-     "id": "https://openalex.org/A5088217633",
-     "name": "Georgia Salanti",
-     "orcid": "https://orcid.org/0000-0002-3830-8508",
-     "institutionIds": [
-      "https://openalex.org/I118564535",
-      "https://openalex.org/I4210135124"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583",
-      "10.1136/bmjopen-2025-102696",
-      "10.1192/bjp.2021.165",
-      "10.12688/f1000research.169873.1"
-     ],
-     "paperCount": 4
-    },
-    {
-     "id": "https://openalex.org/A5006902874",
-     "name": "Tasnim Hamza",
-     "orcid": "https://orcid.org/0000-0002-4700-6990",
-     "institutionIds": [
-      "https://openalex.org/I118564535",
-      "https://openalex.org/I4210135124"
-     ],
-     "dois": [
-      "10.1101/2021.12.09.21267441",
-      "10.1111/pcn.13438",
-      "10.1136/bmjopen-2022-061023",
-      "10.1192/bjp.2021.165"
-     ],
-     "paperCount": 4
-    }
-   ],
-   "dois": [
-    "10.1001/jamapsychiatry.2023.5060",
-    "10.1016/j.eclinm.2025.103583",
-    "10.1093/schbul/sbae098",
-    "10.1101/2021.12.09.21267441",
-    "10.1101/2022.06.02.22275890",
-    "10.1101/2023.05.19.23290084",
-    "10.1101/2024.03.06.24303827",
-    "10.1101/2024.04.24.24306311",
-    "10.1111/pcn.13438",
-    "10.1111/pcn.13730",
-    "10.1136/bmjopen-2022-061023",
-    "10.1136/bmjopen-2025-102696",
-    "10.1192/bjp.2021.165",
-    "10.12688/f1000research.169873.1"
-   ],
-   "paperCount": 14,
-   "coauthorCount": 3
-  },
-  {
-   "key": "46.95,7.45",
+   "key": "CH|Bern",
    "lat": 46.94809,
    "lng": 7.44744,
    "city": "Bern",
@@ -4853,7 +4791,101 @@
    "coauthorCount": 3
   },
   {
-   "key": "35.92,139.60",
+   "key": "CH|Lausanne",
+   "lat": 46.516,
+   "lng": 6.63282,
+   "city": "Lausanne",
+   "countryCode": "CH",
+   "country": "Switzerland",
+   "institutions": [
+    {
+     "id": "https://openalex.org/I4210135124",
+     "name": "Institute of Social and Preventive Medicine",
+     "countryCode": "CH",
+     "type": "facility",
+     "lat": 46.51599884033203,
+     "lng": 6.632820129394531,
+     "city": "Lausanne",
+     "country": "Switzerland"
+    }
+   ],
+   "coauthors": [
+    {
+     "id": "https://openalex.org/A5065638475",
+     "name": "Orestis Efthimiou",
+     "orcid": "https://orcid.org/0000-0002-0955-7572",
+     "institutionIds": [
+      "https://openalex.org/I118564535",
+      "https://openalex.org/I4210135124",
+      "https://openalex.org/I130692619"
+     ],
+     "dois": [
+      "10.1001/jamapsychiatry.2023.5060",
+      "10.1093/schbul/sbae098",
+      "10.1101/2022.06.02.22275890",
+      "10.1101/2023.05.19.23290084",
+      "10.1101/2024.03.06.24303827",
+      "10.1101/2024.04.24.24306311",
+      "10.1111/pcn.13730",
+      "10.1136/bmjopen-2025-102696",
+      "10.12688/f1000research.169873.1"
+     ],
+     "paperCount": 9
+    },
+    {
+     "id": "https://openalex.org/A5088217633",
+     "name": "Georgia Salanti",
+     "orcid": "https://orcid.org/0000-0002-3830-8508",
+     "institutionIds": [
+      "https://openalex.org/I118564535",
+      "https://openalex.org/I4210135124"
+     ],
+     "dois": [
+      "10.1016/j.eclinm.2025.103583",
+      "10.1136/bmjopen-2025-102696",
+      "10.1192/bjp.2021.165",
+      "10.12688/f1000research.169873.1"
+     ],
+     "paperCount": 4
+    },
+    {
+     "id": "https://openalex.org/A5006902874",
+     "name": "Tasnim Hamza",
+     "orcid": "https://orcid.org/0000-0002-4700-6990",
+     "institutionIds": [
+      "https://openalex.org/I118564535",
+      "https://openalex.org/I4210135124"
+     ],
+     "dois": [
+      "10.1101/2021.12.09.21267441",
+      "10.1111/pcn.13438",
+      "10.1136/bmjopen-2022-061023",
+      "10.1192/bjp.2021.165"
+     ],
+     "paperCount": 4
+    }
+   ],
+   "dois": [
+    "10.1001/jamapsychiatry.2023.5060",
+    "10.1016/j.eclinm.2025.103583",
+    "10.1093/schbul/sbae098",
+    "10.1101/2021.12.09.21267441",
+    "10.1101/2022.06.02.22275890",
+    "10.1101/2023.05.19.23290084",
+    "10.1101/2024.03.06.24303827",
+    "10.1101/2024.04.24.24306311",
+    "10.1111/pcn.13438",
+    "10.1111/pcn.13730",
+    "10.1136/bmjopen-2022-061023",
+    "10.1136/bmjopen-2025-102696",
+    "10.1192/bjp.2021.165",
+    "10.12688/f1000research.169873.1"
+   ],
+   "paperCount": 14,
+   "coauthorCount": 3
+  },
+  {
+   "key": "JP|Saitama",
    "lat": 35.91685,
    "lng": 139.60406,
    "city": "Saitama",
@@ -4919,7 +4951,7 @@
    "coauthorCount": 1
   },
   {
-   "key": "48.14,11.58",
+   "key": "DE|Munich",
    "lat": 48.13743,
    "lng": 11.57549,
    "city": "Munich",
@@ -4973,6 +5005,16 @@
      "type": "healthcare",
      "lat": 48.13743,
      "lng": 11.57549,
+     "city": "Munich",
+     "country": "Germany"
+    },
+    {
+     "id": "https://openalex.org/I4210106315",
+     "name": "Berufsverband der Frauenärzte",
+     "countryCode": "DE",
+     "type": "other",
+     "lat": 48.14362716674805,
+     "lng": 11.549654006958008,
      "city": "Munich",
      "country": "Germany"
     }
@@ -5324,6 +5366,18 @@
      "paperCount": 1
     },
     {
+     "id": "https://openalex.org/A5070314416",
+     "name": "Karl Heinz Möhrmann",
+     "orcid": null,
+     "institutionIds": [
+      "https://openalex.org/I4210106315"
+     ],
+     "dois": [
+      "10.12688/f1000research.169873.1"
+     ],
+     "paperCount": 1
+    },
+    {
      "id": "https://openalex.org/A5014246700",
      "name": "Natalia E. Fares‐Otero",
      "orcid": "https://orcid.org/0000-0002-8589-7384",
@@ -5514,10 +5568,10 @@
     "10.12688/f1000research.169873.1"
    ],
    "paperCount": 13,
-   "coauthorCount": 36
+   "coauthorCount": 37
   },
   {
-   "key": "52.52,13.41",
+   "key": "DE|Berlin",
    "lat": 52.52437,
    "lng": 13.41053,
    "city": "Berlin",
@@ -5948,7 +6002,7 @@
    "coauthorCount": 25
   },
   {
-   "key": "52.27,10.53",
+   "key": "DE|Braunschweig",
    "lat": 52.26594,
    "lng": 10.52673,
    "city": "Braunschweig",
@@ -6275,7 +6329,7 @@
    "coauthorCount": 18
   },
   {
-   "key": "51.51,-0.13",
+   "key": "GB|London",
    "lat": 51.50853,
    "lng": -0.12574,
    "city": "London",
@@ -6394,13 +6448,23 @@
    "coauthorCount": 3
   },
   {
-   "key": "51.75,-1.26",
-   "lat": 51.75222,
-   "lng": -1.25596,
+   "key": "GB|Oxford",
+   "lat": 51.72745,
+   "lng": -1.19257,
    "city": "Oxford",
    "countryCode": "GB",
    "country": "United Kingdom",
    "institutions": [
+    {
+     "id": "https://openalex.org/I4210146357",
+     "name": "Oxford BioMedica (United Kingdom)",
+     "countryCode": "GB",
+     "type": "company",
+     "lat": 51.72745132446289,
+     "lng": -1.192566990852356,
+     "city": "Oxford",
+     "country": "United Kingdom"
+    },
     {
      "id": "https://openalex.org/I2802171185",
      "name": "Oxford Health NHS Foundation Trust",
@@ -6418,6 +6482,16 @@
      "type": "education",
      "lat": 51.75222,
      "lng": -1.25596,
+     "city": "Oxford",
+     "country": "United Kingdom"
+    },
+    {
+     "id": "https://openalex.org/I2803066836",
+     "name": "Warneford Hospital",
+     "countryCode": "GB",
+     "type": "healthcare",
+     "lat": 51.750831604003906,
+     "lng": -1.222499966621399,
      "city": "Oxford",
      "country": "United Kingdom"
     }
@@ -6512,7 +6586,7 @@
    "coauthorCount": 4
   },
   {
-   "key": "29.87,121.63",
+   "key": "CN|Ningbo",
    "lat": 29.86913,
    "lng": 121.62906,
    "city": "Ningbo",
@@ -6606,7 +6680,7 @@
    "coauthorCount": 3
   },
   {
-   "key": "35.18,136.91",
+   "key": "JP|Nagoya",
    "lat": 35.18147,
    "lng": 136.9064,
    "city": "Nagoya",
@@ -6703,183 +6777,7 @@
    "coauthorCount": 3
   },
   {
-   "key": "51.75,-1.22",
-   "lat": 51.75083,
-   "lng": -1.2225,
-   "city": "Oxford",
-   "countryCode": "GB",
-   "country": "United Kingdom",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I2803066836",
-     "name": "Warneford Hospital",
-     "countryCode": "GB",
-     "type": "healthcare",
-     "lat": 51.750831604003906,
-     "lng": -1.222499966621399,
-     "city": "Oxford",
-     "country": "United Kingdom"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5047521970",
-     "name": "Edoardo G. Ostinelli",
-     "orcid": "https://orcid.org/0000-0002-8717-0832",
-     "institutionIds": [
-      "https://openalex.org/I125671874",
-      "https://openalex.org/I2802171185",
-      "https://openalex.org/I2803066836",
-      "https://openalex.org/I34931013",
-      "https://openalex.org/I40120149",
-      "https://openalex.org/I4210117980",
-      "https://openalex.org/I4210146357"
-     ],
-     "dois": [
-      "10.1001/jamapsychiatry.2023.5060",
-      "10.1002/wps.20906",
-      "10.1017/rsm.2025.10030",
-      "10.1101/2021.12.09.21267441",
-      "10.1101/2022.06.02.22275890",
-      "10.1101/2023.05.19.23290084",
-      "10.1111/pcn.13438",
-      "10.1136/bmjopen-2022-061023",
-      "10.1192/bjp.2021.165"
-     ],
-     "paperCount": 9
-    },
-    {
-     "id": "https://openalex.org/A5007077090",
-     "name": "Andrea Cipriani",
-     "orcid": "https://orcid.org/0000-0001-5179-8321",
-     "institutionIds": [
-      "https://openalex.org/I2802171185",
-      "https://openalex.org/I2803066836",
-      "https://openalex.org/I40120149",
-      "https://openalex.org/I4210117980",
-      "https://openalex.org/I4210146357"
-     ],
-     "dois": [
-      "10.1002/wps.20906",
-      "10.1017/rsm.2025.10030",
-      "10.1136/bmjopen-2025-102696",
-      "10.1192/bjp.2021.165"
-     ],
-     "paperCount": 4
-    },
-    {
-     "id": "https://openalex.org/A5045088705",
-     "name": "Angharad N. de Cates",
-     "orcid": "https://orcid.org/0000-0001-7848-1295",
-     "institutionIds": [
-      "https://openalex.org/I2803066836",
-      "https://openalex.org/I40120149",
-      "https://openalex.org/I79619799"
-     ],
-     "dois": [
-      "10.1136/bmjopen-2025-102696"
-     ],
-     "paperCount": 1
-    }
-   ],
-   "dois": [
-    "10.1001/jamapsychiatry.2023.5060",
-    "10.1002/wps.20906",
-    "10.1017/rsm.2025.10030",
-    "10.1101/2021.12.09.21267441",
-    "10.1101/2022.06.02.22275890",
-    "10.1101/2023.05.19.23290084",
-    "10.1111/pcn.13438",
-    "10.1136/bmjopen-2022-061023",
-    "10.1136/bmjopen-2025-102696",
-    "10.1192/bjp.2021.165"
-   ],
-   "paperCount": 10,
-   "coauthorCount": 3
-  },
-  {
-   "key": "51.73,-1.19",
-   "lat": 51.72745,
-   "lng": -1.19257,
-   "city": "Oxford",
-   "countryCode": "GB",
-   "country": "United Kingdom",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I4210146357",
-     "name": "Oxford BioMedica (United Kingdom)",
-     "countryCode": "GB",
-     "type": "company",
-     "lat": 51.72745132446289,
-     "lng": -1.192566990852356,
-     "city": "Oxford",
-     "country": "United Kingdom"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5047521970",
-     "name": "Edoardo G. Ostinelli",
-     "orcid": "https://orcid.org/0000-0002-8717-0832",
-     "institutionIds": [
-      "https://openalex.org/I125671874",
-      "https://openalex.org/I2802171185",
-      "https://openalex.org/I2803066836",
-      "https://openalex.org/I34931013",
-      "https://openalex.org/I40120149",
-      "https://openalex.org/I4210117980",
-      "https://openalex.org/I4210146357"
-     ],
-     "dois": [
-      "10.1001/jamapsychiatry.2023.5060",
-      "10.1002/wps.20906",
-      "10.1017/rsm.2025.10030",
-      "10.1101/2021.12.09.21267441",
-      "10.1101/2022.06.02.22275890",
-      "10.1101/2023.05.19.23290084",
-      "10.1111/pcn.13438",
-      "10.1136/bmjopen-2022-061023",
-      "10.1192/bjp.2021.165"
-     ],
-     "paperCount": 9
-    },
-    {
-     "id": "https://openalex.org/A5007077090",
-     "name": "Andrea Cipriani",
-     "orcid": "https://orcid.org/0000-0001-5179-8321",
-     "institutionIds": [
-      "https://openalex.org/I2802171185",
-      "https://openalex.org/I2803066836",
-      "https://openalex.org/I40120149",
-      "https://openalex.org/I4210117980",
-      "https://openalex.org/I4210146357"
-     ],
-     "dois": [
-      "10.1002/wps.20906",
-      "10.1017/rsm.2025.10030",
-      "10.1136/bmjopen-2025-102696",
-      "10.1192/bjp.2021.165"
-     ],
-     "paperCount": 4
-    }
-   ],
-   "dois": [
-    "10.1001/jamapsychiatry.2023.5060",
-    "10.1002/wps.20906",
-    "10.1017/rsm.2025.10030",
-    "10.1101/2021.12.09.21267441",
-    "10.1101/2022.06.02.22275890",
-    "10.1101/2023.05.19.23290084",
-    "10.1111/pcn.13438",
-    "10.1136/bmjopen-2022-061023",
-    "10.1136/bmjopen-2025-102696",
-    "10.1192/bjp.2021.165"
-   ],
-   "paperCount": 10,
-   "coauthorCount": 2
-  },
-  {
-   "key": "41.83,-71.39",
+   "key": "US|Providence",
    "lat": 41.82767,
    "lng": -71.38743,
    "city": "Providence",
@@ -6936,7 +6834,7 @@
    "coauthorCount": 1
   },
   {
-   "key": "39.95,-75.16",
+   "key": "US|Philadelphia",
    "lat": 39.95238,
    "lng": -75.16362,
    "city": "Philadelphia",
@@ -6987,7 +6885,7 @@
    "coauthorCount": 1
   },
   {
-   "key": "52.37,4.89",
+   "key": "NL|Amsterdam",
    "lat": 52.37403,
    "lng": 4.88969,
    "city": "Amsterdam",
@@ -7316,11 +7214,11 @@
    "coauthorCount": 21
   },
   {
-   "key": "34.69,135.50",
+   "key": "@34.69,135.50",
    "lat": 34.69379,
    "lng": 135.50107,
    "city": "Osaka",
-   "countryCode": "JP",
+   "countryCode": null,
    "country": "Japan",
    "institutions": [
     {
@@ -7330,16 +7228,6 @@
      "type": "nonprofit",
      "lat": 34.693790435791016,
      "lng": 135.50106811523438,
-     "city": "Osaka",
-     "country": "Japan"
-    },
-    {
-     "id": "https://openalex.org/I4210106580",
-     "name": "NTT WEST Osaka Hospital",
-     "countryCode": "JP",
-     "type": "healthcare",
-     "lat": 34.69379,
-     "lng": 135.50107,
      "city": "Osaka",
      "country": "Japan"
     }
@@ -7394,19 +7282,6 @@
      "paperCount": 1
     },
     {
-     "id": "https://openalex.org/A5017682602",
-     "name": "Kazumasa Kotake",
-     "orcid": "https://orcid.org/0000-0001-9869-1177",
-     "institutionIds": [
-      "https://openalex.org/I4210106580",
-      "https://openalex.org/I4210118584"
-     ],
-     "dois": [
-      "10.1007/s40263-025-01188-2"
-     ],
-     "paperCount": 1
-    },
-    {
      "id": "https://openalex.org/A5049520100",
      "name": "Masahiro Banno",
      "orcid": "https://orcid.org/0000-0002-2539-1031",
@@ -7453,10 +7328,136 @@
     "10.21037/atm.2019.10.65"
    ],
    "paperCount": 5,
-   "coauthorCount": 7
+   "coauthorCount": 6
   },
   {
-   "key": "34.72,135.43",
+   "key": "JP|Osaka",
+   "lat": 34.74467,
+   "lng": 135.52203,
+   "city": "Osaka",
+   "countryCode": "JP",
+   "country": "Japan",
+   "institutions": [
+    {
+     "id": "https://openalex.org/I149737975",
+     "name": "Santen (Japan)",
+     "countryCode": "JP",
+     "type": "company",
+     "lat": 34.74467468261719,
+     "lng": 135.52203369140625,
+     "city": "Osaka",
+     "country": "Japan"
+    },
+    {
+     "id": "https://openalex.org/I4210106580",
+     "name": "NTT WEST Osaka Hospital",
+     "countryCode": "JP",
+     "type": "healthcare",
+     "lat": 34.69379,
+     "lng": 135.50107,
+     "city": "Osaka",
+     "country": "Japan"
+    }
+   ],
+   "coauthors": [
+    {
+     "id": "https://openalex.org/A5039593848",
+     "name": "Yuki Kataoka",
+     "orcid": "https://orcid.org/0000-0001-7982-5213",
+     "institutionIds": [
+      "https://openalex.org/I201537933",
+      "https://openalex.org/I22299242",
+      "https://openalex.org/I4210092627",
+      "https://openalex.org/I4396570521",
+      "https://openalex.org/I149737975",
+      "https://openalex.org/I4396570538",
+      "https://openalex.org/I4210134765"
+     ],
+     "dois": [
+      "10.1017/rsm.2025.10030",
+      "10.1101/2021.12.09.21267441",
+      "10.1136/bmjopen-2022-061023",
+      "10.21037/atm.2019.10.65"
+     ],
+     "paperCount": 4
+    },
+    {
+     "id": "https://openalex.org/A5017682602",
+     "name": "Kazumasa Kotake",
+     "orcid": "https://orcid.org/0000-0001-9869-1177",
+     "institutionIds": [
+      "https://openalex.org/I4210106580",
+      "https://openalex.org/I4210118584"
+     ],
+     "dois": [
+      "10.1007/s40263-025-01188-2"
+     ],
+     "paperCount": 1
+    }
+   ],
+   "dois": [
+    "10.1007/s40263-025-01188-2",
+    "10.1017/rsm.2025.10030",
+    "10.1101/2021.12.09.21267441",
+    "10.1136/bmjopen-2022-061023",
+    "10.21037/atm.2019.10.65"
+   ],
+   "paperCount": 5,
+   "coauthorCount": 2
+  },
+  {
+   "key": "@35.02,135.75",
+   "lat": 35.02107,
+   "lng": 135.75385,
+   "city": "Kyoto",
+   "countryCode": null,
+   "country": "Japan",
+   "institutions": [
+    {
+     "id": "https://openalex.org/I4396570538",
+     "name": "Kyoto Min-iren Asukai Hospital",
+     "countryCode": null,
+     "type": "healthcare",
+     "lat": 35.02106857299805,
+     "lng": 135.75384521484375,
+     "city": "Kyoto",
+     "country": "Japan"
+    }
+   ],
+   "coauthors": [
+    {
+     "id": "https://openalex.org/A5039593848",
+     "name": "Yuki Kataoka",
+     "orcid": "https://orcid.org/0000-0001-7982-5213",
+     "institutionIds": [
+      "https://openalex.org/I201537933",
+      "https://openalex.org/I22299242",
+      "https://openalex.org/I4210092627",
+      "https://openalex.org/I4396570521",
+      "https://openalex.org/I149737975",
+      "https://openalex.org/I4396570538",
+      "https://openalex.org/I4210134765"
+     ],
+     "dois": [
+      "10.1017/rsm.2025.10030",
+      "10.1101/2021.12.09.21267441",
+      "10.1136/bmjopen-2022-061023",
+      "10.21037/atm.2019.10.65"
+     ],
+     "paperCount": 4
+    }
+   ],
+   "dois": [
+    "10.1017/rsm.2025.10030",
+    "10.1101/2021.12.09.21267441",
+    "10.1136/bmjopen-2022-061023",
+    "10.21037/atm.2019.10.65"
+   ],
+   "paperCount": 4,
+   "coauthorCount": 1
+  },
+  {
+   "key": "JP|Amagasaki",
    "lat": 34.71743,
    "lng": 135.42801,
    "city": "Amagasaki",
@@ -7507,109 +7508,7 @@
    "coauthorCount": 1
   },
   {
-   "key": "34.74,135.52",
-   "lat": 34.74467,
-   "lng": 135.52203,
-   "city": "Osaka",
-   "countryCode": "JP",
-   "country": "Japan",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I149737975",
-     "name": "Santen (Japan)",
-     "countryCode": "JP",
-     "type": "company",
-     "lat": 34.74467468261719,
-     "lng": 135.52203369140625,
-     "city": "Osaka",
-     "country": "Japan"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5039593848",
-     "name": "Yuki Kataoka",
-     "orcid": "https://orcid.org/0000-0001-7982-5213",
-     "institutionIds": [
-      "https://openalex.org/I201537933",
-      "https://openalex.org/I22299242",
-      "https://openalex.org/I4210092627",
-      "https://openalex.org/I4396570521",
-      "https://openalex.org/I149737975",
-      "https://openalex.org/I4396570538",
-      "https://openalex.org/I4210134765"
-     ],
-     "dois": [
-      "10.1017/rsm.2025.10030",
-      "10.1101/2021.12.09.21267441",
-      "10.1136/bmjopen-2022-061023",
-      "10.21037/atm.2019.10.65"
-     ],
-     "paperCount": 4
-    }
-   ],
-   "dois": [
-    "10.1017/rsm.2025.10030",
-    "10.1101/2021.12.09.21267441",
-    "10.1136/bmjopen-2022-061023",
-    "10.21037/atm.2019.10.65"
-   ],
-   "paperCount": 4,
-   "coauthorCount": 1
-  },
-  {
-   "key": "35.70,139.81",
-   "lat": 35.70253,
-   "lng": 139.81396,
-   "city": "Tokyo",
-   "countryCode": "JP",
-   "country": "Japan",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I4210092627",
-     "name": "San-ikukai Hospital",
-     "countryCode": "JP",
-     "type": "healthcare",
-     "lat": 35.70253372192383,
-     "lng": 139.81396484375,
-     "city": "Tokyo",
-     "country": "Japan"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5039593848",
-     "name": "Yuki Kataoka",
-     "orcid": "https://orcid.org/0000-0001-7982-5213",
-     "institutionIds": [
-      "https://openalex.org/I201537933",
-      "https://openalex.org/I22299242",
-      "https://openalex.org/I4210092627",
-      "https://openalex.org/I4396570521",
-      "https://openalex.org/I149737975",
-      "https://openalex.org/I4396570538",
-      "https://openalex.org/I4210134765"
-     ],
-     "dois": [
-      "10.1017/rsm.2025.10030",
-      "10.1101/2021.12.09.21267441",
-      "10.1136/bmjopen-2022-061023",
-      "10.21037/atm.2019.10.65"
-     ],
-     "paperCount": 4
-    }
-   ],
-   "dois": [
-    "10.1017/rsm.2025.10030",
-    "10.1101/2021.12.09.21267441",
-    "10.1136/bmjopen-2022-061023",
-    "10.21037/atm.2019.10.65"
-   ],
-   "paperCount": 4,
-   "coauthorCount": 1
-  },
-  {
-   "key": "38.27,140.87",
+   "key": "JP|Sendai",
    "lat": 38.26667,
    "lng": 140.86667,
    "city": "Sendai",
@@ -7660,7 +7559,7 @@
    "coauthorCount": 1
   },
   {
-   "key": "46.77,23.60",
+   "key": "RO|Cluj-Napoca",
    "lat": 46.76667,
    "lng": 23.6,
    "city": "Cluj-Napoca",
@@ -7706,7 +7605,7 @@
    "coauthorCount": 1
   },
   {
-   "key": "39.29,-76.61",
+   "key": "US|Baltimore",
    "lat": 39.29038,
    "lng": -76.61219,
    "city": "Baltimore",
@@ -7763,7 +7662,7 @@
    "coauthorCount": 2
   },
   {
-   "key": "41.85,-87.65",
+   "key": "US|Chicago",
    "lat": 41.85003,
    "lng": -87.65005,
    "city": "Chicago",
@@ -7830,7 +7729,7 @@
    "coauthorCount": 2
   },
   {
-   "key": "35.62,140.11",
+   "key": "JP|Chiba",
    "lat": 35.62159,
    "lng": 140.1086,
    "city": "Chiba",
@@ -7874,50 +7773,7 @@
    "coauthorCount": 1
   },
   {
-   "key": "35.86,139.90",
-   "lat": 35.8563,
-   "lng": 139.90266,
-   "city": "Nagareyama",
-   "countryCode": "JP",
-   "country": "Japan",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I44902217",
-     "name": "Edogawa University",
-     "countryCode": "JP",
-     "type": "education",
-     "lat": 35.8563,
-     "lng": 139.90266,
-     "city": "Nagareyama",
-     "country": "Japan"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5056171340",
-     "name": "Ryuichiro Yamamoto",
-     "orcid": "https://orcid.org/0000-0002-5500-9964",
-     "institutionIds": [
-      "https://openalex.org/I44902217"
-     ],
-     "dois": [
-      "10.1001/jamapsychiatry.2023.5060",
-      "10.1016/j.jad.2024.09.017",
-      "10.1101/2023.05.19.23290084"
-     ],
-     "paperCount": 3
-    }
-   ],
-   "dois": [
-    "10.1001/jamapsychiatry.2023.5060",
-    "10.1016/j.jad.2024.09.017",
-    "10.1101/2023.05.19.23290084"
-   ],
-   "paperCount": 3,
-   "coauthorCount": 1
-  },
-  {
-   "key": "36.11,140.20",
+   "key": "JP|Ibaraki",
    "lat": 36.10775,
    "lng": 140.19878,
    "city": "Ibaraki",
@@ -7962,7 +7818,50 @@
    "coauthorCount": 1
   },
   {
-   "key": "36.20,140.10",
+   "key": "JP|Nagareyama",
+   "lat": 35.8563,
+   "lng": 139.90266,
+   "city": "Nagareyama",
+   "countryCode": "JP",
+   "country": "Japan",
+   "institutions": [
+    {
+     "id": "https://openalex.org/I44902217",
+     "name": "Edogawa University",
+     "countryCode": "JP",
+     "type": "education",
+     "lat": 35.8563,
+     "lng": 139.90266,
+     "city": "Nagareyama",
+     "country": "Japan"
+    }
+   ],
+   "coauthors": [
+    {
+     "id": "https://openalex.org/A5056171340",
+     "name": "Ryuichiro Yamamoto",
+     "orcid": "https://orcid.org/0000-0002-5500-9964",
+     "institutionIds": [
+      "https://openalex.org/I44902217"
+     ],
+     "dois": [
+      "10.1001/jamapsychiatry.2023.5060",
+      "10.1016/j.jad.2024.09.017",
+      "10.1101/2023.05.19.23290084"
+     ],
+     "paperCount": 3
+    }
+   ],
+   "dois": [
+    "10.1001/jamapsychiatry.2023.5060",
+    "10.1016/j.jad.2024.09.017",
+    "10.1101/2023.05.19.23290084"
+   ],
+   "paperCount": 3,
+   "coauthorCount": 1
+  },
+  {
+   "key": "JP|Tsukuba",
    "lat": 36.2,
    "lng": 140.10001,
    "city": "Tsukuba",
@@ -8007,13 +7906,23 @@
    "coauthorCount": 1
   },
   {
-   "key": "31.19,121.45",
-   "lat": 31.18745,
-   "lng": 121.44868,
+   "key": "CN|Shanghai",
+   "lat": 31.22222,
+   "lng": 121.45806,
    "city": "Shanghai",
    "countryCode": "CN",
    "country": "China",
    "institutions": [
+    {
+     "id": "https://openalex.org/I183067930",
+     "name": "Shanghai Jiao Tong University",
+     "countryCode": "CN",
+     "type": "education",
+     "lat": 31.222219467163086,
+     "lng": 121.45806121826172,
+     "city": "Shanghai",
+     "country": "China"
+    },
     {
      "id": "https://openalex.org/I2802690428",
      "name": "Shanghai Mental Health Center",
@@ -8107,107 +8016,7 @@
    "coauthorCount": 5
   },
   {
-   "key": "31.22,121.46",
-   "lat": 31.22222,
-   "lng": 121.45806,
-   "city": "Shanghai",
-   "countryCode": "CN",
-   "country": "China",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I183067930",
-     "name": "Shanghai Jiao Tong University",
-     "countryCode": "CN",
-     "type": "education",
-     "lat": 31.222219467163086,
-     "lng": 121.45806121826172,
-     "city": "Shanghai",
-     "country": "China"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5084907875",
-     "name": "Chunbo Li",
-     "orcid": "https://orcid.org/0000-0002-3387-4439",
-     "institutionIds": [
-      "https://openalex.org/I183067930",
-      "https://openalex.org/I2802690428",
-      "https://openalex.org/I4210131870"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583"
-     ],
-     "paperCount": 1
-    },
-    {
-     "id": "https://openalex.org/A5100782718",
-     "name": "Robert C. Smith",
-     "orcid": "https://orcid.org/0000-0002-4933-4162",
-     "institutionIds": [
-      "https://openalex.org/I125043107",
-      "https://openalex.org/I183067930",
-      "https://openalex.org/I2802690428"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583"
-     ],
-     "paperCount": 1
-    },
-    {
-     "id": "https://openalex.org/A5001296226",
-     "name": "Yaohui Wei",
-     "orcid": "https://orcid.org/0000-0002-7186-6018",
-     "institutionIds": [
-      "https://openalex.org/I183067930",
-      "https://openalex.org/I2802690428",
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583"
-     ],
-     "paperCount": 1
-    },
-    {
-     "id": "https://openalex.org/A5136794217",
-     "name": "Yaohui Wei",
-     "orcid": "https://orcid.org/0000-0002-7186-6018",
-     "institutionIds": [
-      "https://openalex.org/I183067930",
-      "https://openalex.org/I2802690428",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2026.103988"
-     ],
-     "paperCount": 1
-    },
-    {
-     "id": "https://openalex.org/A5058732680",
-     "name": "Yikang Zhu",
-     "orcid": "https://orcid.org/0000-0001-9725-8507",
-     "institutionIds": [
-      "https://openalex.org/I183067930",
-      "https://openalex.org/I2802690428"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583"
-     ],
-     "paperCount": 1
-    }
-   ],
-   "dois": [
-    "10.1016/j.eclinm.2025.103583",
-    "10.1016/j.eclinm.2026.103988"
-   ],
-   "paperCount": 2,
-   "coauthorCount": 5
-  },
-  {
-   "key": "50.06,8.33",
+   "key": "DE|Wiesbaden",
    "lat": 50.05763,
    "lng": 8.33487,
    "city": "Wiesbaden",
@@ -8283,72 +8092,7 @@
    "coauthorCount": 4
   },
   {
-   "key": "41.39,2.16",
-   "lat": 41.38879,
-   "lng": 2.15899,
-   "city": "Barcelona",
-   "countryCode": "ES",
-   "country": "Spain",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I4210158267",
-     "name": "Fundació Clínic per a la Recerca Biomèdica",
-     "countryCode": "ES",
-     "type": "nonprofit",
-     "lat": 41.388790130615234,
-     "lng": 2.158989906311035,
-     "city": "Barcelona",
-     "country": "Spain"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5128878612",
-     "name": "Eduard Vieta",
-     "orcid": null,
-     "institutionIds": [
-      "https://openalex.org/I4210158267"
-     ],
-     "dois": [
-      "10.1016/j.euroneuro.2026.112802"
-     ],
-     "paperCount": 1
-    },
-    {
-     "id": "https://openalex.org/A5128878315",
-     "name": "Natalia E. Fares-Otero",
-     "orcid": null,
-     "institutionIds": [
-      "https://openalex.org/I4210158267"
-     ],
-     "dois": [
-      "10.1016/j.euroneuro.2026.112802"
-     ],
-     "paperCount": 1
-    },
-    {
-     "id": "https://openalex.org/A5014246700",
-     "name": "Natalia E. Fares‐Otero",
-     "orcid": "https://orcid.org/0000-0002-8589-7384",
-     "institutionIds": [
-      "https://openalex.org/I4210158267",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.12688/f1000research.169873.1"
-     ],
-     "paperCount": 1
-    }
-   ],
-   "dois": [
-    "10.1016/j.euroneuro.2026.112802",
-    "10.12688/f1000research.169873.1"
-   ],
-   "paperCount": 2,
-   "coauthorCount": 3
-  },
-  {
-   "key": "52.13,11.63",
+   "key": "DE|Magdeburg",
    "lat": 52.12773,
    "lng": 11.62916,
    "city": "Magdeburg",
@@ -8413,7 +8157,160 @@
    "coauthorCount": 3
   },
   {
-   "key": "53.22,6.57",
+   "key": "ES|Barcelona",
+   "lat": 41.38879,
+   "lng": 2.15899,
+   "city": "Barcelona",
+   "countryCode": "ES",
+   "country": "Spain",
+   "institutions": [
+    {
+     "id": "https://openalex.org/I4210158267",
+     "name": "Fundació Clínic per a la Recerca Biomèdica",
+     "countryCode": "ES",
+     "type": "nonprofit",
+     "lat": 41.388790130615234,
+     "lng": 2.158989906311035,
+     "city": "Barcelona",
+     "country": "Spain"
+    }
+   ],
+   "coauthors": [
+    {
+     "id": "https://openalex.org/A5128878612",
+     "name": "Eduard Vieta",
+     "orcid": null,
+     "institutionIds": [
+      "https://openalex.org/I4210158267"
+     ],
+     "dois": [
+      "10.1016/j.euroneuro.2026.112802"
+     ],
+     "paperCount": 1
+    },
+    {
+     "id": "https://openalex.org/A5128878315",
+     "name": "Natalia E. Fares-Otero",
+     "orcid": null,
+     "institutionIds": [
+      "https://openalex.org/I4210158267"
+     ],
+     "dois": [
+      "10.1016/j.euroneuro.2026.112802"
+     ],
+     "paperCount": 1
+    },
+    {
+     "id": "https://openalex.org/A5014246700",
+     "name": "Natalia E. Fares‐Otero",
+     "orcid": "https://orcid.org/0000-0002-8589-7384",
+     "institutionIds": [
+      "https://openalex.org/I4210158267",
+      "https://openalex.org/I62916508"
+     ],
+     "dois": [
+      "10.12688/f1000research.169873.1"
+     ],
+     "paperCount": 1
+    }
+   ],
+   "dois": [
+    "10.1016/j.euroneuro.2026.112802",
+    "10.12688/f1000research.169873.1"
+   ],
+   "paperCount": 2,
+   "coauthorCount": 3
+  },
+  {
+   "key": "JP|Okayama",
+   "lat": 34.65091,
+   "lng": 133.91554,
+   "city": "Okayama",
+   "countryCode": "JP",
+   "country": "Japan",
+   "institutions": [
+    {
+     "id": "https://openalex.org/I4210117955",
+     "name": "Okayama Psychiatric Medical Center",
+     "countryCode": "JP",
+     "type": "healthcare",
+     "lat": 34.650909423828125,
+     "lng": 133.91554260253906,
+     "city": "Okayama",
+     "country": "Japan"
+    },
+    {
+     "id": "https://openalex.org/I4210118584",
+     "name": "Okayama Prefecture",
+     "countryCode": "JP",
+     "type": "facility",
+     "lat": 34.84550476074219,
+     "lng": 133.75892639160156,
+     "city": "Okayama",
+     "country": "Japan"
+    },
+    {
+     "id": "https://openalex.org/I163770644",
+     "name": "Okayama University",
+     "countryCode": "JP",
+     "type": "education",
+     "lat": 34.650001525878906,
+     "lng": 133.93333435058594,
+     "city": "Okayama",
+     "country": "Japan"
+    }
+   ],
+   "coauthors": [
+    {
+     "id": "https://openalex.org/A5082770590",
+     "name": "Ryuhei So",
+     "orcid": "https://orcid.org/0000-0002-9838-350X",
+     "institutionIds": [
+      "https://openalex.org/I4210117955",
+      "https://openalex.org/I4396570521"
+     ],
+     "dois": [
+      "10.1007/s40263-025-01188-2",
+      "10.1017/rsm.2025.10030"
+     ],
+     "paperCount": 2
+    },
+    {
+     "id": "https://openalex.org/A5017682602",
+     "name": "Kazumasa Kotake",
+     "orcid": "https://orcid.org/0000-0001-9869-1177",
+     "institutionIds": [
+      "https://openalex.org/I4210106580",
+      "https://openalex.org/I4210118584"
+     ],
+     "dois": [
+      "10.1007/s40263-025-01188-2"
+     ],
+     "paperCount": 1
+    },
+    {
+     "id": "https://openalex.org/A5103179531",
+     "name": "N. Hashimoto",
+     "orcid": "https://orcid.org/0000-0003-4605-2378",
+     "institutionIds": [
+      "https://openalex.org/I163770644",
+      "https://openalex.org/I4210117955"
+     ],
+     "dois": [
+      "10.1007/s40263-025-01188-2"
+     ],
+     "paperCount": 1
+    }
+   ],
+   "dois": [
+    "10.1007/s40263-025-01188-2",
+    "10.1017/rsm.2025.10030"
+   ],
+   "paperCount": 2,
+   "coauthorCount": 3
+  },
+  {
+   "key": "NL|Groningen",
    "lat": 53.21917,
    "lng": 6.56667,
    "city": "Groningen",
@@ -8478,62 +8375,71 @@
    "coauthorCount": 3
   },
   {
-   "key": "34.65,133.92",
-   "lat": 34.65091,
-   "lng": 133.91554,
-   "city": "Okayama",
-   "countryCode": "JP",
-   "country": "Japan",
+   "key": "DE|Bonn",
+   "lat": 50.73438,
+   "lng": 7.09549,
+   "city": "Bonn",
+   "countryCode": "DE",
+   "country": "Germany",
    "institutions": [
     {
-     "id": "https://openalex.org/I4210117955",
-     "name": "Okayama Psychiatric Medical Center",
-     "countryCode": "JP",
-     "type": "healthcare",
-     "lat": 34.650909423828125,
-     "lng": 133.91554260253906,
-     "city": "Okayama",
-     "country": "Japan"
+     "id": "https://openalex.org/I2801533059",
+     "name": "German Center for Neurodegenerative Diseases",
+     "countryCode": "DE",
+     "type": "facility",
+     "lat": 50.73438,
+     "lng": 7.09549,
+     "city": "Bonn",
+     "country": "Germany"
     }
    ],
    "coauthors": [
     {
-     "id": "https://openalex.org/A5082770590",
-     "name": "Ryuhei So",
-     "orcid": "https://orcid.org/0000-0002-9838-350X",
+     "id": "https://openalex.org/A5130688627",
+     "name": "Josef Priller",
+     "orcid": null,
      "institutionIds": [
-      "https://openalex.org/I4210117955",
-      "https://openalex.org/I4396570521"
+      "https://openalex.org/I2801533059",
+      "https://openalex.org/I4210115305",
+      "https://openalex.org/I4210126463",
+      "https://openalex.org/I4210127591",
+      "https://openalex.org/I62916508",
+      "https://openalex.org/I7877124",
+      "https://openalex.org/I98677209"
      ],
      "dois": [
-      "10.1007/s40263-025-01188-2",
-      "10.1017/rsm.2025.10030"
+      "10.1016/j.eclinm.2026.103847"
      ],
-     "paperCount": 2
+     "paperCount": 1
     },
     {
-     "id": "https://openalex.org/A5103179531",
-     "name": "N. Hashimoto",
-     "orcid": "https://orcid.org/0000-0003-4605-2378",
+     "id": "https://openalex.org/A5055109212",
+     "name": "Josef Priller",
+     "orcid": "https://orcid.org/0000-0001-7596-0979",
      "institutionIds": [
-      "https://openalex.org/I163770644",
-      "https://openalex.org/I4210117955"
+      "https://openalex.org/I2801533059",
+      "https://openalex.org/I4210115305",
+      "https://openalex.org/I4210126463",
+      "https://openalex.org/I4210127591",
+      "https://openalex.org/I62916508",
+      "https://openalex.org/I7877124",
+      "https://openalex.org/I98677209"
      ],
      "dois": [
-      "10.1007/s40263-025-01188-2"
+      "10.12688/f1000research.169873.1"
      ],
      "paperCount": 1
     }
    ],
    "dois": [
-    "10.1007/s40263-025-01188-2",
-    "10.1017/rsm.2025.10030"
+    "10.1016/j.eclinm.2026.103847",
+    "10.12688/f1000research.169873.1"
    ],
    "paperCount": 2,
    "coauthorCount": 2
   },
   {
-   "key": "49.41,8.69",
+   "key": "DE|Heidelberg",
    "lat": 49.40768,
    "lng": 8.69079,
    "city": "Heidelberg",
@@ -8600,7 +8506,7 @@
    "coauthorCount": 2
   },
   {
-   "key": "49.49,8.47",
+   "key": "DE|Mannheim",
    "lat": 49.4891,
    "lng": 8.46694,
    "city": "Mannheim",
@@ -8657,71 +8563,7 @@
    "coauthorCount": 2
   },
   {
-   "key": "50.73,7.10",
-   "lat": 50.73438,
-   "lng": 7.09549,
-   "city": "Bonn",
-   "countryCode": "DE",
-   "country": "Germany",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I2801533059",
-     "name": "German Center for Neurodegenerative Diseases",
-     "countryCode": "DE",
-     "type": "facility",
-     "lat": 50.73438,
-     "lng": 7.09549,
-     "city": "Bonn",
-     "country": "Germany"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5130688627",
-     "name": "Josef Priller",
-     "orcid": null,
-     "institutionIds": [
-      "https://openalex.org/I2801533059",
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210126463",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508",
-      "https://openalex.org/I7877124",
-      "https://openalex.org/I98677209"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2026.103847"
-     ],
-     "paperCount": 1
-    },
-    {
-     "id": "https://openalex.org/A5055109212",
-     "name": "Josef Priller",
-     "orcid": "https://orcid.org/0000-0001-7596-0979",
-     "institutionIds": [
-      "https://openalex.org/I2801533059",
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210126463",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508",
-      "https://openalex.org/I7877124",
-      "https://openalex.org/I98677209"
-     ],
-     "dois": [
-      "10.12688/f1000research.169873.1"
-     ],
-     "paperCount": 1
-    }
-   ],
-   "dois": [
-    "10.1016/j.eclinm.2026.103847",
-    "10.12688/f1000research.169873.1"
-   ],
-   "paperCount": 2,
-   "coauthorCount": 2
-  },
-  {
-   "key": "55.95,-3.20",
+   "key": "GB|Edinburgh",
    "lat": 55.95206,
    "lng": -3.19648,
    "city": "Edinburgh",
@@ -8785,7 +8627,7 @@
    "coauthorCount": 2
   },
   {
-   "key": "22.90,113.89",
+   "key": "CN|Dongguan",
    "lat": 22.89883,
    "lng": 113.88955,
    "city": "Dongguan",
@@ -8827,91 +8669,7 @@
    "coauthorCount": 1
   },
   {
-   "key": "32.75,129.88",
-   "lat": 32.75,
-   "lng": 129.88333,
-   "city": "Nagasaki",
-   "countryCode": "JP",
-   "country": "Japan",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I43777268",
-     "name": "Nagasaki University",
-     "countryCode": "JP",
-     "type": "education",
-     "lat": 32.75,
-     "lng": 129.88333129882812,
-     "city": "Nagasaki",
-     "country": "Japan"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5003439282",
-     "name": "Yukiko Honda",
-     "orcid": "https://orcid.org/0000-0002-8337-1549",
-     "institutionIds": [
-      "https://openalex.org/I132400726",
-      "https://openalex.org/I43777268"
-     ],
-     "dois": [
-      "10.1016/j.brat.2026.104960",
-      "10.1136/bmjment-2023-300654"
-     ],
-     "paperCount": 2
-    }
-   ],
-   "dois": [
-    "10.1016/j.brat.2026.104960",
-    "10.1136/bmjment-2023-300654"
-   ],
-   "paperCount": 2,
-   "coauthorCount": 1
-  },
-  {
-   "key": "33.19,129.67",
-   "lat": 33.18578,
-   "lng": 129.66576,
-   "city": "Sasebo",
-   "countryCode": "JP",
-   "country": "Japan",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I132400726",
-     "name": "University of Nagasaki",
-     "countryCode": "JP",
-     "type": "education",
-     "lat": 33.18577575683594,
-     "lng": 129.66575622558594,
-     "city": "Sasebo",
-     "country": "Japan"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5003439282",
-     "name": "Yukiko Honda",
-     "orcid": "https://orcid.org/0000-0002-8337-1549",
-     "institutionIds": [
-      "https://openalex.org/I132400726",
-      "https://openalex.org/I43777268"
-     ],
-     "dois": [
-      "10.1016/j.brat.2026.104960",
-      "10.1136/bmjment-2023-300654"
-     ],
-     "paperCount": 2
-    }
-   ],
-   "dois": [
-    "10.1016/j.brat.2026.104960",
-    "10.1136/bmjment-2023-300654"
-   ],
-   "paperCount": 2,
-   "coauthorCount": 1
-  },
-  {
-   "key": "35.91,139.49",
+   "key": "JP|Kawagoe",
    "lat": 35.90861,
    "lng": 139.48528,
    "city": "Kawagoe",
@@ -8953,7 +8711,91 @@
    "coauthorCount": 1
   },
   {
-   "key": "35.10,140.10",
+   "key": "JP|Nagasaki",
+   "lat": 32.75,
+   "lng": 129.88333,
+   "city": "Nagasaki",
+   "countryCode": "JP",
+   "country": "Japan",
+   "institutions": [
+    {
+     "id": "https://openalex.org/I43777268",
+     "name": "Nagasaki University",
+     "countryCode": "JP",
+     "type": "education",
+     "lat": 32.75,
+     "lng": 129.88333129882812,
+     "city": "Nagasaki",
+     "country": "Japan"
+    }
+   ],
+   "coauthors": [
+    {
+     "id": "https://openalex.org/A5003439282",
+     "name": "Yukiko Honda",
+     "orcid": "https://orcid.org/0000-0002-8337-1549",
+     "institutionIds": [
+      "https://openalex.org/I132400726",
+      "https://openalex.org/I43777268"
+     ],
+     "dois": [
+      "10.1016/j.brat.2026.104960",
+      "10.1136/bmjment-2023-300654"
+     ],
+     "paperCount": 2
+    }
+   ],
+   "dois": [
+    "10.1016/j.brat.2026.104960",
+    "10.1136/bmjment-2023-300654"
+   ],
+   "paperCount": 2,
+   "coauthorCount": 1
+  },
+  {
+   "key": "JP|Sasebo",
+   "lat": 33.18578,
+   "lng": 129.66576,
+   "city": "Sasebo",
+   "countryCode": "JP",
+   "country": "Japan",
+   "institutions": [
+    {
+     "id": "https://openalex.org/I132400726",
+     "name": "University of Nagasaki",
+     "countryCode": "JP",
+     "type": "education",
+     "lat": 33.18577575683594,
+     "lng": 129.66575622558594,
+     "city": "Sasebo",
+     "country": "Japan"
+    }
+   ],
+   "coauthors": [
+    {
+     "id": "https://openalex.org/A5003439282",
+     "name": "Yukiko Honda",
+     "orcid": "https://orcid.org/0000-0002-8337-1549",
+     "institutionIds": [
+      "https://openalex.org/I132400726",
+      "https://openalex.org/I43777268"
+     ],
+     "dois": [
+      "10.1016/j.brat.2026.104960",
+      "10.1136/bmjment-2023-300654"
+     ],
+     "paperCount": 2
+    }
+   ],
+   "dois": [
+    "10.1016/j.brat.2026.104960",
+    "10.1136/bmjment-2023-300654"
+   ],
+   "paperCount": 2,
+   "coauthorCount": 1
+  },
+  {
+   "key": "JP|Kamogawa",
    "lat": 35.0969,
    "lng": 140.1003,
    "city": "Kamogawa",
@@ -9016,217 +8858,7 @@
    "coauthorCount": 3
   },
   {
-   "key": "39.37,22.95",
-   "lat": 39.36923,
-   "lng": 22.94769,
-   "city": "Volos",
-   "countryCode": "GR",
-   "country": "Greece",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I145722265",
-     "name": "University of Thessaly",
-     "countryCode": "GR",
-     "type": "education",
-     "lat": 39.36922836303711,
-     "lng": 22.947689056396484,
-     "city": "Volos",
-     "country": "Greece"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5106370998",
-     "name": "Elisavet Pinioti",
-     "orcid": "https://orcid.org/0000-0002-6033-3144",
-     "institutionIds": [
-      "https://openalex.org/I145722265"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2026.103988"
-     ],
-     "paperCount": 1
-    },
-    {
-     "id": "https://openalex.org/A5136771585",
-     "name": "Myrto Samara",
-     "orcid": null,
-     "institutionIds": [
-      "https://openalex.org/I145722265"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2026.103988"
-     ],
-     "paperCount": 1
-    }
-   ],
-   "dois": [
-    "10.1016/j.eclinm.2026.103988"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 2
-  },
-  {
-   "key": "40.75,-80.32",
-   "lat": 40.75201,
-   "lng": -80.31923,
-   "city": "Beaver Falls",
-   "countryCode": "US",
-   "country": "United States",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I6312358",
-     "name": "Geneva College",
-     "countryCode": "US",
-     "type": "education",
-     "lat": 40.75201,
-     "lng": -80.31923,
-     "city": "Beaver Falls",
-     "country": "United States"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5038306532",
-     "name": "Carlotta L. Schneider",
-     "orcid": "https://orcid.org/0000-0003-0236-5946",
-     "institutionIds": [
-      "https://openalex.org/I114457229",
-      "https://openalex.org/I6312358"
-     ],
-     "dois": [
-      "10.1093/sleepadvances/zpaf070"
-     ],
-     "paperCount": 1
-    },
-    {
-     "id": "https://openalex.org/A5052535424",
-     "name": "Elisabeth Hertenstein",
-     "orcid": "https://orcid.org/0000-0001-6467-0933",
-     "institutionIds": [
-      "https://openalex.org/I114457229",
-      "https://openalex.org/I6312358"
-     ],
-     "dois": [
-      "10.1093/sleepadvances/zpaf070"
-     ],
-     "paperCount": 1
-    }
-   ],
-   "dois": [
-    "10.1093/sleepadvances/zpaf070"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 2
-  },
-  {
-   "key": "43.65,-72.32",
-   "lat": 43.64896,
-   "lng": -72.31926,
-   "city": "White River Junction",
-   "countryCode": "US",
-   "country": "United States",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I4210158294",
-     "name": "National Center for Post Traumatic Stress Disorder",
-     "countryCode": "US",
-     "type": "facility",
-     "lat": 43.64896011352539,
-     "lng": -72.31925964355469,
-     "city": "White River Junction",
-     "country": "United States"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5020360420",
-     "name": "Jessica L. Hamblen",
-     "orcid": "https://orcid.org/0000-0002-3856-2952",
-     "institutionIds": [
-      "https://openalex.org/I107672454",
-      "https://openalex.org/I4210158294"
-     ],
-     "dois": [
-      "10.1016/j.invent.2025.100860"
-     ],
-     "paperCount": 1
-    },
-    {
-     "id": "https://openalex.org/A5033221741",
-     "name": "Paula P. Schnurr",
-     "orcid": "https://orcid.org/0000-0002-6195-716X",
-     "institutionIds": [
-      "https://openalex.org/I107672454",
-      "https://openalex.org/I4210158294"
-     ],
-     "dois": [
-      "10.1016/j.invent.2025.100860"
-     ],
-     "paperCount": 1
-    }
-   ],
-   "dois": [
-    "10.1016/j.invent.2025.100860"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 2
-  },
-  {
-   "key": "43.70,-72.29",
-   "lat": 43.70229,
-   "lng": -72.28954,
-   "city": "Hanover",
-   "countryCode": "US",
-   "country": "United States",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I107672454",
-     "name": "Dartmouth College",
-     "countryCode": "US",
-     "type": "education",
-     "lat": 43.70229,
-     "lng": -72.28954,
-     "city": "Hanover",
-     "country": "United States"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5020360420",
-     "name": "Jessica L. Hamblen",
-     "orcid": "https://orcid.org/0000-0002-3856-2952",
-     "institutionIds": [
-      "https://openalex.org/I107672454",
-      "https://openalex.org/I4210158294"
-     ],
-     "dois": [
-      "10.1016/j.invent.2025.100860"
-     ],
-     "paperCount": 1
-    },
-    {
-     "id": "https://openalex.org/A5033221741",
-     "name": "Paula P. Schnurr",
-     "orcid": "https://orcid.org/0000-0002-6195-716X",
-     "institutionIds": [
-      "https://openalex.org/I107672454",
-      "https://openalex.org/I4210158294"
-     ],
-     "dois": [
-      "10.1016/j.invent.2025.100860"
-     ],
-     "paperCount": 1
-    }
-   ],
-   "dois": [
-    "10.1016/j.invent.2025.100860"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 2
-  },
-  {
-   "key": "46.20,6.15",
+   "key": "CH|Geneva",
    "lat": 46.20222,
    "lng": 6.14569,
    "city": "Geneva",
@@ -9279,7 +8911,7 @@
    "coauthorCount": 2
   },
   {
-   "key": "48.00,7.85",
+   "key": "DE|Freiburg im Breisgau",
    "lat": 47.9959,
    "lng": 7.85222,
    "city": "Freiburg im Breisgau",
@@ -9343,7 +8975,58 @@
    "coauthorCount": 2
   },
   {
-   "key": "63.43,10.40",
+   "key": "GR|Volos",
+   "lat": 39.36923,
+   "lng": 22.94769,
+   "city": "Volos",
+   "countryCode": "GR",
+   "country": "Greece",
+   "institutions": [
+    {
+     "id": "https://openalex.org/I145722265",
+     "name": "University of Thessaly",
+     "countryCode": "GR",
+     "type": "education",
+     "lat": 39.36922836303711,
+     "lng": 22.947689056396484,
+     "city": "Volos",
+     "country": "Greece"
+    }
+   ],
+   "coauthors": [
+    {
+     "id": "https://openalex.org/A5106370998",
+     "name": "Elisavet Pinioti",
+     "orcid": "https://orcid.org/0000-0002-6033-3144",
+     "institutionIds": [
+      "https://openalex.org/I145722265"
+     ],
+     "dois": [
+      "10.1016/j.eclinm.2026.103988"
+     ],
+     "paperCount": 1
+    },
+    {
+     "id": "https://openalex.org/A5136771585",
+     "name": "Myrto Samara",
+     "orcid": null,
+     "institutionIds": [
+      "https://openalex.org/I145722265"
+     ],
+     "dois": [
+      "10.1016/j.eclinm.2026.103988"
+     ],
+     "paperCount": 1
+    }
+   ],
+   "dois": [
+    "10.1016/j.eclinm.2026.103988"
+   ],
+   "paperCount": 1,
+   "coauthorCount": 2
+  },
+  {
+   "key": "NO|Trondheim",
    "lat": 63.43049,
    "lng": 10.39506,
    "city": "Trondheim",
@@ -9405,199 +9088,45 @@
    "coauthorCount": 2
   },
   {
-   "key": "-33.92,18.60",
-   "lat": -33.91629,
-   "lng": 18.60443,
-   "city": "Cape Town",
-   "countryCode": "ZA",
-   "country": "South Africa",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I10947320",
-     "name": "South African Medical Research Council",
-     "countryCode": "ZA",
-     "type": "other",
-     "lat": -33.91628646850586,
-     "lng": 18.604434967041016,
-     "city": "Cape Town",
-     "country": "South Africa"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5002528924",
-     "name": "Soraya Seedat",
-     "orcid": "https://orcid.org/0000-0002-5118-786X",
-     "institutionIds": [
-      "https://openalex.org/I10947320"
-     ],
-     "dois": [
-      "10.1016/j.euroneuro.2026.112802"
-     ],
-     "paperCount": 1
-    }
-   ],
-   "dois": [
-    "10.1016/j.euroneuro.2026.112802"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 1
-  },
-  {
-   "key": "-36.85,174.76",
-   "lat": -36.84853,
-   "lng": 174.76349,
-   "city": "Auckland",
-   "countryCode": "NZ",
-   "country": "New Zealand",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I154130895",
-     "name": "University of Auckland",
-     "countryCode": "NZ",
-     "type": "education",
-     "lat": -36.84853,
-     "lng": 174.76349,
-     "city": "Auckland",
-     "country": "New Zealand"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5078482500",
-     "name": "Sarah Hetrick",
-     "orcid": "https://orcid.org/0000-0003-2532-0142",
-     "institutionIds": [
-      "https://openalex.org/I154130895"
-     ],
-     "dois": [
-      "10.1136/bmjopen-2025-102696"
-     ],
-     "paperCount": 1
-    }
-   ],
-   "dois": [
-    "10.1136/bmjopen-2025-102696"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 1
-  },
-  {
-   "key": "30.63,-96.33",
-   "lat": 30.62798,
-   "lng": -96.33441,
-   "city": "College Station",
+   "key": "US|Beaver Falls",
+   "lat": 40.75201,
+   "lng": -80.31923,
+   "city": "Beaver Falls",
    "countryCode": "US",
    "country": "United States",
    "institutions": [
     {
-     "id": "https://openalex.org/I91045830",
-     "name": "Texas A&M University",
+     "id": "https://openalex.org/I6312358",
+     "name": "Geneva College",
      "countryCode": "US",
      "type": "education",
-     "lat": 30.62798,
-     "lng": -96.33441,
-     "city": "College Station",
+     "lat": 40.75201,
+     "lng": -80.31923,
+     "city": "Beaver Falls",
      "country": "United States"
     }
    ],
    "coauthors": [
     {
-     "id": "https://openalex.org/A5000473326",
-     "name": "Bradley C. Johnston",
-     "orcid": "https://orcid.org/0000-0001-8872-8626",
+     "id": "https://openalex.org/A5038306532",
+     "name": "Carlotta L. Schneider",
+     "orcid": "https://orcid.org/0000-0003-0236-5946",
      "institutionIds": [
-      "https://openalex.org/I91045830"
+      "https://openalex.org/I114457229",
+      "https://openalex.org/I6312358"
      ],
      "dois": [
-      "10.1136/bmjment-2023-300978"
+      "10.1093/sleepadvances/zpaf070"
      ],
      "paperCount": 1
-    }
-   ],
-   "dois": [
-    "10.1136/bmjment-2023-300978"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 1
-  },
-  {
-   "key": "32.78,-96.81",
-   "lat": 32.78306,
-   "lng": -96.80667,
-   "city": "Dallas",
-   "countryCode": "US",
-   "country": "United States",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I1297463080",
-     "name": "Children's Medical Center",
-     "countryCode": "US",
-     "type": "healthcare",
-     "lat": 32.78306,
-     "lng": -96.80667,
-     "city": "Dallas",
-     "country": "United States"
     },
     {
-     "id": "https://openalex.org/I867280407",
-     "name": "The University of Texas Southwestern Medical Center",
-     "countryCode": "US",
-     "type": "healthcare",
-     "lat": 32.78306,
-     "lng": -96.80667,
-     "city": "Dallas",
-     "country": "United States"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5028128941",
-     "name": "Graham J. Emslie",
-     "orcid": "https://orcid.org/0000-0003-1851-4328",
+     "id": "https://openalex.org/A5052535424",
+     "name": "Elisabeth Hertenstein",
+     "orcid": "https://orcid.org/0000-0001-6467-0933",
      "institutionIds": [
-      "https://openalex.org/I1297463080",
-      "https://openalex.org/I867280407"
-     ],
-     "dois": [
-      "10.1136/bmjopen-2025-102696"
-     ],
-     "paperCount": 1
-    }
-   ],
-   "dois": [
-    "10.1136/bmjopen-2025-102696"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 1
-  },
-  {
-   "key": "33.47,-81.97",
-   "lat": 33.47097,
-   "lng": -81.97484,
-   "city": "Augusta",
-   "countryCode": "US",
-   "country": "United States",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I25041050",
-     "name": "Augusta University",
-     "countryCode": "US",
-     "type": "education",
-     "lat": 33.47097,
-     "lng": -81.97484,
-     "city": "Augusta",
-     "country": "United States"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5087471581",
-     "name": "W. Vaughn McCall",
-     "orcid": "https://orcid.org/0000-0001-5035-7858",
-     "institutionIds": [
-      "https://openalex.org/I25041050",
-      "https://openalex.org/I4210087454"
+      "https://openalex.org/I114457229",
+      "https://openalex.org/I6312358"
      ],
      "dois": [
       "10.1093/sleepadvances/zpaf070"
@@ -9609,408 +9138,116 @@
     "10.1093/sleepadvances/zpaf070"
    ],
    "paperCount": 1,
-   "coauthorCount": 1
+   "coauthorCount": 2
   },
   {
-   "key": "33.47,-81.99",
-   "lat": 33.47115,
-   "lng": -81.99,
-   "city": "Augusta",
+   "key": "US|Hanover",
+   "lat": 43.70229,
+   "lng": -72.28954,
+   "city": "Hanover",
    "countryCode": "US",
    "country": "United States",
    "institutions": [
     {
-     "id": "https://openalex.org/I4210087454",
-     "name": "Augusta University Health",
+     "id": "https://openalex.org/I107672454",
+     "name": "Dartmouth College",
      "countryCode": "US",
-     "type": "healthcare",
-     "lat": 33.47114562988281,
-     "lng": -81.98999786376953,
-     "city": "Augusta",
+     "type": "education",
+     "lat": 43.70229,
+     "lng": -72.28954,
+     "city": "Hanover",
      "country": "United States"
     }
    ],
    "coauthors": [
     {
-     "id": "https://openalex.org/A5087471581",
-     "name": "W. Vaughn McCall",
-     "orcid": "https://orcid.org/0000-0001-5035-7858",
+     "id": "https://openalex.org/A5020360420",
+     "name": "Jessica L. Hamblen",
+     "orcid": "https://orcid.org/0000-0002-3856-2952",
      "institutionIds": [
-      "https://openalex.org/I25041050",
-      "https://openalex.org/I4210087454"
+      "https://openalex.org/I107672454",
+      "https://openalex.org/I4210158294"
      ],
      "dois": [
-      "10.1093/sleepadvances/zpaf070"
+      "10.1016/j.invent.2025.100860"
+     ],
+     "paperCount": 1
+    },
+    {
+     "id": "https://openalex.org/A5033221741",
+     "name": "Paula P. Schnurr",
+     "orcid": "https://orcid.org/0000-0002-6195-716X",
+     "institutionIds": [
+      "https://openalex.org/I107672454",
+      "https://openalex.org/I4210158294"
+     ],
+     "dois": [
+      "10.1016/j.invent.2025.100860"
      ],
      "paperCount": 1
     }
    ],
    "dois": [
-    "10.1093/sleepadvances/zpaf070"
+    "10.1016/j.invent.2025.100860"
    ],
    "paperCount": 1,
-   "coauthorCount": 1
+   "coauthorCount": 2
   },
   {
-   "key": "34.65,133.93",
-   "lat": 34.65,
-   "lng": 133.93333,
-   "city": "Okayama",
-   "countryCode": "JP",
-   "country": "Japan",
+   "key": "US|White River Junction",
+   "lat": 43.64896,
+   "lng": -72.31926,
+   "city": "White River Junction",
+   "countryCode": "US",
+   "country": "United States",
    "institutions": [
     {
-     "id": "https://openalex.org/I163770644",
-     "name": "Okayama University",
-     "countryCode": "JP",
-     "type": "education",
-     "lat": 34.650001525878906,
-     "lng": 133.93333435058594,
-     "city": "Okayama",
-     "country": "Japan"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5103179531",
-     "name": "N. Hashimoto",
-     "orcid": "https://orcid.org/0000-0003-4605-2378",
-     "institutionIds": [
-      "https://openalex.org/I163770644",
-      "https://openalex.org/I4210117955"
-     ],
-     "dois": [
-      "10.1007/s40263-025-01188-2"
-     ],
-     "paperCount": 1
-    }
-   ],
-   "dois": [
-    "10.1007/s40263-025-01188-2"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 1
-  },
-  {
-   "key": "34.85,133.76",
-   "lat": 34.8455,
-   "lng": 133.75893,
-   "city": "Okayama",
-   "countryCode": "JP",
-   "country": "Japan",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I4210118584",
-     "name": "Okayama Prefecture",
-     "countryCode": "JP",
+     "id": "https://openalex.org/I4210158294",
+     "name": "National Center for Post Traumatic Stress Disorder",
+     "countryCode": "US",
      "type": "facility",
-     "lat": 34.84550476074219,
-     "lng": 133.75892639160156,
-     "city": "Okayama",
-     "country": "Japan"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5017682602",
-     "name": "Kazumasa Kotake",
-     "orcid": "https://orcid.org/0000-0001-9869-1177",
-     "institutionIds": [
-      "https://openalex.org/I4210106580",
-      "https://openalex.org/I4210118584"
-     ],
-     "dois": [
-      "10.1007/s40263-025-01188-2"
-     ],
-     "paperCount": 1
-    }
-   ],
-   "dois": [
-    "10.1007/s40263-025-01188-2"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 1
-  },
-  {
-   "key": "35.70,139.76",
-   "lat": 35.70222,
-   "lng": 139.76083,
-   "city": "Tokyo",
-   "countryCode": "JP",
-   "country": "Japan",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I34077901",
-     "name": "Juntendo University",
-     "countryCode": "JP",
-     "type": "education",
-     "lat": 35.70222091674805,
-     "lng": 139.76083374023438,
-     "city": "Tokyo",
-     "country": "Japan"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5036796884",
-     "name": "Rei Kansaku",
-     "orcid": "https://orcid.org/0000-0003-4944-6698",
-     "institutionIds": [
-      "https://openalex.org/I1283339181",
-      "https://openalex.org/I34077901",
-      "https://openalex.org/I4210132767"
-     ],
-     "dois": [
-      "10.1001/jama.2020.12660"
-     ],
-     "paperCount": 1
-    }
-   ],
-   "dois": [
-    "10.1001/jama.2020.12660"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 1
-  },
-  {
-   "key": "36.17,-86.78",
-   "lat": 36.16589,
-   "lng": -86.78444,
-   "city": "Nashville",
-   "countryCode": "US",
-   "country": "United States",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I200719446",
-     "name": "Vanderbilt University",
-     "countryCode": "US",
-     "type": "education",
-     "lat": 36.16589,
-     "lng": -86.78444,
-     "city": "Nashville",
+     "lat": 43.64896011352539,
+     "lng": -72.31925964355469,
+     "city": "White River Junction",
      "country": "United States"
     }
    ],
    "coauthors": [
     {
-     "id": "https://openalex.org/A5082277627",
-     "name": "Steven D. Hollon",
-     "orcid": "https://orcid.org/0000-0001-5005-3862",
+     "id": "https://openalex.org/A5020360420",
+     "name": "Jessica L. Hamblen",
+     "orcid": "https://orcid.org/0000-0002-3856-2952",
      "institutionIds": [
-      "https://openalex.org/I200719446"
+      "https://openalex.org/I107672454",
+      "https://openalex.org/I4210158294"
      ],
      "dois": [
-      "10.1002/wps.20906"
+      "10.1016/j.invent.2025.100860"
+     ],
+     "paperCount": 1
+    },
+    {
+     "id": "https://openalex.org/A5033221741",
+     "name": "Paula P. Schnurr",
+     "orcid": "https://orcid.org/0000-0002-6195-716X",
+     "institutionIds": [
+      "https://openalex.org/I107672454",
+      "https://openalex.org/I4210158294"
+     ],
+     "dois": [
+      "10.1016/j.invent.2025.100860"
      ],
      "paperCount": 1
     }
    ],
    "dois": [
-    "10.1002/wps.20906"
+    "10.1016/j.invent.2025.100860"
    ],
    "paperCount": 1,
-   "coauthorCount": 1
+   "coauthorCount": 2
   },
   {
-   "key": "37.14,138.22",
-   "lat": 37.1357,
-   "lng": 138.22429,
-   "city": "Jōetsu",
-   "countryCode": "JP",
-   "country": "Japan",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I8721504",
-     "name": "Joetsu University of Education",
-     "countryCode": "JP",
-     "type": "education",
-     "lat": 37.13570022583008,
-     "lng": 138.2242889404297,
-     "city": "Jōetsu",
-     "country": "Japan"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5039744586",
-     "name": "Shintaro Hara",
-     "orcid": null,
-     "institutionIds": [
-      "https://openalex.org/I8721504"
-     ],
-     "dois": [
-      "10.1016/j.jad.2024.09.017"
-     ],
-     "paperCount": 1
-    }
-   ],
-   "dois": [
-    "10.1016/j.jad.2024.09.017"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 1
-  },
-  {
-   "key": "37.79,-122.42",
-   "lat": 37.79418,
-   "lng": -122.42267,
-   "city": "San Francisco",
-   "countryCode": "US",
-   "country": "United States",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I4210162359",
-     "name": "International Neuromodulation Society",
-     "countryCode": "US",
-     "type": "nonprofit",
-     "lat": 37.7941780090332,
-     "lng": -122.42266845703125,
-     "city": "San Francisco",
-     "country": "United States"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5030135921",
-     "name": "Dieter Riemann",
-     "orcid": "https://orcid.org/0000-0002-1968-6220",
-     "institutionIds": [
-      "https://openalex.org/I161046081",
-      "https://openalex.org/I2801240073",
-      "https://openalex.org/I4210162359"
-     ],
-     "dois": [
-      "10.1093/sleepadvances/zpaf070"
-     ],
-     "paperCount": 1
-    }
-   ],
-   "dois": [
-    "10.1093/sleepadvances/zpaf070"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 1
-  },
-  {
-   "key": "38.30,140.35",
-   "lat": 38.30017,
-   "lng": 140.3459,
-   "city": "Yamagata",
-   "countryCode": "JP",
-   "country": "Japan",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I4210125761",
-     "name": "Yamagata Prefectural Central Hospital",
-     "countryCode": "JP",
-     "type": "healthcare",
-     "lat": 38.3001708984375,
-     "lng": 140.3459014892578,
-     "city": "Yamagata",
-     "country": "Japan"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5102937438",
-     "name": "Takao Kaneko",
-     "orcid": "https://orcid.org/0000-0002-9510-013X",
-     "institutionIds": [
-      "https://openalex.org/I4210125761",
-      "https://openalex.org/I4396570521"
-     ],
-     "dois": [
-      "10.1007/s40263-025-01188-2"
-     ],
-     "paperCount": 1
-    }
-   ],
-   "dois": [
-    "10.1007/s40263-025-01188-2"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 1
-  },
-  {
-   "key": "38.63,-90.20",
-   "lat": 38.62727,
-   "lng": -90.19789,
-   "city": "St Louis",
-   "countryCode": "US",
-   "country": "United States",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I204465549",
-     "name": "Washington University in St. Louis",
-     "countryCode": "US",
-     "type": "education",
-     "lat": 38.62727,
-     "lng": -90.19789,
-     "city": "St Louis",
-     "country": "United States"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5063207513",
-     "name": "Andrew Tubbs",
-     "orcid": "https://orcid.org/0000-0003-3799-5972",
-     "institutionIds": [
-      "https://openalex.org/I204465549"
-     ],
-     "dois": [
-      "10.1093/sleepadvances/zpaf070"
-     ],
-     "paperCount": 1
-    }
-   ],
-   "dois": [
-    "10.1093/sleepadvances/zpaf070"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 1
-  },
-  {
-   "key": "39.13,-84.52",
-   "lat": 39.13044,
-   "lng": -84.52094,
-   "city": "Cincinnati",
-   "countryCode": "US",
-   "country": "United States",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I92156820",
-     "name": "University of Cincinnati Medical Center",
-     "countryCode": "US",
-     "type": "healthcare",
-     "lat": 39.13043975830078,
-     "lng": -84.52094268798828,
-     "city": "Cincinnati",
-     "country": "United States"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5010194987",
-     "name": "Jeffrey R. Strawn",
-     "orcid": "https://orcid.org/0000-0002-7526-2641",
-     "institutionIds": [
-      "https://openalex.org/I92156820"
-     ],
-     "dois": [
-      "10.1136/bmjopen-2025-102696"
-     ],
-     "paperCount": 1
-    }
-   ],
-   "dois": [
-    "10.1136/bmjopen-2025-102696"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 1
-  },
-  {
-   "key": "39.91,116.40",
+   "key": "CN|Beijing",
    "lat": 39.9075,
    "lng": 116.39723,
    "city": "Beijing",
@@ -10051,290 +9288,23 @@
    "coauthorCount": 1
   },
   {
-   "key": "41.05,-73.97",
-   "lat": 41.04962,
-   "lng": -73.96811,
-   "city": "Orangeburg",
-   "countryCode": "US",
-   "country": "United States",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I125043107",
-     "name": "Nathan Kline Institute for Psychiatric Research",
-     "countryCode": "US",
-     "type": "nonprofit",
-     "lat": 41.049617767333984,
-     "lng": -73.96810913085938,
-     "city": "Orangeburg",
-     "country": "United States"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5100782718",
-     "name": "Robert C. Smith",
-     "orcid": "https://orcid.org/0000-0002-4933-4162",
-     "institutionIds": [
-      "https://openalex.org/I125043107",
-      "https://openalex.org/I183067930",
-      "https://openalex.org/I2802690428"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583"
-     ],
-     "paperCount": 1
-    }
-   ],
-   "dois": [
-    "10.1016/j.eclinm.2025.103583"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 1
-  },
-  {
-   "key": "42.38,-71.11",
-   "lat": 42.3751,
-   "lng": -71.10561,
-   "city": "Cambridge",
-   "countryCode": "US",
-   "country": "United States",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I136199984",
-     "name": "Harvard University",
-     "countryCode": "US",
-     "type": "education",
-     "lat": 42.3751,
-     "lng": -71.10561,
-     "city": "Cambridge",
-     "country": "United States"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5052176535",
-     "name": "John R. Weisz",
-     "orcid": "https://orcid.org/0000-0002-5560-6814",
-     "institutionIds": [
-      "https://openalex.org/I136199984"
-     ],
-     "dois": [
-      "10.1136/bmjopen-2025-102696"
-     ],
-     "paperCount": 1
-    }
-   ],
-   "dois": [
-    "10.1136/bmjopen-2025-102696"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 1
-  },
-  {
-   "key": "42.90,-77.27",
-   "lat": 42.901,
-   "lng": -77.27117,
-   "city": "Canandaigua",
-   "countryCode": "US",
-   "country": "United States",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I4210092521",
-     "name": "Canandaigua VA Medical Center",
-     "countryCode": "US",
-     "type": "healthcare",
-     "lat": 42.900997161865234,
-     "lng": -77.27117156982422,
-     "city": "Canandaigua",
-     "country": "United States"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5061539426",
-     "name": "Wilfred R. Pigeon",
-     "orcid": "https://orcid.org/0000-0002-5753-7840",
-     "institutionIds": [
-      "https://openalex.org/I28792581",
-      "https://openalex.org/I4210092521"
-     ],
-     "dois": [
-      "10.1093/sleepadvances/zpaf070"
-     ],
-     "paperCount": 1
-    }
-   ],
-   "dois": [
-    "10.1093/sleepadvances/zpaf070"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 1
-  },
-  {
-   "key": "43.15,-77.62",
-   "lat": 43.15478,
-   "lng": -77.61556,
-   "city": "Rochester",
-   "countryCode": "US",
-   "country": "United States",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I28792581",
-     "name": "University of Rochester Medicine",
-     "countryCode": "US",
-     "type": "healthcare",
-     "lat": 43.15478,
-     "lng": -77.61556,
-     "city": "Rochester",
-     "country": "United States"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5061539426",
-     "name": "Wilfred R. Pigeon",
-     "orcid": "https://orcid.org/0000-0002-5753-7840",
-     "institutionIds": [
-      "https://openalex.org/I28792581",
-      "https://openalex.org/I4210092521"
-     ],
-     "dois": [
-      "10.1093/sleepadvances/zpaf070"
-     ],
-     "paperCount": 1
-    }
-   ],
-   "dois": [
-    "10.1093/sleepadvances/zpaf070"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 1
-  },
-  {
-   "key": "45.41,11.89",
-   "lat": 45.40797,
-   "lng": 11.88586,
-   "city": "Padua",
-   "countryCode": "IT",
-   "country": "Italy",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I138689650",
-     "name": "University of Padua",
-     "countryCode": "IT",
-     "type": "education",
-     "lat": 45.40797,
-     "lng": 11.88586,
-     "city": "Padua",
-     "country": "Italy"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5025084207",
-     "name": "Ioana A. Cristea",
-     "orcid": "https://orcid.org/0000-0002-9854-7076",
-     "institutionIds": [
-      "https://openalex.org/I138689650"
-     ],
-     "dois": [
-      "10.1016/j.invent.2025.100860"
-     ],
-     "paperCount": 1
-    }
-   ],
-   "dois": [
-    "10.1016/j.invent.2025.100860"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 1
-  },
-  {
-   "key": "45.44,10.99",
-   "lat": 45.43854,
-   "lng": 10.9938,
-   "city": "Verona",
-   "countryCode": "IT",
-   "country": "Italy",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I119439378",
-     "name": "University of Verona",
-     "countryCode": "IT",
-     "type": "education",
-     "lat": 45.438541412353516,
-     "lng": 10.993800163269043,
-     "city": "Verona",
-     "country": "Italy"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5002968416",
-     "name": "Davide Papola",
-     "orcid": "https://orcid.org/0000-0001-6482-8593",
-     "institutionIds": [
-      "https://openalex.org/I119439378"
-     ],
-     "dois": [
-      "10.1016/j.invent.2025.100860"
-     ],
-     "paperCount": 1
-    }
-   ],
-   "dois": [
-    "10.1016/j.invent.2025.100860"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 1
-  },
-  {
-   "key": "48.14,11.55",
-   "lat": 48.14363,
-   "lng": 11.54965,
-   "city": "Munich",
-   "countryCode": "DE",
-   "country": "Germany",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I4210106315",
-     "name": "Berufsverband der Frauenärzte",
-     "countryCode": "DE",
-     "type": "other",
-     "lat": 48.14362716674805,
-     "lng": 11.549654006958008,
-     "city": "Munich",
-     "country": "Germany"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5070314416",
-     "name": "Karl Heinz Möhrmann",
-     "orcid": null,
-     "institutionIds": [
-      "https://openalex.org/I4210106315"
-     ],
-     "dois": [
-      "10.12688/f1000research.169873.1"
-     ],
-     "paperCount": 1
-    }
-   ],
-   "dois": [
-    "10.12688/f1000research.169873.1"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 1
-  },
-  {
-   "key": "48.37,10.90",
-   "lat": 48.37154,
-   "lng": 10.89851,
+   "key": "DE|Augsburg",
+   "lat": 48.37062,
+   "lng": 10.93527,
    "city": "Augsburg",
    "countryCode": "DE",
    "country": "Germany",
    "institutions": [
+    {
+     "id": "https://openalex.org/I4210129999",
+     "name": "KUKA (Germany)",
+     "countryCode": "DE",
+     "type": "company",
+     "lat": 48.37062454223633,
+     "lng": 10.93526554107666,
+     "city": "Augsburg",
+     "country": "Germany"
+    },
     {
      "id": "https://openalex.org/I179225836",
      "name": "University of Augsburg",
@@ -10368,47 +9338,7 @@
    "coauthorCount": 1
   },
   {
-   "key": "48.37,10.94",
-   "lat": 48.37062,
-   "lng": 10.93527,
-   "city": "Augsburg",
-   "countryCode": "DE",
-   "country": "Germany",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I4210129999",
-     "name": "KUKA (Germany)",
-     "countryCode": "DE",
-     "type": "company",
-     "lat": 48.37062454223633,
-     "lng": 10.93526554107666,
-     "city": "Augsburg",
-     "country": "Germany"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5085318097",
-     "name": "Wolfgang Strube",
-     "orcid": "https://orcid.org/0000-0003-2380-7651",
-     "institutionIds": [
-      "https://openalex.org/I179225836",
-      "https://openalex.org/I4210129999"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583"
-     ],
-     "paperCount": 1
-    }
-   ],
-   "dois": [
-    "10.1016/j.eclinm.2025.103583"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 1
-  },
-  {
-   "key": "48.85,2.35",
+   "key": "FR|Paris",
    "lat": 48.85341,
    "lng": 2.3488,
    "city": "Paris",
@@ -10514,7 +9444,7 @@
    "coauthorCount": 1
   },
   {
-   "key": "48.96,2.34",
+   "key": "FR|Villetaneuse",
    "lat": 48.95833,
    "lng": 2.34167,
    "city": "Villetaneuse",
@@ -10560,7 +9490,7 @@
    "coauthorCount": 1
   },
   {
-   "key": "52.48,-1.90",
+   "key": "GB|Birmingham",
    "lat": 52.48142,
    "lng": -1.89983,
    "city": "Birmingham",
@@ -10599,6 +9529,698 @@
    ],
    "paperCount": 1,
    "coauthorCount": 1
+  },
+  {
+   "key": "IT|Padua",
+   "lat": 45.40797,
+   "lng": 11.88586,
+   "city": "Padua",
+   "countryCode": "IT",
+   "country": "Italy",
+   "institutions": [
+    {
+     "id": "https://openalex.org/I138689650",
+     "name": "University of Padua",
+     "countryCode": "IT",
+     "type": "education",
+     "lat": 45.40797,
+     "lng": 11.88586,
+     "city": "Padua",
+     "country": "Italy"
+    }
+   ],
+   "coauthors": [
+    {
+     "id": "https://openalex.org/A5025084207",
+     "name": "Ioana A. Cristea",
+     "orcid": "https://orcid.org/0000-0002-9854-7076",
+     "institutionIds": [
+      "https://openalex.org/I138689650"
+     ],
+     "dois": [
+      "10.1016/j.invent.2025.100860"
+     ],
+     "paperCount": 1
+    }
+   ],
+   "dois": [
+    "10.1016/j.invent.2025.100860"
+   ],
+   "paperCount": 1,
+   "coauthorCount": 1
+  },
+  {
+   "key": "IT|Verona",
+   "lat": 45.43854,
+   "lng": 10.9938,
+   "city": "Verona",
+   "countryCode": "IT",
+   "country": "Italy",
+   "institutions": [
+    {
+     "id": "https://openalex.org/I119439378",
+     "name": "University of Verona",
+     "countryCode": "IT",
+     "type": "education",
+     "lat": 45.438541412353516,
+     "lng": 10.993800163269043,
+     "city": "Verona",
+     "country": "Italy"
+    }
+   ],
+   "coauthors": [
+    {
+     "id": "https://openalex.org/A5002968416",
+     "name": "Davide Papola",
+     "orcid": "https://orcid.org/0000-0001-6482-8593",
+     "institutionIds": [
+      "https://openalex.org/I119439378"
+     ],
+     "dois": [
+      "10.1016/j.invent.2025.100860"
+     ],
+     "paperCount": 1
+    }
+   ],
+   "dois": [
+    "10.1016/j.invent.2025.100860"
+   ],
+   "paperCount": 1,
+   "coauthorCount": 1
+  },
+  {
+   "key": "JP|Jōetsu",
+   "lat": 37.1357,
+   "lng": 138.22429,
+   "city": "Jōetsu",
+   "countryCode": "JP",
+   "country": "Japan",
+   "institutions": [
+    {
+     "id": "https://openalex.org/I8721504",
+     "name": "Joetsu University of Education",
+     "countryCode": "JP",
+     "type": "education",
+     "lat": 37.13570022583008,
+     "lng": 138.2242889404297,
+     "city": "Jōetsu",
+     "country": "Japan"
+    }
+   ],
+   "coauthors": [
+    {
+     "id": "https://openalex.org/A5039744586",
+     "name": "Shintaro Hara",
+     "orcid": null,
+     "institutionIds": [
+      "https://openalex.org/I8721504"
+     ],
+     "dois": [
+      "10.1016/j.jad.2024.09.017"
+     ],
+     "paperCount": 1
+    }
+   ],
+   "dois": [
+    "10.1016/j.jad.2024.09.017"
+   ],
+   "paperCount": 1,
+   "coauthorCount": 1
+  },
+  {
+   "key": "JP|Yamagata",
+   "lat": 38.30017,
+   "lng": 140.3459,
+   "city": "Yamagata",
+   "countryCode": "JP",
+   "country": "Japan",
+   "institutions": [
+    {
+     "id": "https://openalex.org/I4210125761",
+     "name": "Yamagata Prefectural Central Hospital",
+     "countryCode": "JP",
+     "type": "healthcare",
+     "lat": 38.3001708984375,
+     "lng": 140.3459014892578,
+     "city": "Yamagata",
+     "country": "Japan"
+    }
+   ],
+   "coauthors": [
+    {
+     "id": "https://openalex.org/A5102937438",
+     "name": "Takao Kaneko",
+     "orcid": "https://orcid.org/0000-0002-9510-013X",
+     "institutionIds": [
+      "https://openalex.org/I4210125761",
+      "https://openalex.org/I4396570521"
+     ],
+     "dois": [
+      "10.1007/s40263-025-01188-2"
+     ],
+     "paperCount": 1
+    }
+   ],
+   "dois": [
+    "10.1007/s40263-025-01188-2"
+   ],
+   "paperCount": 1,
+   "coauthorCount": 1
+  },
+  {
+   "key": "NZ|Auckland",
+   "lat": -36.84853,
+   "lng": 174.76349,
+   "city": "Auckland",
+   "countryCode": "NZ",
+   "country": "New Zealand",
+   "institutions": [
+    {
+     "id": "https://openalex.org/I154130895",
+     "name": "University of Auckland",
+     "countryCode": "NZ",
+     "type": "education",
+     "lat": -36.84853,
+     "lng": 174.76349,
+     "city": "Auckland",
+     "country": "New Zealand"
+    }
+   ],
+   "coauthors": [
+    {
+     "id": "https://openalex.org/A5078482500",
+     "name": "Sarah Hetrick",
+     "orcid": "https://orcid.org/0000-0003-2532-0142",
+     "institutionIds": [
+      "https://openalex.org/I154130895"
+     ],
+     "dois": [
+      "10.1136/bmjopen-2025-102696"
+     ],
+     "paperCount": 1
+    }
+   ],
+   "dois": [
+    "10.1136/bmjopen-2025-102696"
+   ],
+   "paperCount": 1,
+   "coauthorCount": 1
+  },
+  {
+   "key": "US|Augusta",
+   "lat": 33.47097,
+   "lng": -81.97484,
+   "city": "Augusta",
+   "countryCode": "US",
+   "country": "United States",
+   "institutions": [
+    {
+     "id": "https://openalex.org/I25041050",
+     "name": "Augusta University",
+     "countryCode": "US",
+     "type": "education",
+     "lat": 33.47097,
+     "lng": -81.97484,
+     "city": "Augusta",
+     "country": "United States"
+    },
+    {
+     "id": "https://openalex.org/I4210087454",
+     "name": "Augusta University Health",
+     "countryCode": "US",
+     "type": "healthcare",
+     "lat": 33.47114562988281,
+     "lng": -81.98999786376953,
+     "city": "Augusta",
+     "country": "United States"
+    }
+   ],
+   "coauthors": [
+    {
+     "id": "https://openalex.org/A5087471581",
+     "name": "W. Vaughn McCall",
+     "orcid": "https://orcid.org/0000-0001-5035-7858",
+     "institutionIds": [
+      "https://openalex.org/I25041050",
+      "https://openalex.org/I4210087454"
+     ],
+     "dois": [
+      "10.1093/sleepadvances/zpaf070"
+     ],
+     "paperCount": 1
+    }
+   ],
+   "dois": [
+    "10.1093/sleepadvances/zpaf070"
+   ],
+   "paperCount": 1,
+   "coauthorCount": 1
+  },
+  {
+   "key": "US|Cambridge",
+   "lat": 42.3751,
+   "lng": -71.10561,
+   "city": "Cambridge",
+   "countryCode": "US",
+   "country": "United States",
+   "institutions": [
+    {
+     "id": "https://openalex.org/I136199984",
+     "name": "Harvard University",
+     "countryCode": "US",
+     "type": "education",
+     "lat": 42.3751,
+     "lng": -71.10561,
+     "city": "Cambridge",
+     "country": "United States"
+    }
+   ],
+   "coauthors": [
+    {
+     "id": "https://openalex.org/A5052176535",
+     "name": "John R. Weisz",
+     "orcid": "https://orcid.org/0000-0002-5560-6814",
+     "institutionIds": [
+      "https://openalex.org/I136199984"
+     ],
+     "dois": [
+      "10.1136/bmjopen-2025-102696"
+     ],
+     "paperCount": 1
+    }
+   ],
+   "dois": [
+    "10.1136/bmjopen-2025-102696"
+   ],
+   "paperCount": 1,
+   "coauthorCount": 1
+  },
+  {
+   "key": "US|Canandaigua",
+   "lat": 42.901,
+   "lng": -77.27117,
+   "city": "Canandaigua",
+   "countryCode": "US",
+   "country": "United States",
+   "institutions": [
+    {
+     "id": "https://openalex.org/I4210092521",
+     "name": "Canandaigua VA Medical Center",
+     "countryCode": "US",
+     "type": "healthcare",
+     "lat": 42.900997161865234,
+     "lng": -77.27117156982422,
+     "city": "Canandaigua",
+     "country": "United States"
+    }
+   ],
+   "coauthors": [
+    {
+     "id": "https://openalex.org/A5061539426",
+     "name": "Wilfred R. Pigeon",
+     "orcid": "https://orcid.org/0000-0002-5753-7840",
+     "institutionIds": [
+      "https://openalex.org/I28792581",
+      "https://openalex.org/I4210092521"
+     ],
+     "dois": [
+      "10.1093/sleepadvances/zpaf070"
+     ],
+     "paperCount": 1
+    }
+   ],
+   "dois": [
+    "10.1093/sleepadvances/zpaf070"
+   ],
+   "paperCount": 1,
+   "coauthorCount": 1
+  },
+  {
+   "key": "US|Cincinnati",
+   "lat": 39.13044,
+   "lng": -84.52094,
+   "city": "Cincinnati",
+   "countryCode": "US",
+   "country": "United States",
+   "institutions": [
+    {
+     "id": "https://openalex.org/I92156820",
+     "name": "University of Cincinnati Medical Center",
+     "countryCode": "US",
+     "type": "healthcare",
+     "lat": 39.13043975830078,
+     "lng": -84.52094268798828,
+     "city": "Cincinnati",
+     "country": "United States"
+    }
+   ],
+   "coauthors": [
+    {
+     "id": "https://openalex.org/A5010194987",
+     "name": "Jeffrey R. Strawn",
+     "orcid": "https://orcid.org/0000-0002-7526-2641",
+     "institutionIds": [
+      "https://openalex.org/I92156820"
+     ],
+     "dois": [
+      "10.1136/bmjopen-2025-102696"
+     ],
+     "paperCount": 1
+    }
+   ],
+   "dois": [
+    "10.1136/bmjopen-2025-102696"
+   ],
+   "paperCount": 1,
+   "coauthorCount": 1
+  },
+  {
+   "key": "US|College Station",
+   "lat": 30.62798,
+   "lng": -96.33441,
+   "city": "College Station",
+   "countryCode": "US",
+   "country": "United States",
+   "institutions": [
+    {
+     "id": "https://openalex.org/I91045830",
+     "name": "Texas A&M University",
+     "countryCode": "US",
+     "type": "education",
+     "lat": 30.62798,
+     "lng": -96.33441,
+     "city": "College Station",
+     "country": "United States"
+    }
+   ],
+   "coauthors": [
+    {
+     "id": "https://openalex.org/A5000473326",
+     "name": "Bradley C. Johnston",
+     "orcid": "https://orcid.org/0000-0001-8872-8626",
+     "institutionIds": [
+      "https://openalex.org/I91045830"
+     ],
+     "dois": [
+      "10.1136/bmjment-2023-300978"
+     ],
+     "paperCount": 1
+    }
+   ],
+   "dois": [
+    "10.1136/bmjment-2023-300978"
+   ],
+   "paperCount": 1,
+   "coauthorCount": 1
+  },
+  {
+   "key": "US|Dallas",
+   "lat": 32.78306,
+   "lng": -96.80667,
+   "city": "Dallas",
+   "countryCode": "US",
+   "country": "United States",
+   "institutions": [
+    {
+     "id": "https://openalex.org/I1297463080",
+     "name": "Children's Medical Center",
+     "countryCode": "US",
+     "type": "healthcare",
+     "lat": 32.78306,
+     "lng": -96.80667,
+     "city": "Dallas",
+     "country": "United States"
+    },
+    {
+     "id": "https://openalex.org/I867280407",
+     "name": "The University of Texas Southwestern Medical Center",
+     "countryCode": "US",
+     "type": "healthcare",
+     "lat": 32.78306,
+     "lng": -96.80667,
+     "city": "Dallas",
+     "country": "United States"
+    }
+   ],
+   "coauthors": [
+    {
+     "id": "https://openalex.org/A5028128941",
+     "name": "Graham J. Emslie",
+     "orcid": "https://orcid.org/0000-0003-1851-4328",
+     "institutionIds": [
+      "https://openalex.org/I1297463080",
+      "https://openalex.org/I867280407"
+     ],
+     "dois": [
+      "10.1136/bmjopen-2025-102696"
+     ],
+     "paperCount": 1
+    }
+   ],
+   "dois": [
+    "10.1136/bmjopen-2025-102696"
+   ],
+   "paperCount": 1,
+   "coauthorCount": 1
+  },
+  {
+   "key": "US|Nashville",
+   "lat": 36.16589,
+   "lng": -86.78444,
+   "city": "Nashville",
+   "countryCode": "US",
+   "country": "United States",
+   "institutions": [
+    {
+     "id": "https://openalex.org/I200719446",
+     "name": "Vanderbilt University",
+     "countryCode": "US",
+     "type": "education",
+     "lat": 36.16589,
+     "lng": -86.78444,
+     "city": "Nashville",
+     "country": "United States"
+    }
+   ],
+   "coauthors": [
+    {
+     "id": "https://openalex.org/A5082277627",
+     "name": "Steven D. Hollon",
+     "orcid": "https://orcid.org/0000-0001-5005-3862",
+     "institutionIds": [
+      "https://openalex.org/I200719446"
+     ],
+     "dois": [
+      "10.1002/wps.20906"
+     ],
+     "paperCount": 1
+    }
+   ],
+   "dois": [
+    "10.1002/wps.20906"
+   ],
+   "paperCount": 1,
+   "coauthorCount": 1
+  },
+  {
+   "key": "US|Orangeburg",
+   "lat": 41.04962,
+   "lng": -73.96811,
+   "city": "Orangeburg",
+   "countryCode": "US",
+   "country": "United States",
+   "institutions": [
+    {
+     "id": "https://openalex.org/I125043107",
+     "name": "Nathan Kline Institute for Psychiatric Research",
+     "countryCode": "US",
+     "type": "nonprofit",
+     "lat": 41.049617767333984,
+     "lng": -73.96810913085938,
+     "city": "Orangeburg",
+     "country": "United States"
+    }
+   ],
+   "coauthors": [
+    {
+     "id": "https://openalex.org/A5100782718",
+     "name": "Robert C. Smith",
+     "orcid": "https://orcid.org/0000-0002-4933-4162",
+     "institutionIds": [
+      "https://openalex.org/I125043107",
+      "https://openalex.org/I183067930",
+      "https://openalex.org/I2802690428"
+     ],
+     "dois": [
+      "10.1016/j.eclinm.2025.103583"
+     ],
+     "paperCount": 1
+    }
+   ],
+   "dois": [
+    "10.1016/j.eclinm.2025.103583"
+   ],
+   "paperCount": 1,
+   "coauthorCount": 1
+  },
+  {
+   "key": "US|Rochester",
+   "lat": 43.15478,
+   "lng": -77.61556,
+   "city": "Rochester",
+   "countryCode": "US",
+   "country": "United States",
+   "institutions": [
+    {
+     "id": "https://openalex.org/I28792581",
+     "name": "University of Rochester Medicine",
+     "countryCode": "US",
+     "type": "healthcare",
+     "lat": 43.15478,
+     "lng": -77.61556,
+     "city": "Rochester",
+     "country": "United States"
+    }
+   ],
+   "coauthors": [
+    {
+     "id": "https://openalex.org/A5061539426",
+     "name": "Wilfred R. Pigeon",
+     "orcid": "https://orcid.org/0000-0002-5753-7840",
+     "institutionIds": [
+      "https://openalex.org/I28792581",
+      "https://openalex.org/I4210092521"
+     ],
+     "dois": [
+      "10.1093/sleepadvances/zpaf070"
+     ],
+     "paperCount": 1
+    }
+   ],
+   "dois": [
+    "10.1093/sleepadvances/zpaf070"
+   ],
+   "paperCount": 1,
+   "coauthorCount": 1
+  },
+  {
+   "key": "US|San Francisco",
+   "lat": 37.79418,
+   "lng": -122.42267,
+   "city": "San Francisco",
+   "countryCode": "US",
+   "country": "United States",
+   "institutions": [
+    {
+     "id": "https://openalex.org/I4210162359",
+     "name": "International Neuromodulation Society",
+     "countryCode": "US",
+     "type": "nonprofit",
+     "lat": 37.7941780090332,
+     "lng": -122.42266845703125,
+     "city": "San Francisco",
+     "country": "United States"
+    }
+   ],
+   "coauthors": [
+    {
+     "id": "https://openalex.org/A5030135921",
+     "name": "Dieter Riemann",
+     "orcid": "https://orcid.org/0000-0002-1968-6220",
+     "institutionIds": [
+      "https://openalex.org/I161046081",
+      "https://openalex.org/I2801240073",
+      "https://openalex.org/I4210162359"
+     ],
+     "dois": [
+      "10.1093/sleepadvances/zpaf070"
+     ],
+     "paperCount": 1
+    }
+   ],
+   "dois": [
+    "10.1093/sleepadvances/zpaf070"
+   ],
+   "paperCount": 1,
+   "coauthorCount": 1
+  },
+  {
+   "key": "US|St Louis",
+   "lat": 38.62727,
+   "lng": -90.19789,
+   "city": "St Louis",
+   "countryCode": "US",
+   "country": "United States",
+   "institutions": [
+    {
+     "id": "https://openalex.org/I204465549",
+     "name": "Washington University in St. Louis",
+     "countryCode": "US",
+     "type": "education",
+     "lat": 38.62727,
+     "lng": -90.19789,
+     "city": "St Louis",
+     "country": "United States"
+    }
+   ],
+   "coauthors": [
+    {
+     "id": "https://openalex.org/A5063207513",
+     "name": "Andrew Tubbs",
+     "orcid": "https://orcid.org/0000-0003-3799-5972",
+     "institutionIds": [
+      "https://openalex.org/I204465549"
+     ],
+     "dois": [
+      "10.1093/sleepadvances/zpaf070"
+     ],
+     "paperCount": 1
+    }
+   ],
+   "dois": [
+    "10.1093/sleepadvances/zpaf070"
+   ],
+   "paperCount": 1,
+   "coauthorCount": 1
+  },
+  {
+   "key": "ZA|Cape Town",
+   "lat": -33.91629,
+   "lng": 18.60443,
+   "city": "Cape Town",
+   "countryCode": "ZA",
+   "country": "South Africa",
+   "institutions": [
+    {
+     "id": "https://openalex.org/I10947320",
+     "name": "South African Medical Research Council",
+     "countryCode": "ZA",
+     "type": "other",
+     "lat": -33.91628646850586,
+     "lng": 18.604434967041016,
+     "city": "Cape Town",
+     "country": "South Africa"
+    }
+   ],
+   "coauthors": [
+    {
+     "id": "https://openalex.org/A5002528924",
+     "name": "Soraya Seedat",
+     "orcid": "https://orcid.org/0000-0002-5118-786X",
+     "institutionIds": [
+      "https://openalex.org/I10947320"
+     ],
+     "dois": [
+      "10.1016/j.euroneuro.2026.112802"
+     ],
+     "paperCount": 1
+    }
+   ],
+   "dois": [
+    "10.1016/j.euroneuro.2026.112802"
+   ],
+   "paperCount": 1,
+   "coauthorCount": 1
   }
  ],
  "stats": {
@@ -10608,7 +10230,7 @@
   "coauthors": 166,
   "institutions": 119,
   "geoResolved": 119,
-  "cities": 80,
+  "cities": 71,
   "countries": 15,
   "authorshipRows": 315,
   "authorshipsWithoutInstitution": 5,
