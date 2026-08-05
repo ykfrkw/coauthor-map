@@ -23,10 +23,10 @@ const WORKS_SELECT =
 const AUTHORS_SELECT =
   'id,display_name,orcid,works_count,last_known_institutions';
 
-/** UI にそのまま出せる警告文。 */
+/** UI にそのまま出せる警告文。UI は US 英語 1 言語なので英語で持つ。 */
 export const LOW_PRECISION_WARNING =
-  'OpenAlex 著者検索は名寄せの精度が低く、同姓同名の別人の論文が混ざることがあります。' +
-  '一覧を確認し、身に覚えのない論文は除外してください。';
+  'Author search in OpenAlex is imprecise: papers by other people with the same name ' +
+  'can be mixed in. Check the list and exclude anything that is not yours.';
 
 /**
  * 候補著者を返す。UI 側で本人を選ばせるために使う。
@@ -139,7 +139,7 @@ export async function fetchOpenAlexAuthorWorks(spec, options = {}) {
 
     page += 1;
     onProgress?.(
-      'OpenAlex 著者の論文を取得中',
+      'seeds:openalex',
       works.length,
       payload?.meta?.count ?? works.length,
     );

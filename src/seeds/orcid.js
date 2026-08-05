@@ -30,7 +30,7 @@ export function assertValidOrcid(value) {
   const orcid = normalizeOrcid(value);
   if (!ORCID_PATTERN.test(orcid)) {
     throw new Error(
-      `ORCID の形式が不正です: "${String(value ?? '')}"（期待する形式: 0000-0000-0000-000X）`,
+      `That is not a valid ORCID iD: "${String(value ?? '')}" (expected 0000-0000-0000-000X).`,
     );
   }
   return orcid;
@@ -50,7 +50,7 @@ export async function fetchOrcidWorks(orcid, options = {}) {
   });
   if (!response.ok) {
     throw new Error(
-      `ORCID の取得に失敗しました（HTTP ${response.status}）: ${id}`,
+      `Could not fetch from ORCID (HTTP ${response.status}): ${id}`,
     );
   }
   const payload = await response.json();

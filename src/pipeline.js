@@ -52,8 +52,9 @@ export async function buildDataset(options) {
 
   // 1. seed アダプタ。取得は seed ごとに 24 時間キャッシュする。
   //    seed どうしは独立なので並列に流す（返りは入力順を保つ）。
+  //    onProgress の第1引数は**表示用の文字列ではなく安定キー**。文言は UI 側が持つ。
   let seedsDone = 0;
-  onProgress?.('seed を取得中', seedsDone, seeds.length);
+  onProgress?.('seeds', seedsDone, seeds.length);
   const seedResults = await mapWithConcurrency(
     seeds,
     MAX_CONCURRENCY,
@@ -70,11 +71,7 @@ export async function buildDataset(options) {
         { enabled: useCache },
       );
       seedsDone += 1;
-      onProgress?.(
-        `seed を取得中（${seed.kind}: ${seed.value}）`,
-        seedsDone,
-        seeds.length,
-      );
+      onProgress?.(`seeds:${seed.kind}`, seedsDone, seeds.length);
       return result;
     },
   );
@@ -86,7 +83,8 @@ export async function buildDataset(options) {
       if (!warnings.includes(warning)) warnings.push(warning);
     }
   }
-  onProgress?.('seed の取得が完了', seeds.length, seeds.length);
+  // 取得完了は専用キーを作らず `seeds` の done === total で表す。
+  onProgress?.('seeds', seeds.length, seeds.length);
 
   // 2. DOI の和集合（小文字・正規化済み）。sources は結合される。
   //    年フィルタは**集計後ではなく seed works の段階**でかける。
@@ -124,7 +122,7 @@ export async function buildDataset(options) {
     { enabled: useCache },
   );
 
-  onProgress?.('集計中', 1, 1);
+  onProgress?.('aggregate', 1, 1);
   return aggregate({
     seedWorks,
     openAlexWorks,
@@ -162,7 +160,7 @@ async function fetchSeed(seed, options) {
       return { works, warnings: warning ? [warning] : [] };
     }
     default:
-      throw new Error(`未知の seed 種別です: ${String(seed.kind)}`);
+      throw new Error(`Unknown seed kind: ${String(seed.kind)}`);
   }
 }
 

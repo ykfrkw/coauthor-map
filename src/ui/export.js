@@ -118,7 +118,8 @@ export async function svgToPngBlob(
     const img = await new Promise((resolve, reject) => {
       const image = new Image();
       image.onload = () => resolve(image);
-      image.onerror = () => reject(new Error('SVG を画像として読めなかった'));
+      image.onerror = () =>
+        reject(new Error('Could not read the SVG as an image.'));
       image.src = url;
     });
     const canvas = h('canvas');
@@ -131,7 +132,9 @@ export async function svgToPngBlob(
     return await new Promise((resolve, reject) => {
       canvas.toBlob(
         (out) =>
-          out ? resolve(out) : reject(new Error('toBlob が空を返した')),
+          out
+            ? resolve(out)
+            : reject(new Error('canvas.toBlob returned nothing.')),
         'image/png',
       );
     });

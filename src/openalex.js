@@ -44,7 +44,9 @@ const defaultSleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
  * @typedef {Object} OpenAlexOptions
  * @property {typeof fetch} [fetchImpl]
  * @property {string} [mailto]
- * @property {(msg: string, done: number, total: number) => void} [onProgress]
+ * @property {(key: string, done: number, total: number) => void} [onProgress]
+ *   第1引数は表示用の文字列ではなく安定キー（`'works'` / `'institutions'`）。
+ *   文言は src/ui/i18n.js の PROGRESS_STRINGS が持つ。
  * @property {(ms: number) => Promise<void>} [sleepImpl]
  * @property {number} [maxRetries]
  */
@@ -143,15 +145,13 @@ export async function requestOpenAlex(url, options = {}) {
     const status = response.status;
     const retriable = status === 429 || status >= 500;
     if (!retriable) {
-      throw new Error(
-        `OpenAlex がエラーを返しました（HTTP ${status}）: ${url}`,
-      );
+      throw new Error(`OpenAlex returned an error (HTTP ${status}): ${url}`);
     }
     lastError = new Error(
-      `OpenAlex がエラーを返しました（HTTP ${status}）: ${url}`,
+      `OpenAlex returned an error (HTTP ${status}): ${url}`,
     );
   }
-  throw lastError ?? new Error(`OpenAlex の取得に失敗しました: ${url}`);
+  throw lastError ?? new Error(`Could not reach OpenAlex: ${url}`);
 }
 
 /**
@@ -167,9 +167,10 @@ export async function fetchWorksByDois(dois, options = {}) {
   if (targets.length === 0) return [];
 
   const batches = chunk(targets, WORKS_BATCH_SIZE);
-  const label = 'OpenAlex から論文情報を取得中';
+  // 進捗は安定キーで通知する。文言は UI（src/ui/i18n.js）が持つ。
+  const progressKey = 'works';
   let done = 0;
-  onProgress?.(label, done, batches.length);
+  onProgress?.(progressKey, done, batches.length);
 
   const pages = await mapWithConcurrency(
     batches,
@@ -183,7 +184,7 @@ export async function fetchWorksByDois(dois, options = {}) {
       const payload = await requestOpenAlex(url, options);
       // 完了カウントは終わった順に増える。total は動かさない。
       done += 1;
-      onProgress?.(label, done, batches.length);
+      onProgress?.(progressKey, done, batches.length);
       return payload?.results ?? [];
     },
   );
@@ -205,9 +206,9 @@ export async function fetchInstitutions(ids, options = {}) {
   if (targets.length === 0) return [];
 
   const batches = chunk(targets, INSTITUTIONS_BATCH_SIZE);
-  const label = 'OpenAlex から機関情報を取得中';
+  const progressKey = 'institutions';
   let done = 0;
-  onProgress?.(label, done, batches.length);
+  onProgress?.(progressKey, done, batches.length);
 
   const pages = await mapWithConcurrency(
     batches,
@@ -220,7 +221,7 @@ export async function fetchInstitutions(ids, options = {}) {
         `&filter=ids.openalex:${joinFilterValues(batch)}`;
       const payload = await requestOpenAlex(url, options);
       done += 1;
-      onProgress?.(label, done, batches.length);
+      onProgress?.(progressKey, done, batches.length);
       return payload?.results ?? [];
     },
   );

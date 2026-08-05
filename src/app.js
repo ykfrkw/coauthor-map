@@ -7,7 +7,7 @@
  */
 import { createMapRenderer, renderLegend } from './map/render.js';
 import { applyTheme, watchSystemTheme, THEME_AUTO } from './map/themes.js';
-import { createTranslator, formatNumber } from './ui/i18n.js';
+import { createTranslator, formatNumber, progressLabel } from './ui/i18n.js';
 import { h, replaceChildren } from './ui/dom.js';
 import { readStateFromUrl, syncUrl, createControls } from './ui/controls.js';
 import { normalizeDataset, applyCuration, filterDataset } from './ui/derive.js';
@@ -187,10 +187,11 @@ export function createApp({ loadDataset, mode = 'full' }) {
       const dataset = await loadDataset({
         seeds,
         curation,
-        onProgress: (msg, done, total) => {
+        // データ層が渡すのは安定キー。表示文言に直すのはここだけの仕事
+        onProgress: (key, done, total) => {
           const suffix =
             Number.isFinite(total) && total > 0 ? ` (${done}/${total})` : '';
-          setStatus('info', `${msg}${suffix}`);
+          setStatus('info', `${progressLabel(key)}${suffix}`);
         },
       });
       rawDataset = normalizeDataset(dataset);

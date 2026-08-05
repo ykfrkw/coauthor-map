@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { buildDataset } from '../src/pipeline.js';
+import { PROGRESS_STRINGS } from '../src/ui/i18n.js';
 import {
   createFixtureFetch,
   loadFixture,
@@ -227,5 +228,65 @@ describe('buildDataset', () => {
     const { calls } = await build();
     expect(calls.length).toBeGreaterThan(0);
     expect(calls.every((url) => url.startsWith('https://'))).toBe(true);
+  });
+});
+
+describe('onProgress', () => {
+  /** ORCID + researchmap の 2 seed で流したときに出るキー列 */
+  async function collectProgress() {
+    const { fetchImpl } = createFixtureFetch();
+    /** @type {Array<[string, number, number]>} */
+    const events = [];
+    await buildDataset({
+      seeds: [
+        { kind: 'orcid', value: '0000-0003-1317-0220' },
+        { kind: 'researchmap', value: 'yk_frkw' },
+      ],
+      mailto: 'test@example.org',
+      fetchImpl,
+      useCache: false,
+      onProgress: (key, done, total) => events.push([key, done, total]),
+    });
+    return events;
+  }
+
+  it('第1引数は i18n が文言を持つ安定キーだけ', async () => {
+    const events = await collectProgress();
+    const known = new Set(Object.keys(PROGRESS_STRINGS));
+    const seen = new Set(events.map(([key]) => key));
+    expect(seen.size).toBeGreaterThan(0);
+    for (const key of seen) expect(known.has(key)).toBe(true);
+  });
+
+  it('キーは ASCII のみ（日本語が混ざらない回帰）', async () => {
+    const events = await collectProgress();
+    for (const [key] of events) {
+      // eslint-disable-next-line no-control-regex
+      expect(key).toMatch(/^[\x20-\x7e]+$/);
+    }
+  });
+
+  it('この seed 構成で出るキーは seeds / seeds:* / works / institutions / aggregate', async () => {
+    const events = await collectProgress();
+    expect([...new Set(events.map(([key]) => key))].sort()).toEqual([
+      'aggregate',
+      'institutions',
+      'seeds',
+      'seeds:orcid',
+      'seeds:researchmap',
+      'works',
+    ]);
+  });
+
+  it('seeds は最後に done === total で締める', async () => {
+    const events = await collectProgress();
+    const seedEvents = events.filter(([key]) => key === 'seeds');
+    const last = seedEvents.at(-1);
+    expect(last).toEqual(['seeds', 2, 2]);
+  });
+
+  it('aggregate が最後に来る', async () => {
+    const events = await collectProgress();
+    expect(events.at(-1)).toEqual(['aggregate', 1, 1]);
   });
 });

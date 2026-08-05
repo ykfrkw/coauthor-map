@@ -37,7 +37,7 @@ export async function fetchResearchmapWorks(permalink, options = {}) {
     });
     if (!response.ok) {
       throw new Error(
-        `researchmap の取得に失敗しました（HTTP ${response.status}）: ${id}`,
+        `Could not fetch from researchmap (HTTP ${response.status}): ${id}`,
       );
     }
     const payload = await response.json();
@@ -130,7 +130,7 @@ export function assertValidPermalink(value) {
   const permalink = String(value ?? '').trim();
   if (!/^[A-Za-z0-9_.-]+$/.test(permalink)) {
     throw new Error(
-      `researchmap の permalink が不正です: "${String(value ?? '')}"`,
+      `That is not a valid researchmap permalink: "${String(value ?? '')}"`,
     );
   }
   return permalink;
