@@ -1,7 +1,11 @@
 import { describe, expect, it } from 'vitest';
 
 import { DEFAULT_GRAIN, parseGrain } from '../src/map/cluster.js';
-import { DEFAULTS, readStateFromUrl, stateToQuery } from '../src/ui/controls.js';
+import {
+  DEFAULTS,
+  readStateFromUrl,
+  stateToQuery,
+} from '../src/ui/controls.js';
 
 describe('既定の粒度', () => {
   it('既定は 10px（0 だと欧州が団子になるため）', () => {

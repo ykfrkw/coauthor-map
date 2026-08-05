@@ -55,7 +55,10 @@ describe('WAF 対策の検査', () => {
   });
 
   it('style ブロックの子結合子を弾く', () => {
-    const bad = '<style>\n  .a .b{color:red;}\n</style>'.replace(' .b', ' > .b');
+    const bad = '<style>\n  .a .b{color:red;}\n</style>'.replace(
+      ' .b',
+      ' > .b',
+    );
     expect(() => assertSnippetIsSafe(bad)).toThrow(/child combinator/);
   });
 

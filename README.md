@@ -16,7 +16,7 @@ Everything runs in your browser. There is no server, no account, no API key, and
 3. Resolves every affiliation to coordinates and draws the result as pins on a world map.
 4. Gives you the same data as a table you can copy out — by country, by institution, by period.
 
-You can change the projection, re-center the map on any longitude, pick a visual theme, filter by year, resize the pins by paper count or by number of people, and exclude anything the automatic matching got wrong.
+The extent is chosen for you: if every co-author is in one country the map opens on that country, if they are all on one continent it opens on that region, and otherwise on the whole world. You can override it, change the projection, re-center the map on any longitude, pick a visual theme, filter by year, resize the pins by paper count or by number of people, and exclude anything the automatic matching got wrong.
 
 ## Why it starts from ORCID and researchmap, not from an author search
 
@@ -38,12 +38,12 @@ Seven HTTP requests, about 3.6 seconds on a cold load, for a researcher with 34 
 
 ## Data sources
 
-| Source | Used for | License |
-|---|---|---|
-| [ORCID](https://orcid.org) public API | Claimed works | CC0 |
-| [researchmap](https://researchmap.jp) public API | Registered papers (Japan) | Per researchmap's terms |
-| [OpenAlex](https://openalex.org) | Author lists, affiliations, coordinates | CC0 |
-| [Natural Earth](https://www.naturalearthdata.com) via [world-atlas](https://github.com/topojson/world-atlas) | Country boundaries | Public domain |
+| Source                                                                                                       | Used for                                | License                 |
+| ------------------------------------------------------------------------------------------------------------ | --------------------------------------- | ----------------------- |
+| [ORCID](https://orcid.org) public API                                                                        | Claimed works                           | CC0                     |
+| [researchmap](https://researchmap.jp) public API                                                             | Registered papers (Japan)               | Per researchmap's terms |
+| [OpenAlex](https://openalex.org)                                                                             | Author lists, affiliations, coordinates | CC0                     |
+| [Natural Earth](https://www.naturalearthdata.com) via [world-atlas](https://github.com/topojson/world-atlas) | Country boundaries                      | Public domain           |
 
 No API key is required for any of them. Requests to OpenAlex identify themselves through the polite pool.
 
@@ -60,7 +60,7 @@ No API key is required for any of them. Requests to OpenAlex identify themselves
 ```bash
 npm install
 npm run dev      # http://localhost:5173
-npm test         # 111 tests, entirely offline
+npm test         # 159 tests, entirely offline
 npm run build
 ```
 

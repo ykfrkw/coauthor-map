@@ -2,7 +2,7 @@
  * 操作パネルと URL 同期。
  *
  * 表示状態はすべて URL クエリに載せる。リロードで復元でき、そのまま共有もできる:
- *   ?orcid=&rm=&from=&to=&proj=&center=&grain=&theme=&size=
+ *   ?orcid=&rm=&from=&to=&proj=&center=&grain=&theme=&size=&scope=
  *
  * UI は US 英語 1 言語なので `lang` は持たない。
  *
@@ -32,6 +32,7 @@ import {
   grainToSlider,
   sliderToGrain,
 } from '../map/cluster.js';
+import { SCOPE_OPTIONS, DEFAULT_SCOPE, parseScope } from '../map/scope.js';
 
 /** パラメータ無しで開いたときの既定 = オーナー自身の地図 */
 export const DEFAULTS = Object.freeze({
@@ -44,6 +45,7 @@ export const DEFAULTS = Object.freeze({
   grain: DEFAULT_GRAIN,
   theme: DEFAULT_THEME,
   size: 'papers',
+  scope: DEFAULT_SCOPE, // auto = 国 / 地域 / 全世界を共著者の分布から決める
 });
 
 export const SIZE_MODES = [
@@ -95,9 +97,12 @@ export function readStateFromUrl(search = window.location.search) {
     center: q.has('center')
       ? normalizeLongitude(q.get('center'))
       : DEFAULTS.center,
+    // center を書いた URL は「中心を明示した」とみなし、自動フィットの重心より優先する
+    centerExplicit: q.has('center'),
     grain: q.has('grain') ? parseGrain(q.get('grain')) : DEFAULTS.grain,
     theme: isValidTheme(theme) ? theme : DEFAULTS.theme,
     size: SIZE_IDS.has(size) ? size : DEFAULTS.size,
+    scope: q.has('scope') ? parseScope(q.get('scope')) : DEFAULTS.scope,
     rotateLat: 0, // 回転は共有しない（center だけ URL に載せる）
   };
 }
@@ -116,11 +121,15 @@ export function stateToQuery(state, bounds) {
   if (state.to != null && state.to !== bounds?.to)
     q.set('to', String(state.to));
   if (state.proj !== DEFAULTS.proj) q.set('proj', state.proj);
-  if (Math.round(state.center) !== DEFAULTS.center)
+  // 明示された中心は既定値と同じでも書く。書かないと再読み込みで
+  // 「明示した」情報が落ち、自動フィットの重心に乗っ取られてしまう
+  if (state.centerExplicit || Math.round(state.center) !== DEFAULTS.center)
     q.set('center', String(Math.round(state.center)));
   if (state.grain !== DEFAULTS.grain) q.set('grain', grainToParam(state.grain));
   if (state.theme !== DEFAULTS.theme) q.set('theme', state.theme);
   if (state.size !== DEFAULTS.size) q.set('size', state.size);
+  if (state.scope && state.scope !== DEFAULTS.scope)
+    q.set('scope', state.scope);
   return q.toString();
 }
 
@@ -280,6 +289,14 @@ export function createControls({
     },
   });
 
+  // ---- 表示範囲（自動フィット） ----
+  const scopeSelect = selectEl({
+    id: 'scope',
+    value: state.scope ?? DEFAULTS.scope,
+    options: SCOPE_OPTIONS.map((s) => ({ value: s.id, label: t(s.labelKey) })),
+    onChange: (value) => onChange({ scope: value }),
+  });
+
   // ---- 中心経度 ----
   const centerPreset = selectEl({
     id: 'center-preset',
@@ -293,7 +310,8 @@ export function createControls({
       if (!preset) return;
       centerSlider.value = String(preset.lon);
       centerOut.textContent = formatLon(preset.lon);
-      onChange({ center: preset.lon });
+      // 手で選んだ中心は自動フィットの重心より優先する
+      onChange({ center: preset.lon, centerExplicit: true });
     },
   });
   const centerSlider = h('input', {
@@ -309,7 +327,7 @@ export function createControls({
     const lon = normalizeLongitude(centerSlider.value);
     centerOut.textContent = formatLon(lon);
     centerPreset.value = presetIdFor(lon);
-    onChange({ center: lon });
+    onChange({ center: lon, centerExplicit: true });
   });
 
   // ---- テーマ ----
@@ -357,6 +375,11 @@ export function createControls({
       h('label', { for: 'proj', text: t('ctrl.projection') }),
       projSelect,
       projHint,
+    ]),
+    h('div', { class: 'field' }, [
+      h('label', { for: 'scope', text: t('ctrl.scope') }),
+      scopeSelect,
+      h('span', { class: 'hint', text: t('ctrl.scopeHint') }),
     ]),
     h('div', { class: 'field' }, [
       h('label', { for: 'center', text: t('ctrl.center') }),
