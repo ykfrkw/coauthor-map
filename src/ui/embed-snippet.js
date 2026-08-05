@@ -24,6 +24,13 @@ export const AUTHOR_URL = 'https://yukifurukawa.jp/coauthor-map/';
 
 const CLASS_NAME = 'coauthor-map-embed';
 
+/**
+ * この長さを超えたら警告を出す。IE 以外のブラウザはもっと通すが、
+ * 途中の CMS・WAF・メールクライアントが 2000 前後で切ることがある。
+ * **黙って切り捨てず**、絞り込みを勧める。
+ */
+export const URL_WARN_LENGTH = 1800;
+
 /** widget.html の URL を今の表示状態から組む */
 export function buildWidgetUrl(state, bounds, base = WIDGET_BASE) {
   const query = stateToQuery(state, bounds);
@@ -96,13 +103,19 @@ export function createEmbedPanel({ container, t, getState }) {
     'aria-live': 'polite',
   });
 
+  const lengthWarning = h('p', { class: 'notice is-error', hidden: true });
+
   function refresh() {
     const { state, bounds } = getState();
     try {
-      textarea.value = buildSnippet(
-        buildWidgetUrl(state, bounds),
-        heightInput.value,
-      );
+      const src = buildWidgetUrl(state, bounds);
+      textarea.value = buildSnippet(src, heightInput.value);
+      // 手直しを URL に載せる以上、長くなりすぎることがある。黙って切らずに知らせる
+      const tooLong = src.length > URL_WARN_LENGTH;
+      lengthWarning.hidden = !tooLong;
+      lengthWarning.textContent = tooLong
+        ? t('embed.tooLong', { n: src.length })
+        : '';
     } catch (err) {
       textarea.value = '';
       status.textContent = String(err.message ?? err);
@@ -118,6 +131,7 @@ export function createEmbedPanel({ container, t, getState }) {
       heightInput,
     ]),
     textarea,
+    lengthWarning,
     h('div', { class: 'button-row' }, [
       h('button', {
         type: 'button',

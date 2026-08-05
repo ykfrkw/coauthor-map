@@ -32,6 +32,21 @@ OpenAlex splits people. For the researcher above, 21 of 166 co-author records we
 
 Two records are counted as one person when they share an ORCID iD, or when all three of these hold: the same name, an organization in common, and no paper on which both appear. That last condition is the one that matters. A paper never lists the same person twice, so two records appearing together on one paper are definitely two different people — it is the only certain test available, and it is checked first. The corrections panel lists every merge it made, so you can see what was folded together, and a checkbox turns the whole thing off (`?merge=off`, or `?merge=orcid` for ORCID matching only).
 
+## One person, one pin
+
+A co-author who has moved used to appear in every city they had ever been affiliated with: 55 of 145 people showed up more than once, one of them in six cities at the same time. The map is about people, so each co-author is now placed at exactly one primary affiliation.
+
+The primary affiliation is the one **printed first on the paper** (`authorships[].institutions[0]`), which is the convention the literature already follows: the city that comes first most often wins, ties go to the most recent paper. On the reference map that decides 139 of 145 people. Where it does not decide — the same count in two cities in the same year — the affiliations on the person's ORCID record break the tie, and if that is inconclusive too, the smallest institution ID is picked so the result never wanders between reloads. Four people fall through to that last rule, and two have no affiliation anywhere in OpenAlex or ORCID; they are counted as “affiliation missing” rather than guessed at.
+
+Placing people once rather than once per affiliation drops the map from 69 cities in 15 countries to 47 in 14: the cities that disappear were never anybody's main address. `?pin=all` brings the old behavior back.
+
+## Narrowing the map
+
+Two controls decide who is on the map, and both travel in the URL, so a map you have corrected embeds exactly as you corrected it:
+
+- **Main collaborations** (`?min=`) keeps co-authors with at least N shared papers. On the reference map, 2 or more keeps 53 people of 145, 3 or more keeps 27.
+- **Co-authors** starts with everyone checked; unchecking someone takes them off the map (`?xa=`). Excluded organizations and papers ride along the same way (`?xi=`, `?xd=`).
+
 ## Pins are cities, not institutions
 
 OpenAlex stores institution coordinates at **city** granularity. Fifteen Tokyo institutions all sit on exactly the same point (35.6895, 139.6917), and querying ROR directly returns that identical city centroid. Separating institutions geographically is therefore impossible with this data, and the tool does not pretend otherwise: a pin is a city, and the institutions in it are listed in the tooltip.
@@ -40,13 +55,13 @@ Cities are merged when two institutions share a rounded coordinate, or when they
 
 ## Cost of a map
 
-Seven HTTP requests, about 3.6 seconds on a cold load, for a researcher with 34 papers and 145 co-authors. Results are cached in `sessionStorage` for 24 hours, so re-opening the page costs nothing. Because the requests come from your own browser, the OpenAlex rate limit is never a shared resource.
+Ten HTTP requests, a few seconds on a cold load, for a researcher with 34 papers and 145 co-authors (seven for the papers and affiliations, three more to read 117 co-author ORCID records 50 at a time). Results are cached in `sessionStorage` for 24 hours, so re-opening the page costs nothing. Because the requests come from your own browser, the OpenAlex rate limit is never a shared resource.
 
 ## Data sources
 
 | Source                                                                                                       | Used for                                | License                 |
 | ------------------------------------------------------------------------------------------------------------ | --------------------------------------- | ----------------------- |
-| [ORCID](https://orcid.org) public API                                                                        | Claimed works                           | CC0                     |
+| [ORCID](https://orcid.org) public API                                                                        | Claimed works, co-author affiliations   | CC0                     |
 | [researchmap](https://researchmap.jp) public API                                                             | Registered papers (Japan)               | Per researchmap's terms |
 | [OpenAlex](https://openalex.org)                                                                             | Author lists, affiliations, coordinates | CC0                     |
 | [Natural Earth](https://www.naturalearthdata.com) via [world-atlas](https://github.com/topojson/world-atlas) | Country boundaries                      | Public domain           |

@@ -328,7 +328,9 @@
    "mergedIds": [
     "https://openalex.org/A5122799223"
    ],
-   "mergedBy": "name"
+   "mergedBy": "name",
+   "primaryInstitutionId": "https://openalex.org/I22299242",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5002251483",
@@ -359,7 +361,9 @@
     "https://openalex.org/A5130715978",
     "https://openalex.org/A5136768910"
    ],
-   "mergedBy": "orcid"
+   "mergedBy": "orcid",
+   "primaryInstitutionId": "https://openalex.org/I62916508",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5047521970",
@@ -387,7 +391,9 @@
    ],
    "paperCount": 9,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I2802171185",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5058325336",
@@ -411,7 +417,9 @@
    ],
    "paperCount": 9,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I22299242",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5065638475",
@@ -435,7 +443,9 @@
    ],
    "paperCount": 9,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I118564535",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5063565381",
@@ -455,7 +465,9 @@
    ],
    "paperCount": 7,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I79576946",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5011452278",
@@ -476,7 +488,9 @@
    ],
    "paperCount": 6,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I22299242",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5016972944",
@@ -497,7 +511,9 @@
    "mergedIds": [
     "https://openalex.org/A5122768284"
    ],
-   "mergedBy": "name"
+   "mergedBy": "name",
+   "primaryInstitutionId": "https://openalex.org/I865915315",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5068265721",
@@ -516,7 +532,9 @@
    ],
    "paperCount": 5,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I22299242",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5011934579",
@@ -540,7 +558,9 @@
     "https://openalex.org/A5130713196",
     "https://openalex.org/A5136793216"
    ],
-   "mergedBy": "orcid"
+   "mergedBy": "orcid",
+   "primaryInstitutionId": "https://openalex.org/I4210115305",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5007077090",
@@ -561,7 +581,9 @@
    ],
    "paperCount": 4,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I2802171185",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5051793931",
@@ -580,7 +602,9 @@
    "mergedIds": [
     "https://openalex.org/A5121105424"
    ],
-   "mergedBy": "name"
+   "mergedBy": "name",
+   "primaryInstitutionId": "https://openalex.org/I865915315",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5088217633",
@@ -598,7 +622,9 @@
    ],
    "paperCount": 4,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I118564535",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5053074395",
@@ -618,7 +644,9 @@
    "mergedIds": [
     "https://openalex.org/A5122843159"
    ],
-   "mergedBy": "name"
+   "mergedBy": "name",
+   "primaryInstitutionId": "https://openalex.org/I62916508",
+   "primaryBy": "fallback"
   },
   {
    "id": "https://openalex.org/A5056406079",
@@ -637,7 +665,9 @@
    "mergedIds": [
     "https://openalex.org/A5122769924"
    ],
-   "mergedBy": "name"
+   "mergedBy": "name",
+   "primaryInstitutionId": "https://openalex.org/I22299242",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5026844864",
@@ -655,7 +685,9 @@
    ],
    "paperCount": 4,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I33858575",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5006902874",
@@ -673,7 +705,9 @@
    ],
    "paperCount": 4,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I118564535",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5039593848",
@@ -696,7 +730,9 @@
    ],
    "paperCount": 4,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I149737975",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5063320082",
@@ -713,7 +749,9 @@
    ],
    "paperCount": 3,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I865915315",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5009377868",
@@ -730,7 +768,9 @@
    ],
    "paperCount": 3,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I4210103779",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5051133017",
@@ -750,7 +790,9 @@
    "mergedIds": [
     "https://openalex.org/A5136808655"
    ],
-   "mergedBy": "name"
+   "mergedBy": "name",
+   "primaryInstitutionId": "https://openalex.org/I4210127591",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5059726681",
@@ -769,7 +811,9 @@
    ],
    "paperCount": 3,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I4210115305",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5052344963",
@@ -789,7 +833,9 @@
    "mergedIds": [
     "https://openalex.org/A5130710180"
    ],
-   "mergedBy": "name"
+   "mergedBy": "name",
+   "primaryInstitutionId": "https://openalex.org/I145311948",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5056171340",
@@ -805,7 +851,9 @@
    ],
    "paperCount": 3,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I44902217",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5015398914",
@@ -823,7 +871,9 @@
    ],
    "paperCount": 3,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I146399215",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5003292761",
@@ -841,7 +891,9 @@
    "mergedIds": [
     "https://openalex.org/A5122767317"
    ],
-   "mergedBy": "name"
+   "mergedBy": "name",
+   "primaryInstitutionId": "https://openalex.org/I22299242",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5122791740",
@@ -863,7 +915,9 @@
    "mergedIds": [
     "https://openalex.org/A5128861911"
    ],
-   "mergedBy": "name"
+   "mergedBy": "name",
+   "primaryInstitutionId": "https://openalex.org/I4210109338",
+   "primaryBy": "fallback"
   },
   {
    "id": "https://openalex.org/A5074354992",
@@ -878,7 +932,9 @@
    ],
    "paperCount": 2,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I22299242",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5027653673",
@@ -895,7 +951,9 @@
    ],
    "paperCount": 2,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I4210115305",
+   "primaryBy": "fallback"
   },
   {
    "id": "https://openalex.org/A5038819439",
@@ -910,7 +968,9 @@
    ],
    "paperCount": 2,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I95793202",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5010069785",
@@ -925,7 +985,9 @@
    ],
    "paperCount": 2,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I22299242",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5058836037",
@@ -942,7 +1004,9 @@
    ],
    "paperCount": 2,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I223822909",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5101449336",
@@ -959,7 +1023,9 @@
    ],
    "paperCount": 2,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I4210127591",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5060472481",
@@ -976,7 +1042,9 @@
    "mergedIds": [
     "https://openalex.org/A5060622054"
    ],
-   "mergedBy": "name"
+   "mergedBy": "name",
+   "primaryInstitutionId": "https://openalex.org/I22299242",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5111113286",
@@ -991,7 +1059,9 @@
    ],
    "paperCount": 2,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I4210103779",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5100641892",
@@ -1008,7 +1078,9 @@
    "mergedIds": [
     "https://openalex.org/A5130674391"
    ],
-   "mergedBy": "name"
+   "mergedBy": "name",
+   "primaryInstitutionId": "https://openalex.org/I62916508",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5051448405",
@@ -1023,7 +1095,9 @@
    ],
    "paperCount": 2,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I1334415907",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5128884528",
@@ -1042,7 +1116,9 @@
    "mergedIds": [
     "https://openalex.org/A5136785196"
    ],
-   "mergedBy": "name"
+   "mergedBy": "name",
+   "primaryInstitutionId": "https://openalex.org/I4210115305",
+   "primaryBy": "fallback"
   },
   {
    "id": "https://openalex.org/A5055109212",
@@ -1065,7 +1141,9 @@
    "mergedIds": [
     "https://openalex.org/A5130688627"
    ],
-   "mergedBy": "name"
+   "mergedBy": "name",
+   "primaryInstitutionId": "https://openalex.org/I2801533059",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5059920594",
@@ -1080,7 +1158,9 @@
    ],
    "paperCount": 2,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I22299242",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5004615822",
@@ -1096,7 +1176,9 @@
    ],
    "paperCount": 2,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I83642850",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5088288556",
@@ -1111,7 +1193,9 @@
    ],
    "paperCount": 2,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I4210109338",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5039269293",
@@ -1129,7 +1213,9 @@
    "mergedIds": [
     "https://openalex.org/A5103782813"
    ],
-   "mergedBy": "name"
+   "mergedBy": "name",
+   "primaryInstitutionId": "https://openalex.org/I4210103779",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5002846176",
@@ -1146,7 +1232,9 @@
    "mergedIds": [
     "https://openalex.org/A5128866276"
    ],
-   "mergedBy": "name"
+   "mergedBy": "name",
+   "primaryInstitutionId": "https://openalex.org/I865915315",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5016565613",
@@ -1161,7 +1249,9 @@
    ],
    "paperCount": 2,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I865915315",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5026375225",
@@ -1181,7 +1271,9 @@
    ],
    "paperCount": 2,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I203951103",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5037644955",
@@ -1197,7 +1289,9 @@
    ],
    "paperCount": 2,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I4210127591",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5082770590",
@@ -1213,7 +1307,9 @@
    ],
    "paperCount": 2,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I4210117955",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5007932203",
@@ -1228,7 +1324,9 @@
    ],
    "paperCount": 2,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I22299242",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5048162182",
@@ -1244,7 +1342,9 @@
    ],
    "paperCount": 2,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I22299242",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5001296226",
@@ -1265,7 +1365,9 @@
    "mergedIds": [
     "https://openalex.org/A5136794217"
    ],
-   "mergedBy": "orcid"
+   "mergedBy": "orcid",
+   "primaryInstitutionId": "https://openalex.org/I183067930",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5003439282",
@@ -1281,7 +1383,9 @@
    ],
    "paperCount": 2,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I132400726",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5074755827",
@@ -1300,7 +1404,9 @@
    "mergedIds": [
     "https://openalex.org/A5103864075"
    ],
-   "mergedBy": "name"
+   "mergedBy": "name",
+   "primaryInstitutionId": "https://openalex.org/I200641316",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5011214282",
@@ -1314,7 +1420,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I4210114023",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5063207513",
@@ -1328,7 +1436,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I204465549",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5045088705",
@@ -1344,7 +1454,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I2803066836",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5054464657",
@@ -1358,7 +1470,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I865915315",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5024091960",
@@ -1379,7 +1493,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I154526488",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5054887622",
@@ -1394,7 +1510,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I40120149",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5000473326",
@@ -1408,7 +1526,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I91045830",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5087843280",
@@ -1422,7 +1542,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I4210108594",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5038306532",
@@ -1437,7 +1559,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I114457229",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5020172260",
@@ -1451,7 +1575,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I62916508",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5101759540",
@@ -1465,7 +1591,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I897549280",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5084907875",
@@ -1481,7 +1609,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I183067930",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5067702903",
@@ -1496,7 +1626,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I55106644",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5086418339",
@@ -1510,7 +1642,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I95793202",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5022351247",
@@ -1524,7 +1658,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I74801974",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5002968416",
@@ -1538,7 +1674,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I119439378",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5030135921",
@@ -1554,7 +1692,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I161046081",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5128878612",
@@ -1568,7 +1708,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I4210158267",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5034022387",
@@ -1582,7 +1724,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I74801974",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5052535424",
@@ -1597,7 +1741,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I114457229",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5106370998",
@@ -1611,7 +1757,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I145722265",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5028753374",
@@ -1626,7 +1774,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I4210130218",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5093981443",
@@ -1640,7 +1790,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I62916508",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5136797513",
@@ -1655,7 +1807,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I4210127591",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5070078265",
@@ -1672,7 +1826,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I3018771216",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5028128941",
@@ -1687,7 +1843,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I1297463080",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5044060263",
@@ -1701,7 +1859,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I865915315",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5103450135",
@@ -1715,7 +1875,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I87531838",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5025989271",
@@ -1729,7 +1891,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I22299242",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5119706813",
@@ -1743,7 +1907,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I897549280",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5010213008",
@@ -1758,7 +1924,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I204778367",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5025084207",
@@ -1772,7 +1940,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I138689650",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5043920499",
@@ -1786,7 +1956,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I4210108594",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5016694325",
@@ -1800,7 +1972,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I1334415907",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5010194987",
@@ -1814,7 +1988,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I92156820",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5020360420",
@@ -1829,7 +2005,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I107672454",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5130683481",
@@ -1845,7 +2023,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I4210115305",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5119788306",
@@ -1859,7 +2039,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I62916508",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5052176535",
@@ -1873,7 +2055,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I136199984",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5085734631",
@@ -1888,7 +2072,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I55106644",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5042224372",
@@ -1902,7 +2088,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I897549280",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5065188754",
@@ -1917,7 +2105,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I161046081",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5070314416",
@@ -1931,7 +2121,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I4210106315",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5008358666",
@@ -1945,7 +2137,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I22299242",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5017682602",
@@ -1960,7 +2154,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I4210106580",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5068983952",
@@ -1972,7 +2168,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": null,
+   "primaryBy": null
   },
   {
    "id": "https://openalex.org/A5101739348",
@@ -1986,7 +2184,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I74801974",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5018870434",
@@ -2000,7 +2200,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I4210114023",
+   "primaryBy": "first-listed"
   },
   {
    "id": null,
@@ -2014,7 +2216,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I22299242",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5083651374",
@@ -2028,7 +2232,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I4210104358",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5046999982",
@@ -2042,7 +2248,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I865915315",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5090184190",
@@ -2056,7 +2264,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I2800653546",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5122788246",
@@ -2071,7 +2281,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I33858575",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5049520100",
@@ -2085,7 +2297,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I4396570521",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5136771585",
@@ -2099,7 +2313,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I145722265",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5103179531",
@@ -2114,7 +2330,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I163770644",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5128878315",
@@ -2128,7 +2346,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I4210158267",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5014246700",
@@ -2143,7 +2363,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I4210158267",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5092879606",
@@ -2157,7 +2379,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I865915315",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5023685293",
@@ -2171,7 +2395,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I95793202",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5033221741",
@@ -2186,7 +2412,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I107672454",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5036796884",
@@ -2202,7 +2430,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I1283339181",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5026480246",
@@ -2216,7 +2446,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I1334415907",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5100782718",
@@ -2232,7 +2464,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I125043107",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5091440083",
@@ -2246,7 +2480,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I8204097",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5113377698",
@@ -2260,7 +2496,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I62916508",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5112230672",
@@ -2274,7 +2512,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I4210109338",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5078482500",
@@ -2288,7 +2528,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I154130895",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5059432717",
@@ -2302,7 +2544,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I4210109338",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5080016475",
@@ -2318,7 +2562,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I223822909",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5062710767",
@@ -2332,7 +2578,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I62916508",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5039744586",
@@ -2346,7 +2594,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I8721504",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5103684728",
@@ -2358,7 +2608,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": null,
+   "primaryBy": null
   },
   {
    "id": "https://openalex.org/A5101808259",
@@ -2372,7 +2624,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I74801974",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5026256493",
@@ -2386,7 +2640,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I4210103779",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5002528924",
@@ -2400,7 +2656,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I10947320",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5082277627",
@@ -2414,7 +2672,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I200719446",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5102937438",
@@ -2429,7 +2689,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I4210125761",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5122808210",
@@ -2443,7 +2705,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I22299242",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5014532124",
@@ -2459,7 +2723,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I4210115305",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5087471581",
@@ -2474,7 +2740,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I25041050",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5061539426",
@@ -2489,7 +2757,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I28792581",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5085318097",
@@ -2504,7 +2774,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I179225836",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5043487540",
@@ -2518,7 +2790,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I865915315",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5059852489",
@@ -2532,7 +2806,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I897549280",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5130703931",
@@ -2548,7 +2824,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I4210115305",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5017115362",
@@ -2563,7 +2841,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I22299242",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5058732680",
@@ -2578,7 +2858,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I183067930",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5100381004",
@@ -2592,7 +2874,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I865915315",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5019191233",
@@ -2606,7 +2890,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I74801974",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5103069742",
@@ -2620,7 +2906,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I4210114023",
+   "primaryBy": "first-listed"
   },
   {
    "id": "https://openalex.org/A5117934687",
@@ -2634,7 +2922,9 @@
    ],
    "paperCount": 1,
    "mergedIds": [],
-   "mergedBy": null
+   "mergedBy": null,
+   "primaryInstitutionId": "https://openalex.org/I865915315",
+   "primaryBy": "first-listed"
   }
  ],
  "institutions": [
@@ -3831,6 +4121,378 @@
  ],
  "cities": [
   {
+   "key": "JP|Kyoto",
+   "lat": 35.02107,
+   "lng": 135.75385,
+   "city": "Kyoto",
+   "countryCode": "JP",
+   "country": "Japan",
+   "institutions": [
+    {
+     "id": "https://openalex.org/I22299242",
+     "name": "Kyoto University",
+     "countryCode": "JP",
+     "type": "education",
+     "lat": 35.02107,
+     "lng": 135.75385,
+     "city": "Kyoto",
+     "country": "Japan"
+    }
+   ],
+   "coauthors": [
+    {
+     "id": "https://openalex.org/A5085050194",
+     "name": "Toshi A. Furukawa",
+     "orcid": "https://orcid.org/0000-0003-2159-3776",
+     "institutionIds": [
+      "https://openalex.org/I22299242",
+      "https://openalex.org/I4210116961"
+     ],
+     "dois": [
+      "10.1001/jamapsychiatry.2023.5060",
+      "10.1002/wps.20906",
+      "10.1016/j.invent.2025.100860",
+      "10.1017/rsm.2025.10030",
+      "10.1101/2021.12.09.21267441",
+      "10.1101/2022.06.02.22275890",
+      "10.1101/2023.05.19.23290084",
+      "10.1101/2024.04.24.24306311",
+      "10.1111/pcn.13730",
+      "10.1136/bmjment-2023-300654",
+      "10.1136/bmjment-2023-300978",
+      "10.1136/bmjopen-2022-061023",
+      "10.1136/bmjopen-2025-102696",
+      "10.1192/bjp.2021.165",
+      "10.1016/j.brat.2026.104960"
+     ],
+     "paperCount": 15,
+     "mergedIds": [
+      "https://openalex.org/A5122799223"
+     ],
+     "mergedBy": "name",
+     "primaryInstitutionId": "https://openalex.org/I22299242",
+     "primaryBy": "first-listed"
+    },
+    {
+     "id": "https://openalex.org/A5058325336",
+     "name": "Masatsugu Sakata",
+     "orcid": "https://orcid.org/0000-0002-5358-5263",
+     "institutionIds": [
+      "https://openalex.org/I22299242",
+      "https://openalex.org/I33858575",
+      "https://openalex.org/I4210107954"
+     ],
+     "dois": [
+      "10.1001/jamapsychiatry.2023.5060",
+      "10.1002/wps.20906",
+      "10.1016/j.brat.2026.104960",
+      "10.1016/j.jad.2024.09.017",
+      "10.1017/rsm.2025.10030",
+      "10.1101/2022.06.02.22275890",
+      "10.1101/2023.05.19.23290084",
+      "10.1101/2024.04.24.24306311",
+      "10.1111/pcn.13730"
+     ],
+     "paperCount": 9,
+     "mergedIds": [],
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I22299242",
+     "primaryBy": "first-listed"
+    },
+    {
+     "id": "https://openalex.org/A5011452278",
+     "name": "Masami Ito",
+     "orcid": "https://orcid.org/0000-0003-3928-7654",
+     "institutionIds": [
+      "https://openalex.org/I22299242",
+      "https://openalex.org/I4210097860",
+      "https://openalex.org/I4210102907"
+     ],
+     "dois": [
+      "10.1001/jamapsychiatry.2023.5060",
+      "10.1002/wps.20906",
+      "10.1016/j.brat.2026.104960",
+      "10.1016/j.jad.2024.09.017",
+      "10.1101/2023.05.19.23290084",
+      "10.1136/bmjment-2023-300654"
+     ],
+     "paperCount": 6,
+     "mergedIds": [],
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I22299242",
+     "primaryBy": "first-listed"
+    },
+    {
+     "id": "https://openalex.org/A5068265721",
+     "name": "Satoshi Funada",
+     "orcid": "https://orcid.org/0000-0002-8925-2348",
+     "institutionIds": [
+      "https://openalex.org/I203951103",
+      "https://openalex.org/I22299242"
+     ],
+     "dois": [
+      "10.1001/jamapsychiatry.2023.5060",
+      "10.1101/2021.12.09.21267441",
+      "10.1101/2022.06.02.22275890",
+      "10.1101/2023.05.19.23290084",
+      "10.1136/bmjopen-2022-061023"
+     ],
+     "paperCount": 5,
+     "mergedIds": [],
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I22299242",
+     "primaryBy": "first-listed"
+    },
+    {
+     "id": "https://openalex.org/A5056406079",
+     "name": "Rie Toyomoto",
+     "orcid": "https://orcid.org/0000-0003-1125-3145",
+     "institutionIds": [
+      "https://openalex.org/I22299242"
+     ],
+     "dois": [
+      "10.1002/wps.20906",
+      "10.1016/j.jad.2024.09.017",
+      "10.1136/bmjment-2023-300654",
+      "10.1016/j.brat.2026.104960"
+     ],
+     "paperCount": 4,
+     "mergedIds": [
+      "https://openalex.org/A5122769924"
+     ],
+     "mergedBy": "name",
+     "primaryInstitutionId": "https://openalex.org/I22299242",
+     "primaryBy": "first-listed"
+    },
+    {
+     "id": "https://openalex.org/A5003292761",
+     "name": "Yan Luo",
+     "orcid": "https://orcid.org/0000-0002-5271-5126",
+     "institutionIds": [
+      "https://openalex.org/I22299242"
+     ],
+     "dois": [
+      "10.1101/2021.12.09.21267441",
+      "10.1136/bmjopen-2022-061023",
+      "10.1016/j.brat.2026.104960"
+     ],
+     "paperCount": 3,
+     "mergedIds": [
+      "https://openalex.org/A5122767317"
+     ],
+     "mergedBy": "name",
+     "primaryInstitutionId": "https://openalex.org/I22299242",
+     "primaryBy": "first-listed"
+    },
+    {
+     "id": "https://openalex.org/A5074354992",
+     "name": "Akira Ōnishi",
+     "orcid": "https://orcid.org/0000-0002-3120-1273",
+     "institutionIds": [
+      "https://openalex.org/I22299242"
+     ],
+     "dois": [
+      "10.1101/2021.12.09.21267441",
+      "10.1136/bmjopen-2022-061023"
+     ],
+     "paperCount": 2,
+     "mergedIds": [],
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I22299242",
+     "primaryBy": "first-listed"
+    },
+    {
+     "id": "https://openalex.org/A5010069785",
+     "name": "Aran Tajika",
+     "orcid": "https://orcid.org/0000-0003-3926-8867",
+     "institutionIds": [
+      "https://openalex.org/I22299242"
+     ],
+     "dois": [
+      "10.1002/wps.20906",
+      "10.1136/bmjment-2023-300654"
+     ],
+     "paperCount": 2,
+     "mergedIds": [],
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I22299242",
+     "primaryBy": "first-listed"
+    },
+    {
+     "id": "https://openalex.org/A5060472481",
+     "name": "Ethan Sahker",
+     "orcid": null,
+     "institutionIds": [
+      "https://openalex.org/I22299242"
+     ],
+     "dois": [
+      "10.1016/j.brat.2026.104960",
+      "10.1002/wps.20906"
+     ],
+     "paperCount": 2,
+     "mergedIds": [
+      "https://openalex.org/A5060622054"
+     ],
+     "mergedBy": "name",
+     "primaryInstitutionId": "https://openalex.org/I22299242",
+     "primaryBy": "first-listed"
+    },
+    {
+     "id": "https://openalex.org/A5059920594",
+     "name": "Kiyomi Shinohara",
+     "orcid": "https://orcid.org/0000-0003-3527-4004",
+     "institutionIds": [
+      "https://openalex.org/I22299242"
+     ],
+     "dois": [
+      "10.1002/wps.20906",
+      "10.1136/bmjment-2023-300654"
+     ],
+     "paperCount": 2,
+     "mergedIds": [],
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I22299242",
+     "primaryBy": "first-listed"
+    },
+    {
+     "id": "https://openalex.org/A5007932203",
+     "name": "Sanae Kishimoto",
+     "orcid": "https://orcid.org/0000-0002-2341-8931",
+     "institutionIds": [
+      "https://openalex.org/I22299242"
+     ],
+     "dois": [
+      "10.1002/wps.20906",
+      "10.1016/j.brat.2026.104960"
+     ],
+     "paperCount": 2,
+     "mergedIds": [],
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I22299242",
+     "primaryBy": "first-listed"
+    },
+    {
+     "id": "https://openalex.org/A5048162182",
+     "name": "T. Takayama",
+     "orcid": "https://orcid.org/0000-0002-3492-2025",
+     "institutionIds": [
+      "https://openalex.org/I22299242",
+      "https://openalex.org/I4210144487"
+     ],
+     "dois": [
+      "10.1017/rsm.2025.10030",
+      "10.1136/bmjment-2023-300654"
+     ],
+     "paperCount": 2,
+     "mergedIds": [],
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I22299242",
+     "primaryBy": "first-listed"
+    },
+    {
+     "id": "https://openalex.org/A5025989271",
+     "name": "Hissei Imai",
+     "orcid": "https://orcid.org/0000-0003-3656-5188",
+     "institutionIds": [
+      "https://openalex.org/I22299242"
+     ],
+     "dois": [
+      "10.1002/wps.20906"
+     ],
+     "paperCount": 1,
+     "mergedIds": [],
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I22299242",
+     "primaryBy": "first-listed"
+    },
+    {
+     "id": "https://openalex.org/A5008358666",
+     "name": "Kazufumi Yoshida",
+     "orcid": "https://orcid.org/0000-0003-4475-8043",
+     "institutionIds": [
+      "https://openalex.org/I22299242"
+     ],
+     "dois": [
+      "10.1136/bmjment-2023-300654"
+     ],
+     "paperCount": 1,
+     "mergedIds": [],
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I22299242",
+     "primaryBy": "first-listed"
+    },
+    {
+     "id": null,
+     "name": "Keisuke Yoshimura",
+     "orcid": "https://orcid.org/0009-0007-3985-2197",
+     "institutionIds": [
+      "https://openalex.org/I22299242"
+     ],
+     "dois": [
+      "10.1017/rsm.2025.10030"
+     ],
+     "paperCount": 1,
+     "mergedIds": [],
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I22299242",
+     "primaryBy": "first-listed"
+    },
+    {
+     "id": "https://openalex.org/A5122808210",
+     "name": "Tomohiro Takayama",
+     "orcid": null,
+     "institutionIds": [
+      "https://openalex.org/I22299242"
+     ],
+     "dois": [
+      "10.1016/j.brat.2026.104960"
+     ],
+     "paperCount": 1,
+     "mergedIds": [],
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I22299242",
+     "primaryBy": "first-listed"
+    },
+    {
+     "id": "https://openalex.org/A5017115362",
+     "name": "Yasushi Tsujimoto",
+     "orcid": "https://orcid.org/0000-0002-7214-5589",
+     "institutionIds": [
+      "https://openalex.org/I22299242",
+      "https://openalex.org/I4396570521"
+     ],
+     "dois": [
+      "10.1017/rsm.2025.10030"
+     ],
+     "paperCount": 1,
+     "mergedIds": [],
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I22299242",
+     "primaryBy": "first-listed"
+    }
+   ],
+   "dois": [
+    "10.1001/jamapsychiatry.2023.5060",
+    "10.1002/wps.20906",
+    "10.1016/j.brat.2026.104960",
+    "10.1016/j.invent.2025.100860",
+    "10.1016/j.jad.2024.09.017",
+    "10.1017/rsm.2025.10030",
+    "10.1101/2021.12.09.21267441",
+    "10.1101/2022.06.02.22275890",
+    "10.1101/2023.05.19.23290084",
+    "10.1101/2024.04.24.24306311",
+    "10.1111/pcn.13730",
+    "10.1136/bmjment-2023-300654",
+    "10.1136/bmjment-2023-300978",
+    "10.1136/bmjopen-2022-061023",
+    "10.1136/bmjopen-2025-102696",
+    "10.1192/bjp.2021.165"
+   ],
+   "paperCount": 16,
+   "coauthorCount": 17
+  },
+  {
    "key": "JP|Tokyo",
    "lat": 35.6895,
    "lng": 139.69171,
@@ -3838,26 +4500,6 @@
    "countryCode": "JP",
    "country": "Japan",
    "institutions": [
-    {
-     "id": "https://openalex.org/I203951103",
-     "name": "Keio University",
-     "countryCode": "JP",
-     "type": "education",
-     "lat": 35.6895,
-     "lng": 139.69171,
-     "city": "Tokyo",
-     "country": "Japan"
-    },
-    {
-     "id": "https://openalex.org/I4210102907",
-     "name": "Asahi Kasei (Japan)",
-     "countryCode": "JP",
-     "type": "company",
-     "lat": 35.68949890136719,
-     "lng": 139.69171142578125,
-     "city": "Tokyo",
-     "country": "Japan"
-    },
     {
      "id": "https://openalex.org/I4210109338",
      "name": "University of Tokyo Hospital",
@@ -3879,12 +4521,22 @@
      "country": "Japan"
     },
     {
-     "id": "https://openalex.org/I4210092627",
-     "name": "San-ikukai Hospital",
+     "id": "https://openalex.org/I203951103",
+     "name": "Keio University",
      "countryCode": "JP",
-     "type": "healthcare",
-     "lat": 35.70253372192383,
-     "lng": 139.81396484375,
+     "type": "education",
+     "lat": 35.6895,
+     "lng": 139.69171,
+     "city": "Tokyo",
+     "country": "Japan"
+    },
+    {
+     "id": "https://openalex.org/I200641316",
+     "name": "Musashino University",
+     "countryCode": "JP",
+     "type": "education",
+     "lat": 35.68949890136719,
+     "lng": 139.69171142578125,
      "city": "Tokyo",
      "country": "Japan"
     },
@@ -3895,26 +4547,6 @@
      "type": "education",
      "lat": 35.6895,
      "lng": 139.69171,
-     "city": "Tokyo",
-     "country": "Japan"
-    },
-    {
-     "id": "https://openalex.org/I64189623",
-     "name": "Kitasato University",
-     "countryCode": "JP",
-     "type": "education",
-     "lat": 35.6895,
-     "lng": 139.69171,
-     "city": "Tokyo",
-     "country": "Japan"
-    },
-    {
-     "id": "https://openalex.org/I4210132767",
-     "name": "Institute for Health Economics and Policy",
-     "countryCode": "JP",
-     "type": "nonprofit",
-     "lat": 35.68949890136719,
-     "lng": 139.69171142578125,
      "city": "Tokyo",
      "country": "Japan"
     },
@@ -3939,40 +4571,10 @@
      "country": "Japan"
     },
     {
-     "id": "https://openalex.org/I34077901",
-     "name": "Juntendo University",
-     "countryCode": "JP",
-     "type": "education",
-     "lat": 35.70222091674805,
-     "lng": 139.76083374023438,
-     "city": "Tokyo",
-     "country": "Japan"
-    },
-    {
      "id": "https://openalex.org/I4210130218",
      "name": "Mitsui Memorial Hospital",
      "countryCode": "JP",
      "type": "healthcare",
-     "lat": 35.68949890136719,
-     "lng": 139.69171142578125,
-     "city": "Tokyo",
-     "country": "Japan"
-    },
-    {
-     "id": "https://openalex.org/I4210149722",
-     "name": "Musashino Red Cross Hospital",
-     "countryCode": "JP",
-     "type": "healthcare",
-     "lat": 35.68949890136719,
-     "lng": 139.69171142578125,
-     "city": "Tokyo",
-     "country": "Japan"
-    },
-    {
-     "id": "https://openalex.org/I200641316",
-     "name": "Musashino University",
-     "countryCode": "JP",
-     "type": "education",
      "lat": 35.68949890136719,
      "lng": 139.69171142578125,
      "city": "Tokyo",
@@ -3991,69 +4593,6 @@
    ],
    "coauthors": [
     {
-     "id": "https://openalex.org/A5011452278",
-     "name": "Masami Ito",
-     "orcid": "https://orcid.org/0000-0003-3928-7654",
-     "institutionIds": [
-      "https://openalex.org/I22299242",
-      "https://openalex.org/I4210097860",
-      "https://openalex.org/I4210102907"
-     ],
-     "dois": [
-      "10.1001/jamapsychiatry.2023.5060",
-      "10.1002/wps.20906",
-      "10.1016/j.brat.2026.104960",
-      "10.1016/j.jad.2024.09.017",
-      "10.1101/2023.05.19.23290084",
-      "10.1136/bmjment-2023-300654"
-     ],
-     "paperCount": 6,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5068265721",
-     "name": "Satoshi Funada",
-     "orcid": "https://orcid.org/0000-0002-8925-2348",
-     "institutionIds": [
-      "https://openalex.org/I203951103",
-      "https://openalex.org/I22299242"
-     ],
-     "dois": [
-      "10.1001/jamapsychiatry.2023.5060",
-      "10.1101/2021.12.09.21267441",
-      "10.1101/2022.06.02.22275890",
-      "10.1101/2023.05.19.23290084",
-      "10.1136/bmjopen-2022-061023"
-     ],
-     "paperCount": 5,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5039593848",
-     "name": "Yuki Kataoka",
-     "orcid": "https://orcid.org/0000-0001-7982-5213",
-     "institutionIds": [
-      "https://openalex.org/I201537933",
-      "https://openalex.org/I22299242",
-      "https://openalex.org/I4210092627",
-      "https://openalex.org/I4396570521",
-      "https://openalex.org/I149737975",
-      "https://openalex.org/I4396570538",
-      "https://openalex.org/I4210134765"
-     ],
-     "dois": [
-      "10.1017/rsm.2025.10030",
-      "10.1101/2021.12.09.21267441",
-      "10.1136/bmjopen-2022-061023",
-      "10.21037/atm.2019.10.65"
-     ],
-     "paperCount": 4,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
      "id": "https://openalex.org/A5009377868",
      "name": "Hikari Takashina",
      "orcid": "https://orcid.org/0000-0003-3094-0573",
@@ -4068,25 +4607,9 @@
      ],
      "paperCount": 3,
      "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5015398914",
-     "name": "Shun Nakajima",
-     "orcid": "https://orcid.org/0000-0002-2992-195X",
-     "institutionIds": [
-      "https://openalex.org/I146399215",
-      "https://openalex.org/I4210103779",
-      "https://openalex.org/I99561568"
-     ],
-     "dois": [
-      "10.1001/jamapsychiatry.2023.5060",
-      "10.1016/j.jad.2024.09.017",
-      "10.1101/2023.05.19.23290084"
-     ],
-     "paperCount": 3,
-     "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I4210103779",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5122791740",
@@ -4108,7 +4631,9 @@
      "mergedIds": [
       "https://openalex.org/A5128861911"
      ],
-     "mergedBy": "name"
+     "mergedBy": "name",
+     "primaryInstitutionId": "https://openalex.org/I4210109338",
+     "primaryBy": "fallback"
     },
     {
      "id": "https://openalex.org/A5111113286",
@@ -4123,23 +4648,9 @@
      ],
      "paperCount": 2,
      "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5004615822",
-     "name": "Kiyoto Kasai",
-     "orcid": "https://orcid.org/0000-0002-4443-4535",
-     "institutionIds": [
-      "https://openalex.org/I83642850",
-      "https://openalex.org/I4210109338"
-     ],
-     "dois": [
-      "10.1016/j.jad.2024.09.017",
-      "10.1111/pcn.13438"
-     ],
-     "paperCount": 2,
-     "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I4210103779",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5088288556",
@@ -4154,7 +4665,9 @@
      ],
      "paperCount": 2,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I4210109338",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5039269293",
@@ -4172,7 +4685,9 @@
      "mergedIds": [
       "https://openalex.org/A5103782813"
      ],
-     "mergedBy": "name"
+     "mergedBy": "name",
+     "primaryInstitutionId": "https://openalex.org/I4210103779",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5026375225",
@@ -4192,7 +4707,9 @@
      ],
      "paperCount": 2,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I203951103",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5074755827",
@@ -4211,7 +4728,9 @@
      "mergedIds": [
       "https://openalex.org/A5103864075"
      ],
-     "mergedBy": "name"
+     "mergedBy": "name",
+     "primaryInstitutionId": "https://openalex.org/I200641316",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5022351247",
@@ -4225,7 +4744,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I74801974",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5034022387",
@@ -4239,7 +4760,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I74801974",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5028753374",
@@ -4254,7 +4777,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I4210130218",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5103450135",
@@ -4268,7 +4793,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I87531838",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5101739348",
@@ -4282,7 +4809,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I74801974",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5090184190",
@@ -4296,7 +4825,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I2800653546",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5036796884",
@@ -4312,7 +4843,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I1283339181",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5112230672",
@@ -4326,7 +4859,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I4210109338",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5059432717",
@@ -4340,7 +4875,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I4210109338",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5101808259",
@@ -4354,7 +4891,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I74801974",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5026256493",
@@ -4368,7 +4907,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I4210103779",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5019191233",
@@ -4382,432 +4923,29 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I74801974",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
     "10.1001/jama.2020.12660",
     "10.1001/jamapsychiatry.2023.5060",
-    "10.1002/wps.20906",
     "10.1007/s40263-025-01188-2",
     "10.1016/j.brat.2026.104960",
     "10.1016/j.eclinm.2025.103583",
     "10.1016/j.eclinm.2026.103847",
+    "10.1016/j.euroneuro.2026.112802",
     "10.1016/j.jad.2024.09.017",
     "10.1016/j.pec.2021.03.034",
     "10.1017/rsm.2025.10030",
     "10.1093/schbul/sbae098",
-    "10.1101/2021.12.09.21267441",
-    "10.1101/2022.06.02.22275890",
     "10.1101/2023.05.19.23290084",
     "10.1101/2024.03.06.24303827",
     "10.1111/pcn.13438",
-    "10.1136/bmjment-2023-300654",
-    "10.1136/bmjopen-2022-061023",
-    "10.12688/f1000research.169873.1",
-    "10.21037/atm.2019.10.65"
+    "10.12688/f1000research.169873.1"
    ],
-   "paperCount": 20,
-   "coauthorCount": 24
-  },
-  {
-   "key": "JP|Kyoto",
-   "lat": 35.02107,
-   "lng": 135.75385,
-   "city": "Kyoto",
-   "countryCode": "JP",
-   "country": "Japan",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I22299242",
-     "name": "Kyoto University",
-     "countryCode": "JP",
-     "type": "education",
-     "lat": 35.02107,
-     "lng": 135.75385,
-     "city": "Kyoto",
-     "country": "Japan"
-    },
-    {
-     "id": "https://openalex.org/I4210097860",
-     "name": "Kyoto College of Medical Science",
-     "countryCode": "JP",
-     "type": "education",
-     "lat": 35.02107,
-     "lng": 135.75385,
-     "city": "Kyoto",
-     "country": "Japan"
-    },
-    {
-     "id": "https://openalex.org/I4396570538",
-     "name": "Kyoto Min-iren Asukai Hospital",
-     "countryCode": null,
-     "type": "healthcare",
-     "lat": 35.02106857299805,
-     "lng": 135.75384521484375,
-     "city": "Kyoto",
-     "country": "Japan"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5085050194",
-     "name": "Toshi A. Furukawa",
-     "orcid": "https://orcid.org/0000-0003-2159-3776",
-     "institutionIds": [
-      "https://openalex.org/I22299242",
-      "https://openalex.org/I4210116961"
-     ],
-     "dois": [
-      "10.1001/jamapsychiatry.2023.5060",
-      "10.1002/wps.20906",
-      "10.1016/j.invent.2025.100860",
-      "10.1017/rsm.2025.10030",
-      "10.1101/2021.12.09.21267441",
-      "10.1101/2022.06.02.22275890",
-      "10.1101/2023.05.19.23290084",
-      "10.1101/2024.04.24.24306311",
-      "10.1111/pcn.13730",
-      "10.1136/bmjment-2023-300654",
-      "10.1136/bmjment-2023-300978",
-      "10.1136/bmjopen-2022-061023",
-      "10.1136/bmjopen-2025-102696",
-      "10.1192/bjp.2021.165",
-      "10.1016/j.brat.2026.104960"
-     ],
-     "paperCount": 15,
-     "mergedIds": [
-      "https://openalex.org/A5122799223"
-     ],
-     "mergedBy": "name"
-    },
-    {
-     "id": "https://openalex.org/A5058325336",
-     "name": "Masatsugu Sakata",
-     "orcid": "https://orcid.org/0000-0002-5358-5263",
-     "institutionIds": [
-      "https://openalex.org/I22299242",
-      "https://openalex.org/I33858575",
-      "https://openalex.org/I4210107954"
-     ],
-     "dois": [
-      "10.1001/jamapsychiatry.2023.5060",
-      "10.1002/wps.20906",
-      "10.1016/j.brat.2026.104960",
-      "10.1016/j.jad.2024.09.017",
-      "10.1017/rsm.2025.10030",
-      "10.1101/2022.06.02.22275890",
-      "10.1101/2023.05.19.23290084",
-      "10.1101/2024.04.24.24306311",
-      "10.1111/pcn.13730"
-     ],
-     "paperCount": 9,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5011452278",
-     "name": "Masami Ito",
-     "orcid": "https://orcid.org/0000-0003-3928-7654",
-     "institutionIds": [
-      "https://openalex.org/I22299242",
-      "https://openalex.org/I4210097860",
-      "https://openalex.org/I4210102907"
-     ],
-     "dois": [
-      "10.1001/jamapsychiatry.2023.5060",
-      "10.1002/wps.20906",
-      "10.1016/j.brat.2026.104960",
-      "10.1016/j.jad.2024.09.017",
-      "10.1101/2023.05.19.23290084",
-      "10.1136/bmjment-2023-300654"
-     ],
-     "paperCount": 6,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5068265721",
-     "name": "Satoshi Funada",
-     "orcid": "https://orcid.org/0000-0002-8925-2348",
-     "institutionIds": [
-      "https://openalex.org/I203951103",
-      "https://openalex.org/I22299242"
-     ],
-     "dois": [
-      "10.1001/jamapsychiatry.2023.5060",
-      "10.1101/2021.12.09.21267441",
-      "10.1101/2022.06.02.22275890",
-      "10.1101/2023.05.19.23290084",
-      "10.1136/bmjopen-2022-061023"
-     ],
-     "paperCount": 5,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5056406079",
-     "name": "Rie Toyomoto",
-     "orcid": "https://orcid.org/0000-0003-1125-3145",
-     "institutionIds": [
-      "https://openalex.org/I22299242"
-     ],
-     "dois": [
-      "10.1002/wps.20906",
-      "10.1016/j.jad.2024.09.017",
-      "10.1136/bmjment-2023-300654",
-      "10.1016/j.brat.2026.104960"
-     ],
-     "paperCount": 4,
-     "mergedIds": [
-      "https://openalex.org/A5122769924"
-     ],
-     "mergedBy": "name"
-    },
-    {
-     "id": "https://openalex.org/A5026844864",
-     "name": "Shino Kikuchi",
-     "orcid": "https://orcid.org/0000-0001-6706-4912",
-     "institutionIds": [
-      "https://openalex.org/I33858575",
-      "https://openalex.org/I22299242"
-     ],
-     "dois": [
-      "10.1001/jamapsychiatry.2023.5060",
-      "10.1101/2022.06.02.22275890",
-      "10.1101/2023.05.19.23290084",
-      "10.1136/bmjment-2023-300654"
-     ],
-     "paperCount": 4,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5039593848",
-     "name": "Yuki Kataoka",
-     "orcid": "https://orcid.org/0000-0001-7982-5213",
-     "institutionIds": [
-      "https://openalex.org/I201537933",
-      "https://openalex.org/I22299242",
-      "https://openalex.org/I4210092627",
-      "https://openalex.org/I4396570521",
-      "https://openalex.org/I149737975",
-      "https://openalex.org/I4396570538",
-      "https://openalex.org/I4210134765"
-     ],
-     "dois": [
-      "10.1017/rsm.2025.10030",
-      "10.1101/2021.12.09.21267441",
-      "10.1136/bmjopen-2022-061023",
-      "10.21037/atm.2019.10.65"
-     ],
-     "paperCount": 4,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5003292761",
-     "name": "Yan Luo",
-     "orcid": "https://orcid.org/0000-0002-5271-5126",
-     "institutionIds": [
-      "https://openalex.org/I22299242"
-     ],
-     "dois": [
-      "10.1101/2021.12.09.21267441",
-      "10.1136/bmjopen-2022-061023",
-      "10.1016/j.brat.2026.104960"
-     ],
-     "paperCount": 3,
-     "mergedIds": [
-      "https://openalex.org/A5122767317"
-     ],
-     "mergedBy": "name"
-    },
-    {
-     "id": "https://openalex.org/A5074354992",
-     "name": "Akira Ōnishi",
-     "orcid": "https://orcid.org/0000-0002-3120-1273",
-     "institutionIds": [
-      "https://openalex.org/I22299242"
-     ],
-     "dois": [
-      "10.1101/2021.12.09.21267441",
-      "10.1136/bmjopen-2022-061023"
-     ],
-     "paperCount": 2,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5010069785",
-     "name": "Aran Tajika",
-     "orcid": "https://orcid.org/0000-0003-3926-8867",
-     "institutionIds": [
-      "https://openalex.org/I22299242"
-     ],
-     "dois": [
-      "10.1002/wps.20906",
-      "10.1136/bmjment-2023-300654"
-     ],
-     "paperCount": 2,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5060472481",
-     "name": "Ethan Sahker",
-     "orcid": null,
-     "institutionIds": [
-      "https://openalex.org/I22299242"
-     ],
-     "dois": [
-      "10.1016/j.brat.2026.104960",
-      "10.1002/wps.20906"
-     ],
-     "paperCount": 2,
-     "mergedIds": [
-      "https://openalex.org/A5060622054"
-     ],
-     "mergedBy": "name"
-    },
-    {
-     "id": "https://openalex.org/A5059920594",
-     "name": "Kiyomi Shinohara",
-     "orcid": "https://orcid.org/0000-0003-3527-4004",
-     "institutionIds": [
-      "https://openalex.org/I22299242"
-     ],
-     "dois": [
-      "10.1002/wps.20906",
-      "10.1136/bmjment-2023-300654"
-     ],
-     "paperCount": 2,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5007932203",
-     "name": "Sanae Kishimoto",
-     "orcid": "https://orcid.org/0000-0002-2341-8931",
-     "institutionIds": [
-      "https://openalex.org/I22299242"
-     ],
-     "dois": [
-      "10.1002/wps.20906",
-      "10.1016/j.brat.2026.104960"
-     ],
-     "paperCount": 2,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5048162182",
-     "name": "T. Takayama",
-     "orcid": "https://orcid.org/0000-0002-3492-2025",
-     "institutionIds": [
-      "https://openalex.org/I22299242",
-      "https://openalex.org/I4210144487"
-     ],
-     "dois": [
-      "10.1017/rsm.2025.10030",
-      "10.1136/bmjment-2023-300654"
-     ],
-     "paperCount": 2,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5025989271",
-     "name": "Hissei Imai",
-     "orcid": "https://orcid.org/0000-0003-3656-5188",
-     "institutionIds": [
-      "https://openalex.org/I22299242"
-     ],
-     "dois": [
-      "10.1002/wps.20906"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5008358666",
-     "name": "Kazufumi Yoshida",
-     "orcid": "https://orcid.org/0000-0003-4475-8043",
-     "institutionIds": [
-      "https://openalex.org/I22299242"
-     ],
-     "dois": [
-      "10.1136/bmjment-2023-300654"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": null,
-     "name": "Keisuke Yoshimura",
-     "orcid": "https://orcid.org/0009-0007-3985-2197",
-     "institutionIds": [
-      "https://openalex.org/I22299242"
-     ],
-     "dois": [
-      "10.1017/rsm.2025.10030"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5122808210",
-     "name": "Tomohiro Takayama",
-     "orcid": null,
-     "institutionIds": [
-      "https://openalex.org/I22299242"
-     ],
-     "dois": [
-      "10.1016/j.brat.2026.104960"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5017115362",
-     "name": "Yasushi Tsujimoto",
-     "orcid": "https://orcid.org/0000-0002-7214-5589",
-     "institutionIds": [
-      "https://openalex.org/I22299242",
-      "https://openalex.org/I4396570521"
-     ],
-     "dois": [
-      "10.1017/rsm.2025.10030"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
-    }
-   ],
-   "dois": [
-    "10.1001/jamapsychiatry.2023.5060",
-    "10.1002/wps.20906",
-    "10.1016/j.brat.2026.104960",
-    "10.1016/j.invent.2025.100860",
-    "10.1016/j.jad.2024.09.017",
-    "10.1017/rsm.2025.10030",
-    "10.1101/2021.12.09.21267441",
-    "10.1101/2022.06.02.22275890",
-    "10.1101/2023.05.19.23290084",
-    "10.1101/2024.04.24.24306311",
-    "10.1111/pcn.13730",
-    "10.1136/bmjment-2023-300654",
-    "10.1136/bmjment-2023-300978",
-    "10.1136/bmjopen-2022-061023",
-    "10.1136/bmjopen-2025-102696",
-    "10.1192/bjp.2021.165",
-    "10.21037/atm.2019.10.65"
-   ],
-   "paperCount": 17,
+   "paperCount": 15,
    "coauthorCount": 19
   },
   {
@@ -4827,16 +4965,6 @@
      "lng": 7.44744,
      "city": "Bern",
      "country": "Switzerland"
-    },
-    {
-     "id": "https://openalex.org/I130692619",
-     "name": "Bern University of Applied Sciences",
-     "countryCode": "CH",
-     "type": "education",
-     "lat": 46.948089599609375,
-     "lng": 7.447440147399902,
-     "city": "Bern",
-     "country": "Switzerland"
     }
    ],
    "coauthors": [
@@ -4862,7 +4990,9 @@
      ],
      "paperCount": 9,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I118564535",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5088217633",
@@ -4880,7 +5010,9 @@
      ],
      "paperCount": 4,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I118564535",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5006902874",
@@ -4898,7 +5030,9 @@
      ],
      "paperCount": 4,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I118564535",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -4919,177 +5053,6 @@
    ],
    "paperCount": 14,
    "coauthorCount": 3
-  },
-  {
-   "key": "CH|Lausanne",
-   "lat": 46.516,
-   "lng": 6.63282,
-   "city": "Lausanne",
-   "countryCode": "CH",
-   "country": "Switzerland",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I4210135124",
-     "name": "Institute of Social and Preventive Medicine",
-     "countryCode": "CH",
-     "type": "facility",
-     "lat": 46.51599884033203,
-     "lng": 6.632820129394531,
-     "city": "Lausanne",
-     "country": "Switzerland"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5065638475",
-     "name": "Orestis Efthimiou",
-     "orcid": "https://orcid.org/0000-0002-0955-7572",
-     "institutionIds": [
-      "https://openalex.org/I118564535",
-      "https://openalex.org/I4210135124",
-      "https://openalex.org/I130692619"
-     ],
-     "dois": [
-      "10.1001/jamapsychiatry.2023.5060",
-      "10.1093/schbul/sbae098",
-      "10.1101/2022.06.02.22275890",
-      "10.1101/2023.05.19.23290084",
-      "10.1101/2024.03.06.24303827",
-      "10.1101/2024.04.24.24306311",
-      "10.1111/pcn.13730",
-      "10.1136/bmjopen-2025-102696",
-      "10.12688/f1000research.169873.1"
-     ],
-     "paperCount": 9,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5088217633",
-     "name": "Georgia Salanti",
-     "orcid": "https://orcid.org/0000-0002-3830-8508",
-     "institutionIds": [
-      "https://openalex.org/I118564535",
-      "https://openalex.org/I4210135124"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583",
-      "10.1136/bmjopen-2025-102696",
-      "10.1192/bjp.2021.165",
-      "10.12688/f1000research.169873.1"
-     ],
-     "paperCount": 4,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5006902874",
-     "name": "Tasnim Hamza",
-     "orcid": "https://orcid.org/0000-0002-4700-6990",
-     "institutionIds": [
-      "https://openalex.org/I118564535",
-      "https://openalex.org/I4210135124"
-     ],
-     "dois": [
-      "10.1101/2021.12.09.21267441",
-      "10.1111/pcn.13438",
-      "10.1136/bmjopen-2022-061023",
-      "10.1192/bjp.2021.165"
-     ],
-     "paperCount": 4,
-     "mergedIds": [],
-     "mergedBy": null
-    }
-   ],
-   "dois": [
-    "10.1001/jamapsychiatry.2023.5060",
-    "10.1016/j.eclinm.2025.103583",
-    "10.1093/schbul/sbae098",
-    "10.1101/2021.12.09.21267441",
-    "10.1101/2022.06.02.22275890",
-    "10.1101/2023.05.19.23290084",
-    "10.1101/2024.03.06.24303827",
-    "10.1101/2024.04.24.24306311",
-    "10.1111/pcn.13438",
-    "10.1111/pcn.13730",
-    "10.1136/bmjopen-2022-061023",
-    "10.1136/bmjopen-2025-102696",
-    "10.1192/bjp.2021.165",
-    "10.12688/f1000research.169873.1"
-   ],
-   "paperCount": 14,
-   "coauthorCount": 3
-  },
-  {
-   "key": "JP|Saitama",
-   "lat": 35.91685,
-   "lng": 139.60406,
-   "city": "Saitama",
-   "countryCode": "JP",
-   "country": "Japan",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I4210116961",
-     "name": "Bio-oriented Technology Research Advancement Institution",
-     "countryCode": "JP",
-     "type": "facility",
-     "lat": 35.916847229003906,
-     "lng": 139.60406494140625,
-     "city": "Saitama",
-     "country": "Japan"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5085050194",
-     "name": "Toshi A. Furukawa",
-     "orcid": "https://orcid.org/0000-0003-2159-3776",
-     "institutionIds": [
-      "https://openalex.org/I22299242",
-      "https://openalex.org/I4210116961"
-     ],
-     "dois": [
-      "10.1001/jamapsychiatry.2023.5060",
-      "10.1002/wps.20906",
-      "10.1016/j.invent.2025.100860",
-      "10.1017/rsm.2025.10030",
-      "10.1101/2021.12.09.21267441",
-      "10.1101/2022.06.02.22275890",
-      "10.1101/2023.05.19.23290084",
-      "10.1101/2024.04.24.24306311",
-      "10.1111/pcn.13730",
-      "10.1136/bmjment-2023-300654",
-      "10.1136/bmjment-2023-300978",
-      "10.1136/bmjopen-2022-061023",
-      "10.1136/bmjopen-2025-102696",
-      "10.1192/bjp.2021.165",
-      "10.1016/j.brat.2026.104960"
-     ],
-     "paperCount": 15,
-     "mergedIds": [
-      "https://openalex.org/A5122799223"
-     ],
-     "mergedBy": "name"
-    }
-   ],
-   "dois": [
-    "10.1001/jamapsychiatry.2023.5060",
-    "10.1002/wps.20906",
-    "10.1016/j.invent.2025.100860",
-    "10.1017/rsm.2025.10030",
-    "10.1101/2021.12.09.21267441",
-    "10.1101/2022.06.02.22275890",
-    "10.1101/2023.05.19.23290084",
-    "10.1101/2024.04.24.24306311",
-    "10.1111/pcn.13730",
-    "10.1136/bmjment-2023-300654",
-    "10.1136/bmjment-2023-300978",
-    "10.1136/bmjopen-2022-061023",
-    "10.1136/bmjopen-2025-102696",
-    "10.1192/bjp.2021.165"
-   ],
-   "paperCount": 14,
-   "coauthorCount": 1
   },
   {
    "key": "DE|Munich",
@@ -5110,32 +5073,12 @@
      "country": "Germany"
     },
     {
-     "id": "https://openalex.org/I4210160326",
-     "name": "German Center for Diabetes Research",
+     "id": "https://openalex.org/I4210106315",
+     "name": "Berufsverband der Frauenärzte",
      "countryCode": "DE",
-     "type": "facility",
-     "lat": 48.13743,
-     "lng": 11.57549,
-     "city": "Munich",
-     "country": "Germany"
-    },
-    {
-     "id": "https://openalex.org/I4210110383",
-     "name": "Universität Bayern",
-     "countryCode": "DE",
-     "type": "education",
-     "lat": 48.1414794921875,
-     "lng": 11.584481239318848,
-     "city": "Munich",
-     "country": "Germany"
-    },
-    {
-     "id": "https://openalex.org/I8204097",
-     "name": "Ludwig-Maximilians-Universität München",
-     "countryCode": "DE",
-     "type": "education",
-     "lat": 48.13743,
-     "lng": 11.57549,
+     "type": "other",
+     "lat": 48.14362716674805,
+     "lng": 11.549654006958008,
      "city": "Munich",
      "country": "Germany"
     },
@@ -5150,12 +5093,12 @@
      "country": "Germany"
     },
     {
-     "id": "https://openalex.org/I4210106315",
-     "name": "Berufsverband der Frauenärzte",
+     "id": "https://openalex.org/I8204097",
+     "name": "Ludwig-Maximilians-Universität München",
      "countryCode": "DE",
-     "type": "other",
-     "lat": 48.14362716674805,
-     "lng": 11.549654006958008,
+     "type": "education",
+     "lat": 48.13743,
+     "lng": 11.57549,
      "city": "Munich",
      "country": "Germany"
     }
@@ -5190,31 +5133,9 @@
       "https://openalex.org/A5130715978",
       "https://openalex.org/A5136768910"
      ],
-     "mergedBy": "orcid"
-    },
-    {
-     "id": "https://openalex.org/A5011934579",
-     "name": "Spyridon Siafis",
-     "orcid": "https://orcid.org/0000-0001-8264-2039",
-     "institutionIds": [
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508",
-      "https://openalex.org/I4210160326"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583",
-      "10.1136/bmjment-2023-300978",
-      "10.12688/f1000research.169873.1",
-      "10.1016/j.eclinm.2026.103847",
-      "10.1016/j.eclinm.2026.103988"
-     ],
-     "paperCount": 5,
-     "mergedIds": [
-      "https://openalex.org/A5130713196",
-      "https://openalex.org/A5136793216"
-     ],
-     "mergedBy": "orcid"
+     "mergedBy": "orcid",
+     "primaryInstitutionId": "https://openalex.org/I62916508",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5053074395",
@@ -5234,102 +5155,9 @@
      "mergedIds": [
       "https://openalex.org/A5122843159"
      ],
-     "mergedBy": "name"
-    },
-    {
-     "id": "https://openalex.org/A5051133017",
-     "name": "Irene Bighelli",
-     "orcid": "https://orcid.org/0000-0002-5661-5149",
-     "institutionIds": [
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583",
-      "10.1016/j.jpsychires.2025.09.083",
-      "10.1016/j.eclinm.2026.103988"
-     ],
-     "paperCount": 3,
-     "mergedIds": [
-      "https://openalex.org/A5136808655"
-     ],
-     "mergedBy": "name"
-    },
-    {
-     "id": "https://openalex.org/A5059726681",
-     "name": "Johannes Schneider‐Thoma",
-     "orcid": "https://orcid.org/0000-0002-3448-9532",
-     "institutionIds": [
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508",
-      "https://openalex.org/I4210110383"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583",
-      "10.1136/bmjment-2023-300654",
-      "10.12688/f1000research.169873.1"
-     ],
-     "paperCount": 3,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5122791740",
-     "name": "Yuki Furukawa",
-     "orcid": null,
-     "institutionIds": [
-      "https://openalex.org/I4210109338",
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508",
-      "https://openalex.org/I74801974"
-     ],
-     "dois": [
-      "10.1016/j.brat.2026.104960",
-      "10.1016/j.eclinm.2026.103847",
-      "10.1016/j.euroneuro.2026.112802"
-     ],
-     "paperCount": 3,
-     "mergedIds": [
-      "https://openalex.org/A5128861911"
-     ],
-     "mergedBy": "name"
-    },
-    {
-     "id": "https://openalex.org/A5027653673",
-     "name": "Alessandro Rodolico",
-     "orcid": "https://orcid.org/0000-0003-2196-0601",
-     "institutionIds": [
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2026.103847",
-      "10.1017/rsm.2025.10030"
-     ],
-     "paperCount": 2,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5101449336",
-     "name": "David D. Kim",
-     "orcid": "https://orcid.org/0000-0001-5605-9536",
-     "institutionIds": [
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583",
-      "10.1016/j.eclinm.2026.103988"
-     ],
-     "paperCount": 2,
-     "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": "name",
+     "primaryInstitutionId": "https://openalex.org/I62916508",
+     "primaryBy": "fallback"
     },
     {
      "id": "https://openalex.org/A5100641892",
@@ -5346,106 +5174,9 @@
      "mergedIds": [
       "https://openalex.org/A5130674391"
      ],
-     "mergedBy": "name"
-    },
-    {
-     "id": "https://openalex.org/A5128884528",
-     "name": "Johannes Schneider-Thoma",
-     "orcid": null,
-     "institutionIds": [
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2026.103847",
-      "10.1016/j.eclinm.2026.103988"
-     ],
-     "paperCount": 2,
-     "mergedIds": [
-      "https://openalex.org/A5136785196"
-     ],
-     "mergedBy": "name"
-    },
-    {
-     "id": "https://openalex.org/A5055109212",
-     "name": "Josef Priller",
-     "orcid": "https://orcid.org/0000-0001-7596-0979",
-     "institutionIds": [
-      "https://openalex.org/I2801533059",
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210126463",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508",
-      "https://openalex.org/I7877124",
-      "https://openalex.org/I98677209"
-     ],
-     "dois": [
-      "10.12688/f1000research.169873.1",
-      "10.1016/j.eclinm.2026.103847"
-     ],
-     "paperCount": 2,
-     "mergedIds": [
-      "https://openalex.org/A5130688627"
-     ],
-     "mergedBy": "name"
-    },
-    {
-     "id": "https://openalex.org/A5026375225",
-     "name": "Nobuyuki Nomura",
-     "orcid": "https://orcid.org/0000-0001-6516-4573",
-     "institutionIds": [
-      "https://openalex.org/I203951103",
-      "https://openalex.org/I3018771216",
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508",
-      "https://openalex.org/I8204097"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583",
-      "10.12688/f1000research.169873.1"
-     ],
-     "paperCount": 2,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5037644955",
-     "name": "Nurul Husna Salahuddin",
-     "orcid": "https://orcid.org/0000-0003-1431-3473",
-     "institutionIds": [
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2026.103988",
-      "10.1016/j.jpsychires.2025.09.083"
-     ],
-     "paperCount": 2,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5001296226",
-     "name": "Yaohui Wei",
-     "orcid": "https://orcid.org/0000-0002-7186-6018",
-     "institutionIds": [
-      "https://openalex.org/I183067930",
-      "https://openalex.org/I2802690428",
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583",
-      "10.1016/j.eclinm.2026.103988"
-     ],
-     "paperCount": 2,
-     "mergedIds": [
-      "https://openalex.org/A5136794217"
-     ],
-     "mergedBy": "orcid"
+     "mergedBy": "name",
+     "primaryInstitutionId": "https://openalex.org/I62916508",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5020172260",
@@ -5459,7 +5190,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I62916508",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5093981443",
@@ -5473,22 +5206,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5136797513",
-     "name": "Filip Milosavlijević",
-     "orcid": null,
-     "institutionIds": [
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2026.103988"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I62916508",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5070078265",
@@ -5505,23 +5225,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5130683481",
-     "name": "Jing Tian",
-     "orcid": null,
-     "institutionIds": [
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2026.103847"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I3018771216",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5119788306",
@@ -5535,7 +5241,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I62916508",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5070314416",
@@ -5549,22 +5257,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5014246700",
-     "name": "Natalia E. Fares‐Otero",
-     "orcid": "https://orcid.org/0000-0002-8589-7384",
-     "institutionIds": [
-      "https://openalex.org/I4210158267",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.12688/f1000research.169873.1"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I4210106315",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5091440083",
@@ -5578,7 +5273,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I8204097",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5113377698",
@@ -5592,7 +5289,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I62916508",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5062710767",
@@ -5606,39 +5305,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5014532124",
-     "name": "Ulrike Vogelmann",
-     "orcid": "https://orcid.org/0000-0001-5005-0709",
-     "institutionIds": [
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5130703931",
-     "name": "Xiao Lin",
-     "orcid": null,
-     "institutionIds": [
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2026.103847"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I62916508",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -5657,828 +5326,7 @@
     "10.12688/f1000research.169873.1"
    ],
    "paperCount": 13,
-   "coauthorCount": 27
-  },
-  {
-   "key": "DE|Berlin",
-   "lat": 52.52437,
-   "lng": 13.41053,
-   "city": "Berlin",
-   "countryCode": "DE",
-   "country": "Germany",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I4210127591",
-     "name": "German Centre for Cardiovascular Research",
-     "countryCode": "DE",
-     "type": "facility",
-     "lat": 52.52437,
-     "lng": 13.41053,
-     "city": "Berlin",
-     "country": "Germany"
-    },
-    {
-     "id": "https://openalex.org/I7877124",
-     "name": "Charité - Universitätsmedizin Berlin",
-     "countryCode": "DE",
-     "type": "healthcare",
-     "lat": 52.52437,
-     "lng": 13.41053,
-     "city": "Berlin",
-     "country": "Germany"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5002251483",
-     "name": "Stefan Leucht",
-     "orcid": "https://orcid.org/0000-0002-4934-4352",
-     "institutionIds": [
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508",
-      "https://openalex.org/I4210110383",
-      "https://openalex.org/I4210160326"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583",
-      "10.1016/j.euroneuro.2026.112802",
-      "10.1016/j.jpsychires.2025.09.083",
-      "10.1017/rsm.2025.10030",
-      "10.1093/schbul/sbae098",
-      "10.1101/2024.03.06.24303827",
-      "10.1136/bmjment-2023-300654",
-      "10.1136/bmjment-2023-300978",
-      "10.12688/f1000research.169873.1",
-      "10.1016/j.eclinm.2026.103847",
-      "10.1016/j.eclinm.2026.103988"
-     ],
-     "paperCount": 11,
-     "mergedIds": [
-      "https://openalex.org/A5130715978",
-      "https://openalex.org/A5136768910"
-     ],
-     "mergedBy": "orcid"
-    },
-    {
-     "id": "https://openalex.org/A5011934579",
-     "name": "Spyridon Siafis",
-     "orcid": "https://orcid.org/0000-0001-8264-2039",
-     "institutionIds": [
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508",
-      "https://openalex.org/I4210160326"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583",
-      "10.1136/bmjment-2023-300978",
-      "10.12688/f1000research.169873.1",
-      "10.1016/j.eclinm.2026.103847",
-      "10.1016/j.eclinm.2026.103988"
-     ],
-     "paperCount": 5,
-     "mergedIds": [
-      "https://openalex.org/A5130713196",
-      "https://openalex.org/A5136793216"
-     ],
-     "mergedBy": "orcid"
-    },
-    {
-     "id": "https://openalex.org/A5051133017",
-     "name": "Irene Bighelli",
-     "orcid": "https://orcid.org/0000-0002-5661-5149",
-     "institutionIds": [
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583",
-      "10.1016/j.jpsychires.2025.09.083",
-      "10.1016/j.eclinm.2026.103988"
-     ],
-     "paperCount": 3,
-     "mergedIds": [
-      "https://openalex.org/A5136808655"
-     ],
-     "mergedBy": "name"
-    },
-    {
-     "id": "https://openalex.org/A5059726681",
-     "name": "Johannes Schneider‐Thoma",
-     "orcid": "https://orcid.org/0000-0002-3448-9532",
-     "institutionIds": [
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508",
-      "https://openalex.org/I4210110383"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583",
-      "10.1136/bmjment-2023-300654",
-      "10.12688/f1000research.169873.1"
-     ],
-     "paperCount": 3,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5122791740",
-     "name": "Yuki Furukawa",
-     "orcid": null,
-     "institutionIds": [
-      "https://openalex.org/I4210109338",
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508",
-      "https://openalex.org/I74801974"
-     ],
-     "dois": [
-      "10.1016/j.brat.2026.104960",
-      "10.1016/j.eclinm.2026.103847",
-      "10.1016/j.euroneuro.2026.112802"
-     ],
-     "paperCount": 3,
-     "mergedIds": [
-      "https://openalex.org/A5128861911"
-     ],
-     "mergedBy": "name"
-    },
-    {
-     "id": "https://openalex.org/A5027653673",
-     "name": "Alessandro Rodolico",
-     "orcid": "https://orcid.org/0000-0003-2196-0601",
-     "institutionIds": [
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2026.103847",
-      "10.1017/rsm.2025.10030"
-     ],
-     "paperCount": 2,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5101449336",
-     "name": "David D. Kim",
-     "orcid": "https://orcid.org/0000-0001-5605-9536",
-     "institutionIds": [
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583",
-      "10.1016/j.eclinm.2026.103988"
-     ],
-     "paperCount": 2,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5128884528",
-     "name": "Johannes Schneider-Thoma",
-     "orcid": null,
-     "institutionIds": [
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2026.103847",
-      "10.1016/j.eclinm.2026.103988"
-     ],
-     "paperCount": 2,
-     "mergedIds": [
-      "https://openalex.org/A5136785196"
-     ],
-     "mergedBy": "name"
-    },
-    {
-     "id": "https://openalex.org/A5055109212",
-     "name": "Josef Priller",
-     "orcid": "https://orcid.org/0000-0001-7596-0979",
-     "institutionIds": [
-      "https://openalex.org/I2801533059",
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210126463",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508",
-      "https://openalex.org/I7877124",
-      "https://openalex.org/I98677209"
-     ],
-     "dois": [
-      "10.12688/f1000research.169873.1",
-      "10.1016/j.eclinm.2026.103847"
-     ],
-     "paperCount": 2,
-     "mergedIds": [
-      "https://openalex.org/A5130688627"
-     ],
-     "mergedBy": "name"
-    },
-    {
-     "id": "https://openalex.org/A5026375225",
-     "name": "Nobuyuki Nomura",
-     "orcid": "https://orcid.org/0000-0001-6516-4573",
-     "institutionIds": [
-      "https://openalex.org/I203951103",
-      "https://openalex.org/I3018771216",
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508",
-      "https://openalex.org/I8204097"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583",
-      "10.12688/f1000research.169873.1"
-     ],
-     "paperCount": 2,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5037644955",
-     "name": "Nurul Husna Salahuddin",
-     "orcid": "https://orcid.org/0000-0003-1431-3473",
-     "institutionIds": [
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2026.103988",
-      "10.1016/j.jpsychires.2025.09.083"
-     ],
-     "paperCount": 2,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5001296226",
-     "name": "Yaohui Wei",
-     "orcid": "https://orcid.org/0000-0002-7186-6018",
-     "institutionIds": [
-      "https://openalex.org/I183067930",
-      "https://openalex.org/I2802690428",
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583",
-      "10.1016/j.eclinm.2026.103988"
-     ],
-     "paperCount": 2,
-     "mergedIds": [
-      "https://openalex.org/A5136794217"
-     ],
-     "mergedBy": "orcid"
-    },
-    {
-     "id": "https://openalex.org/A5136797513",
-     "name": "Filip Milosavlijević",
-     "orcid": null,
-     "institutionIds": [
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2026.103988"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5070078265",
-     "name": "Frank Padberg",
-     "orcid": "https://orcid.org/0000-0001-7638-8310",
-     "institutionIds": [
-      "https://openalex.org/I3018771216",
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I8204097"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5130683481",
-     "name": "Jing Tian",
-     "orcid": null,
-     "institutionIds": [
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2026.103847"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5014532124",
-     "name": "Ulrike Vogelmann",
-     "orcid": "https://orcid.org/0000-0001-5005-0709",
-     "institutionIds": [
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5130703931",
-     "name": "Xiao Lin",
-     "orcid": null,
-     "institutionIds": [
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2026.103847"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
-    }
-   ],
-   "dois": [
-    "10.1016/j.brat.2026.104960",
-    "10.1016/j.eclinm.2025.103583",
-    "10.1016/j.eclinm.2026.103847",
-    "10.1016/j.eclinm.2026.103988",
-    "10.1016/j.euroneuro.2026.112802",
-    "10.1016/j.jpsychires.2025.09.083",
-    "10.1017/rsm.2025.10030",
-    "10.1093/schbul/sbae098",
-    "10.1101/2024.03.06.24303827",
-    "10.1136/bmjment-2023-300654",
-    "10.1136/bmjment-2023-300978",
-    "10.12688/f1000research.169873.1"
-   ],
-   "paperCount": 12,
-   "coauthorCount": 17
-  },
-  {
-   "key": "DE|Braunschweig",
-   "lat": 52.26594,
-   "lng": 10.52673,
-   "city": "Braunschweig",
-   "countryCode": "DE",
-   "country": "Germany",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I4210115305",
-     "name": "German Center for Infection Research",
-     "countryCode": "DE",
-     "type": "facility",
-     "lat": 52.26594,
-     "lng": 10.52673,
-     "city": "Braunschweig",
-     "country": "Germany"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5002251483",
-     "name": "Stefan Leucht",
-     "orcid": "https://orcid.org/0000-0002-4934-4352",
-     "institutionIds": [
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508",
-      "https://openalex.org/I4210110383",
-      "https://openalex.org/I4210160326"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583",
-      "10.1016/j.euroneuro.2026.112802",
-      "10.1016/j.jpsychires.2025.09.083",
-      "10.1017/rsm.2025.10030",
-      "10.1093/schbul/sbae098",
-      "10.1101/2024.03.06.24303827",
-      "10.1136/bmjment-2023-300654",
-      "10.1136/bmjment-2023-300978",
-      "10.12688/f1000research.169873.1",
-      "10.1016/j.eclinm.2026.103847",
-      "10.1016/j.eclinm.2026.103988"
-     ],
-     "paperCount": 11,
-     "mergedIds": [
-      "https://openalex.org/A5130715978",
-      "https://openalex.org/A5136768910"
-     ],
-     "mergedBy": "orcid"
-    },
-    {
-     "id": "https://openalex.org/A5011934579",
-     "name": "Spyridon Siafis",
-     "orcid": "https://orcid.org/0000-0001-8264-2039",
-     "institutionIds": [
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508",
-      "https://openalex.org/I4210160326"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583",
-      "10.1136/bmjment-2023-300978",
-      "10.12688/f1000research.169873.1",
-      "10.1016/j.eclinm.2026.103847",
-      "10.1016/j.eclinm.2026.103988"
-     ],
-     "paperCount": 5,
-     "mergedIds": [
-      "https://openalex.org/A5130713196",
-      "https://openalex.org/A5136793216"
-     ],
-     "mergedBy": "orcid"
-    },
-    {
-     "id": "https://openalex.org/A5051133017",
-     "name": "Irene Bighelli",
-     "orcid": "https://orcid.org/0000-0002-5661-5149",
-     "institutionIds": [
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583",
-      "10.1016/j.jpsychires.2025.09.083",
-      "10.1016/j.eclinm.2026.103988"
-     ],
-     "paperCount": 3,
-     "mergedIds": [
-      "https://openalex.org/A5136808655"
-     ],
-     "mergedBy": "name"
-    },
-    {
-     "id": "https://openalex.org/A5059726681",
-     "name": "Johannes Schneider‐Thoma",
-     "orcid": "https://orcid.org/0000-0002-3448-9532",
-     "institutionIds": [
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508",
-      "https://openalex.org/I4210110383"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583",
-      "10.1136/bmjment-2023-300654",
-      "10.12688/f1000research.169873.1"
-     ],
-     "paperCount": 3,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5122791740",
-     "name": "Yuki Furukawa",
-     "orcid": null,
-     "institutionIds": [
-      "https://openalex.org/I4210109338",
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508",
-      "https://openalex.org/I74801974"
-     ],
-     "dois": [
-      "10.1016/j.brat.2026.104960",
-      "10.1016/j.eclinm.2026.103847",
-      "10.1016/j.euroneuro.2026.112802"
-     ],
-     "paperCount": 3,
-     "mergedIds": [
-      "https://openalex.org/A5128861911"
-     ],
-     "mergedBy": "name"
-    },
-    {
-     "id": "https://openalex.org/A5027653673",
-     "name": "Alessandro Rodolico",
-     "orcid": "https://orcid.org/0000-0003-2196-0601",
-     "institutionIds": [
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2026.103847",
-      "10.1017/rsm.2025.10030"
-     ],
-     "paperCount": 2,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5101449336",
-     "name": "David D. Kim",
-     "orcid": "https://orcid.org/0000-0001-5605-9536",
-     "institutionIds": [
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583",
-      "10.1016/j.eclinm.2026.103988"
-     ],
-     "paperCount": 2,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5128884528",
-     "name": "Johannes Schneider-Thoma",
-     "orcid": null,
-     "institutionIds": [
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2026.103847",
-      "10.1016/j.eclinm.2026.103988"
-     ],
-     "paperCount": 2,
-     "mergedIds": [
-      "https://openalex.org/A5136785196"
-     ],
-     "mergedBy": "name"
-    },
-    {
-     "id": "https://openalex.org/A5055109212",
-     "name": "Josef Priller",
-     "orcid": "https://orcid.org/0000-0001-7596-0979",
-     "institutionIds": [
-      "https://openalex.org/I2801533059",
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210126463",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508",
-      "https://openalex.org/I7877124",
-      "https://openalex.org/I98677209"
-     ],
-     "dois": [
-      "10.12688/f1000research.169873.1",
-      "10.1016/j.eclinm.2026.103847"
-     ],
-     "paperCount": 2,
-     "mergedIds": [
-      "https://openalex.org/A5130688627"
-     ],
-     "mergedBy": "name"
-    },
-    {
-     "id": "https://openalex.org/A5026375225",
-     "name": "Nobuyuki Nomura",
-     "orcid": "https://orcid.org/0000-0001-6516-4573",
-     "institutionIds": [
-      "https://openalex.org/I203951103",
-      "https://openalex.org/I3018771216",
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508",
-      "https://openalex.org/I8204097"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583",
-      "10.12688/f1000research.169873.1"
-     ],
-     "paperCount": 2,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5001296226",
-     "name": "Yaohui Wei",
-     "orcid": "https://orcid.org/0000-0002-7186-6018",
-     "institutionIds": [
-      "https://openalex.org/I183067930",
-      "https://openalex.org/I2802690428",
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583",
-      "10.1016/j.eclinm.2026.103988"
-     ],
-     "paperCount": 2,
-     "mergedIds": [
-      "https://openalex.org/A5136794217"
-     ],
-     "mergedBy": "orcid"
-    },
-    {
-     "id": "https://openalex.org/A5070078265",
-     "name": "Frank Padberg",
-     "orcid": "https://orcid.org/0000-0001-7638-8310",
-     "institutionIds": [
-      "https://openalex.org/I3018771216",
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I8204097"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5130683481",
-     "name": "Jing Tian",
-     "orcid": null,
-     "institutionIds": [
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2026.103847"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5014532124",
-     "name": "Ulrike Vogelmann",
-     "orcid": "https://orcid.org/0000-0001-5005-0709",
-     "institutionIds": [
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5130703931",
-     "name": "Xiao Lin",
-     "orcid": null,
-     "institutionIds": [
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2026.103847"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
-    }
-   ],
-   "dois": [
-    "10.1016/j.brat.2026.104960",
-    "10.1016/j.eclinm.2025.103583",
-    "10.1016/j.eclinm.2026.103847",
-    "10.1016/j.eclinm.2026.103988",
-    "10.1016/j.euroneuro.2026.112802",
-    "10.1016/j.jpsychires.2025.09.083",
-    "10.1017/rsm.2025.10030",
-    "10.1093/schbul/sbae098",
-    "10.1101/2024.03.06.24303827",
-    "10.1136/bmjment-2023-300654",
-    "10.1136/bmjment-2023-300978",
-    "10.12688/f1000research.169873.1"
-   ],
-   "paperCount": 12,
-   "coauthorCount": 15
-  },
-  {
-   "key": "GB|London",
-   "lat": 51.50853,
-   "lng": -0.12574,
-   "city": "London",
-   "countryCode": "GB",
-   "country": "United Kingdom",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I125671874",
-     "name": "National Health Service",
-     "countryCode": "GB",
-     "type": "healthcare",
-     "lat": 51.50853,
-     "lng": -0.12574,
-     "city": "London",
-     "country": "United Kingdom"
-    },
-    {
-     "id": "https://openalex.org/I34931013",
-     "name": "National Institute for Health and Care Research",
-     "countryCode": "GB",
-     "type": "government",
-     "lat": 51.50853,
-     "lng": -0.12574,
-     "city": "London",
-     "country": "United Kingdom"
-    },
-    {
-     "id": "https://openalex.org/I4210126463",
-     "name": "UK Dementia Research Institute",
-     "countryCode": "GB",
-     "type": "facility",
-     "lat": 51.50853,
-     "lng": -0.12574,
-     "city": "London",
-     "country": "United Kingdom"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5047521970",
-     "name": "Edoardo G. Ostinelli",
-     "orcid": "https://orcid.org/0000-0002-8717-0832",
-     "institutionIds": [
-      "https://openalex.org/I125671874",
-      "https://openalex.org/I2802171185",
-      "https://openalex.org/I2803066836",
-      "https://openalex.org/I34931013",
-      "https://openalex.org/I40120149",
-      "https://openalex.org/I4210117980",
-      "https://openalex.org/I4210146357"
-     ],
-     "dois": [
-      "10.1001/jamapsychiatry.2023.5060",
-      "10.1002/wps.20906",
-      "10.1017/rsm.2025.10030",
-      "10.1101/2021.12.09.21267441",
-      "10.1101/2022.06.02.22275890",
-      "10.1101/2023.05.19.23290084",
-      "10.1111/pcn.13438",
-      "10.1136/bmjopen-2022-061023",
-      "10.1192/bjp.2021.165"
-     ],
-     "paperCount": 9,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5055109212",
-     "name": "Josef Priller",
-     "orcid": "https://orcid.org/0000-0001-7596-0979",
-     "institutionIds": [
-      "https://openalex.org/I2801533059",
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210126463",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508",
-      "https://openalex.org/I7877124",
-      "https://openalex.org/I98677209"
-     ],
-     "dois": [
-      "10.12688/f1000research.169873.1",
-      "10.1016/j.eclinm.2026.103847"
-     ],
-     "paperCount": 2,
-     "mergedIds": [
-      "https://openalex.org/A5130688627"
-     ],
-     "mergedBy": "name"
-    }
-   ],
-   "dois": [
-    "10.1001/jamapsychiatry.2023.5060",
-    "10.1002/wps.20906",
-    "10.1016/j.eclinm.2026.103847",
-    "10.1017/rsm.2025.10030",
-    "10.1101/2021.12.09.21267441",
-    "10.1101/2022.06.02.22275890",
-    "10.1101/2023.05.19.23290084",
-    "10.1111/pcn.13438",
-    "10.1136/bmjopen-2022-061023",
-    "10.1192/bjp.2021.165",
-    "10.12688/f1000research.169873.1"
-   ],
-   "paperCount": 11,
-   "coauthorCount": 2
+   "coauthorCount": 11
   },
   {
    "key": "GB|Oxford",
@@ -6488,16 +5336,6 @@
    "countryCode": "GB",
    "country": "United Kingdom",
    "institutions": [
-    {
-     "id": "https://openalex.org/I4210146357",
-     "name": "Oxford BioMedica (United Kingdom)",
-     "countryCode": "GB",
-     "type": "company",
-     "lat": 51.72745132446289,
-     "lng": -1.192566990852356,
-     "city": "Oxford",
-     "country": "United Kingdom"
-    },
     {
      "id": "https://openalex.org/I2802171185",
      "name": "Oxford Health NHS Foundation Trust",
@@ -6556,7 +5394,9 @@
      ],
      "paperCount": 9,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I2802171185",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5007077090",
@@ -6577,7 +5417,9 @@
      ],
      "paperCount": 4,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I2802171185",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5045088705",
@@ -6593,7 +5435,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I2803066836",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5054887622",
@@ -6608,7 +5452,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I40120149",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -6627,266 +5473,178 @@
    "coauthorCount": 4
   },
   {
-   "key": "CN|Ningbo",
-   "lat": 29.86913,
-   "lng": 121.62906,
-   "city": "Ningbo",
-   "countryCode": "CN",
-   "country": "China",
+   "key": "DE|Braunschweig",
+   "lat": 52.26594,
+   "lng": 10.52673,
+   "city": "Braunschweig",
+   "countryCode": "DE",
+   "country": "Germany",
    "institutions": [
     {
-     "id": "https://openalex.org/I4210117980",
-     "name": "Health Biomed (China)",
-     "countryCode": "CN",
-     "type": "company",
-     "lat": 29.869131088256836,
-     "lng": 121.62905883789062,
-     "city": "Ningbo",
-     "country": "China"
+     "id": "https://openalex.org/I4210115305",
+     "name": "German Center for Infection Research",
+     "countryCode": "DE",
+     "type": "facility",
+     "lat": 52.26594,
+     "lng": 10.52673,
+     "city": "Braunschweig",
+     "country": "Germany"
     }
    ],
    "coauthors": [
     {
-     "id": "https://openalex.org/A5047521970",
-     "name": "Edoardo G. Ostinelli",
-     "orcid": "https://orcid.org/0000-0002-8717-0832",
+     "id": "https://openalex.org/A5011934579",
+     "name": "Spyridon Siafis",
+     "orcid": "https://orcid.org/0000-0001-8264-2039",
      "institutionIds": [
-      "https://openalex.org/I125671874",
-      "https://openalex.org/I2802171185",
-      "https://openalex.org/I2803066836",
-      "https://openalex.org/I34931013",
-      "https://openalex.org/I40120149",
-      "https://openalex.org/I4210117980",
-      "https://openalex.org/I4210146357"
+      "https://openalex.org/I4210115305",
+      "https://openalex.org/I4210127591",
+      "https://openalex.org/I62916508",
+      "https://openalex.org/I4210160326"
      ],
      "dois": [
-      "10.1001/jamapsychiatry.2023.5060",
-      "10.1002/wps.20906",
-      "10.1017/rsm.2025.10030",
-      "10.1101/2021.12.09.21267441",
-      "10.1101/2022.06.02.22275890",
-      "10.1101/2023.05.19.23290084",
-      "10.1111/pcn.13438",
-      "10.1136/bmjopen-2022-061023",
-      "10.1192/bjp.2021.165"
+      "10.1016/j.eclinm.2025.103583",
+      "10.1136/bmjment-2023-300978",
+      "10.12688/f1000research.169873.1",
+      "10.1016/j.eclinm.2026.103847",
+      "10.1016/j.eclinm.2026.103988"
      ],
-     "paperCount": 9,
-     "mergedIds": [],
-     "mergedBy": null
+     "paperCount": 5,
+     "mergedIds": [
+      "https://openalex.org/A5130713196",
+      "https://openalex.org/A5136793216"
+     ],
+     "mergedBy": "orcid",
+     "primaryInstitutionId": "https://openalex.org/I4210115305",
+     "primaryBy": "first-listed"
     },
     {
-     "id": "https://openalex.org/A5007077090",
-     "name": "Andrea Cipriani",
-     "orcid": "https://orcid.org/0000-0001-5179-8321",
+     "id": "https://openalex.org/A5059726681",
+     "name": "Johannes Schneider‐Thoma",
+     "orcid": "https://orcid.org/0000-0002-3448-9532",
      "institutionIds": [
-      "https://openalex.org/I2802171185",
-      "https://openalex.org/I2803066836",
-      "https://openalex.org/I40120149",
-      "https://openalex.org/I4210117980",
-      "https://openalex.org/I4210146357"
+      "https://openalex.org/I4210115305",
+      "https://openalex.org/I4210127591",
+      "https://openalex.org/I62916508",
+      "https://openalex.org/I4210110383"
      ],
      "dois": [
-      "10.1002/wps.20906",
-      "10.1017/rsm.2025.10030",
-      "10.1136/bmjopen-2025-102696",
-      "10.1192/bjp.2021.165"
+      "10.1016/j.eclinm.2025.103583",
+      "10.1136/bmjment-2023-300654",
+      "10.12688/f1000research.169873.1"
      ],
-     "paperCount": 4,
+     "paperCount": 3,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I4210115305",
+     "primaryBy": "first-listed"
     },
     {
-     "id": "https://openalex.org/A5054887622",
-     "name": "Ava Homiar",
-     "orcid": "https://orcid.org/0000-0001-5772-2475",
+     "id": "https://openalex.org/A5027653673",
+     "name": "Alessandro Rodolico",
+     "orcid": "https://orcid.org/0000-0003-2196-0601",
      "institutionIds": [
-      "https://openalex.org/I40120149",
-      "https://openalex.org/I4210117980"
+      "https://openalex.org/I4210115305",
+      "https://openalex.org/I4210127591",
+      "https://openalex.org/I62916508"
      ],
      "dois": [
+      "10.1016/j.eclinm.2026.103847",
       "10.1017/rsm.2025.10030"
      ],
-     "paperCount": 1,
+     "paperCount": 2,
      "mergedIds": [],
-     "mergedBy": null
-    }
-   ],
-   "dois": [
-    "10.1001/jamapsychiatry.2023.5060",
-    "10.1002/wps.20906",
-    "10.1017/rsm.2025.10030",
-    "10.1101/2021.12.09.21267441",
-    "10.1101/2022.06.02.22275890",
-    "10.1101/2023.05.19.23290084",
-    "10.1111/pcn.13438",
-    "10.1136/bmjopen-2022-061023",
-    "10.1136/bmjopen-2025-102696",
-    "10.1192/bjp.2021.165"
-   ],
-   "paperCount": 10,
-   "coauthorCount": 3
-  },
-  {
-   "key": "JP|Nagoya",
-   "lat": 35.18147,
-   "lng": 136.9064,
-   "city": "Nagoya",
-   "countryCode": "JP",
-   "country": "Japan",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I33858575",
-     "name": "Nagoya City University",
-     "countryCode": "JP",
-     "type": "education",
-     "lat": 35.18146896362305,
-     "lng": 136.90640258789062,
-     "city": "Nagoya",
-     "country": "Japan"
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I4210115305",
+     "primaryBy": "fallback"
     },
     {
-     "id": "https://openalex.org/I4210152596",
-     "name": "Nagoya Medical Center",
-     "countryCode": "JP",
-     "type": "healthcare",
-     "lat": 35.18146896362305,
-     "lng": 136.90640258789062,
-     "city": "Nagoya",
-     "country": "Japan"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5058325336",
-     "name": "Masatsugu Sakata",
-     "orcid": "https://orcid.org/0000-0002-5358-5263",
-     "institutionIds": [
-      "https://openalex.org/I22299242",
-      "https://openalex.org/I33858575",
-      "https://openalex.org/I4210107954"
-     ],
-     "dois": [
-      "10.1001/jamapsychiatry.2023.5060",
-      "10.1002/wps.20906",
-      "10.1016/j.brat.2026.104960",
-      "10.1016/j.jad.2024.09.017",
-      "10.1017/rsm.2025.10030",
-      "10.1101/2022.06.02.22275890",
-      "10.1101/2023.05.19.23290084",
-      "10.1101/2024.04.24.24306311",
-      "10.1111/pcn.13730"
-     ],
-     "paperCount": 9,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5026844864",
-     "name": "Shino Kikuchi",
-     "orcid": "https://orcid.org/0000-0001-6706-4912",
-     "institutionIds": [
-      "https://openalex.org/I33858575",
-      "https://openalex.org/I22299242"
-     ],
-     "dois": [
-      "10.1001/jamapsychiatry.2023.5060",
-      "10.1101/2022.06.02.22275890",
-      "10.1101/2023.05.19.23290084",
-      "10.1136/bmjment-2023-300654"
-     ],
-     "paperCount": 4,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5122788246",
-     "name": "Masafumi Tada",
+     "id": "https://openalex.org/A5128884528",
+     "name": "Johannes Schneider-Thoma",
      "orcid": null,
      "institutionIds": [
-      "https://openalex.org/I33858575",
-      "https://openalex.org/I4210152596"
+      "https://openalex.org/I4210115305",
+      "https://openalex.org/I4210127591",
+      "https://openalex.org/I62916508"
      ],
      "dois": [
-      "10.1016/j.brat.2026.104960"
+      "10.1016/j.eclinm.2026.103847",
+      "10.1016/j.eclinm.2026.103988"
+     ],
+     "paperCount": 2,
+     "mergedIds": [
+      "https://openalex.org/A5136785196"
+     ],
+     "mergedBy": "name",
+     "primaryInstitutionId": "https://openalex.org/I4210115305",
+     "primaryBy": "fallback"
+    },
+    {
+     "id": "https://openalex.org/A5130683481",
+     "name": "Jing Tian",
+     "orcid": null,
+     "institutionIds": [
+      "https://openalex.org/I4210115305",
+      "https://openalex.org/I4210127591",
+      "https://openalex.org/I62916508"
+     ],
+     "dois": [
+      "10.1016/j.eclinm.2026.103847"
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
-    }
-   ],
-   "dois": [
-    "10.1001/jamapsychiatry.2023.5060",
-    "10.1002/wps.20906",
-    "10.1016/j.brat.2026.104960",
-    "10.1016/j.jad.2024.09.017",
-    "10.1017/rsm.2025.10030",
-    "10.1101/2022.06.02.22275890",
-    "10.1101/2023.05.19.23290084",
-    "10.1101/2024.04.24.24306311",
-    "10.1111/pcn.13730",
-    "10.1136/bmjment-2023-300654"
-   ],
-   "paperCount": 10,
-   "coauthorCount": 3
-  },
-  {
-   "key": "US|Providence",
-   "lat": 41.82767,
-   "lng": -71.38743,
-   "city": "Providence",
-   "countryCode": "US",
-   "country": "United States",
-   "institutions": [
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I4210115305",
+     "primaryBy": "first-listed"
+    },
     {
-     "id": "https://openalex.org/I4210107954",
-     "name": "NeuroDevelopment Center",
-     "countryCode": "US",
-     "type": "facility",
-     "lat": 41.827667236328125,
-     "lng": -71.3874282836914,
-     "city": "Providence",
-     "country": "United States"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5058325336",
-     "name": "Masatsugu Sakata",
-     "orcid": "https://orcid.org/0000-0002-5358-5263",
+     "id": "https://openalex.org/A5014532124",
+     "name": "Ulrike Vogelmann",
+     "orcid": "https://orcid.org/0000-0001-5005-0709",
      "institutionIds": [
-      "https://openalex.org/I22299242",
-      "https://openalex.org/I33858575",
-      "https://openalex.org/I4210107954"
+      "https://openalex.org/I4210115305",
+      "https://openalex.org/I4210127591",
+      "https://openalex.org/I62916508"
      ],
      "dois": [
-      "10.1001/jamapsychiatry.2023.5060",
-      "10.1002/wps.20906",
-      "10.1016/j.brat.2026.104960",
-      "10.1016/j.jad.2024.09.017",
-      "10.1017/rsm.2025.10030",
-      "10.1101/2022.06.02.22275890",
-      "10.1101/2023.05.19.23290084",
-      "10.1101/2024.04.24.24306311",
-      "10.1111/pcn.13730"
+      "10.1016/j.eclinm.2025.103583"
      ],
-     "paperCount": 9,
+     "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I4210115305",
+     "primaryBy": "first-listed"
+    },
+    {
+     "id": "https://openalex.org/A5130703931",
+     "name": "Xiao Lin",
+     "orcid": null,
+     "institutionIds": [
+      "https://openalex.org/I4210115305",
+      "https://openalex.org/I4210127591",
+      "https://openalex.org/I62916508"
+     ],
+     "dois": [
+      "10.1016/j.eclinm.2026.103847"
+     ],
+     "paperCount": 1,
+     "mergedIds": [],
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I4210115305",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
-    "10.1001/jamapsychiatry.2023.5060",
-    "10.1002/wps.20906",
-    "10.1016/j.brat.2026.104960",
-    "10.1016/j.jad.2024.09.017",
+    "10.1016/j.eclinm.2025.103583",
+    "10.1016/j.eclinm.2026.103847",
+    "10.1016/j.eclinm.2026.103988",
     "10.1017/rsm.2025.10030",
-    "10.1101/2022.06.02.22275890",
-    "10.1101/2023.05.19.23290084",
-    "10.1101/2024.04.24.24306311",
-    "10.1111/pcn.13730"
+    "10.1136/bmjment-2023-300654",
+    "10.1136/bmjment-2023-300978",
+    "10.12688/f1000research.169873.1"
    ],
-   "paperCount": 9,
-   "coauthorCount": 1
+   "paperCount": 7,
+   "coauthorCount": 7
   },
   {
    "key": "US|Philadelphia",
@@ -6926,7 +5684,9 @@
      ],
      "paperCount": 7,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I79576946",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -6952,16 +5712,6 @@
     {
      "id": "https://openalex.org/I865915315",
      "name": "Vrije Universiteit Amsterdam",
-     "countryCode": "NL",
-     "type": "education",
-     "lat": 52.37403,
-     "lng": 4.88969,
-     "city": "Amsterdam",
-     "country": "The Netherlands"
-    },
-    {
-     "id": "https://openalex.org/I887064364",
-     "name": "University of Amsterdam",
      "countryCode": "NL",
      "type": "education",
      "lat": 52.37403,
@@ -7010,7 +5760,9 @@
      "mergedIds": [
       "https://openalex.org/A5122768284"
      ],
-     "mergedBy": "name"
+     "mergedBy": "name",
+     "primaryInstitutionId": "https://openalex.org/I865915315",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5051793931",
@@ -7029,27 +5781,9 @@
      "mergedIds": [
       "https://openalex.org/A5121105424"
      ],
-     "mergedBy": "name"
-    },
-    {
-     "id": "https://openalex.org/A5053074395",
-     "name": "Mathias Harrer",
-     "orcid": "https://orcid.org/0000-0001-7016-2687",
-     "institutionIds": [
-      "https://openalex.org/I865915315",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.euroneuro.2026.112802",
-      "10.1016/j.invent.2025.100860",
-      "10.1017/rsm.2025.10030",
-      "10.1016/j.brat.2026.104960"
-     ],
-     "paperCount": 4,
-     "mergedIds": [
-      "https://openalex.org/A5122843159"
-     ],
-     "mergedBy": "name"
+     "mergedBy": "name",
+     "primaryInstitutionId": "https://openalex.org/I865915315",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5063320082",
@@ -7066,7 +5800,9 @@
      ],
      "paperCount": 3,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I865915315",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5002846176",
@@ -7083,7 +5819,9 @@
      "mergedIds": [
       "https://openalex.org/A5128866276"
      ],
-     "mergedBy": "name"
+     "mergedBy": "name",
+     "primaryInstitutionId": "https://openalex.org/I865915315",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5016565613",
@@ -7098,7 +5836,9 @@
      ],
      "paperCount": 2,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I865915315",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5054464657",
@@ -7112,7 +5852,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I865915315",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5087843280",
@@ -7126,7 +5868,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I4210108594",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5067702903",
@@ -7141,7 +5885,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I55106644",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5044060263",
@@ -7155,7 +5901,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I865915315",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5043920499",
@@ -7169,7 +5917,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I4210108594",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5085734631",
@@ -7184,7 +5934,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I55106644",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5046999982",
@@ -7198,7 +5950,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I865915315",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5092879606",
@@ -7212,7 +5966,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I865915315",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5043487540",
@@ -7226,7 +5982,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I865915315",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5100381004",
@@ -7240,7 +5998,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I865915315",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5117934687",
@@ -7254,7 +6014,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I865915315",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -7266,7 +6028,7 @@
     "10.12688/f1000research.169873.1"
    ],
    "paperCount": 6,
-   "coauthorCount": 17
+   "coauthorCount": 16
   },
   {
    "key": "JP|Osaka",
@@ -7276,16 +6038,6 @@
    "countryCode": "JP",
    "country": "Japan",
    "institutions": [
-    {
-     "id": "https://openalex.org/I4396570521",
-     "name": "Scientific Research WorkS Peer Support Group",
-     "countryCode": null,
-     "type": "nonprofit",
-     "lat": 34.693790435791016,
-     "lng": 135.50106811523438,
-     "city": "Osaka",
-     "country": "Japan"
-    },
     {
      "id": "https://openalex.org/I149737975",
      "name": "Santen (Japan)",
@@ -7305,6 +6057,16 @@
      "lng": 135.50107,
      "city": "Osaka",
      "country": "Japan"
+    },
+    {
+     "id": "https://openalex.org/I4396570521",
+     "name": "Scientific Research WorkS Peer Support Group",
+     "countryCode": null,
+     "type": "nonprofit",
+     "lat": 34.693790435791016,
+     "lng": 135.50106811523438,
+     "city": "Osaka",
+     "country": "Japan"
     }
    ],
    "coauthors": [
@@ -7329,38 +6091,9 @@
      ],
      "paperCount": 4,
      "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5082770590",
-     "name": "Ryuhei So",
-     "orcid": "https://orcid.org/0000-0002-9838-350X",
-     "institutionIds": [
-      "https://openalex.org/I4210117955",
-      "https://openalex.org/I4396570521"
-     ],
-     "dois": [
-      "10.1007/s40263-025-01188-2",
-      "10.1017/rsm.2025.10030"
-     ],
-     "paperCount": 2,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5028753374",
-     "name": "Eriya Imai",
-     "orcid": "https://orcid.org/0000-0002-4511-4672",
-     "institutionIds": [
-      "https://openalex.org/I4210130218",
-      "https://openalex.org/I4396570521"
-     ],
-     "dois": [
-      "10.1007/s40263-025-01188-2"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I149737975",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5017682602",
@@ -7375,7 +6108,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I4210106580",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5049520100",
@@ -7389,37 +6124,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5102937438",
-     "name": "Takao Kaneko",
-     "orcid": "https://orcid.org/0000-0002-9510-013X",
-     "institutionIds": [
-      "https://openalex.org/I4210125761",
-      "https://openalex.org/I4396570521"
-     ],
-     "dois": [
-      "10.1007/s40263-025-01188-2"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5017115362",
-     "name": "Yasushi Tsujimoto",
-     "orcid": "https://orcid.org/0000-0002-7214-5589",
-     "institutionIds": [
-      "https://openalex.org/I22299242",
-      "https://openalex.org/I4396570521"
-     ],
-     "dois": [
-      "10.1017/rsm.2025.10030"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I4396570521",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -7430,257 +6137,180 @@
     "10.21037/atm.2019.10.65"
    ],
    "paperCount": 5,
-   "coauthorCount": 7
+   "coauthorCount": 3
   },
   {
-   "key": "JP|Amagasaki",
-   "lat": 34.71743,
-   "lng": 135.42801,
-   "city": "Amagasaki",
+   "key": "JP|Nagoya",
+   "lat": 35.18147,
+   "lng": 136.9064,
+   "city": "Nagoya",
    "countryCode": "JP",
    "country": "Japan",
    "institutions": [
     {
-     "id": "https://openalex.org/I4210134765",
-     "name": "Hyogo Prefectural Amagasaki General Medical Center",
+     "id": "https://openalex.org/I33858575",
+     "name": "Nagoya City University",
      "countryCode": "JP",
-     "type": "healthcare",
-     "lat": 34.717430114746094,
-     "lng": 135.42800903320312,
-     "city": "Amagasaki",
+     "type": "education",
+     "lat": 35.18146896362305,
+     "lng": 136.90640258789062,
+     "city": "Nagoya",
      "country": "Japan"
     }
    ],
    "coauthors": [
     {
-     "id": "https://openalex.org/A5039593848",
-     "name": "Yuki Kataoka",
-     "orcid": "https://orcid.org/0000-0001-7982-5213",
+     "id": "https://openalex.org/A5026844864",
+     "name": "Shino Kikuchi",
+     "orcid": "https://orcid.org/0000-0001-6706-4912",
      "institutionIds": [
-      "https://openalex.org/I201537933",
-      "https://openalex.org/I22299242",
-      "https://openalex.org/I4210092627",
-      "https://openalex.org/I4396570521",
-      "https://openalex.org/I149737975",
-      "https://openalex.org/I4396570538",
-      "https://openalex.org/I4210134765"
+      "https://openalex.org/I33858575",
+      "https://openalex.org/I22299242"
      ],
      "dois": [
-      "10.1017/rsm.2025.10030",
-      "10.1101/2021.12.09.21267441",
-      "10.1136/bmjopen-2022-061023",
-      "10.21037/atm.2019.10.65"
+      "10.1001/jamapsychiatry.2023.5060",
+      "10.1101/2022.06.02.22275890",
+      "10.1101/2023.05.19.23290084",
+      "10.1136/bmjment-2023-300654"
      ],
      "paperCount": 4,
      "mergedIds": [],
-     "mergedBy": null
-    }
-   ],
-   "dois": [
-    "10.1017/rsm.2025.10030",
-    "10.1101/2021.12.09.21267441",
-    "10.1136/bmjopen-2022-061023",
-    "10.21037/atm.2019.10.65"
-   ],
-   "paperCount": 4,
-   "coauthorCount": 1
-  },
-  {
-   "key": "JP|Sendai",
-   "lat": 38.26667,
-   "lng": 140.86667,
-   "city": "Sendai",
-   "countryCode": "JP",
-   "country": "Japan",
-   "institutions": [
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I33858575",
+     "primaryBy": "first-listed"
+    },
     {
-     "id": "https://openalex.org/I201537933",
-     "name": "Tohoku University",
-     "countryCode": "JP",
-     "type": "education",
-     "lat": 38.26667,
-     "lng": 140.86667,
-     "city": "Sendai",
-     "country": "Japan"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5039593848",
-     "name": "Yuki Kataoka",
-     "orcid": "https://orcid.org/0000-0001-7982-5213",
+     "id": "https://openalex.org/A5122788246",
+     "name": "Masafumi Tada",
+     "orcid": null,
      "institutionIds": [
-      "https://openalex.org/I201537933",
-      "https://openalex.org/I22299242",
-      "https://openalex.org/I4210092627",
-      "https://openalex.org/I4396570521",
-      "https://openalex.org/I149737975",
-      "https://openalex.org/I4396570538",
-      "https://openalex.org/I4210134765"
+      "https://openalex.org/I33858575",
+      "https://openalex.org/I4210152596"
      ],
      "dois": [
-      "10.1017/rsm.2025.10030",
-      "10.1101/2021.12.09.21267441",
-      "10.1136/bmjopen-2022-061023",
-      "10.21037/atm.2019.10.65"
-     ],
-     "paperCount": 4,
-     "mergedIds": [],
-     "mergedBy": null
-    }
-   ],
-   "dois": [
-    "10.1017/rsm.2025.10030",
-    "10.1101/2021.12.09.21267441",
-    "10.1136/bmjopen-2022-061023",
-    "10.21037/atm.2019.10.65"
-   ],
-   "paperCount": 4,
-   "coauthorCount": 1
-  },
-  {
-   "key": "RO|Cluj-Napoca",
-   "lat": 46.76667,
-   "lng": 23.6,
-   "city": "Cluj-Napoca",
-   "countryCode": "RO",
-   "country": "Romania",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I3125347698",
-     "name": "Babeș-Bolyai University",
-     "countryCode": "RO",
-     "type": "education",
-     "lat": 46.76667022705078,
-     "lng": 23.600000381469727,
-     "city": "Cluj-Napoca",
-     "country": "Romania"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5016972944",
-     "name": "Pim Cuijpers",
-     "orcid": "https://orcid.org/0000-0001-5497-2743",
-     "institutionIds": [
-      "https://openalex.org/I865915315",
-      "https://openalex.org/I3125347698"
-     ],
-     "dois": [
-      "10.1002/wps.20906",
-      "10.1016/j.euroneuro.2026.112802",
-      "10.1016/j.invent.2025.100860",
-      "10.1017/rsm.2025.10030",
       "10.1016/j.brat.2026.104960"
      ],
-     "paperCount": 5,
+     "paperCount": 1,
+     "mergedIds": [],
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I33858575",
+     "primaryBy": "first-listed"
+    }
+   ],
+   "dois": [
+    "10.1001/jamapsychiatry.2023.5060",
+    "10.1016/j.brat.2026.104960",
+    "10.1101/2022.06.02.22275890",
+    "10.1101/2023.05.19.23290084",
+    "10.1136/bmjment-2023-300654"
+   ],
+   "paperCount": 5,
+   "coauthorCount": 2
+  },
+  {
+   "key": "DE|Berlin",
+   "lat": 52.52437,
+   "lng": 13.41053,
+   "city": "Berlin",
+   "countryCode": "DE",
+   "country": "Germany",
+   "institutions": [
+    {
+     "id": "https://openalex.org/I4210127591",
+     "name": "German Centre for Cardiovascular Research",
+     "countryCode": "DE",
+     "type": "facility",
+     "lat": 52.52437,
+     "lng": 13.41053,
+     "city": "Berlin",
+     "country": "Germany"
+    }
+   ],
+   "coauthors": [
+    {
+     "id": "https://openalex.org/A5051133017",
+     "name": "Irene Bighelli",
+     "orcid": "https://orcid.org/0000-0002-5661-5149",
+     "institutionIds": [
+      "https://openalex.org/I4210115305",
+      "https://openalex.org/I4210127591",
+      "https://openalex.org/I62916508"
+     ],
+     "dois": [
+      "10.1016/j.eclinm.2025.103583",
+      "10.1016/j.jpsychires.2025.09.083",
+      "10.1016/j.eclinm.2026.103988"
+     ],
+     "paperCount": 3,
      "mergedIds": [
-      "https://openalex.org/A5122768284"
+      "https://openalex.org/A5136808655"
      ],
-     "mergedBy": "name"
-    }
-   ],
-   "dois": [
-    "10.1002/wps.20906",
-    "10.1016/j.euroneuro.2026.112802",
-    "10.1016/j.invent.2025.100860",
-    "10.1017/rsm.2025.10030"
-   ],
-   "paperCount": 4,
-   "coauthorCount": 1
-  },
-  {
-   "key": "JP|Chiba",
-   "lat": 35.62159,
-   "lng": 140.1086,
-   "city": "Chiba",
-   "countryCode": "JP",
-   "country": "Japan",
-   "institutions": [
+     "mergedBy": "name",
+     "primaryInstitutionId": "https://openalex.org/I4210127591",
+     "primaryBy": "first-listed"
+    },
     {
-     "id": "https://openalex.org/I4210162351",
-     "name": "Center for Forensic Mental Health, Chiba University",
-     "countryCode": "JP",
-     "type": "healthcare",
-     "lat": 35.6215934753418,
-     "lng": 140.1085968017578,
-     "city": "Chiba",
-     "country": "Japan"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5009377868",
-     "name": "Hikari Takashina",
-     "orcid": "https://orcid.org/0000-0003-3094-0573",
+     "id": "https://openalex.org/A5101449336",
+     "name": "David D. Kim",
+     "orcid": "https://orcid.org/0000-0001-5605-9536",
      "institutionIds": [
-      "https://openalex.org/I4210103779",
-      "https://openalex.org/I4210162351"
+      "https://openalex.org/I4210115305",
+      "https://openalex.org/I4210127591",
+      "https://openalex.org/I62916508"
      ],
      "dois": [
-      "10.1001/jamapsychiatry.2023.5060",
-      "10.1016/j.jad.2024.09.017",
-      "10.1101/2023.05.19.23290084"
+      "10.1016/j.eclinm.2025.103583",
+      "10.1016/j.eclinm.2026.103988"
      ],
-     "paperCount": 3,
+     "paperCount": 2,
      "mergedIds": [],
-     "mergedBy": null
-    }
-   ],
-   "dois": [
-    "10.1001/jamapsychiatry.2023.5060",
-    "10.1016/j.jad.2024.09.017",
-    "10.1101/2023.05.19.23290084"
-   ],
-   "paperCount": 3,
-   "coauthorCount": 1
-  },
-  {
-   "key": "JP|Ibaraki",
-   "lat": 36.10775,
-   "lng": 140.19878,
-   "city": "Ibaraki",
-   "countryCode": "JP",
-   "country": "Japan",
-   "institutions": [
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I4210127591",
+     "primaryBy": "first-listed"
+    },
     {
-     "id": "https://openalex.org/I99561568",
-     "name": "Tsukuba International University",
-     "countryCode": "JP",
-     "type": "education",
-     "lat": 36.107749938964844,
-     "lng": 140.1987762451172,
-     "city": "Ibaraki",
-     "country": "Japan"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5015398914",
-     "name": "Shun Nakajima",
-     "orcid": "https://orcid.org/0000-0002-2992-195X",
+     "id": "https://openalex.org/A5037644955",
+     "name": "Nurul Husna Salahuddin",
+     "orcid": "https://orcid.org/0000-0003-1431-3473",
      "institutionIds": [
-      "https://openalex.org/I146399215",
-      "https://openalex.org/I4210103779",
-      "https://openalex.org/I99561568"
+      "https://openalex.org/I4210127591",
+      "https://openalex.org/I62916508"
      ],
      "dois": [
-      "10.1001/jamapsychiatry.2023.5060",
-      "10.1016/j.jad.2024.09.017",
-      "10.1101/2023.05.19.23290084"
+      "10.1016/j.eclinm.2026.103988",
+      "10.1016/j.jpsychires.2025.09.083"
      ],
-     "paperCount": 3,
+     "paperCount": 2,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I4210127591",
+     "primaryBy": "first-listed"
+    },
+    {
+     "id": "https://openalex.org/A5136797513",
+     "name": "Filip Milosavlijević",
+     "orcid": null,
+     "institutionIds": [
+      "https://openalex.org/I4210127591",
+      "https://openalex.org/I62916508"
+     ],
+     "dois": [
+      "10.1016/j.eclinm.2026.103988"
+     ],
+     "paperCount": 1,
+     "mergedIds": [],
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I4210127591",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
-    "10.1001/jamapsychiatry.2023.5060",
-    "10.1016/j.jad.2024.09.017",
-    "10.1101/2023.05.19.23290084"
+    "10.1016/j.eclinm.2025.103583",
+    "10.1016/j.eclinm.2026.103988",
+    "10.1016/j.jpsychires.2025.09.083"
    ],
    "paperCount": 3,
-   "coauthorCount": 1
+   "coauthorCount": 4
   },
   {
    "key": "JP|Nagareyama",
@@ -7716,7 +6346,9 @@
      ],
      "paperCount": 3,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I44902217",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -7763,7 +6395,9 @@
      ],
      "paperCount": 3,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I146399215",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -7812,7 +6446,9 @@
      "mergedIds": [
       "https://openalex.org/A5130710180"
      ],
-     "mergedBy": "name"
+     "mergedBy": "name",
+     "primaryInstitutionId": "https://openalex.org/I145311948",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -7822,171 +6458,6 @@
    ],
    "paperCount": 3,
    "coauthorCount": 1
-  },
-  {
-   "key": "US|Chicago",
-   "lat": 41.85003,
-   "lng": -87.65005,
-   "city": "Chicago",
-   "countryCode": "US",
-   "country": "United States",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I39422238",
-     "name": "University of Illinois Chicago",
-     "countryCode": "US",
-     "type": "education",
-     "lat": 41.85003,
-     "lng": -87.65005,
-     "city": "Chicago",
-     "country": "United States"
-    },
-    {
-     "id": "https://openalex.org/I40347166",
-     "name": "University of Chicago",
-     "countryCode": "US",
-     "type": "education",
-     "lat": 41.85003,
-     "lng": -87.65005,
-     "city": "Chicago",
-     "country": "United States"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5052344963",
-     "name": "John M. Davis",
-     "orcid": "https://orcid.org/0000-0003-3963-1654",
-     "institutionIds": [
-      "https://openalex.org/I39422238",
-      "https://openalex.org/I145311948",
-      "https://openalex.org/I40347166"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583",
-      "10.12688/f1000research.169873.1",
-      "10.1016/j.eclinm.2026.103847"
-     ],
-     "paperCount": 3,
-     "mergedIds": [
-      "https://openalex.org/A5130710180"
-     ],
-     "mergedBy": "name"
-    }
-   ],
-   "dois": [
-    "10.1016/j.eclinm.2025.103583",
-    "10.1016/j.eclinm.2026.103847",
-    "10.12688/f1000research.169873.1"
-   ],
-   "paperCount": 3,
-   "coauthorCount": 1
-  },
-  {
-   "key": "CN|Shanghai",
-   "lat": 31.22222,
-   "lng": 121.45806,
-   "city": "Shanghai",
-   "countryCode": "CN",
-   "country": "China",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I183067930",
-     "name": "Shanghai Jiao Tong University",
-     "countryCode": "CN",
-     "type": "education",
-     "lat": 31.222219467163086,
-     "lng": 121.45806121826172,
-     "city": "Shanghai",
-     "country": "China"
-    },
-    {
-     "id": "https://openalex.org/I2802690428",
-     "name": "Shanghai Mental Health Center",
-     "countryCode": "CN",
-     "type": "healthcare",
-     "lat": 31.18744659423828,
-     "lng": 121.44868469238281,
-     "city": "Shanghai",
-     "country": "China"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5001296226",
-     "name": "Yaohui Wei",
-     "orcid": "https://orcid.org/0000-0002-7186-6018",
-     "institutionIds": [
-      "https://openalex.org/I183067930",
-      "https://openalex.org/I2802690428",
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583",
-      "10.1016/j.eclinm.2026.103988"
-     ],
-     "paperCount": 2,
-     "mergedIds": [
-      "https://openalex.org/A5136794217"
-     ],
-     "mergedBy": "orcid"
-    },
-    {
-     "id": "https://openalex.org/A5084907875",
-     "name": "Chunbo Li",
-     "orcid": "https://orcid.org/0000-0002-3387-4439",
-     "institutionIds": [
-      "https://openalex.org/I183067930",
-      "https://openalex.org/I2802690428",
-      "https://openalex.org/I4210131870"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5100782718",
-     "name": "Robert C. Smith",
-     "orcid": "https://orcid.org/0000-0002-4933-4162",
-     "institutionIds": [
-      "https://openalex.org/I125043107",
-      "https://openalex.org/I183067930",
-      "https://openalex.org/I2802690428"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5058732680",
-     "name": "Yikang Zhu",
-     "orcid": "https://orcid.org/0000-0001-9725-8507",
-     "institutionIds": [
-      "https://openalex.org/I183067930",
-      "https://openalex.org/I2802690428"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
-    }
-   ],
-   "dois": [
-    "10.1016/j.eclinm.2025.103583",
-    "10.1016/j.eclinm.2026.103988"
-   ],
-   "paperCount": 2,
-   "coauthorCount": 4
   },
   {
    "key": "DE|Wiesbaden",
@@ -8020,7 +6491,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I897549280",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5119706813",
@@ -8034,7 +6507,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I897549280",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5042224372",
@@ -8048,7 +6523,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I897549280",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5059852489",
@@ -8062,7 +6539,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I897549280",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -8071,6 +6550,92 @@
    ],
    "paperCount": 2,
    "coauthorCount": 4
+  },
+  {
+   "key": "CN|Shanghai",
+   "lat": 31.22222,
+   "lng": 121.45806,
+   "city": "Shanghai",
+   "countryCode": "CN",
+   "country": "China",
+   "institutions": [
+    {
+     "id": "https://openalex.org/I183067930",
+     "name": "Shanghai Jiao Tong University",
+     "countryCode": "CN",
+     "type": "education",
+     "lat": 31.222219467163086,
+     "lng": 121.45806121826172,
+     "city": "Shanghai",
+     "country": "China"
+    }
+   ],
+   "coauthors": [
+    {
+     "id": "https://openalex.org/A5001296226",
+     "name": "Yaohui Wei",
+     "orcid": "https://orcid.org/0000-0002-7186-6018",
+     "institutionIds": [
+      "https://openalex.org/I183067930",
+      "https://openalex.org/I2802690428",
+      "https://openalex.org/I4210115305",
+      "https://openalex.org/I4210127591",
+      "https://openalex.org/I62916508"
+     ],
+     "dois": [
+      "10.1016/j.eclinm.2025.103583",
+      "10.1016/j.eclinm.2026.103988"
+     ],
+     "paperCount": 2,
+     "mergedIds": [
+      "https://openalex.org/A5136794217"
+     ],
+     "mergedBy": "orcid",
+     "primaryInstitutionId": "https://openalex.org/I183067930",
+     "primaryBy": "first-listed"
+    },
+    {
+     "id": "https://openalex.org/A5084907875",
+     "name": "Chunbo Li",
+     "orcid": "https://orcid.org/0000-0002-3387-4439",
+     "institutionIds": [
+      "https://openalex.org/I183067930",
+      "https://openalex.org/I2802690428",
+      "https://openalex.org/I4210131870"
+     ],
+     "dois": [
+      "10.1016/j.eclinm.2025.103583"
+     ],
+     "paperCount": 1,
+     "mergedIds": [],
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I183067930",
+     "primaryBy": "first-listed"
+    },
+    {
+     "id": "https://openalex.org/A5058732680",
+     "name": "Yikang Zhu",
+     "orcid": "https://orcid.org/0000-0001-9725-8507",
+     "institutionIds": [
+      "https://openalex.org/I183067930",
+      "https://openalex.org/I2802690428"
+     ],
+     "dois": [
+      "10.1016/j.eclinm.2025.103583"
+     ],
+     "paperCount": 1,
+     "mergedIds": [],
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I183067930",
+     "primaryBy": "first-listed"
+    }
+   ],
+   "dois": [
+    "10.1016/j.eclinm.2025.103583",
+    "10.1016/j.eclinm.2026.103988"
+   ],
+   "paperCount": 2,
+   "coauthorCount": 3
   },
   {
    "key": "DE|Magdeburg",
@@ -8105,7 +6670,9 @@
      ],
      "paperCount": 2,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I95793202",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5086418339",
@@ -8119,7 +6686,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I95793202",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5023685293",
@@ -8133,7 +6702,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I95793202",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -8175,7 +6746,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I4210158267",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5128878315",
@@ -8189,7 +6762,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I4210158267",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5014246700",
@@ -8204,106 +6779,14 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I4210158267",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
     "10.1016/j.euroneuro.2026.112802",
     "10.12688/f1000research.169873.1"
-   ],
-   "paperCount": 2,
-   "coauthorCount": 3
-  },
-  {
-   "key": "JP|Okayama",
-   "lat": 34.65,
-   "lng": 133.93333,
-   "city": "Okayama",
-   "countryCode": "JP",
-   "country": "Japan",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I4210117955",
-     "name": "Okayama Psychiatric Medical Center",
-     "countryCode": "JP",
-     "type": "healthcare",
-     "lat": 34.650909423828125,
-     "lng": 133.91554260253906,
-     "city": "Okayama",
-     "country": "Japan"
-    },
-    {
-     "id": "https://openalex.org/I4210118584",
-     "name": "Okayama Prefecture",
-     "countryCode": "JP",
-     "type": "facility",
-     "lat": 34.84550476074219,
-     "lng": 133.75892639160156,
-     "city": "Okayama",
-     "country": "Japan"
-    },
-    {
-     "id": "https://openalex.org/I163770644",
-     "name": "Okayama University",
-     "countryCode": "JP",
-     "type": "education",
-     "lat": 34.650001525878906,
-     "lng": 133.93333435058594,
-     "city": "Okayama",
-     "country": "Japan"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5082770590",
-     "name": "Ryuhei So",
-     "orcid": "https://orcid.org/0000-0002-9838-350X",
-     "institutionIds": [
-      "https://openalex.org/I4210117955",
-      "https://openalex.org/I4396570521"
-     ],
-     "dois": [
-      "10.1007/s40263-025-01188-2",
-      "10.1017/rsm.2025.10030"
-     ],
-     "paperCount": 2,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5017682602",
-     "name": "Kazumasa Kotake",
-     "orcid": "https://orcid.org/0000-0001-9869-1177",
-     "institutionIds": [
-      "https://openalex.org/I4210106580",
-      "https://openalex.org/I4210118584"
-     ],
-     "dois": [
-      "10.1007/s40263-025-01188-2"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5103179531",
-     "name": "N. Hashimoto",
-     "orcid": "https://orcid.org/0000-0003-4605-2378",
-     "institutionIds": [
-      "https://openalex.org/I163770644",
-      "https://openalex.org/I4210117955"
-     ],
-     "dois": [
-      "10.1007/s40263-025-01188-2"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
-    }
-   ],
-   "dois": [
-    "10.1007/s40263-025-01188-2",
-    "10.1017/rsm.2025.10030"
    ],
    "paperCount": 2,
    "coauthorCount": 3
@@ -8341,7 +6824,9 @@
      ],
      "paperCount": 2,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I1334415907",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5016694325",
@@ -8355,7 +6840,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I1334415907",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5026480246",
@@ -8369,7 +6856,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I1334415907",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -8396,16 +6885,6 @@
      "lng": 8.69079,
      "city": "Heidelberg",
      "country": "Germany"
-    },
-    {
-     "id": "https://openalex.org/I2802164966",
-     "name": "University Hospital Heidelberg",
-     "countryCode": "DE",
-     "type": "healthcare",
-     "lat": 49.40768,
-     "lng": 8.69079,
-     "city": "Heidelberg",
-     "country": "Germany"
     }
    ],
    "coauthors": [
@@ -8424,7 +6903,9 @@
      ],
      "paperCount": 2,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I223822909",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5080016475",
@@ -8440,7 +6921,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I223822909",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -8451,109 +6934,77 @@
    "coauthorCount": 2
   },
   {
-   "key": "DE|Mannheim",
-   "lat": 49.4891,
-   "lng": 8.46694,
-   "city": "Mannheim",
-   "countryCode": "DE",
-   "country": "Germany",
+   "key": "JP|Okayama",
+   "lat": 34.65,
+   "lng": 133.93333,
+   "city": "Okayama",
+   "countryCode": "JP",
+   "country": "Japan",
    "institutions": [
     {
-     "id": "https://openalex.org/I4210105615",
-     "name": "Central Institute of Mental Health",
-     "countryCode": "DE",
+     "id": "https://openalex.org/I4210117955",
+     "name": "Okayama Psychiatric Medical Center",
+     "countryCode": "JP",
      "type": "healthcare",
-     "lat": 49.48910140991211,
-     "lng": 8.466939926147461,
-     "city": "Mannheim",
-     "country": "Germany"
+     "lat": 34.650909423828125,
+     "lng": 133.91554260253906,
+     "city": "Okayama",
+     "country": "Japan"
+    },
+    {
+     "id": "https://openalex.org/I163770644",
+     "name": "Okayama University",
+     "countryCode": "JP",
+     "type": "education",
+     "lat": 34.650001525878906,
+     "lng": 133.93333435058594,
+     "city": "Okayama",
+     "country": "Japan"
     }
    ],
    "coauthors": [
     {
-     "id": "https://openalex.org/A5058836037",
-     "name": "Cagdas Türkmen",
-     "orcid": "https://orcid.org/0000-0003-1147-612X",
+     "id": "https://openalex.org/A5082770590",
+     "name": "Ryuhei So",
+     "orcid": "https://orcid.org/0000-0002-9838-350X",
      "institutionIds": [
-      "https://openalex.org/I223822909",
-      "https://openalex.org/I2802164966",
-      "https://openalex.org/I4210105615"
+      "https://openalex.org/I4210117955",
+      "https://openalex.org/I4396570521"
      ],
      "dois": [
-      "10.1093/sleepadvances/zpaf070",
-      "10.1136/bmjopen-2025-102696"
+      "10.1007/s40263-025-01188-2",
+      "10.1017/rsm.2025.10030"
      ],
      "paperCount": 2,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I4210117955",
+     "primaryBy": "first-listed"
     },
     {
-     "id": "https://openalex.org/A5080016475",
-     "name": "Seda Sacu",
-     "orcid": "https://orcid.org/0000-0003-4734-9835",
+     "id": "https://openalex.org/A5103179531",
+     "name": "N. Hashimoto",
+     "orcid": "https://orcid.org/0000-0003-4605-2378",
      "institutionIds": [
-      "https://openalex.org/I223822909",
-      "https://openalex.org/I2802164966",
-      "https://openalex.org/I4210105615"
+      "https://openalex.org/I163770644",
+      "https://openalex.org/I4210117955"
      ],
      "dois": [
-      "10.1136/bmjopen-2025-102696"
+      "10.1007/s40263-025-01188-2"
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I163770644",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
-    "10.1093/sleepadvances/zpaf070",
-    "10.1136/bmjopen-2025-102696"
+    "10.1007/s40263-025-01188-2",
+    "10.1017/rsm.2025.10030"
    ],
    "paperCount": 2,
    "coauthorCount": 2
-  },
-  {
-   "key": "CN|Dongguan",
-   "lat": 22.89883,
-   "lng": 113.88955,
-   "city": "Dongguan",
-   "countryCode": "CN",
-   "country": "China",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I4210144487",
-     "name": "Cloud Computing Center",
-     "countryCode": "CN",
-     "type": "facility",
-     "lat": 22.89883041381836,
-     "lng": 113.8895492553711,
-     "city": "Dongguan",
-     "country": "China"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5048162182",
-     "name": "T. Takayama",
-     "orcid": "https://orcid.org/0000-0002-3492-2025",
-     "institutionIds": [
-      "https://openalex.org/I22299242",
-      "https://openalex.org/I4210144487"
-     ],
-     "dois": [
-      "10.1017/rsm.2025.10030",
-      "10.1136/bmjment-2023-300654"
-     ],
-     "paperCount": 2,
-     "mergedIds": [],
-     "mergedBy": null
-    }
-   ],
-   "dois": [
-    "10.1017/rsm.2025.10030",
-    "10.1136/bmjment-2023-300654"
-   ],
-   "paperCount": 2,
-   "coauthorCount": 1
   },
   {
    "key": "DE|Bonn",
@@ -8596,58 +7047,9 @@
      "mergedIds": [
       "https://openalex.org/A5130688627"
      ],
-     "mergedBy": "name"
-    }
-   ],
-   "dois": [
-    "10.1016/j.eclinm.2026.103847",
-    "10.12688/f1000research.169873.1"
-   ],
-   "paperCount": 2,
-   "coauthorCount": 1
-  },
-  {
-   "key": "GB|Edinburgh",
-   "lat": 55.95206,
-   "lng": -3.19648,
-   "city": "Edinburgh",
-   "countryCode": "GB",
-   "country": "United Kingdom",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I98677209",
-     "name": "University of Edinburgh",
-     "countryCode": "GB",
-     "type": "education",
-     "lat": 55.95206,
-     "lng": -3.19648,
-     "city": "Edinburgh",
-     "country": "United Kingdom"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5055109212",
-     "name": "Josef Priller",
-     "orcid": "https://orcid.org/0000-0001-7596-0979",
-     "institutionIds": [
-      "https://openalex.org/I2801533059",
-      "https://openalex.org/I4210115305",
-      "https://openalex.org/I4210126463",
-      "https://openalex.org/I4210127591",
-      "https://openalex.org/I62916508",
-      "https://openalex.org/I7877124",
-      "https://openalex.org/I98677209"
-     ],
-     "dois": [
-      "10.12688/f1000research.169873.1",
-      "10.1016/j.eclinm.2026.103847"
-     ],
-     "paperCount": 2,
-     "mergedIds": [
-      "https://openalex.org/A5130688627"
-     ],
-     "mergedBy": "name"
+     "mergedBy": "name",
+     "primaryInstitutionId": "https://openalex.org/I2801533059",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -8691,56 +7093,14 @@
      ],
      "paperCount": 2,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I83642850",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
     "10.1016/j.jad.2024.09.017",
     "10.1111/pcn.13438"
-   ],
-   "paperCount": 2,
-   "coauthorCount": 1
-  },
-  {
-   "key": "JP|Nagasaki",
-   "lat": 32.75,
-   "lng": 129.88333,
-   "city": "Nagasaki",
-   "countryCode": "JP",
-   "country": "Japan",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I43777268",
-     "name": "Nagasaki University",
-     "countryCode": "JP",
-     "type": "education",
-     "lat": 32.75,
-     "lng": 129.88333129882812,
-     "city": "Nagasaki",
-     "country": "Japan"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5003439282",
-     "name": "Yukiko Honda",
-     "orcid": "https://orcid.org/0000-0002-8337-1549",
-     "institutionIds": [
-      "https://openalex.org/I132400726",
-      "https://openalex.org/I43777268"
-     ],
-     "dois": [
-      "10.1016/j.brat.2026.104960",
-      "10.1136/bmjment-2023-300654"
-     ],
-     "paperCount": 2,
-     "mergedIds": [],
-     "mergedBy": null
-    }
-   ],
-   "dois": [
-    "10.1016/j.brat.2026.104960",
-    "10.1136/bmjment-2023-300654"
    ],
    "paperCount": 2,
    "coauthorCount": 1
@@ -8779,7 +7139,9 @@
      ],
      "paperCount": 2,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I132400726",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -8821,7 +7183,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I4210114023",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5018870434",
@@ -8835,7 +7199,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I4210114023",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5103069742",
@@ -8849,7 +7215,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I4210114023",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -8891,7 +7259,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I114457229",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5052535424",
@@ -8906,7 +7276,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I114457229",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -8923,16 +7295,6 @@
    "countryCode": "DE",
    "country": "Germany",
    "institutions": [
-    {
-     "id": "https://openalex.org/I2801240073",
-     "name": "University Medical Center Freiburg",
-     "countryCode": "DE",
-     "type": "healthcare",
-     "lat": 47.9959,
-     "lng": 7.85222,
-     "city": "Freiburg im Breisgau",
-     "country": "Germany"
-    },
     {
      "id": "https://openalex.org/I161046081",
      "name": "University of Freiburg",
@@ -8959,7 +7321,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I161046081",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5065188754",
@@ -8974,7 +7338,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I161046081",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -9015,7 +7381,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I145722265",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5136771585",
@@ -9029,7 +7397,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I145722265",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -9081,7 +7451,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I204778367",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5083651374",
@@ -9095,64 +7467,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
-    }
-   ],
-   "dois": [
-    "10.1093/sleepadvances/zpaf070"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 2
-  },
-  {
-   "key": "US|Beaver Falls",
-   "lat": 40.75201,
-   "lng": -80.31923,
-   "city": "Beaver Falls",
-   "countryCode": "US",
-   "country": "United States",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I6312358",
-     "name": "Geneva College",
-     "countryCode": "US",
-     "type": "education",
-     "lat": 40.75201,
-     "lng": -80.31923,
-     "city": "Beaver Falls",
-     "country": "United States"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5038306532",
-     "name": "Carlotta L. Schneider",
-     "orcid": "https://orcid.org/0000-0003-0236-5946",
-     "institutionIds": [
-      "https://openalex.org/I114457229",
-      "https://openalex.org/I6312358"
-     ],
-     "dois": [
-      "10.1093/sleepadvances/zpaf070"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5052535424",
-     "name": "Elisabeth Hertenstein",
-     "orcid": "https://orcid.org/0000-0001-6467-0933",
-     "institutionIds": [
-      "https://openalex.org/I114457229",
-      "https://openalex.org/I6312358"
-     ],
-     "dois": [
-      "10.1093/sleepadvances/zpaf070"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I4210104358",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -9194,7 +7511,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I107672454",
+     "primaryBy": "first-listed"
     },
     {
      "id": "https://openalex.org/A5033221741",
@@ -9209,7 +7528,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I107672454",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -9217,106 +7538,6 @@
    ],
    "paperCount": 1,
    "coauthorCount": 2
-  },
-  {
-   "key": "US|White River Junction",
-   "lat": 43.64896,
-   "lng": -72.31926,
-   "city": "White River Junction",
-   "countryCode": "US",
-   "country": "United States",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I4210158294",
-     "name": "National Center for Post Traumatic Stress Disorder",
-     "countryCode": "US",
-     "type": "facility",
-     "lat": 43.64896011352539,
-     "lng": -72.31925964355469,
-     "city": "White River Junction",
-     "country": "United States"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5020360420",
-     "name": "Jessica L. Hamblen",
-     "orcid": "https://orcid.org/0000-0002-3856-2952",
-     "institutionIds": [
-      "https://openalex.org/I107672454",
-      "https://openalex.org/I4210158294"
-     ],
-     "dois": [
-      "10.1016/j.invent.2025.100860"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
-    },
-    {
-     "id": "https://openalex.org/A5033221741",
-     "name": "Paula P. Schnurr",
-     "orcid": "https://orcid.org/0000-0002-6195-716X",
-     "institutionIds": [
-      "https://openalex.org/I107672454",
-      "https://openalex.org/I4210158294"
-     ],
-     "dois": [
-      "10.1016/j.invent.2025.100860"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
-    }
-   ],
-   "dois": [
-    "10.1016/j.invent.2025.100860"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 2
-  },
-  {
-   "key": "CN|Beijing",
-   "lat": 39.9075,
-   "lng": 116.39723,
-   "city": "Beijing",
-   "countryCode": "CN",
-   "country": "China",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I4210131870",
-     "name": "Institute of Psychology, Chinese Academy of Sciences",
-     "countryCode": "CN",
-     "type": "facility",
-     "lat": 39.907501220703125,
-     "lng": 116.39723205566406,
-     "city": "Beijing",
-     "country": "China"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5084907875",
-     "name": "Chunbo Li",
-     "orcid": "https://orcid.org/0000-0002-3387-4439",
-     "institutionIds": [
-      "https://openalex.org/I183067930",
-      "https://openalex.org/I2802690428",
-      "https://openalex.org/I4210131870"
-     ],
-     "dois": [
-      "10.1016/j.eclinm.2025.103583"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
-    }
-   ],
-   "dois": [
-    "10.1016/j.eclinm.2025.103583"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 1
   },
   {
    "key": "DE|Augsburg",
@@ -9326,16 +7547,6 @@
    "countryCode": "DE",
    "country": "Germany",
    "institutions": [
-    {
-     "id": "https://openalex.org/I4210129999",
-     "name": "KUKA (Germany)",
-     "countryCode": "DE",
-     "type": "company",
-     "lat": 48.37062454223633,
-     "lng": 10.93526554107666,
-     "city": "Augsburg",
-     "country": "Germany"
-    },
     {
      "id": "https://openalex.org/I179225836",
      "name": "University of Augsburg",
@@ -9361,7 +7572,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I179225836",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -9379,26 +7592,6 @@
    "country": "France",
    "institutions": [
     {
-     "id": "https://openalex.org/I4210097159",
-     "name": "Assistance Publique – Hôpitaux de Paris",
-     "countryCode": "FR",
-     "type": "healthcare",
-     "lat": 48.85341,
-     "lng": 2.3488,
-     "city": "Paris",
-     "country": "France"
-    },
-    {
-     "id": "https://openalex.org/I4210133078",
-     "name": "Hôtel-Dieu de Paris",
-     "countryCode": "FR",
-     "type": "healthcare",
-     "lat": 48.85341,
-     "lng": 2.3488,
-     "city": "Paris",
-     "country": "France"
-    },
-    {
      "id": "https://openalex.org/I154526488",
      "name": "Inserm",
      "countryCode": "FR",
@@ -9407,46 +7600,6 @@
      "lng": 2.3488,
      "city": "Paris",
      "country": "France"
-    },
-    {
-     "id": "https://openalex.org/I4210088668",
-     "name": "Institut National de Recherche pour l'Agriculture, l'Alimentation et l'Environnement",
-     "countryCode": "FR",
-     "type": "government",
-     "lat": 48.85341,
-     "lng": 2.3488,
-     "city": "Paris",
-     "country": "France"
-    },
-    {
-     "id": "https://openalex.org/I4210091437",
-     "name": "Sorbonne Paris Cité",
-     "countryCode": "FR",
-     "type": "other",
-     "lat": 48.85340881347656,
-     "lng": 2.34879994392395,
-     "city": "Paris",
-     "country": "France"
-    },
-    {
-     "id": "https://openalex.org/I39804081",
-     "name": "Sorbonne Université",
-     "countryCode": "FR",
-     "type": "education",
-     "lat": 48.85341,
-     "lng": 2.3488,
-     "city": "Paris",
-     "country": "France"
-    },
-    {
-     "id": "https://openalex.org/I204730241",
-     "name": "Université Paris Cité",
-     "countryCode": "FR",
-     "type": "education",
-     "lat": 48.85341,
-     "lng": 2.3488,
-     "city": "Paris",
-     "country": "France"
     }
    ],
    "coauthors": [
@@ -9469,98 +7622,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
-    }
-   ],
-   "dois": [
-    "10.1136/bmjopen-2025-102696"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 1
-  },
-  {
-   "key": "FR|Villetaneuse",
-   "lat": 48.95833,
-   "lng": 2.34167,
-   "city": "Villetaneuse",
-   "countryCode": "FR",
-   "country": "France",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I4210091279",
-     "name": "Université Sorbonne Paris Nord",
-     "countryCode": "FR",
-     "type": "education",
-     "lat": 48.95833,
-     "lng": 2.34167,
-     "city": "Villetaneuse",
-     "country": "France"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5024091960",
-     "name": "Astrid Chevance",
-     "orcid": "https://orcid.org/0000-0002-0852-4322",
-     "institutionIds": [
-      "https://openalex.org/I154526488",
-      "https://openalex.org/I204730241",
-      "https://openalex.org/I39804081",
-      "https://openalex.org/I4210088668",
-      "https://openalex.org/I4210091279",
-      "https://openalex.org/I4210091437",
-      "https://openalex.org/I4210097159",
-      "https://openalex.org/I4210133078"
-     ],
-     "dois": [
-      "10.1136/bmjopen-2025-102696"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
-    }
-   ],
-   "dois": [
-    "10.1136/bmjopen-2025-102696"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 1
-  },
-  {
-   "key": "GB|Birmingham",
-   "lat": 52.48142,
-   "lng": -1.89983,
-   "city": "Birmingham",
-   "countryCode": "GB",
-   "country": "United Kingdom",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I79619799",
-     "name": "University of Birmingham",
-     "countryCode": "GB",
-     "type": "education",
-     "lat": 52.48142,
-     "lng": -1.89983,
-     "city": "Birmingham",
-     "country": "United Kingdom"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5045088705",
-     "name": "Angharad N. de Cates",
-     "orcid": "https://orcid.org/0000-0001-7848-1295",
-     "institutionIds": [
-      "https://openalex.org/I2803066836",
-      "https://openalex.org/I40120149",
-      "https://openalex.org/I79619799"
-     ],
-     "dois": [
-      "10.1136/bmjopen-2025-102696"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I154526488",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -9601,7 +7665,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I138689650",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -9642,7 +7708,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I119439378",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -9683,7 +7751,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I8721504",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -9725,7 +7795,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I4210125761",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -9766,7 +7838,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I154130895",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -9792,16 +7866,6 @@
      "lng": -81.97484,
      "city": "Augusta",
      "country": "United States"
-    },
-    {
-     "id": "https://openalex.org/I4210087454",
-     "name": "Augusta University Health",
-     "countryCode": "US",
-     "type": "healthcare",
-     "lat": 33.47114562988281,
-     "lng": -81.98999786376953,
-     "city": "Augusta",
-     "country": "United States"
     }
    ],
    "coauthors": [
@@ -9818,7 +7882,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I25041050",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -9859,53 +7925,13 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I136199984",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
     "10.1136/bmjopen-2025-102696"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 1
-  },
-  {
-   "key": "US|Canandaigua",
-   "lat": 42.901,
-   "lng": -77.27117,
-   "city": "Canandaigua",
-   "countryCode": "US",
-   "country": "United States",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I4210092521",
-     "name": "Canandaigua VA Medical Center",
-     "countryCode": "US",
-     "type": "healthcare",
-     "lat": 42.900997161865234,
-     "lng": -77.27117156982422,
-     "city": "Canandaigua",
-     "country": "United States"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5061539426",
-     "name": "Wilfred R. Pigeon",
-     "orcid": "https://orcid.org/0000-0002-5753-7840",
-     "institutionIds": [
-      "https://openalex.org/I28792581",
-      "https://openalex.org/I4210092521"
-     ],
-     "dois": [
-      "10.1093/sleepadvances/zpaf070"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
-    }
-   ],
-   "dois": [
-    "10.1093/sleepadvances/zpaf070"
    ],
    "paperCount": 1,
    "coauthorCount": 1
@@ -9942,7 +7968,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I92156820",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -9983,7 +8011,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I91045830",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -10009,16 +8039,6 @@
      "lng": -96.80667,
      "city": "Dallas",
      "country": "United States"
-    },
-    {
-     "id": "https://openalex.org/I867280407",
-     "name": "The University of Texas Southwestern Medical Center",
-     "countryCode": "US",
-     "type": "healthcare",
-     "lat": 32.78306,
-     "lng": -96.80667,
-     "city": "Dallas",
-     "country": "United States"
     }
    ],
    "coauthors": [
@@ -10035,7 +8055,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I1297463080",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -10076,7 +8098,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I200719446",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -10119,7 +8143,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I125043107",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -10161,50 +8187,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
-    }
-   ],
-   "dois": [
-    "10.1093/sleepadvances/zpaf070"
-   ],
-   "paperCount": 1,
-   "coauthorCount": 1
-  },
-  {
-   "key": "US|San Francisco",
-   "lat": 37.79418,
-   "lng": -122.42267,
-   "city": "San Francisco",
-   "countryCode": "US",
-   "country": "United States",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I4210162359",
-     "name": "International Neuromodulation Society",
-     "countryCode": "US",
-     "type": "nonprofit",
-     "lat": 37.7941780090332,
-     "lng": -122.42266845703125,
-     "city": "San Francisco",
-     "country": "United States"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5030135921",
-     "name": "Dieter Riemann",
-     "orcid": "https://orcid.org/0000-0002-1968-6220",
-     "institutionIds": [
-      "https://openalex.org/I161046081",
-      "https://openalex.org/I2801240073",
-      "https://openalex.org/I4210162359"
-     ],
-     "dois": [
-      "10.1093/sleepadvances/zpaf070"
-     ],
-     "paperCount": 1,
-     "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I28792581",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -10245,7 +8230,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I204465549",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -10286,7 +8273,9 @@
      ],
      "paperCount": 1,
      "mergedIds": [],
-     "mergedBy": null
+     "mergedBy": null,
+     "primaryInstitutionId": "https://openalex.org/I10947320",
+     "primaryBy": "first-listed"
     }
    ],
    "dois": [
@@ -10304,11 +8293,17 @@
   "coauthorsMerged": 21,
   "institutions": 119,
   "geoResolved": 119,
-  "cities": 69,
-  "countries": 15,
+  "cities": 47,
+  "countries": 14,
   "authorshipRows": 315,
   "authorshipsWithoutInstitution": 5,
   "coauthorsWithoutInstitution": 2,
+  "primaryBy": {
+   "firstListed": 139,
+   "orcid": 0,
+   "fallback": 4,
+   "none": 2
+  },
   "yearMin": 2019,
   "yearMax": 2026
  },

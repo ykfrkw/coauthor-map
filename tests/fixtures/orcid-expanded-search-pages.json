@@ -1,0 +1,1485 @@
+[
+ {
+  "expanded-result": [
+   {
+    "orcid-id": "0000-0002-3535-9078",
+    "given-names": "Knut",
+    "family-names": "Langsrud",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0002-2341-8931",
+    "given-names": "Sanae",
+    "family-names": "Kishimoto",
+    "credit-name": "Sanae Kishimoto",
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Harvard School of Public Health",
+     "Kyoto University"
+    ]
+   },
+   {
+    "orcid-id": "0000-0001-9725-8507",
+    "given-names": "Yikang",
+    "family-names": "Zhu",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0001-6054-3363",
+    "given-names": "Daiki",
+    "family-names": "Nagaoka",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0001-5005-0709",
+    "given-names": "Ulrike",
+    "family-names": "Vogelmann",
+    "credit-name": "Kumpf",
+    "other-name": [
+     "Vogelmann"
+    ],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0002-0071-2599",
+    "given-names": "Eirini",
+    "family-names": "Karyotaki",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "University of Amsterdam",
+     "VU University Amsterdam"
+    ]
+   },
+   {
+    "orcid-id": "0000-0001-8872-8626",
+    "given-names": "Bradley C.",
+    "family-names": "Johnston",
+    "credit-name": "Bradley C. Johnston",
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Dalhousie University",
+     "Hospital for Sick Children Research Institute",
+     "McMaster University",
+     "Texas A&M University",
+     "University of Alberta",
+     "University of Oxford",
+     "University of Toronto"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-1211-7439",
+    "given-names": "Hui",
+    "family-names": "Wu",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Klinikum rechts der Isar der Technischen Universität München"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-3492-2025",
+    "given-names": "Tomohiro",
+    "family-names": "Takayama",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Max Planck Institute for Solid State Research",
+     "National Institute for Materials Science"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-3856-2952",
+    "given-names": "Jessica",
+    "family-names": "Hamblen",
+    "credit-name": "Jessica L. Hamblen",
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Department of Veterans Affairs"
+    ]
+   },
+   {
+    "orcid-id": "0000-0001-5605-9536",
+    "given-names": "David Donghyun",
+    "family-names": "Kim",
+    "credit-name": "David D. Kim",
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Provincial Health Services Authority",
+     "Technical University of Munich",
+     "University of British Columbia",
+     "University of Toronto"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-3830-8508",
+    "given-names": "Georgia",
+    "family-names": "Salanti",
+    "credit-name": null,
+    "other-name": [],
+    "email": [
+     "georgia.salanti@unibe.ch"
+    ],
+    "institution-name": [
+     "BMJ Mental Health",
+     "Fundação para a Ciência e Tecnologia",
+     "L'Oréal-UNESCO \"Women in Science\"",
+     "Ludwig-Maximilians-Universitat Munchen",
+     "MRC Biostatistics Unit",
+     "Multidisciplinary Center for Infectious Diseases (MCID)",
+     "National and Kapodistrian University of Athens",
+     "Panepistemio Ioanninon Tmema Iatrikes",
+     "Society for Research Synthesis Methodology",
+     "Technische Universität München",
+     "The Open University",
+     "Universitat Bern",
+     "Universite Libre Bruxelles Ecole de Santé Publique"
+    ]
+   },
+   {
+    "orcid-id": "0000-0001-6080-1801",
+    "given-names": "Kei",
+    "family-names": "Nakashima",
+    "credit-name": null,
+    "other-name": [],
+    "email": [
+     "kei.7.nakashima@gmail.com"
+    ],
+    "institution-name": [
+     "Kameda Medical Center",
+     "Kyushu University",
+     "Osaka Metropolitan University",
+     "Saiseikai Fukuoka General Hospital",
+     "St.Mary's Hospital"
+    ]
+   },
+   {
+    "orcid-id": "0000-0001-6706-4912",
+    "given-names": "shino",
+    "family-names": "kikuchi",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Nagoya City University"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-4053-8206",
+    "given-names": "Yusuke",
+    "family-names": "Takahashi",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Graduate schoole of Akita University"
+    ]
+   },
+   {
+    "orcid-id": "0000-0001-6516-4573",
+    "given-names": "Nobuyuki",
+    "family-names": "Nomura",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0002-0852-4322",
+    "given-names": "Astrid",
+    "family-names": "Chevance",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Assistance Publique – Hôpitaux de Paris",
+     "Center fo research in Epidemiology and Statistics",
+     "Chancellerie des Universités de Paris",
+     "Congrès Français de Psychiatrie",
+     "Ecole Normale Supérieure",
+     "European Psychiatric Association",
+     "Fondation L'Oréal",
+     "Fondation des Treilles",
+     "Université Paris-Saclay",
+     "Université de Paris",
+     "Université de Versailles Saint-Quentin-en-Yvelines"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-3387-4439",
+    "given-names": "Chunbo",
+    "family-names": "Li",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Shanghai Mental Health Center, Shanghai Jiao Tong University School of Medicine"
+    ]
+   },
+   {
+    "orcid-id": "0000-0001-7148-8320",
+    "given-names": "Julia",
+    "family-names": "Schulz",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Technical University of Munich"
+    ]
+   },
+   {
+    "orcid-id": "0000-0001-6467-0933",
+    "given-names": "Elisabeth",
+    "family-names": "Hertenstein",
+    "credit-name": null,
+    "other-name": [],
+    "email": [
+     "elisabeth.hertenstein@unige.ch"
+    ],
+    "institution-name": [
+     "Albert Ludwig University of Freiburg",
+     "UPD",
+     "University of Bern",
+     "University of Geneva",
+     "Universitätsklinikum Freiburg"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-0955-7572",
+    "given-names": "Orestis",
+    "family-names": "Efthimiou",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0001-5772-2475",
+    "given-names": "Ava",
+    "family-names": "Homiar",
+    "credit-name": null,
+    "other-name": [],
+    "email": [
+     "ava.homiar@psych.ox.ac.uk",
+     "ahomiar@bidmc.harvard.edu"
+    ],
+    "institution-name": [
+     "American Medical Informatics Association",
+     "Beth Israel Deaconess Medical Center",
+     "British Neuroscience Association",
+     "Canadian Psychological Association",
+     "Centre for Addiction and Mental Health",
+     "McMaster University",
+     "St. Joseph’s Healthcare Hamilton",
+     "University of Oxford"
+    ]
+   },
+   {
+    "orcid-id": "0000-0001-5005-3862",
+    "given-names": "Steven",
+    "family-names": "Hollon",
+    "credit-name": "Steven D Hollon",
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Florida State University",
+     "Vanderbilt University"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-2218-3237",
+    "given-names": "Yingying",
+    "family-names": "Wang",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Vrije Universiteit Amsterdam"
+    ]
+   },
+   {
+    "orcid-id": "0000-0001-8022-3228",
+    "given-names": "Rolf",
+    "family-names": "Engel",
+    "credit-name": "Rolf R. Engel",
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Ludwig-Maximilians-Universität München"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-4133-3464",
+    "given-names": "Kai",
+    "family-names": "Spiegelhalder",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0002-3448-9532",
+    "given-names": "Johannes",
+    "family-names": "Schneider-Thoma",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Technische Universität München"
+    ]
+   },
+   {
+    "orcid-id": "0000-0001-7596-0979",
+    "given-names": "Josef",
+    "family-names": "Priller",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0002-4443-4535",
+    "given-names": "Kiyoto",
+    "family-names": "Kasai",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0001-6482-8593",
+    "given-names": "Davide",
+    "family-names": "Papola",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0002-0764-8745",
+    "given-names": "Bram",
+    "family-names": "Storosum",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0002-4388-8447",
+    "given-names": "Jens H.",
+    "family-names": "van Dalfsen",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0002-1968-6220",
+    "given-names": "Dieter",
+    "family-names": "Riemann",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Central Institute of Mental Health",
+     "Klinikum Schwabing",
+     "Ludwig-Maximilians-Universität München",
+     "Max-Planck-Institut für Psychiatrie",
+     "Ruprecht Karls Universität Heidelberg Medizinische Fakultät Mannheim",
+     "Universität Konstanz Fachbereich Psychologie",
+     "Universitätsklinikum Freiburg"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-2992-195X",
+    "given-names": "Shun",
+    "family-names": "Nakajima",
+    "credit-name": null,
+    "other-name": [],
+    "email": [
+     "nakajima.shun.ga@u.tsukuba.ac.jp"
+    ],
+    "institution-name": [
+     "National Center of Neurology and Psychiatry",
+     "University of Tsukuba"
+    ]
+   },
+   {
+    "orcid-id": "0000-0001-7638-8310",
+    "given-names": "Frank",
+    "family-names": "Padberg",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Ludwig-Maximilians-Universitat Munchen"
+    ]
+   },
+   {
+    "orcid-id": "0000-0001-5179-8321",
+    "given-names": "Andrea",
+    "family-names": "Cipriani",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "BMJ Publishing Group",
+     "Canadian Institutes of Health Research",
+     "European Medicines Agency",
+     "Istituto Superiore di Sanità",
+     "NIHR Academy",
+     "NIHR Mental Health Incubator",
+     "National Institute for Health and Care Excellence",
+     "Oxford Health NHS Foundation Trust",
+     "Royal College of Psychiatrists",
+     "United Nations, Vienna",
+     "University of Oxford",
+     "University of Padua",
+     "University of Verona"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-1180-7702",
+    "given-names": "Antonia Anabella",
+    "family-names": "Sprenger",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Humboldt-Universität zu Berlin",
+     "Otto-von-Guericke University Magdeburg",
+     "Technical University of Munich",
+     "Vrije Universiteit Amsterdam"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-3120-1273",
+    "given-names": "Akira",
+    "family-names": "Onishi",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "京都大学 / Kyoto University"
+    ]
+   },
+   {
+    "orcid-id": "0000-0001-5035-7858",
+    "given-names": "William",
+    "family-names": "McCall",
+    "credit-name": "William Vaughn McCall",
+    "other-name": [
+     "Vaughn McCall"
+    ],
+    "email": [],
+    "institution-name": [
+     "Augusta University"
+    ]
+   },
+   {
+    "orcid-id": "0000-0001-9869-1177",
+    "given-names": "Kazumasa",
+    "family-names": "Kotake",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Okayama Saiseikai General Hospital",
+     "Zikei Hospital",
+     "岡山済生会総合病院",
+     "岡山県済生会"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-4269-4800",
+    "given-names": "Ethan",
+    "family-names": "Sahker",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Chatham University",
+     "Kyoto University",
+     "Metropolitan State University of Denver",
+     "University of Iowa",
+     "京都大学 / Kyoto University"
+    ]
+   },
+   {
+    "orcid-id": "0000-0001-8264-2039",
+    "given-names": "Spyridon",
+    "family-names": "Siafis",
+    "credit-name": null,
+    "other-name": [],
+    "email": [
+     "spyridon.siafis@tum.de",
+     "spyridon.siafis@uoi.gr"
+    ],
+    "institution-name": [
+     "Aristotle University of Thessaloniki School of Medicine",
+     "General Hospital of Katerini",
+     "Hellenic Open University",
+     "Technical University of Munich",
+     "University of Ioannina"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-2539-1031",
+    "given-names": "Masahiro",
+    "family-names": "Banno",
+    "credit-name": "Masahiro Banno",
+    "other-name": [],
+    "email": [
+     "solvency@med.nagoya-u.ac.jp"
+    ],
+    "institution-name": [
+     "Cochrane Japan",
+     "Nagoya University",
+     "Seichiryo Hospital"
+    ]
+   },
+   {
+    "orcid-id": "0000-0001-7848-1295",
+    "given-names": "Angharad N.",
+    "family-names": "de Cates",
+    "credit-name": null,
+    "other-name": [
+     "Angharad N. Smyth"
+    ],
+    "email": [],
+    "institution-name": [
+     "British Association for Psychopharmacology",
+     "European College of Neuropsychopharmacology",
+     "Royal College of Psychiatrists",
+     "The University of Birmingham",
+     "University of Birmingham",
+     "University of Oxford",
+     "University of Warwick"
+    ]
+   },
+   {
+    "orcid-id": "0000-0001-5430-9810",
+    "given-names": "Marit",
+    "family-names": "Sijbrandij",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Vrije Universiteit Amsterdam"
+    ]
+   },
+   {
+    "orcid-id": "0000-0001-7982-5213",
+    "given-names": "Yuki",
+    "family-names": "Kataoka",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Hyogo Prefectural Amagasaki General Medical Center",
+     "Kyoto Min-iren Asukai Hospital",
+     "Kyoto University",
+     "Nagoya University Hospital",
+     "Tohoku University",
+     "京都大学"
+    ]
+   },
+   {
+    "orcid-id": "0000-0001-6875-2215",
+    "given-names": "Annemieke",
+    "family-names": "van Straten",
+    "credit-name": "A. van Straten",
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Vrije Universiteit Amsterdam"
+    ]
+   },
+   {
+    "orcid-id": "0000-0001-5497-2743",
+    "given-names": "Pim",
+    "family-names": "Cuijpers",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Vrije Universiteit Amsterdam"
+    ]
+   },
+   {
+    "orcid-id": "0000-0001-7016-2687",
+    "given-names": "Mathias",
+    "family-names": "Harrer",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Friedrich-Alexander-Universität Erlangen-Nürnberg",
+     "Technical University of Munich",
+     "Vrije Universiteit Amsterdam"
+    ]
+   },
+   {
+    "orcid-id": "0000-0001-5563-5896",
+    "given-names": "Clara",
+    "family-names": "Miguel",
+    "credit-name": null,
+    "other-name": [],
+    "email": [
+     "clara.miguel.snz@gmail.com"
+    ],
+    "institution-name": [
+     "Centre de Recherche Épidémiologie et Statistique",
+     "Vrije Universiteit Amsterdam"
+    ]
+   }
+  ],
+  "num-found": 50
+ },
+ {
+  "expanded-result": [
+   {
+    "orcid-id": "0000-0002-5852-9607",
+    "given-names": "Kei",
+    "family-names": "Kobayashi",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0002-6392-8450",
+    "given-names": "Eisuke",
+    "family-names": "Sakakibara",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "The University of Tokyo",
+     "The University of Tokyo Hospital"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-6033-3144",
+    "given-names": "Elisavet",
+    "family-names": "Pinioti",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0002-4700-6990",
+    "given-names": "Tasnim",
+    "family-names": "Hamza",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0002-7202-6061",
+    "given-names": "Carolin",
+    "family-names": "Lorenz",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0002-5661-5149",
+    "given-names": "Irene",
+    "family-names": "Bighelli",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0002-5624-4552",
+    "given-names": "So",
+    "family-names": "Sugita",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "National Center of Neurology and Psychiatry",
+     "Seitoku University",
+     "University of York",
+     "Waseda University"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-6806-759X",
+    "given-names": "Michael",
+    "family-names": "Perlis",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "University of Pennsylvania"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-8095-0545",
+    "given-names": "Shimeng",
+    "family-names": "Dong",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0003-1431-3473",
+    "given-names": "Nurul Husna",
+    "family-names": "Salahuddin",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Technical University of Munich",
+     "University of East London"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-8337-1549",
+    "given-names": "Yukiko",
+    "family-names": "Honda",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Kyoto University"
+    ]
+   },
+   {
+    "orcid-id": "0000-0003-0236-5946",
+    "given-names": "Carlotta",
+    "family-names": "Schneider",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "University of Geneva"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-4933-4162",
+    "given-names": "Robert C",
+    "family-names": "Smith",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Stanford Medicine",
+     "Stanford University"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-8717-0832",
+    "given-names": "Edoardo Giuseppe",
+    "family-names": "Ostinelli",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Oxford Health NHS Foundation Trust",
+     "University of Oxford",
+     "Università degli Studi di Milano"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-9173-942X",
+    "given-names": "Håvard",
+    "family-names": "Kallestad",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Norwegian University of Science and Technology",
+     "St. Olavs University Hospital"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-7481-976X",
+    "given-names": "Paula",
+    "family-names": "Kuper",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0002-5560-6814",
+    "given-names": "John",
+    "family-names": "Weisz",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0002-5500-9964",
+    "given-names": "Ryuichiro",
+    "family-names": "Yamamoto",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Edogawa University"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-7186-6018",
+    "given-names": "Yaohui",
+    "family-names": "Wei",
+    "credit-name": null,
+    "other-name": [],
+    "email": [
+     "weiyaohui0108@163.com"
+    ],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0003-1125-3145",
+    "given-names": "Rie",
+    "family-names": "Toyomoto",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Kyoto University",
+     "National Center For Child Health and Development"
+    ]
+   },
+   {
+    "orcid-id": "0000-0003-1851-4328",
+    "given-names": "Graham",
+    "family-names": "Emslie",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "The University of Texas Southwestern Medical Center"
+    ]
+   },
+   {
+    "orcid-id": "0000-0003-2380-7651",
+    "given-names": "Wolfgang",
+    "family-names": "Strube",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Bezirkskrankenhaus Augsburg",
+     "University of Augsburg",
+     "University of Munich, LMU"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-6195-716X",
+    "given-names": "Paula",
+    "family-names": "Schnurr",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0002-7214-5589",
+    "given-names": "Yasushi",
+    "family-names": "Tsujimoto",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Kyoto University"
+    ]
+   },
+   {
+    "orcid-id": "0000-0003-2532-0142",
+    "given-names": "Sarah",
+    "family-names": "Hetrick",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "University of Auckland"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-4511-4672",
+    "given-names": "Eriya",
+    "family-names": "Imai",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0003-1147-612X",
+    "given-names": "Cagdas",
+    "family-names": "Türkmen",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Central Institute of Mental Health",
+     "St Olav's University Hospital"
+    ]
+   },
+   {
+    "orcid-id": "0000-0003-1864-1861",
+    "given-names": "Josefien J F",
+    "family-names": "Breedvelt",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Centre for Excellence in Mental Health Sciences",
+     "European Association for Clinical Psychology and Psychotherapy",
+     "Global Consortium for Depression Prevention",
+     "King's College London",
+     "Look Ahead Housing and Care",
+     "Mental Health Foundation",
+     "South London and Maudsley NHS Foundation Trust",
+     "The Forward Trust",
+     "The National Centre for Social Research",
+     "University College, London",
+     "University of Amsterdam",
+     "University of Groningen"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-9189-6695",
+    "given-names": "Wouter",
+    "family-names": "van Ballegooijen",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Amsterdam UMC (VUmc)",
+     "Suicide Research Netherlands (SURE NET)",
+     "Vrije Universiteit Amsterdam"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-5753-7840",
+    "given-names": "Wilfred",
+    "family-names": "Pigeon",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0002-8144-8901",
+    "given-names": "Heleen",
+    "family-names": "Riper",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Vrije Universiteit Amsterdam"
+    ]
+   },
+   {
+    "orcid-id": "0000-0003-0262-459X",
+    "given-names": "Akihiro",
+    "family-names": "Shiroshita",
+    "credit-name": null,
+    "other-name": [],
+    "email": [
+     "akihirokun8@gmail.com",
+     "akihiro.shiroshita@vanderbilt.edu"
+    ],
+    "institution-name": [
+     "Ichinomiya Nishi Byoin",
+     "Johns Hopkins University",
+     "Kameda Medical Center",
+     "Kobe University",
+     "Vanderbilt University School of Medicine"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-6475-902X",
+    "given-names": "Jasper Brian",
+    "family-names": "Zantvoord",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Amsterdam UMC Locatie AMC"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-9220-9244",
+    "given-names": "Claudi L.H.",
+    "family-names": "Bockting",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Academic Medical Center",
+     "American Psychological Association",
+     "Amsterdam UMC, location AMC, University of Amsterdam",
+     "Arkin",
+     "Arq Psychotrauma Expert Group",
+     "Beck Institute for Cognitive Behavior Therapy",
+     "Bohn Stafleu Van Loghum",
+     "Centre for Urban Mental Health",
+     "Clinical Psychology Europe (journal)",
+     "Cure & Care Development",
+     "Dutch Assocation of Health Care Psychologists and Dutch Association for Behavioural and Cognitive Therapies (NVGZP and VGCT)",
+     "Dutch Association for Behavioural and Cognitive Therapies, DABCT",
+     "Dutch Association for Psychotherapy (NVP)",
+     "Dutch Research Council",
+     "European Academy of Sciences and Arts",
+     "European Association for Behavioural and Cognitive Therapies, EABCT",
+     "European Association for Clinical Psychology and Psychological Treatment",
+     "European Associationfor Clinical Psychology and Psychological Treatment (EACLIPT)",
+     "European Network for the Joint Evaluation of Connected Health Technologies (ENJECT)",
+     "European Psychiatric Association (EPA)",
+     "European Psychologist (journal)",
+     "Ghent University",
+     "Health Institute Netherlands",
+     "JAMA, American Journal of Psychiatry, Journal of Consulting and Clinical Psychology, Psychotherapy and Psychosomatics, Journal of Affective disorders",
+     "National postdoctoral Clinical Psychologist education (KP-opleiding)",
+     "Netherlands Institute for Advanced Study in the Humanities and Social Sciences",
+     "Netherlands Organisation for Health Research and Development",
+     "PLOS ONE (journal)",
+     "Psyfar",
+     "RINO Groep",
+     "Research School Experimental Psychopathology (EPP)",
+     "STRENGTHS project Global Mental Health",
+     "Trimbos Institute",
+     "Universiteit van Amsterdam Institute for Advanced Study",
+     "University of Amsterdam",
+     "University of Basel",
+     "University of Groningen",
+     "Utrecht University",
+     "World Health Organization"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-5023-6949",
+    "given-names": "Lingyao",
+    "family-names": "Tong",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "University College London",
+     "Vrije Universiteit Amsterdam"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-7526-2641",
+    "given-names": "Jeffrey",
+    "family-names": "Strawn",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "University of Cincinnati"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-4974-5455",
+    "given-names": "Claudia",
+    "family-names": "Buntrock",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Otto-von-Guericke University Magdeburg"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-9510-013X",
+    "given-names": "Takao",
+    "family-names": "Kaneko",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0003-2196-0601",
+    "given-names": "Alessandro",
+    "family-names": "Rodolico",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Università degli Studi di CATANIA"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-9838-350X",
+    "given-names": "Ryuhei",
+    "family-names": "So",
+    "credit-name": null,
+    "other-name": [],
+    "email": [
+     "nexttext@gmail.com",
+     "so.ryuhei.56r@st.kyoto-u.ac.jp"
+    ],
+    "institution-name": [
+     "Kyoto University Graduate School of Medicine/School of Public Health",
+     "Okayama Psychiatric Medical Center"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-5118-786X",
+    "given-names": "Soraya",
+    "family-names": "Seedat",
+    "credit-name": "S. Seedat",
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Stellenbosch University Faculty of Medicine and Health Sciences"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-8925-2348",
+    "given-names": "Satoshi",
+    "family-names": "Funada",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Keio University",
+     "Kyoto University",
+     "Nagoya City University",
+     "Tohoku University"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-5271-5126",
+    "given-names": "Yan",
+    "family-names": "Luo",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Kyoto University",
+     "Sichuan University West China Hospital",
+     "The University of Tokyo",
+     "Tsinghua University"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-5358-5263",
+    "given-names": "Masatsugu",
+    "family-names": "Sakata",
+    "credit-name": null,
+    "other-name": [],
+    "email": [
+     "m.sakata@med.nagoya-cu.ac.jp"
+    ],
+    "institution-name": [
+     "American Psychological Association",
+     "Cochrane",
+     "Kyoto University",
+     "Nagoya City University"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-9854-7076",
+    "given-names": "Ioana Alina",
+    "family-names": "Cristea",
+    "credit-name": null,
+    "other-name": [],
+    "email": [
+     "ioanaalina.cristea@unipd.it"
+    ],
+    "institution-name": [
+     "Babes-Bolyai University",
+     "Università degli Studi di Padova",
+     "Università degli Studi di Pavia"
+    ]
+   },
+   {
+    "orcid-id": "0000-0003-0760-9866",
+    "given-names": "Robert A",
+    "family-names": "Schoevers",
+    "credit-name": "Robert Schoevers",
+    "other-name": [],
+    "email": [
+     "r.a.schoevers@umcg.nl"
+    ],
+    "institution-name": [
+     "Faculteit Medische Wetenschappen/UMCG",
+     "University of Groningen, University Medical Center Groningen"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-7131-1549",
+    "given-names": "Marketa",
+    "family-names": "Ciharova",
+    "credit-name": "Marketa Ciharova",
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Vrije Universiteit Amsterdam"
+    ]
+   },
+   {
+    "orcid-id": "0000-0003-2159-3776",
+    "given-names": "Toshi",
+    "family-names": "Furukawa",
+    "credit-name": "Toshi A. Furukawa",
+    "other-name": [
+     "Toshiaki Furukawa"
+    ],
+    "email": [],
+    "institution-name": [
+     "Kyoto University Hospital"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-4934-4352",
+    "given-names": "Stefan",
+    "family-names": "Leucht",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Technical University of Munich"
+    ]
+   },
+   {
+    "orcid-id": "0000-0002-8589-7384",
+    "given-names": "Natalia",
+    "family-names": "Fares",
+    "credit-name": "Natalia E. Fares Otero",
+    "other-name": [
+     "Natalia Fares-Otero"
+    ],
+    "email": [],
+    "institution-name": [
+     "IDIBAPS"
+    ]
+   }
+  ],
+  "num-found": 50
+ },
+ {
+  "expanded-result": [
+   {
+    "orcid-id": "0000-0003-3527-4004",
+    "given-names": "Kiyomi",
+    "family-names": "Shinohara",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0003-2567-4637",
+    "given-names": "Christian",
+    "family-names": "Schwarz",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0003-4605-2378",
+    "given-names": "Nozomu",
+    "family-names": "Hashimoto",
+    "credit-name": null,
+    "other-name": [
+     "Nozomu Hashimoto"
+    ],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0009-0001-7042-4007",
+    "given-names": "Ferdinand",
+    "family-names": "Heimke",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0009-0007-3985-2197",
+    "given-names": "Keisuke",
+    "family-names": "Yoshimura",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Kyoto University"
+    ]
+   },
+   {
+    "orcid-id": "0000-0003-3799-5972",
+    "given-names": "Andrew",
+    "family-names": "Tubbs",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0003-4475-8043",
+    "given-names": "Kazufumi",
+    "family-names": "Yoshida",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0003-3410-6308",
+    "given-names": "Yu",
+    "family-names": "Tanaka",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0003-3928-7654",
+    "given-names": "Masami",
+    "family-names": "Ito",
+    "credit-name": "Masami Ito",
+    "other-name": [
+     "伊東真沙美"
+    ],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0009-0000-9023-8407",
+    "given-names": "Hiroku",
+    "family-names": "Noma",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "University of Tsukuba"
+    ]
+   },
+   {
+    "orcid-id": "0000-0003-3656-5188",
+    "given-names": "Hissei",
+    "family-names": "Imai",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": []
+   },
+   {
+    "orcid-id": "0000-0003-3094-0573",
+    "given-names": "Hikari",
+    "family-names": "Takashina",
+    "credit-name": null,
+    "other-name": [
+     "Hikari N. Takashina"
+    ],
+    "email": [],
+    "institution-name": [
+     "Awarefy Inc.",
+     "Chiba University",
+     "Kwansei Gakuin University",
+     "University of Occupational and Environmental Health Japan"
+    ]
+   },
+   {
+    "orcid-id": "0000-0003-4734-9835",
+    "given-names": "Seda",
+    "family-names": "Sacu",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Central Institute of Mental Health",
+     "Hacettepe University",
+     "Heidelberg University",
+     "Humboldt-Universität zu Berlin",
+     "International Psychoanalytic University Berlin",
+     "Max Planck Institute for Human Development"
+    ]
+   },
+   {
+    "orcid-id": "0000-0003-4944-6698",
+    "given-names": "Rei",
+    "family-names": "Kansaku",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Institute for Multicultural Health",
+     "Japan International Cooperation Agency",
+     "Japan Surgical Society",
+     "Japanese Circulation Society",
+     "Japanese Society of Public Health",
+     "Japanese Society of Travel Medicine",
+     "Juntendo University",
+     "National Cerebral and Cardiovascular Center",
+     "The Japan Society for Oriental Medicine",
+     "The Japanese Society of Cultural Anthropology",
+     "Toranomon Hospital",
+     "University College London",
+     "Yamanashi Medical University"
+    ]
+   },
+   {
+    "orcid-id": "0000-0003-3963-1654",
+    "given-names": "John",
+    "family-names": "Davis",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "University of Illinois Chicago"
+    ]
+   },
+   {
+    "orcid-id": "0000-0003-3926-8867",
+    "given-names": "Aran",
+    "family-names": "Tajika",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "Kyoto University Hospital"
+    ]
+   },
+   {
+    "orcid-id": "0009-0006-7688-3075",
+    "given-names": "Yosuke",
+    "family-names": "Yamagishi",
+    "credit-name": null,
+    "other-name": [],
+    "email": [],
+    "institution-name": [
+     "The University of Tokyo"
+    ]
+   }
+  ],
+  "num-found": 17
+ }
+]

@@ -116,23 +116,21 @@ describe('スコープの自動判定', () => {
     expect(detectScope(cities)).toBe(SCOPE_COUNTRY);
   });
 
-  it('2019–2021 は 7 カ国・複数地域 → world', () => {
+  it('2019–2021 は 5 カ国・複数地域 → world', () => {
     const cities = citiesFor(2019, 2021);
     expect(countryCodesOf(cities).sort()).toEqual([
       'CH',
-      'CN',
       'GB',
       'JP',
       'NL',
-      'RO',
       'US',
     ]);
     expect(detectScope(cities)).toBe(SCOPE_WORLD);
   });
 
-  it('全期間は 15 カ国 → world', () => {
+  it('全期間は 14 カ国 → world', () => {
     const cities = citiesFor(2019, 2026);
-    expect(countryCodesOf(cities)).toHaveLength(15);
+    expect(countryCodesOf(cities)).toHaveLength(14);
     expect(detectScope(cities)).toBe(SCOPE_WORLD);
   });
 
@@ -223,7 +221,7 @@ describe('scope パラメータ', () => {
 
 describe('geoContains によるポリゴンの特定', () => {
   it('日本の feature が引ける', () => {
-    const tokyo = citiesFor(2019, 2019).find((c) => c.city === 'Tokyo');
+    const tokyo = citiesFor(2019, 2020).find((c) => c.city === 'Tokyo');
     const hit = locator.at(tokyo.lng, tokyo.lat);
     expect(hit).toBeTruthy();
     expect(hit.properties.name).toBe('Japan');

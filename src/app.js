@@ -9,10 +9,18 @@ import { createMapRenderer, renderLegend, fitNoteText } from './map/render.js';
 import { applyTheme, watchSystemTheme, THEME_AUTO } from './map/themes.js';
 import { createTranslator, formatNumber, progressLabel } from './ui/i18n.js';
 import { h, replaceChildren } from './ui/dom.js';
-import { readStateFromUrl, syncUrl, createControls } from './ui/controls.js';
+import {
+  readStateFromUrl,
+  syncUrl,
+  createControls,
+  curationFromState,
+  applyCurationToState,
+} from './ui/controls.js';
 import { normalizeDataset, applyCuration, filterDataset } from './ui/derive.js';
 import { createTableView } from './ui/table.js';
 import { createCurationPanel } from './ui/curation.js';
+import { createAuthorPanel } from './ui/authors.js';
+import { createBusyController } from './ui/busy.js';
 import {
   loadLocalCuration,
   mergeCurations,
@@ -55,6 +63,7 @@ export function createApp({ loadDataset, mode = 'full' }) {
   const legendEl = el('legend');
   const statusEl = el('status');
   const statsEl = el('stats');
+  const shownEl = el('shown');
 
   const renderer = createMapRenderer({
     container: mapEl,
@@ -69,8 +78,19 @@ export function createApp({ loadDataset, mode = 'full' }) {
   let curation = null;
   let controls = null;
   let curationPanel = null;
+  let authorPanel = null;
   let embedPanel = null;
   let tableView = null;
+
+  // 読み込み中インジケータ。地図の骨格（同梱の topojson）は先に描いてあるので、
+  // 待たせるのはピンだけ。200ms 未満で終わるときは出さない
+  const spinner = h('div', { class: 'map-busy', 'aria-hidden': 'true' }, [
+    h('span', { class: 'spinner' }),
+  ]);
+  const busy = createBusyController({
+    show: () => mapEl?.append(spinner),
+    hide: () => spinner.remove(),
+  });
 
   const seedKey = () => `${state.orcid || '-'}|${state.rm || '-'}`;
   const bounds = () => ({
@@ -130,6 +150,24 @@ export function createApp({ loadDataset, mode = 'full' }) {
     );
   }
 
+  /**
+   * 「145 名中 53 名を表示中」。全体と表示中の関係が分かる表示はここ 1 箇所に出す。
+   */
+  function paintShown() {
+    if (!view) return;
+    const total = view.summary.coauthorsTotal ?? view.summary.coauthors;
+    // 絞り込みパネルにも同じ数字を渡す（画面に食い違う 2 つの数を出さない）
+    authorPanel?.setShown(view.summary.coauthors, total);
+    if (!shownEl) return;
+    replaceChildren(
+      shownEl,
+      h('p', {
+        class: 'hint',
+        text: t('auth.shown', { shown: view.summary.coauthors, total }),
+      }),
+    );
+  }
+
   /** 凡例と自動フィットの注記を描き直す */
   function paintLegend(drawn) {
     if (!legendEl || !drawn) return;
@@ -151,7 +189,7 @@ export function createApp({ loadDataset, mode = 'full' }) {
       from: state.from ?? b.from,
       to: state.to ?? b.to,
     };
-    view = filterDataset(curatedDataset, range);
+    view = filterDataset(curatedDataset, range, { minPapers: state.min });
 
     const drawn = renderer.update({
       cities: view.cities,
@@ -167,6 +205,7 @@ export function createApp({ loadDataset, mode = 'full' }) {
 
     paintLegend(drawn);
     paintStats();
+    paintShown();
     tableView?.update(view, rawDataset.stats);
     embedPanel?.refresh();
     if (!view.cities.length) setStatus('info', t('map.empty'));
@@ -174,9 +213,29 @@ export function createApp({ loadDataset, mode = 'full' }) {
     syncUrl(state, b);
   }
 
+  /**
+   * データが来る前に地図の骨格だけ描く。国境の topojson は同梱なので即座に出せる。
+   * 真っ白な四角を見せず、ピンだけを待たせる。
+   */
+  function drawSkeleton() {
+    renderer.update({
+      cities: [],
+      grain: state.grain,
+      projectionId: state.proj,
+      centerLon: state.center,
+      centerExplicit: state.centerExplicit === true,
+      rotateLat: state.rotateLat ?? 0,
+      sizeMode: state.size,
+      scope: state.scope,
+      ariaLabel: t('app.title'),
+    });
+  }
+
   /** 手直しを当て直してから refreshView */
   function reapplyCuration() {
     if (!rawDataset) return;
+    // 手直しは URL にも載せる。載せないと埋め込みウィジェットに伝わらない
+    applyCurationToState(state, curation);
     curatedDataset = applyCuration(rawDataset, curation);
     refreshView();
   }
@@ -192,17 +251,25 @@ export function createApp({ loadDataset, mode = 'full' }) {
     }
 
     setStatus('info', t('load.start'));
+    busy.start();
 
     try {
-      // リポジトリに commit 済みの確定版と、このブラウザの下書きを重ねる
+      // commit 済みの確定版 → このブラウザの下書き → URL で運ばれてきた手直し、の順に重ねる。
+      // URL を最後に置くのは、共有されたリンクの見え方をそのまま再現するため
       const committed = state.orcid
         ? await loadCommittedCuration(state.orcid)
         : null;
-      curation = mergeCurations(committed, loadLocalCuration(seedKey()));
+      curation = mergeCurations(
+        committed,
+        loadLocalCuration(seedKey()),
+        curationFromState(state),
+      );
       const dataset = await loadDataset({
         seeds,
         curation,
         mergeCoauthors: state.merge,
+        pinMode: state.pin,
+        useOrcidAffiliations: state.orcidaff !== false,
         // データ層が渡すのは安定キー。表示文言に直すのはここだけの仕事
         onProgress: (key, done, total) => {
           const suffix =
@@ -219,8 +286,17 @@ export function createApp({ loadDataset, mode = 'full' }) {
       if (state.from > state.to) [state.from, state.to] = [b.from, b.to];
       controls?.setYearBounds(b.from, b.to, { from: state.from, to: state.to });
 
-      curationPanel?.setSeedKey(seedKey());
-      curation = curationPanel?.curation ?? curation;
+      // 手直しパネルは localStorage の下書きを持つ。確定版と URL 側の除外を重ねてから使う
+      const local = curationPanel?.setSeedKey(seedKey());
+      if (local) {
+        curation = mergeCurations(committed, local, curationFromState(state));
+        curationPanel.setCuration(curation);
+      }
+      authorPanel?.update({
+        coauthors: [...rawDataset.coauthors.values()],
+        min: state.min,
+        excludeAuthorIds: curation.excludeAuthorIds,
+      });
       reapplyCuration();
 
       for (const warning of rawDataset.warnings ?? [])
@@ -231,6 +307,9 @@ export function createApp({ loadDataset, mode = 'full' }) {
         `${t('load.failed')} ${err?.message ?? err}`,
         t('load.hintNetwork'),
       );
+    } finally {
+      // 成功でも失敗でも必ず消す。出っぱなしにしない
+      busy.stop();
     }
   }
 
@@ -263,6 +342,29 @@ export function createApp({ loadDataset, mode = 'full' }) {
       });
     }
 
+    const authorsEl = el('authors');
+    if (authorsEl) {
+      authorPanel = createAuthorPanel({
+        container: authorsEl,
+        t,
+        onChange: (patch) => {
+          if (patch.min != null) {
+            state.min = patch.min;
+            refreshView();
+            return;
+          }
+          // 外した人は既存の手直し（excludeAuthorIds）に入れる。
+          // 統合済みレコードは代表を外せば片割れごと消える（集計側の仕様）
+          curation = {
+            ...curation,
+            excludeAuthorIds: patch.excludeAuthorIds ?? [],
+          };
+          curationPanel?.setCuration(curation);
+          reapplyCuration();
+        },
+      });
+    }
+
     const tableEl = el('table');
     if (tableEl) tableView = createTableView({ container: tableEl, t });
 
@@ -275,8 +377,19 @@ export function createApp({ loadDataset, mode = 'full' }) {
         getDataset: () => rawDataset,
         onChange: (next, meta) => {
           curation = next;
-          if (meta.needsRebuild) build();
-          else reapplyCuration();
+          if (meta.needsRebuild) {
+            build();
+            return;
+          }
+          // 手直しパネルで外した人は、著者一覧のチェックにも映す
+          if (rawDataset) {
+            authorPanel?.update({
+              coauthors: [...rawDataset.coauthors.values()],
+              min: state.min,
+              excludeAuthorIds: curation.excludeAuthorIds,
+            });
+          }
+          reapplyCuration();
         },
         getMerge: () => state.merge,
         // 統合は集計の段階で効くので、取り直しが要る（seed も論文も
@@ -328,6 +441,8 @@ export function createApp({ loadDataset, mode = 'full' }) {
     if (state.theme === THEME_AUTO) applyTheme(state.theme);
   });
 
+  // 骨格を先に描いてから取りに行く（真っ白な待ち時間を作らない）
+  drawSkeleton();
   build();
 
   return {

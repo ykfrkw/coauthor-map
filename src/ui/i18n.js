@@ -128,6 +128,24 @@ const STRINGS = {
   'table.papersWithoutLocation':
     'Not on the map: {n} of {total} papers have no co-author affiliation with coordinates, so they contribute no pin.',
 
+  'auth.heading': 'Who is on the map',
+  'auth.intro':
+    'Each co-author is placed at one primary affiliation, so nobody appears twice. Narrow the map to the people you actually work with, then copy the embed snippet: the corrections travel with it.',
+  'auth.min': 'Main collaborations',
+  'auth.minLabel': '{n} papers or more — showing {shown} of {total} co-authors',
+  'auth.minLabelAll':
+    'Everyone, down to a single paper — showing {shown} of {total} co-authors',
+  'auth.minStep': '{n}+ keeps {count}',
+  'auth.select': 'Co-authors',
+  'auth.search': 'Search co-authors',
+  'auth.showAll': 'Show all {n}',
+  'auth.showFewer': 'Show fewer',
+  'auth.includeAll': 'Include everyone',
+  'auth.listNote': 'Listing {visible} of {matching} · {excluded} unchecked',
+  'auth.shown': 'Showing {shown} of {total} co-authors',
+
+  'load.busy': 'Loading the map',
+
   'cur.heading': 'Corrections',
   'cur.intro':
     'OpenAlex is not perfect. Drop papers that are not yours, hide a co-author or an organization, add a missing DOI, or merge two records of the same organization. Changes are stored in this browser only.',
@@ -170,6 +188,8 @@ const STRINGS = {
     'Copy the snippet below. It embeds the map you are looking at right now, with the current years, projection, and theme.',
   'embed.copy': 'Copy the snippet',
   'embed.height': 'Height (px)',
+  'embed.tooLong':
+    'This link is {n} characters long. Some blog editors and servers cut links off around 2,000. Raise Main collaborations to drop the smallest collaborations, or clear a few corrections.',
   'embed.autoResize':
     'The frame reports its own height. To let your page follow it, see the auto-resize script in docs/embedding.md.',
 
@@ -205,6 +225,7 @@ const PROGRESS_STRINGS = {
   'seeds:researchmap': 'Reading papers from researchmap',
   'seeds:openalex': 'Searching OpenAlex for author records',
   works: 'Fetching papers from OpenAlex',
+  'orcid-affiliations': 'Reading affiliations from ORCID',
   institutions: 'Resolving affiliations',
   aggregate: 'Building the map',
 };

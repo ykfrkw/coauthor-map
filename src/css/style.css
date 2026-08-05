@@ -344,6 +344,53 @@ button[aria-pressed='true'] {
   }
 }
 
+/* 読み込み中のインジケータ。地図の骨格の上に重ねる。
+ * 骨格（国境）は同梱の topojson なので待ち時間ゼロで出る。待たせるのはピンだけ */
+.map-busy {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--ocean) 55%, transparent);
+  pointer-events: none;
+}
+
+.map-busy .spinner {
+  display: block;
+  width: 28px;
+  height: 28px;
+  border: 3px solid color-mix(in srgb, var(--fg) 25%, transparent);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+}
+
+.widget .map-busy .spinner {
+  width: 20px;
+  height: 20px;
+  border-width: 2px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .map-busy .spinner {
+    animation: spinner-turn 900ms linear infinite;
+  }
+}
+
+/* 回転を止める設定では、静止した輪だけを出す（消えてしまわないこと） */
+@media (prefers-reduced-motion: reduce) {
+  .map-busy .spinner {
+    border-top-color: var(--accent);
+    border-inline-end-color: var(--accent);
+  }
+}
+
+@keyframes spinner-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* ツールチップ */
 .map-tooltip {
   position: absolute;

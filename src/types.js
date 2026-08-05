@@ -39,6 +39,11 @@
  * 統合が無ければ空配列
  * @property {'orcid'|'name'|null} mergedBy  どの条件で統合されたか。
  * `'orcid'` = ORCID 一致、`'name'` = 氏名一致 + 非同居 + 機関の共有。統合が無ければ `null`
+ * @property {string|null} primaryInstitutionId  主所属。**地図に置く点はここ 1 つだけ**。
+ * 決められなければ `null`（所属不明として数える）
+ * @property {'first-listed'|'orcid'|'fallback'|null} primaryBy  主所属をどの規則で決めたか。
+ * `'first-listed'` = 論文に印字された先頭の所属、`'orcid'` = ORCID の所属名との一致、
+ * `'fallback'` = 決め手が無いので機関 ID 昇順で決定的に選んだ
  */
 
 /**
@@ -56,9 +61,11 @@
  * @property {string|null} city
  * @property {string|null} countryCode
  * @property {string|null} country
- * @property {Institution[]} institutions  論文数の多い順。共著者から参照されたものだけ
- * @property {Coauthor[]} coauthors        論文数の多い順
- * @property {string[]} dois               この都市が関わった DOI（重複なし）
+ * @property {Institution[]} institutions  論文数の多い順。既定（`pinMode: 'primary'`）では
+ * **この都市を主所属とする共著者の主所属機関だけ**
+ * @property {Coauthor[]} coauthors        論文数の多い順。既定では
+ * **この都市を主所属とする人だけ**（1 人は必ず 1 都市にしか現れない）
+ * @property {string[]} dois               既定では `coauthors` の DOI の和集合（重複なし）
  * @property {number} paperCount           `dois.length`
  * @property {number} coauthorCount        `coauthors.length`
  */
@@ -76,7 +83,9 @@
  * @property {number} countries
  * @property {number} authorshipRows             著者×論文の行数（seed 本人を含む）
  * @property {number} authorshipsWithoutInstitution  所属が付いていない行数。**黙って捨てず UI に出す**
- * @property {number} coauthorsWithoutInstitution    一度も所属が取れなかった共著者数
+ * @property {number} coauthorsWithoutInstitution    主所属を決められなかった共著者数
+ * @property {{firstListed: number, orcid: number, fallback: number, none: number}} primaryBy
+ *   主所属をどの規則で決めたかの内訳（人数）
  * @property {number} yearMin
  * @property {number} yearMax
  */
@@ -131,6 +140,10 @@
  *   共著者レコードをまとめるか（既定 `true`）。`true` = ORCID 一致に加えて
  *   「氏名一致 + 同一論文に非同居 + 機関の共有」でもまとめる、`'orcid'` = ORCID 一致だけ、
  *   `false` = まとめない
+ * @property {'primary'|'all'} [pinMode]  共著者を主所属の 1 都市だけに置くか（既定 `'primary'`）、
+ *   旧来どおり所属した全都市に置くか（`'all'`）
+ * @property {boolean} [useOrcidAffiliations]  ORCID の所属名を主所属の判定に使うか（既定 true）。
+ *   取得に失敗しても地図は壊さない（先頭所属の規則だけで決める）
  * @property {boolean} [useCache]     sessionStorage の 24 時間キャッシュを使うか（既定 true）
  * @property {(ms: number) => Promise<void>} [sleepImpl]  リトライの待機。テストで実時間を消さないため
  * @property {number} [maxRetries]    429 / 5xx のリトライ上限（既定 3）

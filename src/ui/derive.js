@@ -99,12 +99,17 @@ export function applyCuration(dataset, curation) {
       );
     }
 
+    // 人を落としたら、その人の論文も都市から引く。地図の主役は人なので、
+    // 残った人の論文の和集合が都市の論文数になる
+    const cityKept = restrictToCoauthors(dois, coauthors);
+    if (!cityKept.length) continue;
+
     cities.push({
       ...city,
-      dois,
+      dois: cityKept,
       coauthors,
       institutions,
-      paperCount: dois.length,
+      paperCount: cityKept.length,
       coauthorCount: coauthors.length,
     });
   }
@@ -117,6 +122,17 @@ export function applyCuration(dataset, curation) {
   return { ...dataset, works, cities };
 }
 
+/**
+ * 都市の DOI を「残った共著者の論文」に絞る。
+ * @param {string[]} dois       都市の DOI（並びは保つ）
+ * @param {Array<{dois: string[]}>} coauthors
+ * @returns {string[]}
+ */
+function restrictToCoauthors(dois, coauthors) {
+  const live = new Set(coauthors.flatMap((c) => c.dois));
+  return dois.filter((doi) => live.has(doi));
+}
+
 /** DOI → 出版年 */
 export function buildYearIndex(works) {
   const index = new Map();
@@ -125,12 +141,17 @@ export function buildYearIndex(works) {
 }
 
 /**
- * 年で切り出した表示用データを作る。
+ * 年と「共著論文数の下限」で切り出した表示用データを作る。
+ *
+ * 下限（Main collaborations）は**その人の全期間の共著論文数**で判定する。
+ * 年フィルタと掛け算にすると「2 本以上の人」が年を動かすたびに入れ替わって読めない。
  *
  * @param {Object} dataset  normalizeDataset 済み
  * @param {{from: number, to: number}} range
+ * @param {{minPapers?: number}} [options]
  */
-export function filterDataset(dataset, range) {
+export function filterDataset(dataset, range, options = {}) {
+  const minPapers = Math.max(1, Number(options.minPapers) || 1);
   const yearIndex = buildYearIndex(dataset.works);
   const { from, to } = range;
   // 年が取れていない論文は落とさない（年の欠測で地図から消えるほうが害が大きい）
@@ -149,8 +170,10 @@ export function filterDataset(dataset, range) {
     const dois = city.dois.filter(inRange);
     if (!dois.length) continue;
     const cityDois = new Set(dois);
-    const coauthors = city.coauthors.filter((c) =>
-      c.dois.some((d) => cityDois.has(d)),
+    const coauthors = city.coauthors.filter(
+      (c) =>
+        (c.paperCount ?? c.dois.length) >= minPapers &&
+        c.dois.some((d) => cityDois.has(d)),
     );
 
     // 機関も年で絞る。その期間に生き残った共著者が所属している機関だけ残す。
@@ -162,16 +185,21 @@ export function filterDataset(dataset, range) {
       liveInstitutionIds.has(i.id),
     );
 
-    for (const d of dois) doiSet.add(d);
+    // 残った人の論文だけを都市の論文として数える（絞り込みが統計・ピンの
+    // 大きさ・表のすべてに同じように効くようにする）
+    const keptDois = restrictToCoauthors(dois, coauthors);
+    if (!keptDois.length) continue;
+
+    for (const d of keptDois) doiSet.add(d);
     for (const c of coauthors) coauthorIds.add(c.id);
     for (const i of institutions) institutionIds.add(i.id);
 
     cities.push({
       ...city,
-      dois,
+      dois: keptDois,
       coauthors,
       institutions,
-      paperCount: dois.length,
+      paperCount: keptDois.length,
       coauthorCount: coauthors.length,
     });
   }
@@ -187,6 +215,7 @@ export function filterDataset(dataset, range) {
 
   return {
     range: { from, to },
+    minPapers,
     works,
     cities,
     yearIndex,
@@ -196,6 +225,8 @@ export function filterDataset(dataset, range) {
       institutions: institutionIds.size,
       cities: cities.length,
       countries: countries.size,
+      // 「145 名中 53 名を表示中」を出すための母数。絞り込み前の全共著者数
+      coauthorsTotal: dataset.coauthors?.size ?? coauthorIds.size,
     },
   };
 }

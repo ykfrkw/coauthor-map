@@ -4,6 +4,11 @@
  */
 
 import { fetchOrcidWorks, assertValidOrcid } from './seeds/orcid.js';
+import {
+  fetchOrcidAffiliations,
+  normalizeOrcidList,
+  toOrcidKey,
+} from './seeds/orcid-affiliations.js';
 import { fetchResearchmapWorks } from './seeds/researchmap.js';
 import { fetchOpenAlexAuthorWorks } from './seeds/openalex-author.js';
 import {
@@ -36,6 +41,8 @@ export async function buildDataset(options) {
     onProgress,
     useCache = true,
     mergeCoauthors = true,
+    pinMode = 'primary',
+    useOrcidAffiliations = true,
   } = options ?? {};
 
   const curation = normalizeCuration(rawCuration);
@@ -105,6 +112,7 @@ export async function buildDataset(options) {
       curation,
       warnings,
       mergeCoauthors,
+      pinMode,
     });
   }
 
@@ -124,6 +132,22 @@ export async function buildDataset(options) {
     { enabled: useCache },
   );
 
+  // 6. ORCID の所属名。主所属が「先頭所属」で決まらなかった人の判定に使う。
+  //    50 人ずつまとめて引くのでリクエストは数本しか増えない。失敗しても続行する。
+  const coauthorOrcids = collectCoauthorOrcids(
+    openAlexWorks,
+    findSeedOrcid(seeds),
+  );
+  const orcidAffiliations =
+    useOrcidAffiliations && coauthorOrcids.length > 0
+      ? await withCache(
+          ['orcid-affiliations', coauthorOrcids],
+          () =>
+            fetchOrcidAffiliations(coauthorOrcids, { fetchImpl, onProgress }),
+          { enabled: useCache },
+        )
+      : {};
+
   onProgress?.('aggregate', 1, 1);
   return aggregate({
     seedWorks,
@@ -133,7 +157,30 @@ export async function buildDataset(options) {
     curation,
     warnings,
     mergeCoauthors,
+    pinMode,
+    orcidAffiliations,
   });
+}
+
+/**
+ * authorship から共著者の ORCID を集める。seed 本人は除く。
+ * 並びは昇順（バッチの切れ目を決定的にするため）。
+ * @param {any[]} openAlexWorks
+ * @param {string|null} seedOrcid
+ * @returns {string[]}
+ */
+function collectCoauthorOrcids(openAlexWorks, seedOrcid) {
+  const seedKey = toOrcidKey(seedOrcid);
+  /** @type {string[]} */
+  const found = [];
+  for (const work of openAlexWorks ?? []) {
+    for (const authorship of work?.authorships ?? []) {
+      const key = toOrcidKey(authorship?.author?.orcid);
+      if (key === null || key === seedKey) continue;
+      found.push(key);
+    }
+  }
+  return normalizeOrcidList(found);
 }
 
 /**
