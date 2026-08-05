@@ -68,7 +68,7 @@ The world map ships at two resolutions. The 110m outline (105 KB) always loads f
 ```bash
 npm install
 npm run dev      # http://localhost:5173
-npm test         # 209 tests, entirely offline
+npm test         # 272 tests, entirely offline
 npm run build
 node tests/regenerate-snapshot.mjs   # rewrite tests/fixtures/dataset-snapshot.json from the recorded fixtures
 ```
@@ -76,6 +76,8 @@ node tests/regenerate-snapshot.mjs   # rewrite tests/fixtures/dataset-snapshot.j
 Tests never touch the network. `tests/fixtures/` holds recorded API responses plus `dataset-snapshot.json`, which is the expected aggregation output for a real researcher and doubles as the specification for the aggregation rules. Run the regenerate script only when you have deliberately changed an aggregation rule, and read the resulting diff.
 
 `dev.html` renders the map straight from the snapshot without calling any API. It is excluded from the production build.
+
+Adding `?review=1` to `index.html` or `widget.html` turns on review mode: click anywhere to drop a numbered pin and write a note about what you see, then copy the whole set as Markdown. Notes are anchored to the element under the click, so they survive a redraw or a change of window width, and they live in `localStorage` only. The code ships as a separate chunk that is fetched only when the parameter is present. Press Escape to hand the map back its own clicks.
 
 Deployment is automatic: pushing to `main` runs the tests and publishes to GitHub Pages.
 
