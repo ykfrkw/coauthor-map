@@ -35,6 +35,13 @@ const STRINGS = {
   'ctrl.size.coauthors': 'Co-authors',
   'ctrl.size.uniform': 'Uniform',
   'ctrl.projection': 'Projection',
+  'ctrl.scope': 'Extent',
+  'scope.auto': 'Auto',
+  'scope.country': 'Country',
+  'scope.region': 'Region',
+  'scope.world': 'World',
+  'ctrl.scopeHint':
+    'Auto fits the map to one country, one region, or the whole world, depending on where your co-authors are.',
   'ctrl.center': 'Center longitude',
   'ctrl.theme': 'Theme',
   'ctrl.reset': 'Reset view',
@@ -53,6 +60,14 @@ const STRINGS = {
   'center.pacific': 'Pacific (180°)',
   'center.atlantic': 'Atlantic (30°W)',
   'center.custom': 'Custom',
+
+  'region.africa': 'Africa',
+  'region.asia': 'Asia',
+  'region.europe': 'Europe',
+  'region.northAmerica': 'North America',
+  'region.southAmerica': 'South America',
+  'region.oceania': 'Oceania',
+  'region.antarctica': 'Antarctica',
 
   'theme.auto': 'Match system',
   'theme.minimal': 'Minimal',
@@ -76,6 +91,7 @@ const STRINGS = {
   'map.clusterMore': '+{n} more',
   'map.pinCount': '{n} pins',
   'map.legendSize': 'Pin area is proportional to {metric}',
+  'map.fittedTo': 'Fitted to {name}',
   'map.empty': 'No location falls inside the selected years.',
   'map.keyboardHint':
     'Press Tab to step through pins; Escape closes the tooltip.',

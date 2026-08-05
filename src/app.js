@@ -5,7 +5,7 @@
  * 本番は src/main.js が pipeline.js の buildDataset を渡し、
  * 開発中は src/dev.js が fixture の snapshot を渡す。
  */
-import { createMapRenderer, renderLegend } from './map/render.js';
+import { createMapRenderer, renderLegend, fitNoteText } from './map/render.js';
 import { applyTheme, watchSystemTheme, THEME_AUTO } from './map/themes.js';
 import { createTranslator, formatNumber, progressLabel } from './ui/i18n.js';
 import { h, replaceChildren } from './ui/dom.js';
@@ -122,6 +122,19 @@ export function createApp({ loadDataset, mode = 'full' }) {
     );
   }
 
+  /** 凡例と自動フィットの注記を描き直す */
+  function paintLegend(drawn) {
+    if (!legendEl || !drawn) return;
+    renderLegend(legendEl, {
+      sizeMode: state.size,
+      maxValue: drawn.maxValue,
+      maxRadius: drawn.maxRadius,
+      pinCount: drawn.pinCount,
+      fitNote: fitNoteText(drawn.fit, t),
+      t,
+    });
+  }
+
   /** 年フィルタから下だけを描き直す（データ取得はしない） */
   function refreshView() {
     if (!curatedDataset) return;
@@ -137,20 +150,14 @@ export function createApp({ loadDataset, mode = 'full' }) {
       grain: state.grain,
       projectionId: state.proj,
       centerLon: state.center,
+      centerExplicit: state.centerExplicit === true,
       rotateLat: state.rotateLat ?? 0,
       sizeMode: state.size,
+      scope: state.scope,
       ariaLabel: ariaLabel(),
     });
 
-    if (legendEl && drawn) {
-      renderLegend(legendEl, {
-        sizeMode: state.size,
-        maxValue: drawn.maxValue,
-        maxRadius: drawn.maxRadius,
-        pinCount: drawn.pinCount,
-        t,
-      });
-    }
+    paintLegend(drawn);
     paintStats();
     tableView?.update(view, rawDataset.stats);
     embedPanel?.refresh();
@@ -240,16 +247,9 @@ export function createApp({ loadDataset, mode = 'full' }) {
           build();
         },
         onResetView: () => {
-          const drawn = renderer.resetView();
-          if (legendEl && drawn) {
-            renderLegend(legendEl, {
-              sizeMode: state.size,
-              maxValue: drawn.maxValue,
-              maxRadius: drawn.maxRadius,
-              pinCount: drawn.pinCount,
-              t,
-            });
-          }
+          // リセットは自動フィットに戻す操作。中心経度の明示も解除する
+          state.centerExplicit = false;
+          paintLegend(renderer.resetView());
         },
       });
     }
@@ -300,6 +300,8 @@ export function createApp({ loadDataset, mode = 'full' }) {
   renderer.onRotate(({ centerLon, rotateLat }) => {
     state.center = centerLon;
     state.rotateLat = rotateLat;
+    // 手で回した中心は自動フィットの重心より優先する
+    state.centerExplicit = true;
     controls?.syncFromState({ center: centerLon });
     embedPanel?.refresh();
     syncUrl(state, bounds());

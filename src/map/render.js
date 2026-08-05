@@ -32,6 +32,13 @@ import {
   GRAIN_COUNTRY,
   DEFAULT_GRAIN,
 } from './cluster.js';
+import {
+  resolveFit,
+  createCountryLocator,
+  SCOPE_AUTO,
+  SCOPE_WORLD,
+} from './scope.js';
+import { regionLabelKey } from './regions.js';
 
 const SPHERE = { type: 'Sphere' };
 const GRATICULE = geoGraticule10();
@@ -123,14 +130,18 @@ export function createMapRenderer({ container, t, compact = false }) {
     grain: DEFAULT_GRAIN,
     projectionId: 'equalEarth',
     centerLon: 0,
+    /** 利用者が中心経度を明示したか。false なら自動フィットの重心に譲る */
+    centerExplicit: false,
     rotateLat: 0,
     sizeMode: 'papers',
+    scope: SCOPE_AUTO,
     ariaLabel: '',
     width: 320,
     height: 180,
   };
 
   let atlas = null;
+  let locator = null;
   let countryNodesCache = null;
   let countryNodesKey = null;
   let projectionState = null;
@@ -139,18 +150,27 @@ export function createMapRenderer({ container, t, compact = false }) {
   let onRotate = null;
   let onNodes = null;
   let destroyed = false;
+  /** 現在のフィット対象。null なら次の rebuild で引き直す */
+  let fit = null;
+  /** 利用者がズーム・パン・回転したか。true のあいだは勝手に再フィットしない */
+  let userMoved = false;
 
   // ---- ズーム（全投影法共通。正射図法では倍率だけ使う） ----
   const zoomBehavior = d3zoom()
     .scaleExtent([1, 14])
     .on('zoom', (event) => {
       transform = event.transform;
+      // sourceEvent が無いのは resetView などのプログラム側の操作。
+      // 利用者の操作だけを「動かした」と数える
+      if (event.sourceEvent) userMoved = true;
       draw();
     });
 
   // ---- 回転ドラッグ（正射図法のみ） ----
   const dragBehavior = d3drag().on('drag', (event) => {
     if (!projectionState?.spec.rotatable) return;
+    userMoved = true;
+    state.centerExplicit = true;
     const { dLon, dLat } = dragToRotation(
       event.dx,
       event.dy,
@@ -212,14 +232,43 @@ export function createMapRenderer({ container, t, compact = false }) {
   ro?.observe(container);
   window.addEventListener('resize', onResize);
 
+  /**
+   * 表示スコープを引き直す。atlas が来る前は世界地図のまま（ポリゴンが無いので
+   * 国を特定できない）。atlas が届いた時点でもう一度呼ばれる。
+   */
+  function resolveScope() {
+    if (!locator) {
+      return {
+        scope: SCOPE_WORLD,
+        geometry: null,
+        centerLon: null,
+        label: null,
+      };
+    }
+    return resolveFit({
+      cities: state.cities,
+      locator,
+      scope: state.scope,
+    });
+  }
+
   function rebuildProjection() {
+    if (!fit) fit = resolveScope();
+    // 中心経度は「明示されていれば利用者の値、そうでなければ対象の重心」。
+    // 重心は d3.geoCentroid の球面重心なので、日付変更線をまたぐ地域でも折り返さない
+    const centerLon =
+      !state.centerExplicit && fit.centerLon != null
+        ? fit.centerLon
+        : state.centerLon;
+
     projectionState = createProjection({
       id: state.projectionId,
-      centerLon: state.centerLon,
+      centerLon,
       rotateLat: state.rotateLat,
       width: state.width,
       height: state.height,
       padding: compact ? 4 : 8,
+      fitTarget: fit.geometry,
     });
     // 正射図法では zoom のドラッグを止め、回転ドラッグに譲る
     if (projectionState.spec.rotatable) {
@@ -508,6 +557,7 @@ export function createMapRenderer({ container, t, compact = false }) {
       maxValue,
       maxRadius,
       pinCount: nodes.length,
+      fit: { scope: fit?.scope ?? SCOPE_WORLD, label: fit?.label ?? null },
     };
     onNodes?.(result);
     return result;
@@ -520,10 +570,23 @@ export function createMapRenderer({ container, t, compact = false }) {
     const projectionChanged =
       next.projectionId !== undefined &&
       next.projectionId !== state.projectionId;
-    if (next.cities && next.cities !== state.cities) countryNodesKey = null;
+    const scopeChanged = next.scope !== undefined && next.scope !== state.scope;
+    const citiesChanged = next.cities != null && next.cities !== state.cities;
+    if (citiesChanged) countryNodesKey = null;
     Object.assign(state, next);
     state.centerLon = normalizeLongitude(state.centerLon);
     state.rotateLat = clampRotateLat(state.rotateLat);
+
+    // スコープを選び直したのは明示の指示なので、動かした後でも従う。
+    // 国の集合が変わっただけのときは、利用者が動かしていないときだけ追従する
+    if (scopeChanged) {
+      fit = null;
+      userMoved = false;
+      transform = zoomIdentity;
+      svg.call(zoomBehavior.transform, zoomIdentity);
+    } else if (citiesChanged && !userMoved) {
+      fit = null;
+    }
 
     // 毎回実測する。ResizeObserver が来ない環境（背面タブなど）でも
     // 幅が変われば必ず追従させるため、ここを唯一の拠りどころにする
@@ -542,6 +605,11 @@ export function createMapRenderer({ container, t, compact = false }) {
     transform = zoomIdentity;
     svg.call(zoomBehavior.transform, zoomIdentity);
     hideTooltip();
+    // 「リセット」は自動フィットに戻す操作でもある。
+    // 回転や中心スライダーで付いた「明示した」印もここで解除する
+    userMoved = false;
+    state.centerExplicit = false;
+    fit = null;
     rebuildProjection();
     lastDraw = draw();
     return lastDraw;
@@ -551,7 +619,13 @@ export function createMapRenderer({ container, t, compact = false }) {
     .then((loaded) => {
       if (destroyed) return;
       atlas = loaded;
+      locator = createCountryLocator(loaded.land?.features ?? []);
       countryNodesKey = null;
+      // ポリゴンが揃って初めて国 / 地域を特定できる。ここで一度フィットし直す
+      if (!userMoved) {
+        fit = null;
+        rebuildProjection();
+      }
       lastDraw = draw();
     })
     .catch(() => {
@@ -592,7 +666,7 @@ export function createMapRenderer({ container, t, compact = false }) {
  */
 export function renderLegend(
   el,
-  { sizeMode, maxValue, maxRadius, pinCount, t },
+  { sizeMode, maxValue, maxRadius, pinCount, fitNote, t },
 ) {
   const host = select(el);
   host.selectAll('*').remove();
@@ -630,4 +704,20 @@ export function renderLegend(
   if (Number.isFinite(pinCount)) {
     host.append('span').text(t('map.pinCount', { n: pinCount }));
   }
+
+  // 自動で範囲が決まったことが分かるように短く添える（世界地図のときは出さない）
+  if (fitNote) host.append('span').text(fitNote);
+}
+
+/**
+ * フィット結果を読める一文にする。世界全体なら空文字。
+ * @param {{label: Object|null}|null} fit
+ * @param {(k: string, p?: Object) => string} t
+ */
+export function fitNoteText(fit, t) {
+  const label = fit?.label;
+  if (!label) return '';
+  const name =
+    label.type === 'region' ? t(regionLabelKey(label.region)) : label.name;
+  return name ? t('map.fittedTo', { name }) : '';
 }

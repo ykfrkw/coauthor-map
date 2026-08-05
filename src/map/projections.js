@@ -16,6 +16,7 @@ import {
   geoMercator,
   geoOrthographic,
   geoDistance,
+  geoBounds,
 } from 'd3-geo';
 
 /** 投影法の定義一覧。順序がそのまま UI の並び順になる */
@@ -84,6 +85,57 @@ export function clampRotateLat(lat) {
 
 const SPHERE = { type: 'Sphere' };
 
+/** メルカトルで世界全体を出すときの代用矩形（極が無限遠なので緯度を切る） */
+const MERCATOR_WORLD = {
+  type: 'Polygon',
+  coordinates: [
+    [
+      [-180, -83],
+      [180, -83],
+      [180, 83],
+      [-180, 83],
+      [-180, -83],
+    ],
+  ],
+};
+
+/**
+ * 国や地域にフィットさせるときの余白。
+ *
+ * ぴったり合わせると縁のピンが切れるので、対象の境界ボックスを 1.15 倍に
+ * 広げてから合わせたい。地理座標の bbox を膨らませると日付変更線をまたぐ
+ * ケースで壊れるので、**投影後の矩形**の側を 1/1.15 に縮めて同じ結果を得る。
+ * fitExtent は投影後の bbox を枠に収める関数なので、これは
+ * 「bbox を 1.15 倍してから合わせる」と等価で、経度の折り返しに依存しない。
+ */
+export const FIT_PAD_FACTOR = 1.15;
+
+/** 枠を中心に向かって factor 分だけ縮める */
+export function padExtent(extent, factor = FIT_PAD_FACTOR) {
+  const [[x0, y0], [x1, y1]] = extent;
+  const w = x1 - x0;
+  const h = y1 - y0;
+  const insetX = (w - w / factor) / 2;
+  const insetY = (h - h / factor) / 2;
+  // 縮めすぎて潰れないように最低 1px は残す
+  if (w - insetX * 2 < 1 || h - insetY * 2 < 1) return extent;
+  return [
+    [x0 + insetX, y0 + insetY],
+    [x1 - insetX, y1 - insetY],
+  ];
+}
+
+/**
+ * メルカトルは極が無限遠なので、±83 を越える対象はそのまま渡せない。
+ * 越えていたら世界全体の代用矩形に落とす（南極スコープのような極端な場合だけ）。
+ */
+function mercatorSafeTarget(target) {
+  if (!target) return MERCATOR_WORLD;
+  const [[, south], [, north]] = geoBounds(target);
+  if (!Number.isFinite(south) || !Number.isFinite(north)) return MERCATOR_WORLD;
+  return south < -83 || north > 83 ? MERCATOR_WORLD : target;
+}
+
 /**
  * 投影法インスタンスを作り、与えられた矩形にフィットさせる。
  *
@@ -94,6 +146,7 @@ const SPHERE = { type: 'Sphere' };
  * @param {number} opts.width
  * @param {number} opts.height
  * @param {number} [opts.padding]
+ * @param {Object|null} [opts.fitTarget] 国 / 地域のポリゴン。null なら世界全体
  * @returns {{ projection: import('d3-geo').GeoProjection, spec: Object,
  *             base: {scale: number, translate: [number, number]} }}
  */
@@ -104,6 +157,7 @@ export function createProjection({
   width,
   height,
   padding = 6,
+  fitTarget = null,
 }) {
   const spec = getProjectionSpec(id);
   const lon = normalizeLongitude(centerLon);
@@ -113,8 +167,6 @@ export function createProjection({
   // rotate の符号は「地球を回す」側なので中心にしたい経度の符号を反転する
   projection.rotate([-lon, -lat, 0]);
 
-  // メルカトルは極が無限遠なので、Sphere でフィットさせると縦が伸び切る。
-  // 実用範囲の ±83° に切って、そこをフィット対象にする。
   const extent = [
     [padding, padding],
     [
@@ -122,23 +174,15 @@ export function createProjection({
       Math.max(padding + 1, height - padding),
     ],
   ];
-  const fitTarget =
-    spec.id === 'mercator'
-      ? {
-          type: 'Polygon',
-          coordinates: [
-            [
-              [-180, -83],
-              [180, -83],
-              [180, 83],
-              [-180, 83],
-              [-180, -83],
-            ],
-          ],
-        }
-      : SPHERE;
 
-  projection.fitExtent(extent, fitTarget);
+  // メルカトルは極が無限遠なので、Sphere でフィットさせると縦が伸び切る。
+  // 実用範囲の ±83° に切って、そこをフィット対象にする。
+  let target = fitTarget ?? SPHERE;
+  if (spec.id === 'mercator') target = mercatorSafeTarget(fitTarget);
+
+  // 世界全体のときは従来どおり枠いっぱい。国 / 地域のときだけ余白を足す
+  const scoped = target !== SPHERE && target !== MERCATOR_WORLD;
+  projection.fitExtent(scoped ? padExtent(extent) : extent, target);
 
   const base = {
     scale: projection.scale(),

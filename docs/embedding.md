@@ -55,12 +55,18 @@ link, to the page that documents the tool.
 | `rm`         | researchmap permalink, e.g. `yk_frkw`                                       | owner's map                          |
 | `from`, `to` | publication years                                                           | the full range in the data           |
 | `proj`       | `equalEarth`, `naturalEarth`, `equirectangular`, `mercator`, `orthographic` | `equalEarth`                         |
-| `center`     | center longitude, `-180`…`180`                                              | `140`                                |
+| `center`     | center longitude, `-180`…`180`                                              | `140`, unless `scope` fits the map   |
+| `scope`      | `auto`, `country`, `region`, `world`                                        | `auto`                               |
 | `grain`      | `country`, or a merge radius in pixels `0`…`64`                             | `10` (`0` = one pin per city)        |
 | `size`       | `papers`, `coauthors`, `uniform`                                            | `papers`                             |
 | `theme`      | `minimal`, `dark`, `blueprint`, `paper`                                     | follows the visitor's system setting |
 
 `orcid` and `rm` can be given together; the two publication lists are merged.
+
+`scope=auto` picks the extent from where the co-authors actually are: one country if
+they are all in the same country, one region if they are all on the same continent,
+otherwise the whole world. When the map is fitted to a country or a region, the center
+longitude follows that shape's centroid unless `center` is given explicitly.
 
 ## 3. Letting the frame set its own height
 
