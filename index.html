@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Co-author map</title>
+    <meta
+      name="description"
+      content="Map your co-author network on a world map from an ORCID iD or a researchmap permalink."
+    />
+    <link rel="canonical" href="https://ykfrkw.github.io/coauthor-map/" />
+  </head>
+  <body>
+    <main class="page">
+      <header class="page-header">
+        <h1 data-i18n="app.title">Co-author map</h1>
+        <p class="lede" data-i18n="app.tagline"></p>
+        <p class="lede" data-i18n="app.about"></p>
+      </header>
+
+      <noscript>
+        <p class="notice">
+          This tool builds the map in your browser, so JavaScript has to be
+          enabled.
+        </p>
+      </noscript>
+
+      <section class="section" aria-labelledby="h-controls">
+        <h2
+          id="h-controls"
+          class="visually-hidden"
+          data-i18n="seed.legend"
+        ></h2>
+        <div class="card" id="controls"></div>
+      </section>
+
+      <div id="status" role="status" aria-live="polite"></div>
+
+      <section class="section" aria-labelledby="h-map">
+        <h2 id="h-map" class="visually-hidden" data-i18n="app.title"></h2>
+        <div class="map-wrap" id="map"></div>
+        <div class="map-legend" id="legend"></div>
+        <p class="hint" data-i18n="map.keyboardHint"></p>
+        <div class="stat-grid" id="stats"></div>
+      </section>
+
+      <section class="section" aria-labelledby="h-table">
+        <h2 id="h-table" data-i18n="table.heading"></h2>
+        <div class="section" id="table"></div>
+      </section>
+
+      <details class="card">
+        <summary data-i18n="cur.heading"></summary>
+        <div id="curation"></div>
+      </details>
+
+      <section class="section" aria-labelledby="h-export">
+        <h2 id="h-export" data-i18n="exp.heading"></h2>
+        <div id="export"></div>
+      </section>
+
+      <section class="section" aria-labelledby="h-embed">
+        <h2 id="h-embed" data-i18n="embed.heading"></h2>
+        <div class="card" id="embed"></div>
+      </section>
+
+      <section class="section card" aria-labelledby="h-cta">
+        <h2 id="h-cta" data-i18n="cta.heading"></h2>
+        <p data-i18n="cta.body"></p>
+        <p>
+          <a href="https://yukifurukawa.jp/coauthor-map/"
+            >yukifurukawa.jp/coauthor-map</a
+          >
+        </p>
+      </section>
+
+      <footer class="page-footer">
+        <p data-i18n="footer.sources"></p>
+        <ul>
+          <li>
+            <a href="https://openalex.org/" data-i18n="footer.openalex"></a>
+          </li>
+          <li><a href="https://orcid.org/" data-i18n="footer.orcid"></a></li>
+          <li>
+            <a
+              href="https://researchmap.jp/"
+              data-i18n="footer.researchmap"
+            ></a>
+          </li>
+          <li>
+            <a
+              href="https://www.naturalearthdata.com/"
+              data-i18n="footer.naturalearth"
+            ></a>
+          </li>
+        </ul>
+        <p>
+          <a
+            href="https://yukifurukawa.jp/coauthor-map/"
+            data-i18n="footer.by"
+          ></a>
+        </p>
+      </footer>
+    </main>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
