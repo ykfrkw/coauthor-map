@@ -6,7 +6,12 @@
 import { fetchOrcidWorks, assertValidOrcid } from './seeds/orcid.js';
 import { fetchResearchmapWorks } from './seeds/researchmap.js';
 import { fetchOpenAlexAuthorWorks } from './seeds/openalex-author.js';
-import { fetchWorksByDois, fetchInstitutions } from './openalex.js';
+import {
+  fetchWorksByDois,
+  fetchInstitutions,
+  mapWithConcurrency,
+  MAX_CONCURRENCY,
+} from './openalex.js';
 import {
   aggregate,
   unionSeedWorks,
@@ -46,23 +51,36 @@ export async function buildDataset(options) {
   const seedWorkLists = [];
 
   // 1. seed アダプタ。取得は seed ごとに 24 時間キャッシュする。
-  for (const [index, seed] of seeds.entries()) {
-    onProgress?.(
-      `seed を取得中（${seed.kind}: ${seed.value}）`,
-      index,
-      seeds.length,
-    );
-    const result = await withCache(
-      ['seed', seed.kind, seed.value],
-      () =>
-        fetchSeed(seed, {
-          fetchImpl,
-          mailto,
-          onProgress,
-          ...pickRetryOptions(options),
-        }),
-      { enabled: useCache },
-    );
+  //    seed どうしは独立なので並列に流す（返りは入力順を保つ）。
+  let seedsDone = 0;
+  onProgress?.('seed を取得中', seedsDone, seeds.length);
+  const seedResults = await mapWithConcurrency(
+    seeds,
+    MAX_CONCURRENCY,
+    async (seed) => {
+      const result = await withCache(
+        ['seed', seed.kind, seed.value],
+        () =>
+          fetchSeed(seed, {
+            fetchImpl,
+            mailto,
+            onProgress,
+            ...pickRetryOptions(options),
+          }),
+        { enabled: useCache },
+      );
+      seedsDone += 1;
+      onProgress?.(
+        `seed を取得中（${seed.kind}: ${seed.value}）`,
+        seedsDone,
+        seeds.length,
+      );
+      return result;
+    },
+  );
+
+  // warnings は seed の入力順で積む（完了順で揺れないように）。
+  for (const result of seedResults) {
     seedWorkLists.push(result.works);
     for (const warning of result.warnings) {
       if (!warnings.includes(warning)) warnings.push(warning);
