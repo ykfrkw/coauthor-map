@@ -40,7 +40,9 @@ describe('buildDataset', () => {
       seedWorks: 34,
       matchedWorks: 34,
       unmatchedDois: [],
-      coauthors: 166,
+      // 統合後の人数。統合前は 166 レコード（tests/merge-coauthors.test.js 参照）。
+      coauthors: 145,
+      coauthorsMerged: 21,
       institutions: 119,
       geoResolved: 119,
       cities: 69,
@@ -71,13 +73,13 @@ describe('buildDataset', () => {
     expect(byCity.get('JP|Tokyo')).toMatchObject({
       city: 'Tokyo',
       paperCount: 20,
-      coauthorCount: 26,
+      coauthorCount: 24,
     });
     expect(byCity.get('JP|Tokyo').institutions).toHaveLength(15);
 
     expect(byCity.get('JP|Kyoto')).toMatchObject({
       paperCount: 17,
-      coauthorCount: 23,
+      coauthorCount: 19,
     });
     expect(byCity.get('JP|Kyoto').institutions).toHaveLength(3);
 
@@ -101,7 +103,7 @@ describe('buildDataset', () => {
 
     expect(byCity.get('DE|Munich')).toMatchObject({
       paperCount: 13,
-      coauthorCount: 37,
+      coauthorCount: 27,
     });
     expect(byCity.get('DE|Munich').institutions).toHaveLength(6);
   });
@@ -124,7 +126,7 @@ describe('buildDataset', () => {
     expect(kyoto).toHaveLength(1);
     expect(kyoto[0].key).toBe('JP|Kyoto');
     expect(kyoto[0].paperCount).toBe(17);
-    expect(kyoto[0].coauthorCount).toBe(23);
+    expect(kyoto[0].coauthorCount).toBe(19);
     expect(kyoto[0].institutions).toHaveLength(3);
     // country_code が null の機関も同じノードに入る。
     const asukai = kyoto[0].institutions.find(

@@ -35,6 +35,7 @@ export async function buildDataset(options) {
     fetchImpl = fetch,
     onProgress,
     useCache = true,
+    mergeCoauthors = true,
   } = options ?? {};
 
   const curation = normalizeCuration(rawCuration);
@@ -103,6 +104,7 @@ export async function buildDataset(options) {
       seedOrcid: findSeedOrcid(seeds),
       curation,
       warnings,
+      mergeCoauthors,
     });
   }
 
@@ -130,6 +132,7 @@ export async function buildDataset(options) {
     seedOrcid: findSeedOrcid(seeds),
     curation,
     warnings,
+    mergeCoauthors,
   });
 }
 

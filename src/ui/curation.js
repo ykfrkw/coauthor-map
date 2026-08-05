@@ -25,6 +25,8 @@ import { normalizeDoi, isDoiLike } from '../doi.js';
  * @param {string} opts.seedKey                 localStorage のキー（seed ごとに分ける）
  * @param {() => Object} opts.getDataset        手直し前の Dataset
  * @param {(curation: Object, meta: {needsRebuild: boolean}) => void} opts.onChange
+ * @param {() => (true|'orcid'|false)} [opts.getMerge]  共著者レコード統合の現在値
+ * @param {(value: boolean) => void} [opts.onMergeChange]  統合の ON/OFF が変わった
  */
 export function createCurationPanel({
   container,
@@ -32,6 +34,8 @@ export function createCurationPanel({
   seedKey,
   getDataset,
   onChange,
+  getMerge,
+  onMergeChange,
 }) {
   let curation = loadLocalCuration(seedKey);
 
@@ -221,6 +225,37 @@ export function createCurationPanel({
     }
     paintMerges();
 
+    // --- 共著者レコードの統合 ---
+    // 誤統合を目視で確かめられるように、何を吸収したかを必ず一覧で見せる。
+    const mergeBox = h('input', {
+      type: 'checkbox',
+      id: 'merge-coauthors',
+      checked: (getMerge?.() ?? true) !== false,
+    });
+    mergeBox.addEventListener('change', () =>
+      onMergeChange?.(mergeBox.checked),
+    );
+
+    const mergedRows = coauthors.filter((c) => (c.mergedIds?.length ?? 0) > 0);
+    const mergedList = mergedRows.length
+      ? h(
+          'ul',
+          { class: 'chip-list' },
+          mergedRows.map((c) =>
+            h('li', {
+              text: t('cur.mergedRow', {
+                name: c.name ?? c.id,
+                n: c.mergedIds.length,
+                by:
+                  c.mergedBy === 'orcid'
+                    ? t('cur.mergedByOrcid')
+                    : t('cur.mergedByName'),
+              }),
+            }),
+          ),
+        )
+      : h('p', { class: 'hint', text: t('cur.mergedNone') });
+
     // --- 入出力 ---
     const fileInput = h('input', {
       type: 'file',
@@ -296,6 +331,16 @@ export function createCurationPanel({
           }),
           h('span', { class: 'field-label', text: t('cur.merges') }),
           mergeChips,
+        ]),
+        h('div', { class: 'field' }, [
+          h('span', { class: 'field-label', text: t('cur.mergeCoauthors') }),
+          h('label', { for: 'merge-coauthors' }, [
+            mergeBox,
+            h('span', { text: t('cur.mergeCoauthorsLabel') }),
+          ]),
+          h('span', { class: 'hint', text: t('cur.mergeCoauthorsHint') }),
+          h('span', { class: 'field-label', text: t('cur.mergedList') }),
+          mergedList,
         ]),
         h('div', { class: 'field' }, [
           h('span', { class: 'field-label', text: 'JSON' }),

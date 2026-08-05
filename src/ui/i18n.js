@@ -81,6 +81,7 @@ const STRINGS = {
   'stat.cities': 'Cities',
   'stat.countries': 'Countries',
   'stat.years': 'Years',
+  'stat.merged': 'Records merged',
 
   'map.aria':
     'World map of co-author locations: {cities} cities in {countries} countries, {coauthors} co-authors, {papers} papers, {from} to {to}. The tables below give the same data as text.',
@@ -142,6 +143,15 @@ const STRINGS = {
   'cur.mergeInto': 'into this',
   'cur.mergeAdd': 'Merge',
   'cur.merges': 'Merges',
+  'cur.mergeCoauthors': 'Merge duplicate co-author records',
+  'cur.mergeCoauthorsLabel': 'Count split records as one person',
+  'cur.mergeCoauthorsHint':
+    'OpenAlex sometimes files one person under several author records, which inflates the co-author counts and the pin sizes. Two records are counted as one person when they share an ORCID iD, or when they share a name and an organization and never appear together on the same paper.',
+  'cur.mergedList': 'Merged co-authors',
+  'cur.mergedRow': '{name} — {n} absorbed (matched by {by})',
+  'cur.mergedByOrcid': 'ORCID',
+  'cur.mergedByName': 'name',
+  'cur.mergedNone': 'No co-author records were merged.',
   'cur.filter': 'Filter the list',
   'cur.export': 'Export JSON',
   'cur.import': 'Import JSON',

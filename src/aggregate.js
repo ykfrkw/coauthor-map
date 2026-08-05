@@ -5,6 +5,7 @@
  */
 
 import { normalizeDoi } from './doi.js';
+import { normalizeName } from './name.js';
 import { normalizeCuration } from './curation.js';
 
 /**
@@ -357,6 +358,220 @@ export function detectSeedAuthorIds(matchedWorks, seedOrcid) {
 }
 
 /**
+ * ORCID を比較用のキーにする。`https://orcid.org/` 接頭辞と大小の揺れを吸収する。
+ * @param {unknown} raw
+ * @returns {string|null}
+ */
+export function normalizeOrcid(raw) {
+  if (typeof raw !== 'string') return null;
+  const value = raw
+    .trim()
+    .toUpperCase()
+    .replace(/^HTTPS?:\/\/(WWW\.)?ORCID\.ORG\//, '');
+  return value || null;
+}
+
+/**
+ * `mergeCoauthors` を 3 値に正規化する。既定は `true`。
+ * URL クエリから来る文字列（`'off'` / `'0'` など）も受ける。
+ * @param {unknown} value
+ * @returns {true|'orcid'|false}
+ */
+export function normalizeMergeMode(value) {
+  if (value === false || value === 'off' || value === 'none') return false;
+  if (value === 'false' || value === '0') return false;
+  if (value === 'orcid') return 'orcid';
+  return true;
+}
+
+/** 統合の根拠の強さ。ORCID 一致のほうが強い。 */
+const MERGE_REASON_RANK = { orcid: 2, name: 1 };
+
+/**
+ * @param {...('orcid'|'name'|null)} reasons
+ * @returns {'orcid'|'name'|null}
+ */
+function strongestReason(...reasons) {
+  let best = null;
+  for (const reason of reasons) {
+    if (!reason) continue;
+    if (best === null || MERGE_REASON_RANK[reason] > MERGE_REASON_RANK[best])
+      best = reason;
+  }
+  return best;
+}
+
+/**
+ * OpenAlex の名寄せが分裂させた共著者レコードを union-find でまとめる。
+ *
+ * 統合する条件は 2 つ:
+ * 1. ORCID が一致する（正規化して比較）。例外なく統合してよい
+ * 2. 氏名が一致し、かつ**同一論文に同居せず**、かつ機関を 1 つ以上共有する
+ *
+ * 2 の「同居していないこと」を先に見るのが肝心。1 本の論文に同じ人物が 2 回出ることは
+ * 無いので、同居していれば同姓同名の**別人**だと確定できる。これが唯一の確実な検定で、
+ * これを外すと同姓同名を潰してしまう。機関の共有はそのうえでの補強。
+ *
+ * 代表レコードは論文数が最大のもの。同数なら著者 ID の昇順で最小（決定的にするため）。
+ *
+ * @param {import('./types.js').Coauthor[]} coauthors 登場順
+ * @param {unknown} [mode] `true`（既定）/ `'orcid'` / `false`
+ * @returns {{coauthors: import('./types.js').Coauthor[], members: Map<import('./types.js').Coauthor, import('./types.js').Coauthor[]>}}
+ * `coauthors` は統合後（並びは代表レコードの登場順）、`members` は統合後 → 元レコード
+ * （登場順・代表を含む）。除外を人物単位で効かせるために呼び手が使う。
+ */
+export function mergeCoauthors(coauthors, mode = true) {
+  const merged = normalizeMergeMode(mode);
+  if (merged === false || coauthors.length < 2) {
+    /** @type {Map<import('./types.js').Coauthor, import('./types.js').Coauthor[]>} */
+    const members = new Map();
+    const out = coauthors.map((coauthor) => {
+      const record = { ...coauthor, mergedIds: [], mergedBy: null };
+      members.set(record, [coauthor]);
+      return record;
+    });
+    return { coauthors: out, members };
+  }
+
+  const parent = coauthors.map((_, index) => index);
+  /** @type {Array<'orcid'|'name'|null>} 根に集約した統合の根拠 */
+  const reasons = coauthors.map(() => null);
+
+  const find = (index) => {
+    let root = index;
+    while (parent[root] !== root) root = parent[root];
+    let cursor = index;
+    while (parent[cursor] !== root) {
+      const next = parent[cursor];
+      parent[cursor] = root;
+      cursor = next;
+    }
+    return root;
+  };
+  const union = (a, b, why) => {
+    const rootA = find(a);
+    const rootB = find(b);
+    if (rootA === rootB) {
+      reasons[rootA] = strongestReason(reasons[rootA], why);
+      return;
+    }
+    // 添字の小さい方（＝先に出てきた方）を根にして決定的にする。
+    const root = Math.min(rootA, rootB);
+    const other = Math.max(rootA, rootB);
+    parent[other] = root;
+    reasons[root] = strongestReason(reasons[root], reasons[other], why);
+  };
+
+  // 条件 1: ORCID 一致。
+  /** @type {Map<string, number>} */
+  const firstOfOrcid = new Map();
+  for (let i = 0; i < coauthors.length; i += 1) {
+    const orcid = normalizeOrcid(coauthors[i].orcid);
+    if (orcid === null) continue;
+    const seen = firstOfOrcid.get(orcid);
+    if (seen === undefined) firstOfOrcid.set(orcid, i);
+    else union(seen, i, 'orcid');
+  }
+
+  // 条件 2: 氏名一致 + 非同居 + 機関の共有。
+  if (merged === true) {
+    /** @type {Map<string, number[]>} */
+    const byName = new Map();
+    for (let i = 0; i < coauthors.length; i += 1) {
+      const name = normalizeName(coauthors[i].name);
+      if (!name) continue;
+      if (!byName.has(name)) byName.set(name, []);
+      byName.get(name).push(i);
+    }
+    for (const indices of byName.values()) {
+      if (indices.length < 2) continue;
+      for (let a = 0; a < indices.length; a += 1) {
+        for (let b = a + 1; b < indices.length; b += 1) {
+          const left = coauthors[indices[a]];
+          const right = coauthors[indices[b]];
+          // 同居していたら別人と確定。必ず先に落とす。
+          const rightDois = new Set(right.dois);
+          if (left.dois.some((doi) => rightDois.has(doi))) continue;
+          const rightInstitutions = new Set(right.institutionIds);
+          const sharesInstitution = left.institutionIds.some((id) =>
+            rightInstitutions.has(id),
+          );
+          if (!sharesInstitution) continue;
+          union(indices[a], indices[b], 'name');
+        }
+      }
+    }
+  }
+
+  /** @type {Map<number, number[]>} 根 → メンバーの添字（登場順） */
+  const groups = new Map();
+  for (let i = 0; i < coauthors.length; i += 1) {
+    const root = find(i);
+    if (!groups.has(root)) groups.set(root, []);
+    groups.get(root).push(i);
+  }
+
+  /** @type {import('./types.js').Coauthor[]} */
+  const out = [];
+  /** @type {Map<import('./types.js').Coauthor, import('./types.js').Coauthor[]>} */
+  const memberMap = new Map();
+  for (const [root, indices] of groups) {
+    const members = indices.map((index) => coauthors[index]);
+    if (members.length === 1) {
+      const record = { ...members[0], mergedIds: [], mergedBy: null };
+      memberMap.set(record, members);
+      out.push(record);
+      continue;
+    }
+
+    // 代表は論文数が最大のもの。同数なら著者 ID の昇順で最小。
+    const anchor = members.reduce((best, candidate) => {
+      if (candidate.dois.length !== best.dois.length)
+        return candidate.dois.length > best.dois.length ? candidate : best;
+      return compareText(candidate.id, best.id) < 0 ? candidate : best;
+    });
+    const others = members.filter((member) => member !== anchor);
+
+    const dois = uniqueInOrder([
+      ...anchor.dois,
+      ...others.flatMap((member) => member.dois),
+    ]);
+    const institutionIds = uniqueInOrder([
+      ...anchor.institutionIds,
+      ...others.flatMap((member) => member.institutionIds),
+    ]);
+
+    const record = {
+      ...anchor,
+      institutionIds,
+      dois,
+      paperCount: dois.length,
+      mergedIds: others.map((member) => member.id).filter(Boolean),
+      mergedBy: reasons[root] ?? null,
+    };
+    memberMap.set(record, members);
+    out.push(record);
+  }
+  return { coauthors: out, members: memberMap };
+}
+
+/**
+ * 重複を落として登場順を保つ。
+ * @param {string[]} values
+ * @returns {string[]}
+ */
+function uniqueInOrder(values) {
+  const seen = new Set();
+  const out = [];
+  for (const value of values) {
+    if (seen.has(value)) continue;
+    seen.add(value);
+    out.push(value);
+  }
+  return out;
+}
+
+/**
  * @param {Object} input
  * @param {import('./types.js').SeedWork[]} input.seedWorks
  * @param {any[]} input.openAlexWorks   OpenAlex works の生オブジェクト
@@ -364,6 +579,7 @@ export function detectSeedAuthorIds(matchedWorks, seedOrcid) {
  * @param {string|null} [input.seedOrcid]
  * @param {import('./types.js').Curation} [input.curation]
  * @param {string[]} [input.warnings]
+ * @param {true|'orcid'|false} [input.mergeCoauthors] 分裂した著者レコードの統合（既定 true）
  * @returns {import('./types.js').Dataset & { seedAuthorIds: string[] }}
  */
 export function aggregate(input) {
@@ -373,6 +589,7 @@ export function aggregate(input) {
     institutions: rawInstitutions = [],
     seedOrcid = null,
     warnings = [],
+    mergeCoauthors: mergeMode = true,
   } = input;
   const curation = normalizeCuration(input.curation);
 
@@ -433,6 +650,8 @@ export function aggregate(input) {
   //    `dois` / `institutionIds` の「登場順」も決定的になる。
   /** @type {Map<string, import('./types.js').Coauthor>} */
   const coauthorMap = new Map();
+  /** @type {Map<import('./types.js').Coauthor, string>} レコード → 除外照合用のキー */
+  const keyByCoauthor = new Map();
   let authorshipRows = 0;
   let authorshipsWithoutInstitution = 0;
 
@@ -466,7 +685,8 @@ export function aggregate(input) {
         author.orcid.toUpperCase() === seedOrcidUrl
       )
         continue;
-      if (excludedAuthorIds.has(mapKey)) continue;
+      // 除外はここでは効かせない。統合したあとに**人物単位**で落とす
+      // （代表 ID を除外したのに吸収されたレコードが別人として残るのを防ぐ）。
 
       let coauthor = coauthorMap.get(mapKey);
       if (!coauthor) {
@@ -479,6 +699,7 @@ export function aggregate(input) {
           paperCount: 0,
         };
         coauthorMap.set(mapKey, coauthor);
+        keyByCoauthor.set(coauthor, mapKey);
       }
       if (coauthor.orcid == null && author?.orcid)
         coauthor.orcid = author.orcid;
@@ -497,13 +718,41 @@ export function aggregate(input) {
     coauthor.paperCount = coauthor.dois.length;
   }
 
+  // 5.5. OpenAlex の名寄せが分裂させたレコードをまとめる。**論文・機関・都市は
+  //      1 つも増減しない**（和集合を取るだけ）。変わるのは共著者の同一性だけ。
+  const allRecords = [...coauthorMap.values()];
+  const { coauthors: allMerged, members: membersOf } = mergeCoauthors(
+    allRecords,
+    mergeMode,
+  );
+
+  // 除外は統合後の人物単位で効かせる。メンバーのどれか 1 つでも除外されていたら
+  // その人物ごと落とす（誤統合を見つけた利用者が代表 1 つ消せば済むように）。
+  /** @type {Set<import('./types.js').Coauthor>} */
+  const keptRecords = new Set();
+  /** @type {import('./types.js').Coauthor[]} */
+  const mergedCoauthors = [];
+  for (const merged of allMerged) {
+    const group = membersOf.get(merged) ?? [];
+    if (
+      group.some((record) => excludedAuthorIds.has(keyByCoauthor.get(record)))
+    )
+      continue;
+    mergedCoauthors.push(merged);
+    for (const record of group) keptRecords.add(record);
+  }
+  const rawCoauthorList = allRecords.filter((record) =>
+    keptRecords.has(record),
+  );
+  const coauthorsMerged = rawCoauthorList.length - mergedCoauthors.length;
+
   // 6. 共著者から実際に参照された機関だけを Dataset に載せる。
   //    （seed 本人しか属していない機関は地図に出さない）
   /** @type {Map<string, import('./types.js').Institution>} */
   const institutions = new Map();
   /** @type {Set<string>} */
   const referenced = new Set();
-  for (const coauthor of coauthorMap.values()) {
+  for (const coauthor of mergedCoauthors) {
     for (const id of coauthor.institutionIds) referenced.add(id);
   }
   for (const [id, institution] of institutionMaster) {
@@ -525,15 +774,18 @@ export function aggregate(input) {
     });
   }
 
-  const sortedCoauthors = [...coauthorMap.values()].sort(
+  const sortedCoauthors = [...mergedCoauthors].sort(
     compareByPaperCountThenName,
   );
 
   // 7. 都市ノード。緯度経度が無い機関は都市に入れない（stats には数える）。
+  //    論文と機関の結び付きは**統合前のレコード**で数える。統合が変えてよいのは
+  //    共著者の同一性だけで、都市の論文数を動かしてはいけない。
   const cities = buildCities({
     master: institutionMaster,
     institutions,
     coauthors: sortedCoauthors,
+    records: rawCoauthorList,
     works,
   });
 
@@ -551,6 +803,7 @@ export function aggregate(input) {
     matchedWorks: matchedWorks.length,
     unmatchedDois,
     coauthors: sortedCoauthors.length,
+    coauthorsMerged,
     institutions: institutions.size,
     geoResolved: [...institutions.values()].filter(
       (i) => i.lat != null && i.lng != null,
@@ -622,11 +875,12 @@ function firstNonNull(members, field) {
  * @param {Object} input
  * @param {Map<string, import('./types.js').Institution>} input.master       fetch できた全機関
  * @param {Map<string, import('./types.js').Institution>} input.institutions 参照された機関だけ
- * @param {import('./types.js').Coauthor[]} input.coauthors  既に paperCount 降順
+ * @param {import('./types.js').Coauthor[]} input.coauthors  統合後。既に paperCount 降順
+ * @param {import('./types.js').Coauthor[]} input.records    統合前のレコード（登場順）
  * @param {import('./types.js').SeedWork[]} input.works      DOI 昇順
  * @returns {import('./types.js').CityNode[]}
  */
-function buildCities({ master, institutions, coauthors, works }) {
+function buildCities({ master, institutions, coauthors, records, works }) {
   // 緯度経度が無い機関は地図に置けないので都市ノードに入れない（stats には数える）。
   const located = [...master.values()].filter(
     (institution) => institution.lat != null && institution.lng != null,
@@ -659,21 +913,40 @@ function buildCities({ master, institutions, coauthors, works }) {
       cityKeyByInstitution.set(institution.id, group.key);
   }
 
-  // 機関 → 相異なる DOI 集合、都市 → 共著者。
+  // 機関 → 相異なる DOI 集合、都市 → 相異なる DOI 集合。
+  // **統合前のレコード**で数える。統合すると 1 人が複数都市の DOI を持つので、
+  // 統合後のレコードで数えると「その都市に居ない論文」が都市に混ざる。
   /** @type {Map<string, Set<string>>} */
   const doisByInstitution = new Map();
+  /** @type {Map<string, Set<string>>} */
+  const doisByCity = new Map();
+
+  for (const record of records) {
+    /** @type {Set<string>} */
+    const cityKeys = new Set();
+    for (const institutionId of record.institutionIds) {
+      if (!doisByInstitution.has(institutionId))
+        doisByInstitution.set(institutionId, new Set());
+      const bucket = doisByInstitution.get(institutionId);
+      for (const doi of record.dois) bucket.add(doi);
+
+      const key = cityKeyByInstitution.get(institutionId);
+      if (key) cityKeys.add(key);
+    }
+    for (const key of cityKeys) {
+      if (!doisByCity.has(key)) doisByCity.set(key, new Set());
+      const bucket = doisByCity.get(key);
+      for (const doi of record.dois) bucket.add(doi);
+    }
+  }
+
+  // 都市 → 共著者は**統合後**で持つ。同じ人物を 2 回並べないため。
   /** @type {Map<string, import('./types.js').Coauthor[]>} */
   const coauthorsByCity = new Map();
-
   for (const coauthor of coauthors) {
     /** @type {Set<string>} */
     const cityKeys = new Set();
     for (const institutionId of coauthor.institutionIds) {
-      if (!doisByInstitution.has(institutionId))
-        doisByInstitution.set(institutionId, new Set());
-      const bucket = doisByInstitution.get(institutionId);
-      for (const doi of coauthor.dois) bucket.add(doi);
-
       const key = cityKeyByInstitution.get(institutionId);
       if (key) cityKeys.add(key);
     }
@@ -690,11 +963,7 @@ function buildCities({ master, institutions, coauthors, works }) {
   for (const group of groups.values()) {
     const cityCoauthors = coauthorsByCity.get(group.key) ?? [];
 
-    /** @type {Set<string>} */
-    const doiSet = new Set();
-    for (const coauthor of cityCoauthors) {
-      for (const doi of coauthor.dois) doiSet.add(doi);
-    }
+    const doiSet = doisByCity.get(group.key) ?? new Set();
     // 和集合の並びは works（DOI 昇順）に合わせる。
     const dois = [...doiSet].sort(
       (a, b) => (doiOrder.get(a) ?? 0) - (doiOrder.get(b) ?? 0),

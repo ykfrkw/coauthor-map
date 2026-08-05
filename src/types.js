@@ -35,6 +35,10 @@
  * @property {string[]} institutionIds
  * @property {string[]} dois
  * @property {number} paperCount
+ * @property {string[]} mergedIds  統合で吸収した他の著者 ID。代表自身は含めない。
+ * 統合が無ければ空配列
+ * @property {'orcid'|'name'|null} mergedBy  どの条件で統合されたか。
+ * `'orcid'` = ORCID 一致、`'name'` = 氏名一致 + 非同居 + 機関の共有。統合が無ければ `null`
  */
 
 /**
@@ -64,7 +68,8 @@
  * @property {number} seedWorks                  seed から得た DOI 件数（和集合・除外適用後）
  * @property {number} matchedWorks               OpenAlex で突合できた件数
  * @property {string[]} unmatchedDois            突合できなかった DOI
- * @property {number} coauthors
+ * @property {number} coauthors                 統合後の共著者数
+ * @property {number} coauthorsMerged            統合で吸収された著者レコード数（166→145 なら 21）
  * @property {number} institutions
  * @property {number} geoResolved                緯度経度が取れた機関数
  * @property {number} cities
@@ -122,6 +127,10 @@
  *   `` `seeds:${kind}` ``（`'seeds:orcid'` / `'seeds:researchmap'` / `'seeds:openalex'`）、
  *   `'works'`（OpenAlex の論文取得）、`'institutions'`（機関取得）、`'aggregate'`（集計）。
  *   受け手は未知のキーが来ても壊れないこと（`progressLabel` が汎用文言に落とす）。
+ * @property {true|'orcid'|false} [mergeCoauthors]  OpenAlex の名寄せが分裂させた
+ *   共著者レコードをまとめるか（既定 `true`）。`true` = ORCID 一致に加えて
+ *   「氏名一致 + 同一論文に非同居 + 機関の共有」でもまとめる、`'orcid'` = ORCID 一致だけ、
+ *   `false` = まとめない
  * @property {boolean} [useCache]     sessionStorage の 24 時間キャッシュを使うか（既定 true）
  * @property {(ms: number) => Promise<void>} [sleepImpl]  リトライの待機。テストで実時間を消さないため
  * @property {number} [maxRetries]    429 / 5xx のリトライ上限（既定 3）

@@ -26,6 +26,12 @@ Claimed works do not have this problem. For the same researcher, ORCID returns 3
 
 So the tool always starts from a list of DOIs the researcher has claimed. Searching OpenAlex by author name is available as a fallback for people with no ORCID works, but it warns you that the result will be noisy.
 
+## One person, several author records
+
+OpenAlex splits people. For the researcher above, 21 of 166 co-author records were duplicates of someone already in the list — a 13% inflation that made the largest pin 27% too big when pins are sized by number of people. The split has a consistent shape: a record with several papers, plus a record holding exactly one paper, usually a paper indexed in the current year that OpenAlex has not yet folded back into the existing cluster.
+
+Two records are counted as one person when they share an ORCID iD, or when all three of these hold: the same name, an organization in common, and no paper on which both appear. That last condition is the one that matters. A paper never lists the same person twice, so two records appearing together on one paper are definitely two different people — it is the only certain test available, and it is checked first. The corrections panel lists every merge it made, so you can see what was folded together, and a checkbox turns the whole thing off (`?merge=off`, or `?merge=orcid` for ORCID matching only).
+
 ## Pins are cities, not institutions
 
 OpenAlex stores institution coordinates at **city** granularity. Fifteen Tokyo institutions all sit on exactly the same point (35.6895, 139.6917), and querying ROR directly returns that identical city centroid. Separating institutions geographically is therefore impossible with this data, and the tool does not pretend otherwise: a pin is a city, and the institutions in it are listed in the tooltip.
@@ -34,7 +40,7 @@ Cities are merged when two institutions share a rounded coordinate, or when they
 
 ## Cost of a map
 
-Seven HTTP requests, about 3.6 seconds on a cold load, for a researcher with 34 papers and 166 co-authors. Results are cached in `sessionStorage` for 24 hours, so re-opening the page costs nothing. Because the requests come from your own browser, the OpenAlex rate limit is never a shared resource.
+Seven HTTP requests, about 3.6 seconds on a cold load, for a researcher with 34 papers and 145 co-authors. Results are cached in `sessionStorage` for 24 hours, so re-opening the page costs nothing. Because the requests come from your own browser, the OpenAlex rate limit is never a shared resource.
 
 ## Data sources
 
@@ -46,6 +52,8 @@ Seven HTTP requests, about 3.6 seconds on a cold load, for a researcher with 34 
 | [Natural Earth](https://www.naturalearthdata.com) via [world-atlas](https://github.com/topojson/world-atlas) | Country boundaries                      | Public domain           |
 
 No API key is required for any of them. Requests to OpenAlex identify themselves through the polite pool.
+
+The world map ships at two resolutions. The 110m outline (105 KB) always loads first; the finer 50m outline (739 KB) is fetched only once it is worth its weight — when the map fits a single country or a region, or when you zoom past three times the initial scale. It is swapped in without disturbing pins, labels, or zoom, and exports carry whichever outline is on screen.
 
 ## Known limits
 
@@ -60,11 +68,12 @@ No API key is required for any of them. Requests to OpenAlex identify themselves
 ```bash
 npm install
 npm run dev      # http://localhost:5173
-npm test         # 159 tests, entirely offline
+npm test         # 209 tests, entirely offline
 npm run build
+node tests/regenerate-snapshot.mjs   # rewrite tests/fixtures/dataset-snapshot.json from the recorded fixtures
 ```
 
-Tests never touch the network. `tests/fixtures/` holds recorded API responses plus `dataset-snapshot.json`, which is the expected aggregation output for a real researcher and doubles as the specification for the aggregation rules.
+Tests never touch the network. `tests/fixtures/` holds recorded API responses plus `dataset-snapshot.json`, which is the expected aggregation output for a real researcher and doubles as the specification for the aggregation rules. Run the regenerate script only when you have deliberately changed an aggregation rule, and read the resulting diff.
 
 `dev.html` renders the map straight from the snapshot without calling any API. It is excluded from the production build.
 

@@ -2,7 +2,7 @@
  * 操作パネルと URL 同期。
  *
  * 表示状態はすべて URL クエリに載せる。リロードで復元でき、そのまま共有もできる:
- *   ?orcid=&rm=&from=&to=&proj=&center=&grain=&theme=&size=&scope=
+ *   ?orcid=&rm=&from=&to=&proj=&center=&grain=&theme=&size=&scope=&merge=
  *
  * UI は US 英語 1 言語なので `lang` は持たない。
  *
@@ -33,6 +33,7 @@ import {
   sliderToGrain,
 } from '../map/cluster.js';
 import { SCOPE_OPTIONS, DEFAULT_SCOPE, parseScope } from '../map/scope.js';
+import { normalizeMergeMode } from '../aggregate.js';
 
 /** パラメータ無しで開いたときの既定 = オーナー自身の地図 */
 export const DEFAULTS = Object.freeze({
@@ -46,7 +47,18 @@ export const DEFAULTS = Object.freeze({
   theme: DEFAULT_THEME,
   size: 'papers',
   scope: DEFAULT_SCOPE, // auto = 国 / 地域 / 全世界を共著者の分布から決める
+  // OpenAlex の名寄せが分裂させた共著者レコードを統合するか。既定 ON
+  merge: true,
 });
+
+/**
+ * `merge=` の値を URL に載せる形にする。既定（true）は書かない。
+ * @param {true|'orcid'|false} value
+ * @returns {string}
+ */
+export function mergeToParam(value) {
+  return value === false ? 'off' : String(value);
+}
 
 export const SIZE_MODES = [
   { id: 'papers', labelKey: 'ctrl.size.papers' },
@@ -103,6 +115,7 @@ export function readStateFromUrl(search = window.location.search) {
     theme: isValidTheme(theme) ? theme : DEFAULTS.theme,
     size: SIZE_IDS.has(size) ? size : DEFAULTS.size,
     scope: q.has('scope') ? parseScope(q.get('scope')) : DEFAULTS.scope,
+    merge: q.has('merge') ? normalizeMergeMode(q.get('merge')) : DEFAULTS.merge,
     rotateLat: 0, // 回転は共有しない（center だけ URL に載せる）
   };
 }
@@ -130,6 +143,8 @@ export function stateToQuery(state, bounds) {
   if (state.size !== DEFAULTS.size) q.set('size', state.size);
   if (state.scope && state.scope !== DEFAULTS.scope)
     q.set('scope', state.scope);
+  if (state.merge !== undefined && state.merge !== DEFAULTS.merge)
+    q.set('merge', mergeToParam(state.merge));
   return q.toString();
 }
 

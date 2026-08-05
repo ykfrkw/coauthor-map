@@ -107,6 +107,7 @@ export function createApp({ loadDataset, mode = 'full' }) {
 
   function paintStats() {
     if (!statsEl || !view) return;
+    const merged = rawDataset?.stats?.coauthorsMerged ?? 0;
     replaceChildren(
       statsEl,
       ...STAT_KEYS.map(([key, labelKey]) =>
@@ -119,6 +120,13 @@ export function createApp({ loadDataset, mode = 'full' }) {
         h('b', { text: `${view.range.from}–${view.range.to}` }),
         h('span', { text: t('stat.years') }),
       ]),
+      // 統合した件数は「共著者数が減った理由」なので、黙って飲み込まず出す。
+      merged > 0
+        ? h('div', { class: 'stat' }, [
+            h('b', { text: formatNumber(merged) }),
+            h('span', { text: t('stat.merged') }),
+          ])
+        : null,
     );
   }
 
@@ -194,6 +202,7 @@ export function createApp({ loadDataset, mode = 'full' }) {
       const dataset = await loadDataset({
         seeds,
         curation,
+        mergeCoauthors: state.merge,
         // データ層が渡すのは安定キー。表示文言に直すのはここだけの仕事
         onProgress: (key, done, total) => {
           const suffix =
@@ -268,6 +277,13 @@ export function createApp({ loadDataset, mode = 'full' }) {
           curation = next;
           if (meta.needsRebuild) build();
           else reapplyCuration();
+        },
+        getMerge: () => state.merge,
+        // 統合は集計の段階で効くので、取り直しが要る（seed も論文も
+        // sessionStorage に載っているので通信は起きない）
+        onMergeChange: (value) => {
+          state.merge = value;
+          build();
         },
       });
     }
