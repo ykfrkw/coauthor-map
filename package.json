@@ -5,7 +5,10 @@
   "type": "module",
   "description": "Map your co-author network on a world map from an ORCID iD or a researchmap permalink.",
   "scripts": {
+    "copy:atlas": "node scripts/copy-atlas.js",
+    "predev": "npm run copy:atlas",
     "dev": "vite",
+    "prebuild": "npm run copy:atlas",
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",

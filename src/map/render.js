@@ -1,0 +1,628 @@
+/**
+ * SVG 地図の描画。
+ *
+ * 設計上の要点:
+ *  - 再描画は d3 の join による差分更新。テーマ切替や年フィルタでちらつかせない
+ *  - ズームは幾何変換ではなく投影パラメータを動かす「セマンティックズーム」。
+ *    線幅とピン半径が拡大率に依存せず、日付変更線のクリップも効き続ける。
+ *    粒度クラスタリングが画面距離で効くのも、これがあるおかげで自動追従する
+ *  - ピンの大きさは scaleSqrt。面積が値に比例する（半径比例にすると誇張される）
+ *  - 重なりは「大きい順に描く」で解決。小さいピンが必ず前面に来る
+ *  - 地図データ（countries-110m.json）は public/ から実行時 fetch。
+ *    110KB の TopoJSON をバンドルに焼き込まない
+ */
+import { select } from 'd3-selection';
+import { zoom as d3zoom, zoomIdentity } from 'd3-zoom';
+import { drag as d3drag } from 'd3-drag';
+import { scaleSqrt } from 'd3-scale';
+import { geoPath, geoGraticule10 } from 'd3-geo';
+import { feature, mesh } from 'topojson-client';
+import {
+  createProjection,
+  applyZoom,
+  createVisibilityTest,
+  dragToRotation,
+  normalizeLongitude,
+  clampRotateLat,
+  getProjectionSpec,
+} from './projections.js';
+import { buildCountryNodes, clusterPlaced, GRAIN_COUNTRY } from './cluster.js';
+
+const SPHERE = { type: 'Sphere' };
+const GRATICULE = geoGraticule10();
+
+const MIN_RADIUS = 2.5;
+const UNIFORM_RADIUS = 5;
+const MAX_LABELS = 10;
+const TOOLTIP_INSTITUTIONS = 5;
+const TOOLTIP_COAUTHORS = 8;
+const TOOLTIP_CITIES = 6;
+
+let atlasPromise = null;
+
+/**
+ * world-atlas の TopoJSON を読み、陸ポリゴンと国境メッシュに分けて返す。
+ * 一度読んだら使い回す。
+ */
+export function loadWorldAtlas(url) {
+  if (atlasPromise) return atlasPromise;
+  const href = url ?? `${import.meta.env.BASE_URL}countries-110m.json`;
+  atlasPromise = fetch(href)
+    .then((res) => {
+      if (!res.ok) throw new Error(`countries-110m.json: HTTP ${res.status}`);
+      return res.json();
+    })
+    .then((topo) => ({
+      land: feature(topo, topo.objects.countries),
+      borders: mesh(topo, topo.objects.countries, (a, b) => a !== b),
+    }))
+    .catch((err) => {
+      atlasPromise = null;
+      throw err;
+    });
+  return atlasPromise;
+}
+
+/** ピンの値を取り出す */
+function metricValue(node, sizeMode) {
+  if (sizeMode === 'coauthors') return node.coauthorCount;
+  if (sizeMode === 'uniform') return 1;
+  return node.paperCount;
+}
+
+/** HTML 埋め込み用の最小エスケープ */
+export function esc(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+/**
+ * 地図レンダラを作る。
+ *
+ * @param {Object} opts
+ * @param {HTMLElement} opts.container   地図を入れる要素（position: relative の .map-wrap）
+ * @param {(k: string, p?: Object) => string} opts.t  翻訳関数
+ * @param {boolean} [opts.compact]       widget 用に余白と最大高を詰める
+ */
+export function createMapRenderer({ container, t, compact = false }) {
+  const wrap = select(container);
+  wrap.selectAll('*').remove();
+
+  const svg = wrap
+    .append('svg')
+    .attr('xmlns', 'http://www.w3.org/2000/svg')
+    .attr('role', 'img')
+    .attr('preserveAspectRatio', 'xMidYMid meet');
+
+  const gRoot = svg.append('g').attr('class', 'map-root');
+  const pSphere = gRoot.append('path').attr('class', 'map-sphere');
+  const pGraticule = gRoot.append('path').attr('class', 'map-graticule');
+  const pLand = gRoot.append('path').attr('class', 'map-land');
+  const pBorders = gRoot.append('path').attr('class', 'map-borders');
+  const gPins = gRoot.append('g').attr('class', 'map-pins');
+  const gLabels = gRoot.append('g').attr('class', 'map-labels');
+
+  const tooltip = wrap
+    .append('div')
+    .attr('class', 'map-tooltip')
+    .attr('role', 'status')
+    .attr('aria-live', 'polite')
+    .property('hidden', true);
+
+  /** 現在の状態 */
+  const state = {
+    cities: [],
+    grain: 0,
+    projectionId: 'equalEarth',
+    centerLon: 0,
+    rotateLat: 0,
+    sizeMode: 'papers',
+    ariaLabel: '',
+    width: 320,
+    height: 180,
+  };
+
+  let atlas = null;
+  let countryNodesCache = null;
+  let countryNodesKey = null;
+  let projectionState = null;
+  let transform = zoomIdentity;
+  let activeKey = null;
+  let onRotate = null;
+  let onNodes = null;
+  let destroyed = false;
+
+  // ---- ズーム（全投影法共通。正射図法では倍率だけ使う） ----
+  const zoomBehavior = d3zoom()
+    .scaleExtent([1, 14])
+    .on('zoom', (event) => {
+      transform = event.transform;
+      draw();
+    });
+
+  // ---- 回転ドラッグ（正射図法のみ） ----
+  const dragBehavior = d3drag().on('drag', (event) => {
+    if (!projectionState?.spec.rotatable) return;
+    const { dLon, dLat } = dragToRotation(
+      event.dx,
+      event.dy,
+      projectionState.projection.scale(),
+    );
+    state.centerLon = normalizeLongitude(state.centerLon + dLon);
+    state.rotateLat = clampRotateLat(state.rotateLat + dLat);
+    projectionState.projection.rotate([-state.centerLon, -state.rotateLat, 0]);
+    hideTooltip();
+    draw();
+    onRotate?.({ centerLon: state.centerLon, rotateLat: state.rotateLat });
+  });
+
+  svg.call(zoomBehavior).call(dragBehavior);
+  svg.on('dblclick.zoom', null);
+
+  // 空白クリックと Esc でツールチップを閉じる
+  svg.on('pointerdown', (event) => {
+    if (event.target === svg.node()) hideTooltip();
+  });
+  container.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') hideTooltip();
+  });
+
+  // ---- サイズ追従 ----
+  function computeSize() {
+    const w = Math.max(240, Math.round(container.clientWidth || 320));
+    const spec = getProjectionSpec(state.projectionId);
+    const maxH = compact ? 520 : 620;
+    // 地球儀は正方形に近いほうが収まりがよい。平面図は横長に取る
+    const ratio = spec.rotatable ? 0.92 : 0.52;
+    // 狭い画面では横長にしすぎると地図が潰れるので下限を高めに取る
+    const minH = w < 420 ? 240 : 200;
+    const h = Math.round(Math.max(minH, Math.min(maxH, w * ratio)));
+    return { width: w, height: h };
+  }
+
+  /** 実測サイズを state に取り込む。変化があったら true */
+  function syncSize() {
+    const next = computeSize();
+    if (next.width === state.width && next.height === state.height)
+      return false;
+    state.width = next.width;
+    state.height = next.height;
+    return true;
+  }
+
+  function onResize() {
+    if (destroyed) return;
+    if (!syncSize()) return;
+    rebuildProjection();
+    draw();
+  }
+
+  // ResizeObserver が本命だが、背面タブなど配信が止まる状況があるので
+  // window の resize と update() 側の実測もあわせて使う（三重に張る）
+  const ro =
+    typeof ResizeObserver === 'function' ? new ResizeObserver(onResize) : null;
+  ro?.observe(container);
+  window.addEventListener('resize', onResize);
+
+  function rebuildProjection() {
+    projectionState = createProjection({
+      id: state.projectionId,
+      centerLon: state.centerLon,
+      rotateLat: state.rotateLat,
+      width: state.width,
+      height: state.height,
+      padding: compact ? 4 : 8,
+    });
+    // 正射図法では zoom のドラッグを止め、回転ドラッグに譲る
+    if (projectionState.spec.rotatable) {
+      zoomBehavior.filter(
+        (event) => event.type === 'wheel' || event.touches?.length > 1,
+      );
+    } else {
+      zoomBehavior.filter(
+        (event) => !event.button && event.type !== 'dblclick',
+      );
+    }
+  }
+
+  /** 粒度に応じた「投影前」のノード列 */
+  function baseNodes() {
+    if (state.grain !== GRAIN_COUNTRY) return state.cities;
+    // 国重心は atlas に依存するので、都市集合と atlas の有無でキャッシュを判定する
+    const key = `${state.cities.length}:${state.cities[0]?.key ?? ''}:${atlas ? 1 : 0}:${
+      state.cities.at(-1)?.key ?? ''
+    }`;
+    if (countryNodesKey !== key) {
+      countryNodesCache = buildCountryNodes(state.cities, atlas);
+      countryNodesKey = key;
+    }
+    return countryNodesCache;
+  }
+
+  // ---- ツールチップ ----
+  function listWithRest(items, limit, toText) {
+    const shown = items.slice(0, limit);
+    const rest = items.length - shown.length;
+    const body = shown.map((x) => `<li>${esc(toText(x))}</li>`).join('');
+    const more =
+      rest > 0
+        ? `<li class="hint">${esc(t('tip.andMore', { n: rest }))}</li>`
+        : '';
+    return `<ul>${body}${more}</ul>`;
+  }
+
+  function tooltipHtml(node) {
+    const members = node.members ?? [node];
+    const grouped = members.length > 1;
+    const parts = [];
+
+    parts.push(`<h3>${esc(node.city ?? '—')}</h3>`);
+    if (!node.isCountry && node.country) {
+      parts.push(`<p class="hint">${esc(node.country)}</p>`);
+    }
+
+    const dl = [
+      `<dt>${esc(t('tip.papers'))}</dt><dd>${node.paperCount}</dd>`,
+      `<dt>${esc(t('tip.coauthors'))}</dt><dd>${node.coauthorCount}</dd>`,
+      `<dt>${esc(t('tip.institutions'))}</dt><dd>${node.institutions.length}</dd>`,
+    ];
+    if (grouped)
+      dl.push(`<dt>${esc(t('tip.cities'))}</dt><dd>${members.length}</dd>`);
+    parts.push(`<dl>${dl.join('')}</dl>`);
+
+    if (grouped) {
+      // 塊のときは「都市 → その機関」の入れ子で見せる
+      const shown = members.slice(0, TOOLTIP_CITIES);
+      const rest = members.length - shown.length;
+      const rows = shown
+        .map((m) => {
+          const inst = m.institutions
+            .slice(0, 2)
+            .map((i) => i.name)
+            .join(', ');
+          const more =
+            m.institutions.length > 2 ? ` +${m.institutions.length - 2}` : '';
+          return `<li><b>${esc(m.city ?? '—')}</b> (${m.paperCount})${
+            inst ? `<br><span class="hint">${esc(inst)}${esc(more)}</span>` : ''
+          }</li>`;
+        })
+        .join('');
+      const moreRow =
+        rest > 0
+          ? `<li class="hint">${esc(t('tip.andMore', { n: rest }))}</li>`
+          : '';
+      parts.push(`<ul>${rows}${moreRow}</ul>`);
+    } else if (node.institutions.length) {
+      parts.push(
+        listWithRest(node.institutions, TOOLTIP_INSTITUTIONS, (i) => i.name),
+      );
+    }
+
+    if (node.coauthors.length) {
+      const shown = node.coauthors.slice(0, TOOLTIP_COAUTHORS);
+      const rest = node.coauthors.length - shown.length;
+      parts.push(
+        `<p>${shown.map((c) => esc(c.name)).join(', ')}` +
+          (rest > 0
+            ? ` <span class="hint">${esc(t('tip.andMore', { n: rest }))}</span>`
+            : '') +
+          `</p>`,
+      );
+    }
+    return parts.join('');
+  }
+
+  function showTooltip(node, x, y) {
+    activeKey = node.key;
+    tooltip.property('hidden', false).html(tooltipHtml(node));
+    const el = tooltip.node();
+    const box = el.getBoundingClientRect();
+    const w = container.clientWidth;
+    const h = container.clientHeight;
+    // SVG は viewBox 座標なので、実 px に直してから配置して画面内に収める
+    const sx = (x / state.width) * w;
+    const sy = (y / state.height) * h;
+    el.style.left = `${Math.max(6, Math.min(Math.max(6, w - box.width - 6), sx - box.width / 2))}px`;
+    el.style.top = `${Math.max(6, Math.min(Math.max(6, h - box.height - 6), sy - box.height - 14))}px`;
+    gPins.selectAll('circle').classed('is-active', (d) => d.key === activeKey);
+  }
+
+  function hideTooltip() {
+    activeKey = null;
+    tooltip.property('hidden', true).html('');
+    gPins.selectAll('circle').classed('is-active', false);
+  }
+
+  function nodeAria(node) {
+    const members = node.members ?? [node];
+    if (members.length > 1) {
+      return t('map.pinAriaCluster', {
+        city: node.city ?? '—',
+        cities: members.length,
+        papers: node.paperCount,
+        coauthors: node.coauthorCount,
+      });
+    }
+    return t('map.pinAria', {
+      city: node.city ?? '—',
+      country: node.country ?? node.countryCode ?? '—',
+      papers: node.paperCount,
+      coauthors: node.coauthorCount,
+      institutions: node.institutions.length,
+    });
+  }
+
+  function nodeLabel(node) {
+    const members = node.members ?? [node];
+    if (members.length > 1 && !node.isCountry) {
+      return `${node.city} ${t('map.clusterMore', { n: members.length - 1 })}`;
+    }
+    return node.city;
+  }
+
+  // ---- 描画本体 ----
+  function draw() {
+    if (!projectionState) rebuildProjection();
+    const { projection, spec, base } = projectionState;
+    applyZoom(projection, spec, base, transform);
+    const path = geoPath(projection);
+    const visible = createVisibilityTest(projection, spec);
+
+    svg
+      .attr('viewBox', `0 0 ${state.width} ${state.height}`)
+      .attr('aria-label', state.ariaLabel);
+
+    pSphere.attr('d', path(SPHERE) || '');
+    pGraticule.attr('d', path(GRATICULE) || '');
+    if (atlas) {
+      pLand.attr('d', path(atlas.land) || '');
+      pBorders.attr('d', path(atlas.borders) || '');
+    }
+
+    // 1) 投影して、画面に載るものだけ残す
+    const projected = [];
+    for (const node of baseNodes()) {
+      if (!Number.isFinite(node.lat) || !Number.isFinite(node.lng)) continue;
+      if (!visible(node.lng, node.lat)) continue;
+      const xy = projection([node.lng, node.lat]);
+      if (!xy || !Number.isFinite(xy[0]) || !Number.isFinite(xy[1])) continue;
+      projected.push({ node, x: xy[0], y: xy[1] });
+    }
+
+    // 2) 画面座標でまとめる。ズームすると画面距離が広がるので塊は自動でほどける
+    const radiusPx = state.grain === GRAIN_COUNTRY ? 0 : state.grain;
+    const nodes = clusterPlaced(projected, radiusPx);
+
+    // 3) 値 → 半径。面積比例なので scaleSqrt
+    const values = nodes.map((n) => metricValue(n, state.sizeMode));
+    const maxValue = values.length ? Math.max(...values) : 1;
+    const maxRadius = Math.max(9, Math.min(26, state.width / 26));
+    const radiusScale = scaleSqrt()
+      .domain([0, maxValue || 1])
+      .range([0, maxRadius]);
+    for (const n of nodes) {
+      n.r =
+        state.sizeMode === 'uniform'
+          ? UNIFORM_RADIUS
+          : Math.max(MIN_RADIUS, radiusScale(metricValue(n, state.sizeMode)));
+    }
+
+    // 4) 大きい順に描く → 小さいピンが前面に来て、埋もれない
+    nodes.sort(
+      (a, b) => b.r - a.r || String(a.key).localeCompare(String(b.key)),
+    );
+
+    gPins
+      .selectAll('circle')
+      .data(nodes, (d) => d.key)
+      .join(
+        (enter) =>
+          enter
+            .append('circle')
+            .attr('class', 'map-pin')
+            .attr('tabindex', 0)
+            .attr('role', 'button')
+            .on('pointerenter', (event, d) => {
+              if (event.pointerType === 'touch') return;
+              showTooltip(d, d.x, d.y);
+            })
+            .on('pointerleave', (event) => {
+              if (event.pointerType === 'touch') return;
+              hideTooltip();
+            })
+            .on('click', (event, d) => {
+              event.stopPropagation();
+              if (activeKey === d.key) hideTooltip();
+              else showTooltip(d, d.x, d.y);
+            })
+            .on('focus', (event, d) => showTooltip(d, d.x, d.y))
+            .on('blur', () => hideTooltip()),
+        (update) => update,
+        (exit) => exit.remove(),
+      )
+      .attr('cx', (d) => d.x)
+      .attr('cy', (d) => d.y)
+      .attr('r', (d) => d.r)
+      .attr('aria-label', nodeAria)
+      .classed('is-active', (d) => d.key === activeKey)
+      .order();
+
+    // ラベルは上位だけ。全部出すと 69 地点で読めなくなる。
+    // さらに、重なるものは後ろから落とす（欧州の団子で文字が潰れるのを避ける）
+    const candidates = nodes
+      .slice()
+      .sort(
+        (a, b) =>
+          metricValue(b, state.sizeMode) - metricValue(a, state.sizeMode),
+      )
+      .filter((d) => d.city)
+      .slice(0, MAX_LABELS * 2);
+
+    const boxes = [];
+    const labelled = [];
+    for (const d of candidates) {
+      if (labelled.length >= MAX_LABELS) break;
+      const text = nodeLabel(d);
+      const halfWidth = (String(text).length * 4.8) / 2 + 2;
+      const lx = Math.max(
+        halfWidth + 2,
+        Math.min(state.width - halfWidth - 2, d.x),
+      );
+      const ly = Math.max(11, d.y - d.r - 4);
+      const box = {
+        x0: lx - halfWidth,
+        x1: lx + halfWidth,
+        y0: ly - 10,
+        y1: ly + 3,
+      };
+      const hits = boxes.some(
+        (b) =>
+          !(box.x1 < b.x0 || box.x0 > b.x1 || box.y1 < b.y0 || box.y0 > b.y1),
+      );
+      if (hits) continue;
+      boxes.push(box);
+      labelled.push({ ...d, lx, ly, labelText: text });
+    }
+
+    gLabels
+      .selectAll('text')
+      .data(labelled, (d) => d.key)
+      .join('text')
+      .attr('class', 'map-label')
+      .attr('text-anchor', 'middle')
+      .attr('x', (d) => d.lx)
+      .attr('y', (d) => d.ly)
+      .text((d) => d.labelText);
+
+    const result = {
+      nodes,
+      radiusScale,
+      maxValue,
+      maxRadius,
+      pinCount: nodes.length,
+    };
+    onNodes?.(result);
+    return result;
+  }
+
+  let lastDraw = null;
+
+  /** 状態を差し込んで描き直す */
+  function update(next = {}) {
+    const projectionChanged =
+      next.projectionId !== undefined &&
+      next.projectionId !== state.projectionId;
+    if (next.cities && next.cities !== state.cities) countryNodesKey = null;
+    Object.assign(state, next);
+    state.centerLon = normalizeLongitude(state.centerLon);
+    state.rotateLat = clampRotateLat(state.rotateLat);
+
+    // 毎回実測する。ResizeObserver が来ない環境（背面タブなど）でも
+    // 幅が変われば必ず追従させるため、ここを唯一の拠りどころにする
+    syncSize();
+    if (projectionChanged) {
+      // 投影法を変えると高さの比率も変わる。ズームも初期化する
+      transform = zoomIdentity;
+      svg.call(zoomBehavior.transform, zoomIdentity);
+    }
+    rebuildProjection();
+    lastDraw = draw();
+    return lastDraw;
+  }
+
+  function resetView() {
+    transform = zoomIdentity;
+    svg.call(zoomBehavior.transform, zoomIdentity);
+    hideTooltip();
+    rebuildProjection();
+    lastDraw = draw();
+    return lastDraw;
+  }
+
+  loadWorldAtlas()
+    .then((loaded) => {
+      if (destroyed) return;
+      atlas = loaded;
+      countryNodesKey = null;
+      lastDraw = draw();
+    })
+    .catch(() => {
+      // 陸が描けなくてもピンと経緯線は出す。UI 側で警告を出す
+    });
+
+  return {
+    update,
+    resetView,
+    hideTooltip,
+    /** 回転ドラッグの結果を URL 等に反映するためのフック */
+    onRotate(fn) {
+      onRotate = fn;
+    },
+    /** 描画のたびに呼ばれる。凡例とピン数表示の更新用 */
+    onNodes(fn) {
+      onNodes = fn;
+    },
+    get svgNode() {
+      return svg.node();
+    },
+    get size() {
+      return { width: state.width, height: state.height };
+    },
+    get lastDraw() {
+      return lastDraw;
+    },
+    destroy() {
+      destroyed = true;
+      ro?.disconnect();
+      wrap.selectAll('*').remove();
+    },
+  };
+}
+
+/**
+ * 凡例。ピンの大きさが何を表すかを、実際の円で見せる。
+ */
+export function renderLegend(
+  el,
+  { sizeMode, maxValue, maxRadius, pinCount, t },
+) {
+  const host = select(el);
+  host.selectAll('*').remove();
+
+  if (sizeMode !== 'uniform' && maxValue) {
+    const metricLabel =
+      sizeMode === 'coauthors'
+        ? t('ctrl.size.coauthors')
+        : t('ctrl.size.papers');
+    const steps = [maxValue, Math.max(1, Math.round(maxValue / 4)), 1].filter(
+      (v, i, a) => a.indexOf(v) === i,
+    );
+    const scale = scaleSqrt()
+      .domain([0, maxValue])
+      .range([0, maxRadius ?? 18]);
+
+    const swatches = host.append('div').attr('class', 'legend-swatches');
+    for (const v of steps) {
+      const r = Math.max(MIN_RADIUS, scale(v));
+      const g = swatches.append('div');
+      g.append('svg')
+        .attr('width', r * 2 + 2)
+        .attr('height', r * 2 + 2)
+        .attr('aria-hidden', 'true')
+        .append('circle')
+        .attr('class', 'legend-dot')
+        .attr('cx', r + 1)
+        .attr('cy', r + 1)
+        .attr('r', r);
+      g.append('div').style('text-align', 'center').text(v);
+    }
+    host.append('span').text(t('map.legendSize', { metric: metricLabel }));
+  }
+
+  if (Number.isFinite(pinCount)) {
+    host.append('span').text(t('map.pinCount', { n: pinCount }));
+  }
+}

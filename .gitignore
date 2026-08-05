@@ -1,5 +1,8 @@
 node_modules/
 dist/
+
+# npm run copy:atlas が node_modules から複製する。commit しない
+public/countries-110m.json
 .env
 .env.*
 .DS_Store

@@ -1,0 +1,7 @@
+# API 応答と集計結果のスナップショット。整形すると差分が読めなくなる
+tests/fixtures/
+# 手で編集する確定版の curation
+public/
+dist/
+node_modules/
+package-lock.json
