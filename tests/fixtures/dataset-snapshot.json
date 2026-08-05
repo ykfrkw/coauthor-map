@@ -4325,6 +4325,16 @@
      "lng": 135.75385,
      "city": "Kyoto",
      "country": "Japan"
+    },
+    {
+     "id": "https://openalex.org/I4396570538",
+     "name": "Kyoto Min-iren Asukai Hospital",
+     "countryCode": null,
+     "type": "healthcare",
+     "lat": 35.02106857299805,
+     "lng": 135.75384521484375,
+     "city": "Kyoto",
+     "country": "Japan"
     }
    ],
    "coauthors": [
@@ -6449,8 +6459,8 @@
   },
   {
    "key": "GB|Oxford",
-   "lat": 51.72745,
-   "lng": -1.19257,
+   "lat": 51.75222,
+   "lng": -1.25596,
    "city": "Oxford",
    "countryCode": "GB",
    "country": "United Kingdom",
@@ -7214,11 +7224,11 @@
    "coauthorCount": 21
   },
   {
-   "key": "@34.69,135.50",
+   "key": "JP|Osaka",
    "lat": 34.69379,
    "lng": 135.50107,
    "city": "Osaka",
-   "countryCode": null,
+   "countryCode": "JP",
    "country": "Japan",
    "institutions": [
     {
@@ -7228,6 +7238,26 @@
      "type": "nonprofit",
      "lat": 34.693790435791016,
      "lng": 135.50106811523438,
+     "city": "Osaka",
+     "country": "Japan"
+    },
+    {
+     "id": "https://openalex.org/I149737975",
+     "name": "Santen (Japan)",
+     "countryCode": "JP",
+     "type": "company",
+     "lat": 34.74467468261719,
+     "lng": 135.52203369140625,
+     "city": "Osaka",
+     "country": "Japan"
+    },
+    {
+     "id": "https://openalex.org/I4210106580",
+     "name": "NTT WEST Osaka Hospital",
+     "countryCode": "JP",
+     "type": "healthcare",
+     "lat": 34.69379,
+     "lng": 135.50107,
      "city": "Osaka",
      "country": "Japan"
     }
@@ -7282,6 +7312,19 @@
      "paperCount": 1
     },
     {
+     "id": "https://openalex.org/A5017682602",
+     "name": "Kazumasa Kotake",
+     "orcid": "https://orcid.org/0000-0001-9869-1177",
+     "institutionIds": [
+      "https://openalex.org/I4210106580",
+      "https://openalex.org/I4210118584"
+     ],
+     "dois": [
+      "10.1007/s40263-025-01188-2"
+     ],
+     "paperCount": 1
+    },
+    {
      "id": "https://openalex.org/A5049520100",
      "name": "Masahiro Banno",
      "orcid": "https://orcid.org/0000-0002-2539-1031",
@@ -7328,133 +7371,7 @@
     "10.21037/atm.2019.10.65"
    ],
    "paperCount": 5,
-   "coauthorCount": 6
-  },
-  {
-   "key": "JP|Osaka",
-   "lat": 34.74467,
-   "lng": 135.52203,
-   "city": "Osaka",
-   "countryCode": "JP",
-   "country": "Japan",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I149737975",
-     "name": "Santen (Japan)",
-     "countryCode": "JP",
-     "type": "company",
-     "lat": 34.74467468261719,
-     "lng": 135.52203369140625,
-     "city": "Osaka",
-     "country": "Japan"
-    },
-    {
-     "id": "https://openalex.org/I4210106580",
-     "name": "NTT WEST Osaka Hospital",
-     "countryCode": "JP",
-     "type": "healthcare",
-     "lat": 34.69379,
-     "lng": 135.50107,
-     "city": "Osaka",
-     "country": "Japan"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5039593848",
-     "name": "Yuki Kataoka",
-     "orcid": "https://orcid.org/0000-0001-7982-5213",
-     "institutionIds": [
-      "https://openalex.org/I201537933",
-      "https://openalex.org/I22299242",
-      "https://openalex.org/I4210092627",
-      "https://openalex.org/I4396570521",
-      "https://openalex.org/I149737975",
-      "https://openalex.org/I4396570538",
-      "https://openalex.org/I4210134765"
-     ],
-     "dois": [
-      "10.1017/rsm.2025.10030",
-      "10.1101/2021.12.09.21267441",
-      "10.1136/bmjopen-2022-061023",
-      "10.21037/atm.2019.10.65"
-     ],
-     "paperCount": 4
-    },
-    {
-     "id": "https://openalex.org/A5017682602",
-     "name": "Kazumasa Kotake",
-     "orcid": "https://orcid.org/0000-0001-9869-1177",
-     "institutionIds": [
-      "https://openalex.org/I4210106580",
-      "https://openalex.org/I4210118584"
-     ],
-     "dois": [
-      "10.1007/s40263-025-01188-2"
-     ],
-     "paperCount": 1
-    }
-   ],
-   "dois": [
-    "10.1007/s40263-025-01188-2",
-    "10.1017/rsm.2025.10030",
-    "10.1101/2021.12.09.21267441",
-    "10.1136/bmjopen-2022-061023",
-    "10.21037/atm.2019.10.65"
-   ],
-   "paperCount": 5,
-   "coauthorCount": 2
-  },
-  {
-   "key": "@35.02,135.75",
-   "lat": 35.02107,
-   "lng": 135.75385,
-   "city": "Kyoto",
-   "countryCode": null,
-   "country": "Japan",
-   "institutions": [
-    {
-     "id": "https://openalex.org/I4396570538",
-     "name": "Kyoto Min-iren Asukai Hospital",
-     "countryCode": null,
-     "type": "healthcare",
-     "lat": 35.02106857299805,
-     "lng": 135.75384521484375,
-     "city": "Kyoto",
-     "country": "Japan"
-    }
-   ],
-   "coauthors": [
-    {
-     "id": "https://openalex.org/A5039593848",
-     "name": "Yuki Kataoka",
-     "orcid": "https://orcid.org/0000-0001-7982-5213",
-     "institutionIds": [
-      "https://openalex.org/I201537933",
-      "https://openalex.org/I22299242",
-      "https://openalex.org/I4210092627",
-      "https://openalex.org/I4396570521",
-      "https://openalex.org/I149737975",
-      "https://openalex.org/I4396570538",
-      "https://openalex.org/I4210134765"
-     ],
-     "dois": [
-      "10.1017/rsm.2025.10030",
-      "10.1101/2021.12.09.21267441",
-      "10.1136/bmjopen-2022-061023",
-      "10.21037/atm.2019.10.65"
-     ],
-     "paperCount": 4
-    }
-   ],
-   "dois": [
-    "10.1017/rsm.2025.10030",
-    "10.1101/2021.12.09.21267441",
-    "10.1136/bmjopen-2022-061023",
-    "10.21037/atm.2019.10.65"
-   ],
-   "paperCount": 4,
-   "coauthorCount": 1
+   "coauthorCount": 7
   },
   {
    "key": "JP|Amagasaki",
@@ -8223,8 +8140,8 @@
   },
   {
    "key": "JP|Okayama",
-   "lat": 34.65091,
-   "lng": 133.91554,
+   "lat": 34.65,
+   "lng": 133.93333,
    "city": "Okayama",
    "countryCode": "JP",
    "country": "Japan",
@@ -9289,8 +9206,8 @@
   },
   {
    "key": "DE|Augsburg",
-   "lat": 48.37062,
-   "lng": 10.93527,
+   "lat": 48.37154,
+   "lng": 10.89851,
    "city": "Augsburg",
    "countryCode": "DE",
    "country": "Germany",
@@ -10230,7 +10147,7 @@
   "coauthors": 166,
   "institutions": 119,
   "geoResolved": 119,
-  "cities": 71,
+  "cities": 69,
   "countries": 15,
   "authorshipRows": 315,
   "authorshipsWithoutInstitution": 5,
