@@ -8,15 +8,18 @@
  *    粒度クラスタリングが画面距離で効くのも、これがあるおかげで自動追従する
  *  - ピンの大きさは scaleSqrt。面積が値に比例する（半径比例にすると誇張される）
  *  - 重なりは「大きい順に描く」で解決。小さいピンが必ず前面に来る
- *  - 地図データ（countries-110m.json）は public/ から実行時 fetch。
- *    110KB の TopoJSON をバンドルに焼き込まない
+ *  - 地図データ（countries-*.json）は public/ から実行時 fetch。
+ *    TopoJSON をバンドルに焼き込まない。始まりは常に 110m で、国 / 地域に
+ *    フィットしたときと大きく拡大したときだけ 50m に差し替える（atlas.js 参照）。
+ *    差し替えは land / borders の d 属性を書き換えるだけなので、
+ *    ピン・ズーム・ラベルの状態はそのまま残る。書き出し（SVG / PNG）は
+ *    表示中の SVG を直列化するので、そのとき描いている解像度がそのまま出る
  */
 import { select } from 'd3-selection';
 import { zoom as d3zoom, zoomIdentity } from 'd3-zoom';
 import { drag as d3drag } from 'd3-drag';
 import { scaleSqrt } from 'd3-scale';
 import { geoPath, geoGraticule10 } from 'd3-geo';
-import { feature, mesh } from 'topojson-client';
 import {
   createProjection,
   applyZoom,
@@ -38,6 +41,12 @@ import {
   SCOPE_AUTO,
   SCOPE_WORLD,
 } from './scope.js';
+import {
+  createAtlasProvider,
+  resolutionFor,
+  RESOLUTION_LOW,
+  RESOLUTION_HIGH,
+} from './atlas.js';
 import { regionLabelKey } from './regions.js';
 
 const SPHERE = { type: 'Sphere' };
@@ -50,29 +59,19 @@ const TOOLTIP_INSTITUTIONS = 5;
 const TOOLTIP_COAUTHORS = 8;
 const TOOLTIP_CITIES = 6;
 
-let atlasPromise = null;
+let sharedProvider = null;
 
 /**
- * world-atlas の TopoJSON を読み、陸ポリゴンと国境メッシュに分けて返す。
- * 一度読んだら使い回す。
+ * ページ全体で 1 つの atlas 供給元を共有する。
+ * 地図を 2 つ立てても同じファイルを二度取りに行かせないため。
  */
-export function loadWorldAtlas(url) {
-  if (atlasPromise) return atlasPromise;
-  const href = url ?? `${import.meta.env.BASE_URL}countries-110m.json`;
-  atlasPromise = fetch(href)
-    .then((res) => {
-      if (!res.ok) throw new Error(`countries-110m.json: HTTP ${res.status}`);
-      return res.json();
-    })
-    .then((topo) => ({
-      land: feature(topo, topo.objects.countries),
-      borders: mesh(topo, topo.objects.countries, (a, b) => a !== b),
-    }))
-    .catch((err) => {
-      atlasPromise = null;
-      throw err;
+export function getAtlasProvider() {
+  if (!sharedProvider) {
+    sharedProvider = createAtlasProvider({
+      baseUrl: import.meta.env.BASE_URL,
     });
-  return atlasPromise;
+  }
+  return sharedProvider;
 }
 
 /** ピンの値を取り出す */
@@ -98,8 +97,14 @@ export function esc(value) {
  * @param {HTMLElement} opts.container   地図を入れる要素（position: relative の .map-wrap）
  * @param {(k: string, p?: Object) => string} opts.t  翻訳関数
  * @param {boolean} [opts.compact]       widget 用に余白と最大高を詰める
+ * @param {ReturnType<createAtlasProvider>} [opts.atlasProvider] 既定はページ共有のもの
  */
-export function createMapRenderer({ container, t, compact = false }) {
+export function createMapRenderer({
+  container,
+  t,
+  compact = false,
+  atlasProvider = getAtlasProvider(),
+}) {
   const wrap = select(container);
   wrap.selectAll('*').remove();
 
@@ -154,6 +159,8 @@ export function createMapRenderer({ container, t, compact = false }) {
   let fit = null;
   /** 利用者がズーム・パン・回転したか。true のあいだは勝手に再フィットしない */
   let userMoved = false;
+  /** 50m をもう頼んだか。成否によらず 1 回で打ち止めにする */
+  let highResRequested = false;
 
   // ---- ズーム（全投影法共通。正射図法では倍率だけ使う） ----
   const zoomBehavior = d3zoom()
@@ -163,6 +170,8 @@ export function createMapRenderer({ container, t, compact = false }) {
       // sourceEvent が無いのは resetView などのプログラム側の操作。
       // 利用者の操作だけを「動かした」と数える
       if (event.sourceEvent) userMoved = true;
+      // 大きく拡大したら海岸線を精細にする（届くのは数百 ms 後。描画は待たない）
+      syncResolution();
       draw();
     });
 
@@ -270,6 +279,7 @@ export function createMapRenderer({ container, t, compact = false }) {
       padding: compact ? 4 : 8,
       fitTarget: fit.geometry,
     });
+    syncResolution();
     // 正射図法では zoom のドラッグを止め、回転ドラッグに譲る
     if (projectionState.spec.rotatable) {
       zoomBehavior.filter(
@@ -615,22 +625,51 @@ export function createMapRenderer({ container, t, compact = false }) {
     return lastDraw;
   }
 
-  loadWorldAtlas()
-    .then((loaded) => {
-      if (destroyed) return;
-      atlas = loaded;
-      locator = createCountryLocator(loaded.land?.features ?? []);
-      countryNodesKey = null;
-      // ポリゴンが揃って初めて国 / 地域を特定できる。ここで一度フィットし直す
-      if (!userMoved) {
-        fit = null;
-        rebuildProjection();
-      }
-      lastDraw = draw();
-    })
-    .catch(() => {
-      // 陸が描けなくてもピンと経緯線は出す。UI 側で警告を出す
+  /**
+   * 届いた atlas を受け取る。
+   *
+   * 最初の 1 枚（110m）が来たときだけフィットを引き直す。ポリゴンが揃って初めて
+   * 国 / 地域を特定できるため。50m への差し替えでは投影に一切触らない
+   * ——ズームもピンの位置も動かさず、陸と国境の輪郭だけが精細になる。
+   */
+  function adoptAtlas(loaded) {
+    if (!loaded || loaded === atlas) return;
+    const first = !atlas;
+    atlas = loaded;
+    locator = createCountryLocator(loaded.land?.features ?? []);
+    // 国重心はポリゴン由来なので、解像度が変われば作り直す（キーは変わらない）
+    countryNodesKey = null;
+    if (first && !userMoved) {
+      fit = null;
+      rebuildProjection();
+    }
+    lastDraw = draw();
+  }
+
+  /**
+   * いまの表示に見合う解像度を確かめ、足りなければ引き上げる。
+   * 引き下げはしない（一度精細にした地図を粗く戻すとちらつくため）。
+   */
+  function syncResolution() {
+    if (highResRequested) return;
+    const want = resolutionFor({
+      scope: fit?.scope,
+      scaleRatio: transform.k,
     });
+    if (want !== RESOLUTION_HIGH) return;
+    highResRequested = true;
+    atlasProvider.ensure(RESOLUTION_HIGH).then(() => {
+      // 失敗したら解像度は上がらない。何もせず 110m のまま動き続ける
+      if (destroyed || atlasProvider.resolution !== RESOLUTION_HIGH) return;
+      adoptAtlas(atlasProvider.atlas);
+    });
+  }
+
+  // 起動時に読むのは 110m だけ。50m は必要になってから取りに行く
+  atlasProvider.ensure(RESOLUTION_LOW).then(() => {
+    // 陸が描けなくてもピンと経緯線は出す（atlas が null のままでも draw は通る）
+    if (!destroyed) adoptAtlas(atlasProvider.atlas);
+  });
 
   return {
     update,
