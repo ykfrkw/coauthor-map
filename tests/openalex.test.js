@@ -5,6 +5,8 @@ import {
   fetchInstitutions,
   fetchWorksByDois,
   joinFilterValues,
+  mapWithConcurrency,
+  MAX_CONCURRENCY,
   requestOpenAlex,
   shortOpenAlexId,
 } from '../src/openalex.js';
@@ -104,18 +106,91 @@ describe('URL の組み立て', () => {
     );
   });
 
-  it('リクエストは直列に流す', async () => {
+  it('同時実行は MAX_CONCURRENCY を超えない', async () => {
+    expect(MAX_CONCURRENCY).toBe(3);
+
+    /**
+     * 同時進行中のリクエスト数の最大値を測るスタブ。
+     * バッチ数より多くの遅延を挟んで、並列に走れる状況を作る。
+     */
+    const makeCountingFetch = () => {
+      let inFlight = 0;
+      const state = { maxInFlight: 0, calls: 0 };
+      const fetchImpl = async () => {
+        inFlight += 1;
+        state.calls += 1;
+        state.maxInFlight = Math.max(state.maxInFlight, inFlight);
+        await new Promise((resolve) => setTimeout(resolve, 5));
+        inFlight -= 1;
+        return jsonResponse({ results: [] });
+      };
+      return { fetchImpl, state };
+    };
+
+    // 500 機関 → 10 バッチ。直列なら 1、無制限なら 10 になる。
+    const manyIds = Array.from(
+      { length: 500 },
+      (_, i) => `https://openalex.org/I${100000 + i}`,
+    );
+    const institutions = makeCountingFetch();
+    await fetchInstitutions(manyIds, { fetchImpl: institutions.fetchImpl });
+    expect(institutions.state.calls).toBe(10);
+    expect(institutions.state.maxInFlight).toBe(MAX_CONCURRENCY);
+
+    // 250 DOI → 10 バッチ。
+    const manyDois = Array.from({ length: 250 }, (_, i) => `10.1/${i}`);
+    const works = makeCountingFetch();
+    await fetchWorksByDois(manyDois, { fetchImpl: works.fetchImpl });
+    expect(works.state.calls).toBe(10);
+    expect(works.state.maxInFlight).toBe(MAX_CONCURRENCY);
+  });
+
+  it('並列でも返り値はバッチの入力順', async () => {
+    // 先に投げたバッチほど遅く返るスタブ。完了順に詰めると順序が反転する。
+    const seen = [];
+    const fetchImpl = async (url) => {
+      const filter = String(url).match(/filter=ids\.openalex:(.*)$/)[1];
+      const first = filter.split('|')[0];
+      const index = seen.length;
+      seen.push(first);
+      await new Promise((resolve) => setTimeout(resolve, 20 - index * 5));
+      return jsonResponse({ results: [{ id: `page-${first}` }] });
+    };
+
+    const manyIds = Array.from(
+      { length: 150 },
+      (_, i) => `https://openalex.org/I${100000 + i}`,
+    );
+    const results = await fetchInstitutions(manyIds, { fetchImpl });
+
+    // 入力は ID 昇順にソートされてから 50 件ずつに切られる。
+    expect(results.map((entry) => entry.id)).toEqual([
+      'page-I100000',
+      'page-I100050',
+      'page-I100100',
+    ]);
+  });
+
+  it('mapWithConcurrency は入力順で返し、上限を守る', async () => {
     let inFlight = 0;
     let maxInFlight = 0;
-    const fetchImpl = async () => {
-      inFlight += 1;
-      maxInFlight = Math.max(maxInFlight, inFlight);
-      await new Promise((resolve) => setTimeout(resolve, 0));
-      inFlight -= 1;
-      return jsonResponse({ results: [] });
-    };
-    await fetchInstitutions(institutionIds, { fetchImpl });
-    expect(maxInFlight).toBe(1);
+    const results = await mapWithConcurrency(
+      [1, 2, 3, 4, 5, 6, 7],
+      3,
+      async (value) => {
+        inFlight += 1;
+        maxInFlight = Math.max(maxInFlight, inFlight);
+        await new Promise((resolve) => setTimeout(resolve, (8 - value) * 2));
+        inFlight -= 1;
+        return value * 10;
+      },
+    );
+    expect(results).toEqual([10, 20, 30, 40, 50, 60, 70]);
+    expect(maxInFlight).toBe(3);
+  });
+
+  it('mapWithConcurrency は空配列でも落ちない', async () => {
+    await expect(mapWithConcurrency([], 3, async () => 1)).resolves.toEqual([]);
   });
 });
 
