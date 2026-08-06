@@ -166,3 +166,19 @@ describe('埋め込みスニペットの自動リサイズ', () => {
     expect(styleBody(snippet)).not.toContain('>');
   });
 });
+
+describe('丸の大きさの基準', () => {
+  it('既定は共著者数（人が主役の地図なので）', () => {
+    expect(DEFAULTS.size).toBe('coauthors');
+    expect(readStateFromUrl('').size).toBe('coauthors');
+    expect(stateToQuery(readStateFromUrl(''), BOUNDS)).not.toContain('size=');
+  });
+
+  it('size=papers は既定と違うので URL に載って往復する', () => {
+    const state = readStateFromUrl('?size=papers');
+    expect(state.size).toBe('papers');
+    const query = stateToQuery(state, BOUNDS);
+    expect(query).toContain('size=papers');
+    expect(readStateFromUrl(`?${query}`).size).toBe('papers');
+  });
+});

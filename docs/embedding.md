@@ -82,7 +82,7 @@ link, to the page that documents the tool.
 | `center`     | center longitude, `-180`…`180`                                              | `140`, unless `scope` fits the map    |
 | `scope`      | `auto`, `country`, `region`, `world`                                        | `auto`                                |
 | `grain`      | `country`, or a merge radius in pixels `0`…`64`                             | `10` (`0` = one pin per city)         |
-| `size`       | `papers`, `coauthors`, `uniform`                                            | `papers`                              |
+| `size`       | `papers`, `coauthors`, `uniform`                                            | `coauthors`                           |
 | `theme`      | `minimal`, `dark`, `blueprint`, `paper`                                     | follows the visitor's system setting  |
 | `min`        | keep co-authors with at least this many shared papers                       | `1` (everyone)                        |
 | `xa`         | co-authors to leave out, e.g. `xa=5085050194.5002251483`                    | none                                  |

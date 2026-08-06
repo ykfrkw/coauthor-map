@@ -5,10 +5,19 @@ import { createTranslator, STRINGS } from '../src/ui/i18n.js';
 
 const t = createTranslator();
 
-/** 既定はウィジェット側の呼び方（凡例が無いので丸の基準を文中に出す） */
+/**
+ * ウィジェット側の呼び方（凡例が無いので丸の基準を文中に出す）。
+ * `sizeMode` は既定に頼らず明示する。既定が変わっても文言の固定が崩れないようにする。
+ */
 const widget = (extra) =>
   shownStatusText(
-    { shown: 26, total: 138, includeSizeBasis: true, ...extra },
+    {
+      shown: 26,
+      total: 138,
+      includeSizeBasis: true,
+      sizeMode: 'papers',
+      ...extra,
+    },
     t,
   );
 

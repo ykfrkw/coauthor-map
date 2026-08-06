@@ -46,7 +46,7 @@ export function shownStatusText(opts, t) {
     total = 0,
     minPapers = 1,
     hiddenCount = 0,
-    sizeMode = 'papers',
+    sizeMode = 'coauthors',
     includeSizeBasis = false,
     years = null,
   } = opts ?? {};

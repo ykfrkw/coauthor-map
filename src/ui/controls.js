@@ -54,7 +54,11 @@ export const DEFAULTS = Object.freeze({
   center: 140, // 日本中心。オーナーの地図が既定なので日本を真ん中に置く
   grain: DEFAULT_GRAIN,
   theme: DEFAULT_THEME,
-  size: 'papers',
+  // 丸の大きさの基準。既定は共著者数。
+  // 論文数を既定にしていたとき、少人数でも共著が多い都市（Bern 3名14論文）が
+  // 大人数の都市（Munich 25名13論文）より大きく描かれ、人数と誤読された。
+  // この地図の主役は人なので、既定は人数に合わせる。
+  size: 'coauthors',
   scope: DEFAULT_SCOPE, // auto = 国 / 地域 / 全世界を共著者の分布から決める
   // OpenAlex の名寄せが分裂させた共著者レコードを統合するか。既定 ON
   merge: true,
