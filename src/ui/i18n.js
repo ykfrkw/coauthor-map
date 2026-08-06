@@ -216,6 +216,11 @@ const STRINGS = {
   'embed.height': 'Height (px)',
   'embed.tooLong':
     'This link is {n} characters long. Some blog editors and servers cut links off around 2,000. Raise Main collaborations to drop the smallest collaborations, or clear a few corrections.',
+  // `controls=on` を付ける版。読者が枠の中で自分の地図を作れるようになる代わりに
+  // 枠が 300px ほど高くなるので、既定は表示専用のまま
+  'embed.controlsLabel': 'Let readers build their own map',
+  'embed.controlsHint':
+    'Adds the ID fields and the main view controls inside the frame, so a reader can enter their own ORCID iD without leaving your page. The frame needs about 300 more pixels of height.',
   'embed.autoResizeLabel': 'Let the frame set its own height',
   'embed.autoResizeHint':
     'On by default. The snippet carries a small script that follows the height the frame reports, so the map is never cut off or padded. Uncheck it to paste a fixed-height frame instead.',
@@ -228,6 +233,11 @@ const STRINGS = {
   // 年は {year} で渡す。{n} だと桁区切りが入って 2,026 になる
   'embed.frozenAt':
     'Stops at {year}: the snippet pins the last year, so papers published later never appear. Drag the last year back to the right end of the slider to let the map keep growing.',
+
+  // `?controls=on` の埋め込みの末尾に置く 1 本のリンク。埋め込みでは出さない
+  // 補正・集計テーブル・ダウンロード・埋め込みコード生成への唯一の導線
+  'widget.openFullTool':
+    'Open the full tool for tables, corrections, and downloads',
 
   'load.start': 'Starting...',
   'load.done': 'Done.',

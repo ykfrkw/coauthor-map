@@ -30,7 +30,11 @@ import {
   loadCommittedCuration,
 } from './curation.js';
 import { createExportPanel } from './ui/export.js';
-import { createEmbedPanel } from './ui/embed-snippet.js';
+import {
+  createEmbedPanel,
+  createOpenFullToolLink,
+} from './ui/embed-snippet.js';
+import { resolvePanels } from './ui/panels.js';
 
 /** data-i18n が付いた静的要素に文言を流し込む */
 export function applyStaticI18n(root, t) {
@@ -65,6 +69,8 @@ export function createApp({ loadDataset, mode = 'full' }) {
       new URLSearchParams(window.location.search).get('afftype'),
     );
   }
+  // どのパネルを出すかの判断はここ 1 か所（src/ui/panels.js）に閉じる
+  const panels = resolvePanels(mode, state);
   const t = createTranslator();
   applyTheme(state.theme);
   applyStaticI18n(document, t);
@@ -99,6 +105,7 @@ export function createApp({ loadDataset, mode = 'full' }) {
   let authorPanel = null;
   let embedPanel = null;
   let tableView = null;
+  let openFullTool = null;
 
   // 読み込み中インジケータ。地図の骨格（同梱の topojson）は先に描いてあるので、
   // 待たせるのはピンだけ。200ms 未満で終わるときは出さない
@@ -257,6 +264,7 @@ export function createApp({ loadDataset, mode = 'full' }) {
     paintShown();
     tableView?.update(view, rawDataset.stats);
     embedPanel?.refresh();
+    openFullTool?.refresh(state, b);
     if (!view.cities.length) setStatus('info', t('map.empty'));
     else setStatus(null, '');
     syncUrl(state, b);
@@ -368,14 +376,17 @@ export function createApp({ loadDataset, mode = 'full' }) {
     }
   }
 
-  // ---- 操作パネル（widget では出さない） ----
-  if (mode === 'full') {
-    const controlsEl = el('controls');
+  // ---- 操作パネル ----
+  // index.html は全部、widget.html は `?controls=on` のときだけ主要なものを出す
+  {
+    const controlsEl = panels.controls ? el('controls') : null;
     if (controlsEl) {
+      controlsEl.hidden = false;
       controls = createControls({
         container: controlsEl,
         t,
         state,
+        viewFields: panels.viewFields,
         onChange: (patch) => {
           Object.assign(state, patch);
           if (patch.theme) applyTheme(state.theme);
@@ -394,7 +405,7 @@ export function createApp({ loadDataset, mode = 'full' }) {
 
     // 「表示を初期に戻す」は地図の真下に置く。
     // データを取り直す上のボタンとは別物だと、置き場所で見せる
-    const mapActionsEl = el('map-actions');
+    const mapActionsEl = panels.mapActions ? el('map-actions') : null;
     if (mapActionsEl) {
       mapActions = createMapActions({
         container: mapActionsEl,
@@ -410,7 +421,7 @@ export function createApp({ loadDataset, mode = 'full' }) {
       mapActions.setMoved(renderer.viewMoved);
     }
 
-    const authorsEl = el('authors');
+    const authorsEl = panels.authors ? el('authors') : null;
     if (authorsEl) {
       authorPanel = createAuthorPanel({
         container: authorsEl,
@@ -433,10 +444,10 @@ export function createApp({ loadDataset, mode = 'full' }) {
       });
     }
 
-    const tableEl = el('table');
+    const tableEl = panels.table ? el('table') : null;
     if (tableEl) tableView = createTableView({ container: tableEl, t });
 
-    const curationEl = el('curation');
+    const curationEl = panels.curation ? el('curation') : null;
     if (curationEl) {
       curationPanel = createCurationPanel({
         container: curationEl,
@@ -469,7 +480,7 @@ export function createApp({ loadDataset, mode = 'full' }) {
       });
     }
 
-    const exportEl = el('export');
+    const exportEl = panels.download ? el('export') : null;
     if (exportEl) {
       createExportPanel({
         container: exportEl,
@@ -483,13 +494,21 @@ export function createApp({ loadDataset, mode = 'full' }) {
       });
     }
 
-    const embedEl = el('embed');
+    const embedEl = panels.embed ? el('embed') : null;
     if (embedEl) {
       embedPanel = createEmbedPanel({
         container: embedEl,
         t,
         getState: () => ({ state, bounds: bounds() }),
       });
+    }
+
+    // 出さないもの（補正・表・ダウンロード・埋め込みコード）への導線はこの 1 本だけ。
+    // いまの表示状態をそのまま引き継いで飛ばす
+    const moreEl = panels.openFullTool ? el('more') : null;
+    if (moreEl) {
+      moreEl.hidden = false;
+      openFullTool = createOpenFullToolLink({ container: moreEl, t });
     }
   }
 
@@ -501,6 +520,7 @@ export function createApp({ loadDataset, mode = 'full' }) {
     state.centerExplicit = true;
     controls?.syncFromState({ center: centerLon });
     embedPanel?.refresh();
+    openFullTool?.refresh(state, bounds());
     syncUrl(state, bounds());
   });
 

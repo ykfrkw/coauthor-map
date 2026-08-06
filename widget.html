@@ -8,10 +8,14 @@
   </head>
   <body data-mode="widget">
     <div class="widget">
+      <!-- Filled in only with ?controls=on; see src/ui/panels.js -->
+      <div class="card widget-controls-card" id="controls" hidden></div>
       <div id="status" role="status" aria-live="polite"></div>
       <div class="map-wrap" id="map"></div>
       <div class="map-legend" id="legend"></div>
       <div id="shown"></div>
+      <!-- Filled in only with ?controls=on; see src/ui/panels.js -->
+      <div id="more" hidden></div>
       <!-- Shown only when this page is opened on its own; see src/main.js -->
       <p class="widget-credit" id="widget-credit" hidden>
         Made with
