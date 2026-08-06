@@ -39,3 +39,10 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          # Pages 側のキューが混むと deployment_queued のまま待たされる。既定の
+          # 10 分では足りずに何度も打ち切られた（2026-08-06 に 3 回）。打ち切られると
+          # そのコミット SHA のデプロイが「キャンセル済み」として残り、rerun しても
+          # 同じ SHA を掴んで即 Deployment cancelled になる。抜けるには新しいコミットを
+          # 積むしかないので、そもそも待てる時間を延ばしておく。
+          timeout: 1800000
