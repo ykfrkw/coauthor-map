@@ -87,7 +87,7 @@ The world map ships at two resolutions. The 110m outline (105 KB) always loads f
 ```bash
 npm install
 npm run dev      # http://localhost:5173
-npm test         # 272 tests, entirely offline
+npm test         # 433 tests, entirely offline
 npm run build
 node tests/regenerate-snapshot.mjs   # rewrite tests/fixtures/dataset-snapshot.json from the recorded fixtures
 ```
