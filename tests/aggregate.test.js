@@ -531,9 +531,9 @@ describe('aggregate', () => {
     });
     // ORCID の所属名を渡していないので orcid は 0。
     expect(dataset.stats.primaryBy).toEqual({
-      firstListed: 139,
+      firstListed: 142,
       orcid: 0,
-      fallback: 4,
+      fallback: 1,
       none: 2,
     });
     const sum = Object.values(dataset.stats.primaryBy).reduce(

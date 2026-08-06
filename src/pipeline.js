@@ -43,6 +43,7 @@ export async function buildDataset(options) {
     mergeCoauthors = true,
     pinMode = 'primary',
     useOrcidAffiliations = true,
+    preferOccupationalTypes = true,
   } = options ?? {};
 
   const curation = normalizeCuration(rawCuration);
@@ -113,6 +114,7 @@ export async function buildDataset(options) {
       warnings,
       mergeCoauthors,
       pinMode,
+      preferOccupationalTypes,
     });
   }
 
@@ -159,6 +161,7 @@ export async function buildDataset(options) {
     mergeCoauthors,
     pinMode,
     orcidAffiliations,
+    preferOccupationalTypes,
   });
 }
 

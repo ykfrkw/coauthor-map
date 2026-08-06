@@ -36,6 +36,46 @@ export function normalizePinMode(value) {
   return value === 'all' ? 'all' : DEFAULT_PIN_MODE;
 }
 
+/**
+ * 「人が実際に勤めている場所」らしい機関の種別（OpenAlex の `type`）。
+ * 主所属を決める前に、候補をこの 2 種別へ絞り込む。
+ *
+ * なぜ `education` と `healthcare` の 2 つだけか:
+ * 研究者が日々出勤して所属先として名乗るのは大学・研究所付属の教育機関か病院で、
+ * OpenAlex の `type` でこれに当たるのがこの 2 つしかない。
+ *
+ * とくに落としたいのが `facility`。オーナーのデータ（145 名）では 12 名が
+ * ドイツの研究コンソーシアム本部に紐づいていた:
+ *   German Centre for Cardiovascular Research (Berlin)
+ *   German Center for Infection Research (Braunschweig)
+ *   German Center for Neurodegenerative Diseases (Bonn)
+ *   German Center for Diabetes Research (Munich)
+ * いずれも資金配分・連携組織の**登記上の本部**であって勤務地ではない。実際には
+ * Siafis / Bighelli / Schneider-Thoma / Rodolico / Kim / Priller はミュンヘン工科大学の
+ * Leucht 研の人で、地図には Braunschweig 7 名・Berlin 4 名・Bonn 1 名という
+ * 実在しない集積が出ていた。
+ *
+ * `company` / `nonprofit` / `government` / `other` も勤務地であることはあるので
+ * 一律には落とさない。この 2 種別が候補に 1 つも無い人は従来どおり全候補で決める
+ * （企業研究者が不当に落ちないようにするため）。
+ */
+export const OCCUPATIONAL_INSTITUTION_TYPES = Object.freeze([
+  'education',
+  'healthcare',
+]);
+
+/**
+ * `afftype=` の値を正規化する。既定は有効（`true`）。`afftype=off` だけが無効化。
+ * UI には出さない逃げ道で、種別の絞り込みを切って従来の判定に戻すために使う。
+ * @param {unknown} value
+ * @returns {boolean}
+ */
+export function normalizeAffiliationTypeMode(value) {
+  if (value === false || value === 'off' || value === 'false' || value === '0')
+    return false;
+  return true;
+}
+
 /** 地球の平均半径（km）。 */
 const EARTH_RADIUS_KM = 6371;
 
@@ -604,9 +644,65 @@ export function matchesOrcidAffiliation(institutionName, orcidNames) {
 }
 
 /**
+ * イベント（論文 1 本分の所属）から、その論文に印字された所属 ID を印字順で取り出す。
+ * 古い呼び出し（`listedIds` を持たないイベント）は先頭 1 件だけとみなす。
+ * @param {{institutionId: string, listedIds?: string[]}} event
+ * @returns {string[]}
+ */
+function listedIdsOf(event) {
+  const listed = event?.listedIds;
+  if (Array.isArray(listed) && listed.length > 0) return listed;
+  return event?.institutionId ? [event.institutionId] : [];
+}
+
+/**
+ * 主所属の候補を「勤務先らしい種別」に絞り込む。
+ *
+ * 候補にその種別が 1 つも無ければ**何もしない**（`filtered: false` を返す）。
+ * 絞り込むときは、論文ごとの「先頭所属」も**許容種別のうち最初に印字されたもの**に
+ * 読み替える。先頭がコンソーシアム本部でも、同じ論文に大学が併記されていれば
+ * そちらを先頭とみなす、という意味になる。
+ *
+ * @param {Object} input
+ * @param {Array<{institutionId: string, year: number|null, order: number, listedIds?: string[]}>} input.events
+ * @param {string[]} input.institutionIds  その人の所属機関 ID（登場順）
+ * @param {Map<string, import('./types.js').Institution>} input.institutionMaster
+ * @returns {{events: typeof input.events, institutionIds: string[], filtered: boolean}}
+ */
+function restrictToOccupationalTypes({
+  events,
+  institutionIds,
+  institutionMaster,
+}) {
+  const allowed = new Set(OCCUPATIONAL_INSTITUTION_TYPES);
+  const isAllowed = (id) => allowed.has(institutionMaster.get(id)?.type);
+
+  const candidateIds = uniqueInOrder([
+    ...events.flatMap(listedIdsOf),
+    ...institutionIds,
+  ]);
+  if (!candidateIds.some(isAllowed))
+    return { events, institutionIds, filtered: false };
+
+  /** @type {typeof events} */
+  const restrictedEvents = [];
+  for (const event of events) {
+    const first = listedIdsOf(event).find(isAllowed);
+    if (first === undefined) continue;
+    restrictedEvents.push({ ...event, institutionId: first });
+  }
+  return {
+    events: restrictedEvents,
+    institutionIds: institutionIds.filter(isAllowed),
+    filtered: true,
+  };
+}
+
+/**
  * 各共著者に**ちょうど 1 つ**の主所属を割り当てる。決定は完全に決定的。
  *
- * 優先順:
+ * まず候補を勤務先らしい種別（`OCCUPATIONAL_INSTITUTION_TYPES`）に絞り込み、
+ * そのうえで次の優先順で決める:
  * 1. **論文に印字された先頭の所属**（`authorships[].institutions[0]`）。
  *    その人の論文ごとに先頭所属を取り、最も多く先頭に来た都市を採る。
  *    同数なら最も新しい論文のもの
@@ -617,12 +713,14 @@ export function matchesOrcidAffiliation(institutionName, orcidNames) {
  *
  * @param {Object} input
  * @param {import('./types.js').Coauthor[]} input.coauthors  破壊的に書き込む
- * @param {(c: import('./types.js').Coauthor) => Array<{institutionId: string, year: number|null, order: number}>} input.eventsOf
- *   その人の「先頭に印字された所属」の一覧（論文ごと 1 件）
+ * @param {(c: import('./types.js').Coauthor) => Array<{institutionId: string, year: number|null, order: number, listedIds?: string[]}>} input.eventsOf
+ *   その人の「論文に印字された所属」の一覧（論文ごと 1 件）。`listedIds` は印字順の全所属
  * @param {Map<string, string>} input.cityKeyByInstitution  機関 ID → 都市キー
  * @param {Map<string, import('./types.js').Institution>} input.institutionMaster
  * @param {Record<string, string[]>} [input.orcidAffiliations]  ORCID → 所属名（過去を含む）
- * @returns {{'first-listed': number, orcid: number, fallback: number, none: number}} 規則ごとの人数
+ * @param {boolean} [input.preferOccupationalTypes]  種別で候補を絞るか（既定 true。`afftype=off` で false）
+ * @returns {{'first-listed': number, orcid: number, fallback: number, none: number, typeFiltered: number}}
+ *   規則ごとの人数と、種別の絞り込みが実際に効いた人数
  */
 export function assignPrimaryAffiliations({
   coauthors,
@@ -630,23 +728,56 @@ export function assignPrimaryAffiliations({
   cityKeyByInstitution,
   institutionMaster,
   orcidAffiliations = {},
+  preferOccupationalTypes = true,
 }) {
-  const counts = { 'first-listed': 0, orcid: 0, fallback: 0, none: 0 };
+  const counts = {
+    'first-listed': 0,
+    orcid: 0,
+    fallback: 0,
+    none: 0,
+    typeFiltered: 0,
+  };
   // 座標が無い機関は都市に属さない。同一機関を 1 つのバケツとして扱う。
   const bucketOf = (institutionId) =>
     cityKeyByInstitution.get(institutionId) ?? `institution:${institutionId}`;
 
   for (const coauthor of coauthors) {
-    const events = eventsOf(coauthor) ?? [];
+    const rawEvents = eventsOf(coauthor) ?? [];
+    const rawIds = coauthor.institutionIds ?? [];
+    const restricted = preferOccupationalTypes
+      ? restrictToOccupationalTypes({
+          events: rawEvents,
+          institutionIds: rawIds,
+          institutionMaster,
+        })
+      : { events: rawEvents, institutionIds: rawIds, filtered: false };
+
     const decided = decidePrimary({
       coauthor,
-      events,
+      events: restricted.events,
+      institutionIds: restricted.institutionIds,
       bucketOf,
       institutionMaster,
       orcidAffiliations,
     });
     coauthor.primaryInstitutionId = decided.institutionId;
     coauthor.primaryBy = decided.by;
+
+    // 「絞り込みが効いた」= 絞らなければ**別の機関**になっていた、と定義する。
+    // 候補が減っただけで結論が同じ人まで数えると、施策の効き目が読めなくなる。
+    // 絞り込みが起きた人だけ、絞らない場合の結論も出して突き合わせる。
+    coauthor.primaryTypeFiltered =
+      restricted.filtered &&
+      decidePrimary({
+        coauthor,
+        events: rawEvents,
+        institutionIds: rawIds,
+        bucketOf,
+        institutionMaster,
+        orcidAffiliations,
+      }).institutionId !== decided.institutionId;
+
+    if (coauthor.primaryTypeFiltered) counts.typeFiltered += 1;
     counts[decided.by ?? 'none'] += 1;
   }
   return counts;
@@ -654,12 +785,14 @@ export function assignPrimaryAffiliations({
 
 /**
  * 1 人分の主所属を決める。`assignPrimaryAffiliations` の本体。
+ * 候補（`events` / `institutionIds`）は呼び手が絞り込み済みで渡す。
  * @param {Object} input
  * @returns {{institutionId: string|null, by: 'first-listed'|'orcid'|'fallback'|null}}
  */
 function decidePrimary({
   coauthor,
   events,
+  institutionIds,
   bucketOf,
   institutionMaster,
   orcidAffiliations,
@@ -692,8 +825,8 @@ function decidePrimary({
     const candidateIds =
       events.length > 0
         ? uniqueInOrder(events.map((event) => event.institutionId))
-        : coauthor.institutionIds.length > 0
-          ? [...coauthor.institutionIds]
+        : institutionIds.length > 0
+          ? [...institutionIds]
           : [...institutionMaster.keys()];
     const matched = candidateIds.filter((id) =>
       matchesOrcidAffiliation(institutionMaster.get(id)?.name, orcidNames),
@@ -715,7 +848,7 @@ function decidePrimary({
   const fallbackIds =
     events.length > 0
       ? uniqueInOrder(events.map((event) => event.institutionId))
-      : [...coauthor.institutionIds];
+      : [...institutionIds];
   if (fallbackIds.length === 0) return { institutionId: null, by: null };
   return {
     institutionId: [...fallbackIds].sort(compareText)[0],
@@ -802,6 +935,7 @@ function uniqueInOrder(values) {
  * @param {true|'orcid'|false} [input.mergeCoauthors] 分裂した著者レコードの統合（既定 true）
  * @param {'primary'|'all'} [input.pinMode] 主所属の 1 都市だけに置くか（既定 `'primary'`）
  * @param {Record<string, string[]>} [input.orcidAffiliations] ORCID → 所属名。主所属の判定に使う
+ * @param {boolean} [input.preferOccupationalTypes] 主所属の候補を勤務先らしい種別に絞るか（既定 true）
  * @returns {import('./types.js').Dataset & { seedAuthorIds: string[] }}
  */
 export function aggregate(input) {
@@ -814,6 +948,7 @@ export function aggregate(input) {
     mergeCoauthors: mergeMode = true,
     pinMode = DEFAULT_PIN_MODE,
     orcidAffiliations = {},
+    preferOccupationalTypes = true,
   } = input;
   const curation = normalizeCuration(input.curation);
 
@@ -950,6 +1085,9 @@ export function aggregate(input) {
           firstListedByRecord.set(coauthor, []);
         firstListedByRecord.get(coauthor).push({
           institutionId: listedIds[0],
+          // 印字順の全所属。種別で候補を絞るとき「許容種別のうち最初のもの」を
+          // 取り直せるように持っておく（絞らないときは使わない）。
+          listedIds,
           year: work.year ?? null,
           order: workIndex,
         });
@@ -1034,6 +1172,7 @@ export function aggregate(input) {
     cityKeyByInstitution,
     institutionMaster,
     orcidAffiliations,
+    preferOccupationalTypes,
   });
 
   // 6.6. ORCID の所属名から引き当てた主所属は、まだ「参照された機関」に入っていない
@@ -1099,6 +1238,9 @@ export function aggregate(input) {
       fallback: primaryCounts.fallback,
       none: primaryCounts.none,
     },
+    // 勤務先らしい種別（education / healthcare）への絞り込みが実際に効いた人数。
+    // `afftype=off` なら常に 0。
+    primaryTypeFiltered: primaryCounts.typeFiltered,
     yearMin: years.length ? Math.min(...years) : 0,
     yearMax: years.length ? Math.max(...years) : 0,
   };
