@@ -59,11 +59,65 @@ export function assertSnippetIsSafe(snippet) {
 }
 
 /**
+ * 高さ通知を受ける親側スクリプトの出どころ。widget.html は
+ * `postMessage({type:'embed:height'}, '*')` を投げるので、
+ * **受け側で origin と source の両方を確かめる**。
+ *  - origin: 別サイトの iframe が高さを詐称して枠を伸ばすのを防ぐ
+ *  - source: 1 ページに地図を 2 つ貼ったとき、投げた枠だけを伸ばす
+ *
+ * `<style>` の外なので、比較演算子の大なり記号は WAF の検査対象にならない。
+ * @param {string} origin  widget.html の origin
+ */
+function autoResizeScript(origin) {
+  return `  <script>
+    (function () {
+      if (window.coauthorMapEmbedResize) return;
+      window.coauthorMapEmbedResize = true;
+      var ORIGIN = '${origin}';
+      window.addEventListener('message', function (event) {
+        if (event.origin !== ORIGIN) return;
+        var data = event.data;
+        if (!data || data.type !== 'embed:height') return;
+        var height = parseInt(data.height, 10);
+        if (!height || height < 100 || height > 5000) return;
+        var frames = document.querySelectorAll('iframe.${CLASS_NAME}');
+        for (var i = 0; i < frames.length; i++) {
+          if (frames[i].contentWindow === event.source) {
+            frames[i].style.height = height + 'px';
+          }
+        }
+      });
+    })();
+  <\/script>
+`;
+}
+
+/**
+ * スニペットの src から origin を取り出す。読めない src が来ても
+ * 配布先の URL を落とさないよう、既定の widget の origin に倒す。
+ * @param {string} src
+ */
+export function originOf(src) {
+  try {
+    return new URL(src, WIDGET_BASE).origin;
+  } catch {
+    return new URL(WIDGET_BASE).origin;
+  }
+}
+
+/**
  * スニペット本体。
+ *
+ * **自動リサイズは既定で入る。** 固定高さだけの版は WordPress 等で
+ * script が落とされる場合の逃げ道として残してある（`autoResize: false`）。
+ * `style` は自動リサイズが効くまでの初期高さとしても働くので、
+ * どちらの版でも書いておく。
+ *
  * @param {string} src     widget.html の URL
  * @param {number} height  iframe の高さ（px）
+ * @param {{autoResize?: boolean}} [options]
  */
-export function buildSnippet(src, height = 720) {
+export function buildSnippet(src, height = 720, { autoResize = true } = {}) {
   const px = Math.max(240, Math.round(Number(height) || 720));
   const snippet = `<div style="margin:28px 0;">
   <style>
@@ -71,7 +125,7 @@ export function buildSnippet(src, height = 720) {
   </style>
   <iframe class="${CLASS_NAME}" title="Co-author map" src="${src}" style="height:${px}px" loading="lazy"></iframe>
   <p style="font-size:13px;margin-top:6px;">Made with <a href="${AUTHOR_URL}">coauthor-map</a> by Yuki Furukawa</p>
-</div>`;
+${autoResize ? autoResizeScript(originOf(src)) : ''}</div>`;
   return assertSnippetIsSafe(snippet);
 }
 
@@ -105,11 +159,21 @@ export function createEmbedPanel({ container, t, getState }) {
 
   const lengthWarning = h('p', { class: 'notice is-error', hidden: true });
 
+  // 自動リサイズが既定。外したい人のためにチェックボックスを 1 つだけ置く
+  const autoResizeToggle = h('input', {
+    type: 'checkbox',
+    id: 'embed-auto-resize',
+    checked: true,
+  });
+  const heightNote = h('span', { class: 'hint' });
+
   function refresh() {
     const { state, bounds } = getState();
+    const autoResize = autoResizeToggle.checked;
+    heightNote.textContent = autoResize ? '' : t('embed.fixedHeightNote');
     try {
       const src = buildWidgetUrl(state, bounds);
-      textarea.value = buildSnippet(src, heightInput.value);
+      textarea.value = buildSnippet(src, heightInput.value, { autoResize });
       // 手直しを URL に載せる以上、長くなりすぎることがある。黙って切らずに知らせる
       const tooLong = src.length > URL_WARN_LENGTH;
       lengthWarning.hidden = !tooLong;
@@ -123,12 +187,23 @@ export function createEmbedPanel({ container, t, getState }) {
   }
 
   heightInput.addEventListener('input', refresh);
+  autoResizeToggle.addEventListener('change', refresh);
 
   container.append(
     h('p', { class: 'hint', text: t('embed.intro') }),
-    h('div', { class: 'field' }, [
-      h('label', { for: 'embed-height', text: t('embed.height') }),
-      heightInput,
+    h('div', { class: 'controls' }, [
+      h('div', { class: 'field' }, [
+        h('label', { for: 'embed-height', text: t('embed.height') }),
+        heightInput,
+        heightNote,
+      ]),
+      h('div', { class: 'field' }, [
+        h('label', { class: 'check-row', for: 'embed-auto-resize' }, [
+          autoResizeToggle,
+          h('span', { text: t('embed.autoResizeLabel') }),
+        ]),
+        h('span', { class: 'hint', text: t('embed.autoResizeHint') }),
+      ]),
     ]),
     textarea,
     lengthWarning,
@@ -144,7 +219,6 @@ export function createEmbedPanel({ container, t, getState }) {
       }),
       status,
     ]),
-    h('p', { class: 'hint', text: t('embed.autoResize') }),
   );
 
   return { refresh };

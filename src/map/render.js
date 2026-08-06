@@ -140,6 +140,8 @@ export function createMapRenderer({
     rotateLat: 0,
     sizeMode: 'papers',
     scope: SCOPE_AUTO,
+    /** 地図に重なる都市名ラベルを描くか（`labels=off` で false） */
+    showLabels: true,
     ariaLabel: '',
     width: 320,
     height: 180,
@@ -515,15 +517,18 @@ export function createMapRenderer({
       .order();
 
     // ラベルは上位だけ。全部出すと 69 地点で読めなくなる。
-    // さらに、重なるものは後ろから落とす（欧州の団子で文字が潰れるのを避ける）
-    const candidates = nodes
-      .slice()
-      .sort(
-        (a, b) =>
-          metricValue(b, state.sizeMode) - metricValue(a, state.sizeMode),
-      )
-      .filter((d) => d.city)
-      .slice(0, MAX_LABELS * 2);
+    // さらに、重なるものは後ろから落とす（欧州の団子で文字が潰れるのを避ける）。
+    // showLabels が false のときは候補を作らず、join で既存の text ごと消える
+    const candidates = !state.showLabels
+      ? []
+      : nodes
+          .slice()
+          .sort(
+            (a, b) =>
+              metricValue(b, state.sizeMode) - metricValue(a, state.sizeMode),
+          )
+          .filter((d) => d.city)
+          .slice(0, MAX_LABELS * 2);
 
     const boxes = [];
     const labelled = [];
@@ -688,6 +693,14 @@ export function createMapRenderer({
     },
     get size() {
       return { width: state.width, height: state.height };
+    },
+    /**
+     * 初期表示から動いているか。`resetView()` に意味があるのはこれが true のときだけ。
+     * ズーム・パン・回転（userMoved）に加え、中心経度を明示した状態も数える
+     * ——リセットは自動フィットに戻す操作でもあるため。
+     */
+    get viewMoved() {
+      return userMoved || transform.k !== 1 || state.centerExplicit === true;
     },
     get lastDraw() {
       return lastDraw;

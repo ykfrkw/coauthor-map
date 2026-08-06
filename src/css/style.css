@@ -100,10 +100,12 @@ a {
   gap: var(--space-2);
 }
 
+/* 見出しと説明文は、下の操作パネル・地図と同じ幅で折り返す。
+ * 以前は 62ch で切っていたが、ページの他のどの枠とも揃わず
+ * 「ヘッダだけ幅が中途半端」に見えていた。幅の基準は .page の 1 本に絞る */
 .lede {
   color: var(--muted);
   font-size: var(--fs-sm);
-  max-width: 62ch;
 }
 
 .section {
@@ -131,9 +133,12 @@ details.card > summary {
 
 /* ---------- フォーム部品 ---------- */
 
+/* 行は中身の高さで積む。これが無いと、隣の列が背の高い分だけ
+ * ボタンが縦に伸びて、入力欄とボタンの高さが揃わなくなる */
 .field {
   display: grid;
   gap: var(--space-1);
+  align-content: start;
   min-width: 0;
 }
 
@@ -144,6 +149,28 @@ details.card > summary {
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--muted);
+}
+
+/* チェックボックスの行。field の見出しラベルとは別物なので打ち消す */
+.field > label.check-row,
+.check-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--fs-sm);
+  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--fg);
+  cursor: pointer;
+}
+
+.check-row input[type='checkbox'] {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--accent);
 }
 
 .hint {
@@ -179,6 +206,111 @@ input[type='range'] {
   accent-color: var(--accent);
 }
 
+/* ---------- 年範囲: 1 本のトラックに 2 つのつまみ ---------- */
+
+/* 重ね方は Grid（同じセルに全部置く）。position での重ね置きはしない。
+ * 下から順に: トラックの絵 → 開始のつまみ → 終了のつまみ */
+.range-dual {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  min-width: 0;
+  min-height: 28px;
+}
+
+.range-dual > * {
+  grid-area: 1 / 1;
+  min-width: 0;
+}
+
+/* 見えているトラックはこの 1 本だけ。選択中の区間だけ accent で塗る */
+.range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    var(--panel-border) 0,
+    var(--panel-border) var(--range-from, 0%),
+    var(--accent) var(--range-from, 0%),
+    var(--accent) var(--range-to, 100%),
+    var(--panel-border) var(--range-to, 100%),
+    var(--panel-border) 100%
+  );
+}
+
+/* input 側のトラックは透明。掴めるのはつまみだけにして、
+ * 2 枚重なった input のどちらのつまみにもポインタが届くようにする */
+.range-dual input[type='range'] {
+  width: 100%;
+  height: 28px;
+  margin: 0;
+  background: none;
+  -webkit-appearance: none;
+  appearance: none;
+  pointer-events: none;
+}
+
+.range-dual .range-from {
+  z-index: 1;
+}
+
+.range-dual .range-to {
+  z-index: 2;
+}
+
+/* 右端で 2 つが重なったとき、開始側が下敷きのままだと掴めない */
+.range-dual.is-from-on-top .range-from {
+  z-index: 3;
+}
+
+.range-dual input[type='range']::-webkit-slider-runnable-track {
+  height: 4px;
+  border: none;
+  background: none;
+}
+
+.range-dual input[type='range']::-moz-range-track {
+  height: 4px;
+  border: none;
+  background: none;
+}
+
+.range-dual input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  pointer-events: auto;
+  width: 16px;
+  height: 16px;
+  margin-top: -6px;
+  border: 2px solid var(--bg);
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+}
+
+.range-dual input[type='range']::-moz-range-thumb {
+  pointer-events: auto;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--bg);
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+}
+
+/* フォーカスリングはトラック全幅ではなく、いま動かせるつまみに出す */
+.range-dual input[type='range']:focus-visible {
+  outline: none;
+}
+
+.range-dual input[type='range']:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 3px var(--focus);
+}
+
+.range-dual input[type='range']:focus-visible::-moz-range-thumb {
+  box-shadow: 0 0 0 3px var(--focus);
+}
+
 button {
   padding: var(--space-2) var(--space-3);
   border: 1px solid var(--panel-border);
@@ -201,6 +333,21 @@ button.primary {
   font-weight: 650;
 }
 
+/* 押しても何も起きないボタンは無効にする。
+ * primary の塗りをそのまま薄くすると 4 テーマのどれかで読めなくなるので、
+ * 塗りごと落として「いまは押す番ではない」を色でも示す */
+button[disabled],
+button.primary[disabled] {
+  background: var(--panel);
+  border-color: var(--panel-border);
+  color: var(--muted);
+  cursor: not-allowed;
+}
+
+button[disabled]:hover {
+  border-color: var(--panel-border);
+}
+
 button[aria-pressed='true'] {
   border-color: var(--accent);
   box-shadow: inset 0 0 0 1px var(--accent);
@@ -209,6 +356,7 @@ button[aria-pressed='true'] {
 .button-row {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: var(--space-2);
 }
 
@@ -445,6 +593,11 @@ button[aria-pressed='true'] {
   color: var(--muted);
 }
 
+/* widget では凡例を出さない。display: flex が [hidden] に勝つので明示する */
+.map-legend[hidden] {
+  display: none;
+}
+
 .map-legend .legend-swatches {
   display: flex;
   align-items: flex-end;
@@ -624,6 +777,21 @@ th.num {
   border-top: 1px solid var(--panel-border);
   font-size: var(--fs-xs);
   color: var(--muted);
+}
+
+/* 段落の下 margin が残ると、フッタが grid の gap と二重に空いて縦に伸びる */
+.page-footer p {
+  margin: 0;
+}
+
+/* 「Sources」と出典の並びを 1 行にまとめる。
+ * 縦に積むほどの情報量ではないし、積むと下端だけ間延びして見える。
+ * 狭い画面では折り返す（272px でも横スクロールさせない） */
+.footer-sources {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-3);
 }
 
 .page-footer ul {
