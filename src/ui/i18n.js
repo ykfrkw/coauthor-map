@@ -18,10 +18,14 @@ const STRINGS = {
   'seed.rm': 'researchmap permalink',
   'seed.orcidHint': 'e.g. 0000-0003-1317-0220',
   'seed.rmHint': 'e.g. yk_frkw',
-  'seed.build': 'Build the map',
+  'seed.load': 'Load this researcher',
+  'seed.loadHint': 'Rebuild the map from the IDs above.',
+  'seed.upToDate': 'The map below already shows these IDs.',
   'seed.needOne': 'Enter an ORCID iD or a researchmap permalink.',
 
   'ctrl.years': 'Years',
+  'ctrl.yearFrom': 'First year',
+  'ctrl.yearTo': 'Last year',
   'ctrl.grain': 'Grouping',
   'grain.country': 'Country',
   'grain.city': 'City',
@@ -43,8 +47,14 @@ const STRINGS = {
   'ctrl.scopeHint':
     'Auto fits the map to one country, one region, or the whole world, depending on where your co-authors are.',
   'ctrl.center': 'Center longitude',
+  'ctrl.labels': 'City labels',
+  'ctrl.labelsShow': 'Show city names on the map',
+  'ctrl.labelsHint':
+    'Names sit on top of the map for the ten largest pins. Turn them off for a plain map; the setting travels with the embed snippet.',
   'ctrl.theme': 'Theme',
-  'ctrl.reset': 'Reset view',
+  'ctrl.reset': 'Reset map view',
+  'ctrl.resetHint':
+    'Puts the projection, zoom, and center back where they started. It does not reload any data.',
   'ctrl.rotateHint': 'Drag the globe to rotate. Scroll to zoom.',
   'ctrl.panHint': 'Drag to pan. Scroll to zoom.',
 
@@ -190,8 +200,11 @@ const STRINGS = {
   'embed.height': 'Height (px)',
   'embed.tooLong':
     'This link is {n} characters long. Some blog editors and servers cut links off around 2,000. Raise Main collaborations to drop the smallest collaborations, or clear a few corrections.',
-  'embed.autoResize':
-    'The frame reports its own height. To let your page follow it, see the auto-resize script in docs/embedding.md.',
+  'embed.autoResizeLabel': 'Let the frame set its own height',
+  'embed.autoResizeHint':
+    'On by default. The snippet carries a small script that follows the height the frame reports, so the map is never cut off or padded. Uncheck it to paste a fixed-height frame instead.',
+  'embed.fixedHeightNote':
+    'Fixed height. The map is cut off if it needs more room than this.',
 
   'load.start': 'Starting...',
   'load.done': 'Done.',
@@ -202,7 +215,7 @@ const STRINGS = {
 
   'cta.heading': 'Make your own',
   'cta.body':
-    'Replace the ORCID iD above with yours and press Build. Nothing is uploaded; everything runs in your browser.',
+    'Replace the ORCID iD above with yours and press Load this researcher. Nothing is uploaded; everything runs in your browser.',
 
   'footer.sources': 'Sources',
   'footer.openalex': 'OpenAlex (CC0)',

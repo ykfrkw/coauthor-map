@@ -35,8 +35,34 @@ The snippet looks like this:
     <a href="https://yukifurukawa.jp/coauthor-map/">coauthor-map</a> by Yuki
     Furukawa
   </p>
+  <script>
+    (function () {
+      if (window.coauthorMapEmbedResize) return;
+      window.coauthorMapEmbedResize = true;
+      var ORIGIN = 'https://ykfrkw.github.io';
+      window.addEventListener('message', function (event) {
+        if (event.origin !== ORIGIN) return;
+        var data = event.data;
+        if (!data || data.type !== 'embed:height') return;
+        var height = parseInt(data.height, 10);
+        if (!height || height < 100 || height > 5000) return;
+        var frames = document.querySelectorAll('iframe.coauthor-map-embed');
+        for (var i = 0; i < frames.length; i++) {
+          if (frames[i].contentWindow === event.source) {
+            frames[i].style.height = height + 'px';
+          }
+        }
+      });
+    })();
+  </script>
 </div>
 ```
+
+The trailing script is what makes the frame fit its content; see
+[section 3](#3-letting-the-frame-set-its-own-height). It is included by default.
+Untick **Let the frame set its own height** in the embed panel if your CMS strips
+inline scripts, and you get the same snippet without it — the frame then keeps the
+fixed `height` you chose.
 
 The credit line is appreciated but entirely optional: the MIT license does not ask for a
 link back, and you are free to delete that paragraph or reword it. It carries a single
@@ -49,23 +75,25 @@ link, to the page that documents the tool.
 
 ## 2. URL parameters
 
-| Parameter    | Values                                                                      | Default                              |
-| ------------ | --------------------------------------------------------------------------- | ------------------------------------ |
-| `orcid`      | ORCID iD, e.g. `0000-0003-1317-0220`                                        | owner's map                          |
-| `rm`         | researchmap permalink, e.g. `yk_frkw`                                       | owner's map                          |
-| `from`, `to` | publication years                                                           | the full range in the data           |
-| `proj`       | `equalEarth`, `naturalEarth`, `equirectangular`, `mercator`, `orthographic` | `equalEarth`                         |
-| `center`     | center longitude, `-180`…`180`                                              | `140`, unless `scope` fits the map   |
-| `scope`      | `auto`, `country`, `region`, `world`                                        | `auto`                               |
-| `grain`      | `country`, or a merge radius in pixels `0`…`64`                             | `10` (`0` = one pin per city)        |
-| `size`       | `papers`, `coauthors`, `uniform`                                            | `papers`                             |
-| `theme`      | `minimal`, `dark`, `blueprint`, `paper`                                     | follows the visitor's system setting |
-| `min`        | keep co-authors with at least this many shared papers                       | `1` (everyone)                       |
-| `xa`         | co-authors to leave out, e.g. `xa=5085050194.5002251483`                    | none                                 |
-| `xi`         | organizations to leave out, e.g. `xi=62916508`                              | none                                 |
-| `xd`         | papers to leave out, e.g. `xd=1016/j.eclinm.2026.103988`                    | none                                 |
-| `pin`        | `primary`, `all`                                                            | `primary`                            |
-| `orcidaff`   | `off` to skip the ORCID affiliation lookup                                  | on                                   |
+| Parameter    | Values                                                                      | Default                               |
+| ------------ | --------------------------------------------------------------------------- | ------------------------------------- |
+| `orcid`      | ORCID iD, e.g. `0000-0003-1317-0220`                                        | owner's map                           |
+| `rm`         | researchmap permalink, e.g. `yk_frkw`                                       | owner's map                           |
+| `from`, `to` | publication years                                                           | the full range in the data            |
+| `proj`       | `equalEarth`, `naturalEarth`, `equirectangular`, `mercator`, `orthographic` | `equalEarth`                          |
+| `center`     | center longitude, `-180`…`180`                                              | `140`, unless `scope` fits the map    |
+| `scope`      | `auto`, `country`, `region`, `world`                                        | `auto`                                |
+| `grain`      | `country`, or a merge radius in pixels `0`…`64`                             | `10` (`0` = one pin per city)         |
+| `size`       | `papers`, `coauthors`, `uniform`                                            | `papers`                              |
+| `theme`      | `minimal`, `dark`, `blueprint`, `paper`                                     | follows the visitor's system setting  |
+| `min`        | keep co-authors with at least this many shared papers                       | `1` (everyone)                        |
+| `xa`         | co-authors to leave out, e.g. `xa=5085050194.5002251483`                    | none                                  |
+| `xi`         | organizations to leave out, e.g. `xi=62916508`                              | none                                  |
+| `xd`         | papers to leave out, e.g. `xd=1016/j.eclinm.2026.103988`                    | none                                  |
+| `pin`        | `primary`, `all`                                                            | `primary`                             |
+| `orcidaff`   | `off` to skip the ORCID affiliation lookup                                  | on                                    |
+| `labels`     | `off` to drop the city names drawn over the map                             | on                                    |
+| `legend`     | `on`, `off`                                                                 | on in the full page, off in the frame |
 
 `orcid` and `rm` can be given together; the two publication lists are merged.
 
@@ -89,39 +117,33 @@ longitude follows that shape's centroid unless `center` is given explicitly.
 
 ## 3. Letting the frame set its own height
 
-A fixed `height:720px` is fine, but the frame also reports the height it actually needs.
-It posts a message to the parent window whenever its content resizes:
+This is on by default and already sits in the snippet above; this section explains what
+it does.
+
+The frame reports the height it actually needs. It posts a message to the parent window
+whenever its content resizes:
 
 ```js
 { type: 'embed:height', height: 812 }
 ```
 
-Add this to the embedding page to follow it:
+The script in the snippet listens for that message and applies the height. The `height`
+in the `style` attribute stays as the starting height, used until the first message
+arrives (and as the final height if scripts are stripped).
 
-```html
-<script>
-  (function () {
-    var ORIGIN = 'https://ykfrkw.github.io';
-    window.addEventListener('message', function (event) {
-      if (event.origin !== ORIGIN) return;
-      var data = event.data;
-      if (!data || data.type !== 'embed:height') return;
-      var height = parseInt(data.height, 10);
-      if (!height || height < 100 || height > 5000) return;
-      var frames = document.querySelectorAll('iframe.coauthor-map-embed');
-      for (var i = 0; i < frames.length; i++) {
-        if (frames[i].contentWindow === event.source) {
-          frames[i].style.height = height + 'px';
-        }
-      }
-    });
-  })();
-</script>
-```
+Two checks in that listener are not optional:
 
-The origin check matters: without it, any framed page on your site could resize the map.
-Matching `event.source` against the frame is what makes this work when a page embeds more
-than one map.
+- `event.origin` must equal the origin serving `widget.html`. Without it, any framed page
+  on your site could resize the map.
+- `event.source` must be the frame that sent the message. That is what makes this work
+  when one page embeds more than one map.
+
+The `window.coauthorMapEmbedResize` flag keeps a page with several snippets from
+registering the listener more than once.
+
+If your CMS strips inline `<script>`, untick **Let the frame set its own height** in the
+embed panel. You then get the same snippet without the script, and the frame keeps the
+fixed height you chose.
 
 ## 4. Accessibility and print
 

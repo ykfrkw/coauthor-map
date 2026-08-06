@@ -3,7 +3,7 @@
  *
  * 表示状態はすべて URL クエリに載せる。リロードで復元でき、そのまま共有もできる:
  *   ?orcid=&rm=&from=&to=&proj=&center=&grain=&theme=&size=&scope=&merge=
- *   &min=&xa=&xi=&xd=&pin=&orcidaff=
+ *   &min=&xa=&xi=&xd=&pin=&orcidaff=&labels=&legend=
  *
  * **手直し（除外）も URL に載せる。** localStorage にしか無いと埋め込みウィジェットに
  * 伝わらず、「画面で直した状態」と「配布した地図」が食い違う。
@@ -64,6 +64,19 @@ export const DEFAULTS = Object.freeze({
   pin: DEFAULT_PIN_MODE,
   // ORCID の所属名を主所属の判定に使うか。既定 ON（`orcidaff=off` で切る）
   orcidaff: true,
+  // 地図に重なる都市名ラベルを出すか。既定 ON（`labels=off` で消す）
+  //
+  // **既定を ON にした根拠**: オーナーは「基本的には不要かも」と言っているが、
+  // ラベルを全部落とすと、埋め込みウィジェットには表の併記もツールチップの
+  // 発見手段も無いため「どこが光っているのか分からない丸の集合」になる。
+  // ラベルは元々上位 10 件までで、重なるものは落としてあるので密度も出ない。
+  // 「基本的には不要」という要望は、既定を変えるより 1 クリックで消せる
+  // スイッチ（と埋め込み URL に載る `labels=off`）で満たす。
+  labels: true,
+  // 凡例（丸の大きさの目盛り）を出すか。
+  // null = ページ既定に従う（index.html は出す / widget.html は出さない）。
+  // `legend=on` / `legend=off` を書いたときだけ、そのページ既定を上書きする
+  legend: null,
   // 手直し（除外）。URL に載せて埋め込み先まで運ぶ
   xa: [], // 除外した共著者の OpenAlex 著者 ID
   xi: [], // 除外した機関の OpenAlex 機関 ID
@@ -182,6 +195,28 @@ export function parseMinPapers(raw) {
 }
 
 /**
+ * 年範囲のつまみが交差しないように片方を止める。
+ *
+ * 2 つのつまみは 1 本のトラックに重なっているので、追い越しを許すと
+ * 「どちらを掴んでいるのか」が分からなくなる。**動かしたほうを相手の位置で止める**
+ * （相手を押して動かさない）。等しくなるところまでは寄れる = 単年の指定。
+ *
+ * @param {number} from
+ * @param {number} to
+ * @param {'from'|'to'} moved  いま動かしたつまみ
+ * @returns {{from: number, to: number}}
+ */
+export function clampYearRange(from, to, moved) {
+  if (!(from > to)) return { from, to };
+  return moved === 'to' ? { from, to: from } : { from: to, to };
+}
+
+/** 年範囲の表示（en dash でつなぐ） */
+export function formatYearRange(from, to) {
+  return `${from} – ${to}`;
+}
+
+/**
  * `merge=` の値を URL に載せる形にする。既定（true）は書かない。
  * @param {true|'orcid'|false} value
  * @returns {string}
@@ -249,6 +284,9 @@ export function readStateFromUrl(search = window.location.search) {
     min: parseMinPapers(q.get('min')),
     pin: q.has('pin') ? normalizePinMode(q.get('pin')) : DEFAULTS.pin,
     orcidaff: q.get('orcidaff') !== 'off',
+    labels: q.get('labels') !== 'off',
+    // 書かれていなければ null のまま。ページ側の既定に判断を譲る
+    legend: q.has('legend') ? q.get('legend') !== 'off' : DEFAULTS.legend,
     xa: expandOpenAlexIds(q.get('xa'), 'A'),
     xi: expandOpenAlexIds(q.get('xi'), 'I'),
     xd: expandDois(q.get('xd')),
@@ -312,6 +350,11 @@ export function stateToQuery(state, bounds) {
   if (parseMinPapers(state.min) > 1) q.set('min', String(state.min));
   if (state.pin && state.pin !== DEFAULTS.pin) q.set('pin', state.pin);
   if (state.orcidaff === false) q.set('orcidaff', 'off');
+  if (state.labels === false) q.set('labels', 'off');
+  // 凡例は「ページ既定に従う（null）」が既定なので、明示されたときだけ書く。
+  // これで index.html の見え方をそのまま widget.html に運べる
+  if (state.legend === true) q.set('legend', 'on');
+  else if (state.legend === false) q.set('legend', 'off');
   // 手直しは短縮形で載せる。1 件も無ければ書かない
   const authors = shortenOpenAlexIds(state.xa ?? [], 'A');
   if (authors) q.set('xa', authors);
@@ -338,16 +381,11 @@ export function syncUrl(state, bounds) {
  * @param {Object} opts.state
  * @param {(patch: Object) => void} opts.onChange   表示だけ変わる操作
  * @param {(seeds: {orcid: string, rm: string}) => void} opts.onRebuild  データを取り直す操作
- * @param {() => void} opts.onResetView
+ *
+ * 「表示を初期に戻す」ボタンはここには無い。地図の真下に置くので
+ * `createMapActions` が持つ（Load this researcher との役割の違いを見せるため）。
  */
-export function createControls({
-  container,
-  t,
-  state,
-  onChange,
-  onRebuild,
-  onResetView,
-}) {
+export function createControls({ container, t, state, onChange, onRebuild }) {
   let bounds = {
     from: state.from ?? 1990,
     to: state.to ?? new Date().getFullYear(),
@@ -372,6 +410,39 @@ export function createControls({
   });
   const seedError = h('p', { class: 'hint', role: 'alert' });
 
+  // 既定の ORCID で最初から地図が出ているので、このボタンは
+  // 「いま入力されている ID で作り直す」ためのもの。**押しても何も変わらない
+  // あいだは無効にする**。押す理由の分からないボタンを出しておかない
+  const seedButton = h('button', {
+    type: 'submit',
+    class: 'primary',
+    text: t('seed.load'),
+  });
+  const seedNote = h('span', { class: 'hint' });
+
+  /** いま画面に出ている地図が読んでいる seed。null = 同じ ID でも読み直せる */
+  let loadedSeeds = { orcid: state.orcid ?? '', rm: state.rm ?? '' };
+
+  function syncSeedButton() {
+    const same =
+      loadedSeeds != null &&
+      cleanOrcid(orcidInput.value) === loadedSeeds.orcid &&
+      cleanPermalink(rmInput.value) === loadedSeeds.rm;
+    seedButton.disabled = same;
+    seedNote.textContent = same ? t('seed.upToDate') : t('seed.loadHint');
+  }
+
+  /**
+   * 表示中の地図の seed を差し替える。null を渡すと
+   * 「同じ ID でももう一度読める」状態に戻す（読み込みに失敗したとき用）。
+   */
+  function setLoadedSeeds(seeds) {
+    loadedSeeds = seeds
+      ? { orcid: seeds.orcid ?? '', rm: seeds.rm ?? '' }
+      : null;
+    syncSeedButton();
+  }
+
   function submitSeeds(event) {
     event?.preventDefault();
     const orcid = cleanOrcid(orcidInput.value);
@@ -383,8 +454,12 @@ export function createControls({
     seedError.textContent = '';
     orcidInput.value = orcid;
     rmInput.value = rm;
+    setLoadedSeeds({ orcid, rm });
     onRebuild({ orcid, rm });
   }
+
+  for (const input of [orcidInput, rmInput])
+    input.addEventListener('input', syncSeedButton);
 
   const seedForm = h('form', { class: 'controls', onsubmit: submitSeeds }, [
     h('div', { class: 'field' }, [
@@ -399,31 +474,67 @@ export function createControls({
     ]),
     h('div', { class: 'field' }, [
       h('span', { class: 'field-label', text: ' ' }),
-      h('button', { type: 'submit', class: 'primary', text: t('seed.build') }),
+      seedButton,
+      seedNote,
     ]),
     h('div', { class: 'field-wide' }, [seedError]),
   ]);
+  syncSeedButton();
 
-  // ---- 年範囲 ----
-  const yearFrom = h('input', { type: 'range', id: 'year-from' });
-  const yearTo = h('input', { type: 'range', id: 'year-to' });
+  // ---- 年範囲（1 本のトラックに 2 つのつまみ） ----
+  //
+  // 見た目は 1 本。実体は range を 2 つ**同じグリッドセルに重ねて**いる
+  // （position ではなく Grid で重ねる）。トラックは下敷きの div が描き、
+  // input 側のトラックは透明にして、掴めるのはつまみだけにしてある。
+  // どちらも本物の input なので、Tab で入って矢印キーで動く操作性は素のまま。
+  const yearFrom = h('input', {
+    type: 'range',
+    id: 'year-from',
+    class: 'range-from',
+    'aria-label': t('ctrl.yearFrom'),
+  });
+  const yearTo = h('input', {
+    type: 'range',
+    id: 'year-to',
+    class: 'range-to',
+    'aria-label': t('ctrl.yearTo'),
+  });
+  const yearTrack = h('div', { class: 'range-track', 'aria-hidden': 'true' });
+  const yearRange = h(
+    'div',
+    { class: 'range-dual', role: 'group', 'aria-labelledby': 'years-label' },
+    [yearTrack, yearFrom, yearTo],
+  );
   const yearOut = h('output', { for: 'year-from year-to', class: 'hint' });
 
-  function pushYears() {
-    let from = Number(yearFrom.value);
-    let to = Number(yearTo.value);
-    if (from > to) {
-      // 追い越したら押し戻す
-      if (document.activeElement === yearFrom) to = from;
-      else from = to;
-      yearFrom.value = String(from);
-      yearTo.value = String(to);
-    }
-    yearOut.textContent = `${from} – ${to}`;
+  /** 選択中の区間をトラックに塗り、つまみの前後関係を決める */
+  function paintYearTrack() {
+    const min = Number(yearFrom.min);
+    const max = Number(yearFrom.max);
+    const span = max - min || 1;
+    const fromPct = ((Number(yearFrom.value) - min) / span) * 100;
+    const toPct = ((Number(yearTo.value) - min) / span) * 100;
+    yearTrack.style.setProperty('--range-from', `${fromPct}%`);
+    yearTrack.style.setProperty('--range-to', `${toPct}%`);
+    // 右端で 2 つが重なると後ろのつまみをポインタで掴めなくなる。
+    // 開始側が右寄りのときだけ手前に出して、必ずどちらも掴めるようにする
+    yearRange.classList.toggle('is-from-on-top', fromPct > 50);
+  }
+
+  function pushYears(moved) {
+    const { from, to } = clampYearRange(
+      Number(yearFrom.value),
+      Number(yearTo.value),
+      moved,
+    );
+    yearFrom.value = String(from);
+    yearTo.value = String(to);
+    yearOut.textContent = formatYearRange(from, to);
+    paintYearTrack();
     onChange({ from, to });
   }
-  yearFrom.addEventListener('input', pushYears);
-  yearTo.addEventListener('input', pushYears);
+  yearFrom.addEventListener('input', () => pushYears('from'));
+  yearTo.addEventListener('input', () => pushYears('to'));
 
   // ---- 粒度（国 ←→ 都市） ----
   const grainSlider = h('input', {
@@ -465,6 +576,16 @@ export function createControls({
         onChange({ size: mode.id });
       },
     }),
+  );
+
+  // ---- 都市名ラベルの表示 ----
+  const labelsToggle = h('input', {
+    type: 'checkbox',
+    id: 'map-labels',
+    checked: state.labels !== false,
+  });
+  labelsToggle.addEventListener('change', () =>
+    onChange({ labels: labelsToggle.checked }),
   );
 
   // ---- 投影法 ----
@@ -541,9 +662,12 @@ export function createControls({
 
   const viewForm = h('div', { class: 'controls' }, [
     h('div', { class: 'field' }, [
-      h('span', { class: 'field-label', text: t('ctrl.years') }),
-      yearFrom,
-      yearTo,
+      h('span', {
+        id: 'years-label',
+        class: 'field-label',
+        text: t('ctrl.years'),
+      }),
+      yearRange,
       yearOut,
     ]),
     h('div', { class: 'field' }, [
@@ -559,6 +683,14 @@ export function createControls({
     h('div', { class: 'field' }, [
       h('span', { class: 'field-label', text: t('ctrl.size') }),
       h('div', { class: 'segmented' }, sizeButtons),
+    ]),
+    h('div', { class: 'field' }, [
+      h('span', { class: 'field-label', text: t('ctrl.labels') }),
+      h('label', { class: 'check-row', for: 'map-labels' }, [
+        labelsToggle,
+        h('span', { text: t('ctrl.labelsShow') }),
+      ]),
+      h('span', { class: 'hint', text: t('ctrl.labelsHint') }),
     ]),
     h('div', { class: 'field' }, [
       h('label', { for: 'proj', text: t('ctrl.projection') }),
@@ -579,11 +711,6 @@ export function createControls({
     h('div', { class: 'field' }, [
       h('label', { for: 'theme', text: t('ctrl.theme') }),
       themeSelect,
-      h('button', {
-        type: 'button',
-        text: t('ctrl.reset'),
-        onclick: () => onResetView?.(),
-      }),
     ]),
     h('div', { class: 'field-wide' }, [
       h('p', { class: 'hint', text: t('grain.hint') }),
@@ -615,7 +742,8 @@ export function createControls({
     }
     yearFrom.value = String(current?.from ?? min);
     yearTo.value = String(current?.to ?? max);
-    yearOut.textContent = `${yearFrom.value} – ${yearTo.value}`;
+    yearOut.textContent = formatYearRange(yearFrom.value, yearTo.value);
+    paintYearTrack();
     return { from: Number(yearFrom.value), to: Number(yearTo.value) };
   }
 
@@ -635,13 +763,51 @@ export function createControls({
   // 初期表示
   centerOut.textContent = formatLon(state.center);
   grainOut.textContent = grainText(state.grain);
+  paintYearTrack();
 
   return {
     setYearBounds,
     syncFromState,
     submitSeeds,
+    setLoadedSeeds,
     get bounds() {
       return bounds;
+    },
+  };
+}
+
+/**
+ * 地図のすぐ下に置く操作。
+ *
+ * Reset は**投影・ズーム・中心を初期に戻すだけ**で、データは読み直さない。
+ * 上の「Load this researcher」と役割が違うことが見て分かるように、
+ * 操作パネルから外して地図の真下に置き、文言も Reset map view にしてある。
+ * 動かしていないあいだは押しても何も起きないので無効にする。
+ *
+ * @param {Object} opts
+ * @param {HTMLElement} opts.container
+ * @param {(k: string, p?: Object) => string} opts.t
+ * @param {() => void} opts.onResetView
+ */
+export function createMapActions({ container, t, onResetView }) {
+  const resetButton = h('button', {
+    type: 'button',
+    text: t('ctrl.reset'),
+    disabled: true,
+    onclick: () => onResetView?.(),
+  });
+
+  container.append(
+    h('div', { class: 'button-row' }, [
+      resetButton,
+      h('span', { class: 'hint', text: t('ctrl.resetHint') }),
+    ]),
+  );
+
+  return {
+    /** ズーム・パン・回転・中心指定があるあいだだけ押せるようにする */
+    setMoved(moved) {
+      resetButton.disabled = !moved;
     },
   };
 }

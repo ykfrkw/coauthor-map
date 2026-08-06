@@ -13,6 +13,7 @@ import {
   readStateFromUrl,
   syncUrl,
   createControls,
+  createMapActions,
   curationFromState,
   applyCurationToState,
 } from './ui/controls.js';
@@ -65,6 +66,12 @@ export function createApp({ loadDataset, mode = 'full' }) {
   const statsEl = el('stats');
   const shownEl = el('shown');
 
+  // 凡例はページごとに既定が違う。widget では出さない
+  // （埋め込み先では丸の目盛りより地図そのものに面積を割く）。
+  // URL に `legend=on` / `legend=off` があればそれが勝つ
+  const showLegend = state.legend ?? mode !== 'widget';
+  if (legendEl) legendEl.hidden = !showLegend;
+
   const renderer = createMapRenderer({
     container: mapEl,
     t,
@@ -77,6 +84,7 @@ export function createApp({ loadDataset, mode = 'full' }) {
   let view = null;
   let curation = null;
   let controls = null;
+  let mapActions = null;
   let curationPanel = null;
   let authorPanel = null;
   let embedPanel = null;
@@ -170,7 +178,7 @@ export function createApp({ loadDataset, mode = 'full' }) {
 
   /** 凡例と自動フィットの注記を描き直す */
   function paintLegend(drawn) {
-    if (!legendEl || !drawn) return;
+    if (!legendEl || !showLegend || !drawn) return;
     renderLegend(legendEl, {
       sizeMode: state.size,
       maxValue: drawn.maxValue,
@@ -200,6 +208,7 @@ export function createApp({ loadDataset, mode = 'full' }) {
       rotateLat: state.rotateLat ?? 0,
       sizeMode: state.size,
       scope: state.scope,
+      showLabels: state.labels !== false,
       ariaLabel: ariaLabel(),
     });
 
@@ -227,6 +236,7 @@ export function createApp({ loadDataset, mode = 'full' }) {
       rotateLat: state.rotateLat ?? 0,
       sizeMode: state.size,
       scope: state.scope,
+      showLabels: state.labels !== false,
       ariaLabel: t('app.title'),
     });
   }
@@ -307,6 +317,10 @@ export function createApp({ loadDataset, mode = 'full' }) {
         `${t('load.failed')} ${err?.message ?? err}`,
         t('load.hintNetwork'),
       );
+      // 失敗したときは同じ ID でも読み直せるようにする。
+      // 「入力が反映済み = 無効」のままだと、通信が一度こけただけで
+      // 押せるボタンがひとつも無くなってしまう
+      controls?.setLoadedSeeds(null);
     } finally {
       // 成功でも失敗でも必ず消す。出っぱなしにしない
       busy.stop();
@@ -334,12 +348,25 @@ export function createApp({ loadDataset, mode = 'full' }) {
           state.to = null;
           build();
         },
+      });
+    }
+
+    // 「表示を初期に戻す」は地図の真下に置く。
+    // データを取り直す上のボタンとは別物だと、置き場所で見せる
+    const mapActionsEl = el('map-actions');
+    if (mapActionsEl) {
+      mapActions = createMapActions({
+        container: mapActionsEl,
+        t,
         onResetView: () => {
           // リセットは自動フィットに戻す操作。中心経度の明示も解除する
           state.centerExplicit = false;
           paintLegend(renderer.resetView());
         },
       });
+      // 描き直しのたびに「動いているか」を見て、押せる / 押せないを切り替える
+      renderer.onNodes(() => mapActions.setMoved(renderer.viewMoved));
+      mapActions.setMoved(renderer.viewMoved);
     }
 
     const authorsEl = el('authors');
