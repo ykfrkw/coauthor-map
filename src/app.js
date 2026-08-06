@@ -21,7 +21,8 @@ import { normalizeDataset, applyCuration, filterDataset } from './ui/derive.js';
 import { normalizeAffiliationTypeMode } from './aggregate.js';
 import { createTableView } from './ui/table.js';
 import { createCurationPanel } from './ui/curation.js';
-import { createAuthorPanel } from './ui/authors.js';
+import { createAuthorPanel, coauthorKey } from './ui/authors.js';
+import { shownStatusText } from './ui/status-line.js';
 import { createBusyController } from './ui/busy.js';
 import {
   loadLocalCuration,
@@ -168,7 +169,24 @@ export function createApp({ loadDataset, mode = 'full' }) {
   }
 
   /**
+   * 手で外した共著者の実数。URL や確定版から来た「いまのデータに居ない ID」は数えない。
+   * 判定は著者パネルのチェックと同じ coauthorKey で行う。
+   */
+  function hiddenCoauthorCount() {
+    const ids = new Set(curation?.excludeAuthorIds ?? []);
+    if (!ids.size || !rawDataset) return 0;
+    let n = 0;
+    for (const c of rawDataset.coauthors.values())
+      if (ids.has(coauthorKey(c))) n += 1;
+    return n;
+  }
+
+  /**
    * 「145 名中 53 名を表示中」。全体と表示中の関係が分かる表示はここ 1 箇所に出す。
+   *
+   * 数だけでは何で絞った結果か分からないので、絞り込みの条件と丸の基準も同じ行に載せる。
+   * 丸の基準は**凡例が出ていないページでだけ**添える（index.html は凡例が持っている）。
+   * 年は統計パネルが持っているので、統計パネルが無くて実際に絞ったときだけ添える。
    */
   function paintShown() {
     if (!view) return;
@@ -176,11 +194,24 @@ export function createApp({ loadDataset, mode = 'full' }) {
     // 絞り込みパネルにも同じ数字を渡す（画面に食い違う 2 つの数を出さない）
     authorPanel?.setShown(view.summary.coauthors, total);
     if (!shownEl) return;
+    const b = bounds();
+    const narrowed = view.range.from > b.from || view.range.to < b.to;
     replaceChildren(
       shownEl,
       h('p', {
         class: 'hint',
-        text: t('auth.shown', { shown: view.summary.coauthors, total }),
+        text: shownStatusText(
+          {
+            shown: view.summary.coauthors,
+            total,
+            minPapers: view.minPapers,
+            hiddenCount: hiddenCoauthorCount(),
+            sizeMode: state.size,
+            includeSizeBasis: !showLegend,
+            years: !statsEl && narrowed ? view.range : null,
+          },
+          t,
+        ),
       }),
     );
   }

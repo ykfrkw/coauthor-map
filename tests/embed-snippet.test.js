@@ -24,11 +24,26 @@ describe('スニペットのクレジット行', () => {
     expect(found[0].href).toBe(AUTHOR_URL);
   });
 
-  it('アンカーテキストは coauthor-map のみで、人名はリンクにしない', () => {
+  it('アンカーテキストは coauthor-map のみ', () => {
+    expect(anchors(buildSnippet(SRC))[0].text).toBe('coauthor-map');
+  });
+
+  // 配布先の記事に書き手の名前が残ると、記事の書き手が誰なのか読み手が取り違える。
+  it('クレジット行は Made with coauthor-map だけで、人名を含まない', () => {
     const snippet = buildSnippet(SRC);
-    expect(anchors(snippet)[0].text).toBe('coauthor-map');
-    expect(snippet).toContain('by Yuki Furukawa</p>');
-    expect(snippet).not.toMatch(/<a[^>]*>[^<]*Yuki Furukawa/);
+    expect(snippet).toContain(
+      `Made with <a href="${AUTHOR_URL}">coauthor-map</a></p>`,
+    );
+    expect(snippet).not.toContain('Yuki Furukawa');
+    expect(snippet).not.toContain('by Yuki');
+  });
+
+  it('自動リサイズを外した版でも人名は入らず、外部リンクは1本のまま', () => {
+    const snippet = buildSnippet(SRC, 720, { autoResize: false });
+    expect(snippet).not.toContain('Yuki Furukawa');
+    const found = anchors(snippet);
+    expect(found).toHaveLength(1);
+    expect(found[0].href).toBe(AUTHOR_URL);
   });
 
   // 配布先で同じ外部リンクが2本並ぶフットプリントを避けるため、

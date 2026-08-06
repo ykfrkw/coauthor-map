@@ -31,9 +31,7 @@ The snippet looks like this:
     loading="lazy"
   ></iframe>
   <p style="font-size:13px;margin-top:6px;">
-    Made with
-    <a href="https://yukifurukawa.jp/coauthor-map/">coauthor-map</a> by Yuki
-    Furukawa
+    Made with <a href="https://yukifurukawa.jp/coauthor-map/">coauthor-map</a>
   </p>
   <script>
     (function () {

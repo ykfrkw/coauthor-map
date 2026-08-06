@@ -152,7 +152,18 @@ const STRINGS = {
   'auth.showFewer': 'Show fewer',
   'auth.includeAll': 'Include everyone',
   'auth.listNote': 'Listing {visible} of {matching} · {excluded} unchecked',
-  'auth.shown': 'Showing {shown} of {total} co-authors',
+
+  // 地図の下の状態表示（src/ui/status-line.js が組み立てる）。
+  // 幅 272px の埋め込みでも読めるよう、短い文を並べて折り返させる。
+  'shown.basisPapers': 'Pin area is proportional to papers, not to head count.',
+  'shown.basisCoauthors':
+    'Pin area is proportional to the number of co-authors.',
+  'shown.all': 'Showing {shown} of {total} co-authors.',
+  'shown.min':
+    'Showing co-authors with {n} or more joint papers: {shown} of {total}.',
+  'shown.hiddenOne': '1 co-author is hidden by hand.',
+  'shown.hidden': '{n} co-authors are hidden by hand.',
+  'shown.years': 'Years {from}–{to}.',
 
   'load.busy': 'Loading the map',
 

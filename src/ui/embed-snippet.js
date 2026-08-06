@@ -12,6 +12,8 @@
  * 同一パターンの外部リンクが2本並ぶフットプリントは避けたいので TOOL_URL は載せない。
  * アンカーテキストは `coauthor-map`、リンク先は AUTHOR_URL に統一する
  * （人名がツールページを指すねじれもこれで消える）。
+ * クレジット行は `Made with coauthor-map` だけにする。**人名は入れない**
+ * （配布先の記事に書き手の名前が残ると、書き手が誰なのか読み手が取り違える）。
  */
 import { h, copyText } from './dom.js';
 import { stateToQuery } from './controls.js';
@@ -124,7 +126,7 @@ export function buildSnippet(src, height = 720, { autoResize = true } = {}) {
     .${CLASS_NAME}{display:block;width:100%;border:none;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.08);}
   </style>
   <iframe class="${CLASS_NAME}" title="Co-author map" src="${src}" style="height:${px}px" loading="lazy"></iframe>
-  <p style="font-size:13px;margin-top:6px;">Made with <a href="${AUTHOR_URL}">coauthor-map</a> by Yuki Furukawa</p>
+  <p style="font-size:13px;margin-top:6px;">Made with <a href="${AUTHOR_URL}">coauthor-map</a></p>
 ${autoResize ? autoResizeScript(originOf(src)) : ''}</div>`;
   return assertSnippetIsSafe(snippet);
 }
