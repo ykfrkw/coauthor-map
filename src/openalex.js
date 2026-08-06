@@ -2,7 +2,7 @@
  * OpenAlex API クライアント。
  *
  * 方針:
- * - バッチは**同時実行数 3 の上限つきで並列**に流す。完全直列だと 7 段で 5 秒以上かかり、
+ * - バッチは**同時実行数 5 の上限つきで並列**に流す。完全直列だと 7 段で 5 秒以上かかり、
  *   iframe 埋め込みには遅すぎる。一方で無制限に並べると polite pool でも 429 を踏む
  * - **返り値はバッチの入力順**。完了順に詰めると出力が非決定的になり集計が揺れる
  * - すべてのリクエストに `mailto` を付ける
@@ -19,10 +19,14 @@ export const WORKS_BATCH_SIZE = 25;
 export const INSTITUTIONS_BATCH_SIZE = 50;
 
 /**
- * 同時に投げるリクエストの上限。OpenAlex は 10 req/s 程度なら通すが、
- * polite pool の趣旨に沿って控えめにする。
+ * 同時に投げるリクエストの上限。OpenAlex は 10 req/s 程度なら通すので、
+ * その半分までを使う。polite pool の趣旨（`mailto` を必ず付ける）は守る。
+ *
+ * 3 から 5 に上げたのは works（2 バッチ）と institutions（3 バッチ）を
+ * それぞれ 1 段で流し切るため。返り値は `mapWithConcurrency` が入力順に
+ * 詰め直すので、上げても出力は決定的なまま。
  */
-export const MAX_CONCURRENCY = 3;
+export const MAX_CONCURRENCY = 5;
 
 /** works で取る列。authorships まで取ると 1 件が重いので必要な列だけ絞る。 */
 const WORKS_SELECT =

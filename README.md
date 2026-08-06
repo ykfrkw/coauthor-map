@@ -36,7 +36,7 @@ Two records are counted as one person when they share an ORCID iD, or when all t
 
 A co-author who has moved used to appear in every city they had ever been affiliated with: 55 of 145 people showed up more than once, one of them in six cities at the same time. The map is about people, so each co-author is now placed at exactly one primary affiliation.
 
-The primary affiliation is the one **printed first on the paper** (`authorships[].institutions[0]`), which is the convention the literature already follows: the city that comes first most often wins, ties go to the most recent paper. On the reference map that decides 139 of 145 people. Where it does not decide — the same count in two cities in the same year — the affiliations on the person's ORCID record break the tie, and if that is inconclusive too, the smallest institution ID is picked so the result never wanders between reloads. Four people fall through to that last rule, and two have no affiliation anywhere in OpenAlex or ORCID; they are counted as “affiliation missing” rather than guessed at.
+The primary affiliation is the one **printed first on the paper** (`authorships[].institutions[0]`), which is the convention the literature already follows: the city that comes first most often wins, ties go to the most recent paper. On the reference map that decides 142 of 145 people. Where it does not decide — the same count in two cities in the same year — the affiliations on the person's ORCID record break the tie, and if that is inconclusive too, the smallest institution ID is picked so the result never wanders between reloads. One person falls through to that last rule, and two have no affiliation anywhere in OpenAlex or ORCID; they are counted as “affiliation missing” rather than guessed at.
 
 Placing people once rather than once per affiliation drops the map from 69 cities in 15 countries to 47 in 14: the cities that disappear were never anybody's main address. `?pin=all` brings the old behavior back.
 
@@ -55,7 +55,11 @@ Cities are merged when two institutions share a rounded coordinate, or when they
 
 ## Cost of a map
 
-Ten HTTP requests, a few seconds on a cold load, for a researcher with 34 papers and 145 co-authors (seven for the papers and affiliations, three more to read 117 co-author ORCID records 50 at a time). Results are cached in `sessionStorage` for 24 hours, so re-opening the page costs nothing. Because the requests come from your own browser, the OpenAlex rate limit is never a shared resource.
+Seven HTTP requests and about 1.5 seconds on a cold load, for a researcher with 34 papers and 145 co-authors: one to ORCID for the claimed works, two to OpenAlex for the papers, three more for the 119 organizations, and one back to ORCID for affiliations. Results are cached in `sessionStorage` for 24 hours, so re-opening the page costs nothing. Because the requests come from your own browser, the OpenAlex rate limit is never a shared resource.
+
+That last request is only made when it can change something. The primary affiliation is decided by the order printed on the paper for 142 of the 145 people, and the ORCID affiliation lookup exists for the rest; asking for all 145 up front cost 560ms and three requests and decided nobody. The map is now built once without it, and ORCID is asked only about the people still undecided — two of them here, in one request. If the printed order decides everyone, ORCID is never called at all.
+
+researchmap is not read unless you ask for it (`?rm=`). It answered in 1.9 seconds, which made it the slowest step by far, and every one of the 25 papers it returned was already in the 34 from ORCID. The field is still there, and it is the right seed for a researcher who keeps their publication list on researchmap rather than ORCID.
 
 ## Data sources
 

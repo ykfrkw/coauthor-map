@@ -4,6 +4,7 @@ import { buildDataset } from '../src/pipeline.js';
 import { PROGRESS_STRINGS } from '../src/ui/i18n.js';
 import {
   createFixtureFetch,
+  jsonResponse,
   loadFixture,
   serializeDataset,
   stripRor,
@@ -152,6 +153,24 @@ describe('buildDataset', () => {
     expect(dataset.stats.countries).toBe(15);
   });
 
+  it('実データでは規則 1 で決まらない 2 人分しか ORCID を引かない', async () => {
+    const { dataset, calls } = await build();
+    const searches = calls.filter((url) => url.includes('expanded-search'));
+    // 145 人分を 50 人ずつ 3 回引いていたのを 1 回に減らす。
+    expect(searches).toHaveLength(1);
+    expect(dataset.pendingOrcidLookups).toEqual([
+      '0000-0001-7016-2687',
+      '0000-0003-2196-0601',
+    ]);
+    // 規則 1 で決まった 142 人は問い合わせに含めない。
+    const query = decodeURIComponent(searches[0]);
+    for (const orcid of dataset.pendingOrcidLookups)
+      expect(query).toContain(orcid);
+    expect(query.split(' OR ')).toHaveLength(
+      dataset.pendingOrcidLookups.length,
+    );
+  });
+
   it('ORCID の所属取得が落ちても地図は同じように出る', async () => {
     const { fetchImpl } = createFixtureFetch({
       // 全バッチ失敗させる。
@@ -289,6 +308,235 @@ describe('buildDataset', () => {
     const { calls } = await build();
     expect(calls.length).toBeGreaterThan(0);
     expect(calls.every((url) => url.startsWith('https://'))).toBe(true);
+  });
+});
+
+/**
+ * ORCID の所属取得を「規則 1 で決まらない人がいるときだけ」に遅らせた経路の固定。
+ *
+ * 実データは規則 1 でほぼ決まってしまうので、合成データで両方の経路を作る:
+ *   - 全員が規則 1 で決まる  → expanded-search を 1 回も投げない
+ *   - 決まらない人がいる      → その人の分だけ投げ、規則 2 で決め直す
+ */
+describe('ORCID 所属の遅延取得', () => {
+  const SEED_ORCID = '0000-0000-0000-0001';
+  const DECIDED_ORCID = '0000-0000-0000-0003';
+  const UNDECIDED_ORCID = '0000-0000-0000-0002';
+
+  const TOKYO = 'https://openalex.org/I1';
+  const OXFORD = 'https://openalex.org/I2';
+
+  const INSTITUTIONS = [
+    {
+      id: TOKYO,
+      display_name: 'Alpha University',
+      country_code: 'JP',
+      type: 'education',
+      geo: {
+        latitude: 35.68,
+        longitude: 139.69,
+        city: 'Tokyo',
+        country: 'Japan',
+        country_code: 'JP',
+      },
+    },
+    {
+      id: OXFORD,
+      display_name: 'Beta University',
+      country_code: 'GB',
+      type: 'education',
+      geo: {
+        latitude: 51.75,
+        longitude: -1.25,
+        city: 'Oxford',
+        country: 'United Kingdom',
+        country_code: 'GB',
+      },
+    },
+  ];
+
+  /** OpenAlex の authorship 1 行。 */
+  const row = (id, orcid, institutionId) => ({
+    author: {
+      id: `https://openalex.org/${id}`,
+      display_name: id,
+      orcid: orcid ? `https://orcid.org/${orcid}` : null,
+    },
+    institutions: [INSTITUTIONS.find((i) => i.id === institutionId)],
+  });
+
+  /** OpenAlex の work 1 件。 */
+  const work = (doi, authorships) => ({
+    id: `https://openalex.org/W${doi}`,
+    doi: `https://doi.org/${doi}`,
+    display_name: doi,
+    publication_year: 2020,
+    authorships,
+  });
+
+  /**
+   * 合成データを返すスタブ。expanded-search は**問い合わせられた ORCID の分だけ**返す。
+   * @param {Object} input
+   * @param {any[]} input.works
+   * @param {Record<string, string[]>} [input.affiliations]
+   */
+  function syntheticFetch({ works, affiliations = {} }) {
+    const dois = works.map((entry) =>
+      entry.doi.replace('https://doi.org/', ''),
+    );
+    /** @type {string[]} */
+    const calls = [];
+
+    const fetchImpl = async (url) => {
+      const target = String(url);
+      calls.push(target);
+
+      if (target.startsWith('https://pub.orcid.org/v3.0/expanded-search')) {
+        const query = new URL(target).searchParams.get('q') ?? '';
+        const requested = query
+          .replace(/^orcid:\(|\)$/g, '')
+          .split(' OR ')
+          .map((id) => id.trim());
+        return jsonResponse({
+          'expanded-result': requested
+            .filter((id) => affiliations[id])
+            .map((id) => ({
+              'orcid-id': id,
+              'institution-name': affiliations[id],
+            })),
+        });
+      }
+      if (target.startsWith('https://pub.orcid.org/')) {
+        return jsonResponse({
+          group: dois.map((doi) => ({
+            'work-summary': [
+              {
+                title: { title: { value: doi } },
+                'publication-date': { year: { value: '2020' } },
+                'external-ids': {
+                  'external-id': [
+                    { 'external-id-type': 'doi', 'external-id-value': doi },
+                  ],
+                },
+              },
+            ],
+          })),
+        });
+      }
+      if (target.includes('api.openalex.org/works'))
+        return jsonResponse({ results: works });
+      if (target.includes('api.openalex.org/institutions'))
+        return jsonResponse({ results: INSTITUTIONS });
+      return jsonResponse({ error: 'unexpected url' }, 404);
+    };
+
+    return { fetchImpl: /** @type {any} */ (fetchImpl), calls };
+  }
+
+  /** 全員が規則 1 で決まる構成。共著者はどちらも所属が 1 つだけ。 */
+  const decidedWorks = [
+    work('10.1/a', [
+      row('A0', SEED_ORCID, TOKYO),
+      row('A1', DECIDED_ORCID, TOKYO),
+    ]),
+  ];
+
+  /** A2 だけ 2 都市に 1 本ずつで割れる（同数・同年なので規則 1 が決められない）。 */
+  const undecidedWorks = [
+    work('10.1/a', [
+      row('A0', SEED_ORCID, TOKYO),
+      row('A1', DECIDED_ORCID, TOKYO),
+      row('A2', UNDECIDED_ORCID, TOKYO),
+    ]),
+    work('10.1/b', [
+      row('A0', SEED_ORCID, OXFORD),
+      row('A2', UNDECIDED_ORCID, OXFORD),
+    ]),
+  ];
+
+  /**
+   * @param {ReturnType<typeof syntheticFetch>} stub
+   * @param {Object} [options]
+   */
+  function run(stub, options = {}) {
+    return buildDataset({
+      seeds: [{ kind: 'orcid', value: SEED_ORCID }],
+      mailto: 'test@example.org',
+      fetchImpl: stub.fetchImpl,
+      useCache: false,
+      ...options,
+    });
+  }
+
+  const searchesOf = (calls) =>
+    calls.filter((url) => url.includes('expanded-search'));
+
+  it('全員が規則 1 で決まるなら expanded-search を 1 回も投げない', async () => {
+    const stub = syntheticFetch({ works: decidedWorks });
+    const dataset = await run(stub);
+
+    expect(searchesOf(stub.calls)).toEqual([]);
+    expect(dataset.pendingOrcidLookups).toEqual([]);
+    expect(dataset.stats.primaryBy).toEqual({
+      firstListed: 1,
+      orcid: 0,
+      fallback: 0,
+      none: 0,
+    });
+  });
+
+  it('その経路では onProgress に orcid-affiliations が出ない', async () => {
+    const stub = syntheticFetch({ works: decidedWorks });
+    /** @type {string[]} */
+    const keys = [];
+    await run(stub, { onProgress: (key) => keys.push(key) });
+    expect(keys).not.toContain('orcid-affiliations');
+    expect(keys.at(-1)).toBe('aggregate');
+  });
+
+  it('決まらない人がいるときだけ、その人の分を投げる', async () => {
+    const stub = syntheticFetch({
+      works: undecidedWorks,
+      affiliations: { [UNDECIDED_ORCID]: ['Beta University'] },
+    });
+    const dataset = await run(stub);
+
+    const searches = searchesOf(stub.calls);
+    expect(searches).toHaveLength(1);
+    const query = decodeURIComponent(searches[0]);
+    expect(query).toContain(UNDECIDED_ORCID);
+    // 規則 1 で決まった人は問い合わせに混ぜない。
+    expect(query).not.toContain(DECIDED_ORCID);
+
+    expect(dataset.pendingOrcidLookups).toEqual([UNDECIDED_ORCID]);
+    expect(dataset.stats.primaryBy).toEqual({
+      firstListed: 1,
+      orcid: 1,
+      fallback: 0,
+      none: 0,
+    });
+    const undecided = [...dataset.coauthors.values()].find(
+      (coauthor) => coauthor.orcid === `https://orcid.org/${UNDECIDED_ORCID}`,
+    );
+    expect(undecided.primaryInstitutionId).toBe(OXFORD);
+    expect(undecided.primaryBy).toBe('orcid');
+  });
+
+  it('orcidaff=off なら決まらない人がいても投げない', async () => {
+    const stub = syntheticFetch({
+      works: undecidedWorks,
+      affiliations: { [UNDECIDED_ORCID]: ['Beta University'] },
+    });
+    const dataset = await run(stub, { useOrcidAffiliations: false });
+
+    expect(searchesOf(stub.calls)).toEqual([]);
+    // 規則 2 を使えないので規則 3（機関 ID 昇順）に落ちる。
+    expect(dataset.stats.primaryBy).toEqual({
+      firstListed: 1,
+      orcid: 0,
+      fallback: 1,
+      none: 0,
+    });
   });
 });
 

@@ -258,7 +258,7 @@ describe('埋め込みスニペットの自動リサイズ', () => {
     expect(snippet).toContain('embed:height');
     expect(snippet).toContain('window.addEventListener');
     // 初期高さは残す（スクリプトが届くまでと、剥がされたときの保険）
-    expect(snippet).toContain('style="height:720px"');
+    expect(snippet).toContain('style="height:460px"');
   });
 
   it('origin と source の両方を確かめている', () => {

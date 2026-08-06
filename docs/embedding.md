@@ -27,7 +27,7 @@ The snippet looks like this:
     class="coauthor-map-embed"
     title="Co-author map"
     src="https://ykfrkw.github.io/coauthor-map/widget.html?orcid=0000-0003-1317-0220"
-    style="height:720px"
+    style="height:460px"
     loading="lazy"
   ></iframe>
   <p style="font-size:13px;margin-top:6px;">
@@ -75,8 +75,8 @@ link, to the page that documents the tool.
 
 | Parameter    | Values                                                                      | Default                               |
 | ------------ | --------------------------------------------------------------------------- | ------------------------------------- |
-| `orcid`      | ORCID iD, e.g. `0000-0003-1317-0220`                                        | owner's map                           |
-| `rm`         | researchmap permalink, e.g. `yk_frkw`                                       | owner's map                           |
+| `orcid`      | ORCID iD, e.g. `0000-0003-1317-0220`                                        | owner's ORCID                         |
+| `rm`         | researchmap permalink, e.g. `yk_frkw`                                       | none; only read when you pass it      |
 | `from`, `to` | publication years; `earliest` / `latest` for an open end                    | the full range in the data            |
 | `proj`       | `equalEarth`, `naturalEarth`, `equirectangular`, `mercator`, `orthographic` | `equalEarth`                          |
 | `center`     | center longitude, `-180`…`180`                                              | `140`, unless `scope` fits the map    |
@@ -93,7 +93,9 @@ link, to the page that documents the tool.
 | `labels`     | `on` to draw city names over the ten largest pins                           | off                                   |
 | `legend`     | `on`, `off`                                                                 | on in the full page, off in the frame |
 
-`orcid` and `rm` can be given together; the two publication lists are merged.
+`orcid` and `rm` can be given together; the two publication lists are merged. Nothing is
+read from researchmap unless you pass `rm`, so give it if the researcher keeps their
+publication list there rather than on ORCID.
 
 ### The map keeps itself up to date
 
@@ -138,12 +140,19 @@ The frame reports the height it actually needs. It posts a message to the parent
 whenever its content resizes:
 
 ```js
-{ type: 'embed:height', height: 812 }
+{ type: 'embed:height', height: 462 }
 ```
 
 The script in the snippet listens for that message and applies the height. The `height`
 in the `style` attribute stays as the starting height, used until the first message
 arrives (and as the final height if scripts are stripped).
+
+The starting height defaults to `460`, which is what the frame actually measures in a
+780px-wide column. The map is drawn to about `(frame width − 16) × 0.52`, capped at
+520px, with roughly 63px for the padding and the line under the map, so a wider column
+settles a little taller and a narrower one a little shorter. Raise or lower the number in
+the embed panel if your content column is far from 780px; getting it close only matters
+for the moment before the first message arrives, and for CMSes that strip the script.
 
 Two checks in that listener are not optional:
 

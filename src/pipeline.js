@@ -7,7 +7,6 @@ import { fetchOrcidWorks, assertValidOrcid } from './seeds/orcid.js';
 import {
   fetchOrcidAffiliations,
   normalizeOrcidList,
-  toOrcidKey,
 } from './seeds/orcid-affiliations.js';
 import { fetchResearchmapWorks } from './seeds/researchmap.js';
 import { fetchOpenAlexAuthorWorks } from './seeds/openalex-author.js';
@@ -134,24 +133,17 @@ export async function buildDataset(options) {
     { enabled: useCache },
   );
 
-  // 6. ORCID の所属名。主所属が「先頭所属」で決まらなかった人の判定に使う。
-  //    50 人ずつまとめて引くのでリクエストは数本しか増えない。失敗しても続行する。
-  const coauthorOrcids = collectCoauthorOrcids(
-    openAlexWorks,
-    findSeedOrcid(seeds),
-  );
-  const orcidAffiliations =
-    useOrcidAffiliations && coauthorOrcids.length > 0
-      ? await withCache(
-          ['orcid-affiliations', coauthorOrcids],
-          () =>
-            fetchOrcidAffiliations(coauthorOrcids, { fetchImpl, onProgress }),
-          { enabled: useCache },
-        )
-      : {};
-
-  onProgress?.('aggregate', 1, 1);
-  return aggregate({
+  // 6. まず ORCID の所属名**なし**で集計する。
+  //
+  //    主所属の規則 1（論文に印字された先頭の所属）はほぼ全員を決めてしまい、
+  //    ORCID の所属名が要るのは残った人だけ。オーナーのデータでは 145 名中 142 名が
+  //    規則 1 で決まり、ORCID の所属名で決まった人は 0 名だった。それでも毎回
+  //    全員分（3 リクエスト・約 560ms）を先に引いていたので、順序を入れ替える。
+  //
+  //    `pendingOrcidLookups` は「規則 1 で決まらず ORCID を要した人」だけ。
+  //    空なら 1 リクエストも投げずにこの結果をそのまま返してよい
+  //    （規則 2 に到達する人がいない ＝ 所属名を渡しても結果が変わらない）。
+  const aggregateInput = {
     seedWorks,
     openAlexWorks,
     institutions,
@@ -160,30 +152,29 @@ export async function buildDataset(options) {
     warnings,
     mergeCoauthors,
     pinMode,
-    orcidAffiliations,
     preferOccupationalTypes,
-  });
-}
+  };
+  const withoutOrcidAffiliations = aggregate(aggregateInput);
 
-/**
- * authorship から共著者の ORCID を集める。seed 本人は除く。
- * 並びは昇順（バッチの切れ目を決定的にするため）。
- * @param {any[]} openAlexWorks
- * @param {string|null} seedOrcid
- * @returns {string[]}
- */
-function collectCoauthorOrcids(openAlexWorks, seedOrcid) {
-  const seedKey = toOrcidKey(seedOrcid);
-  /** @type {string[]} */
-  const found = [];
-  for (const work of openAlexWorks ?? []) {
-    for (const authorship of work?.authorships ?? []) {
-      const key = toOrcidKey(authorship?.author?.orcid);
-      if (key === null || key === seedKey) continue;
-      found.push(key);
-    }
+  const pendingOrcids = useOrcidAffiliations
+    ? normalizeOrcidList(withoutOrcidAffiliations.pendingOrcidLookups)
+    : [];
+  if (pendingOrcids.length === 0) {
+    onProgress?.('aggregate', 1, 1);
+    return withoutOrcidAffiliations;
   }
-  return normalizeOrcidList(found);
+
+  // 7. 決まらなかった人の分だけ ORCID の所属名を引き、主所属を決め直す。
+  //    50 人ずつまとめて引く。失敗しても続行する（所属名は補助情報）。
+  //    規則 2 は各人が自分の ORCID しか見ないので、引く相手を絞っても結果は変わらない。
+  const orcidAffiliations = await withCache(
+    ['orcid-affiliations', pendingOrcids],
+    () => fetchOrcidAffiliations(pendingOrcids, { fetchImpl, onProgress }),
+    { enabled: useCache },
+  );
+
+  onProgress?.('aggregate', 1, 1);
+  return aggregate({ ...aggregateInput, orcidAffiliations });
 }
 
 /**

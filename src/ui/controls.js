@@ -44,10 +44,14 @@ import {
   DEFAULT_PIN_MODE,
 } from '../aggregate.js';
 
-/** パラメータ無しで開いたときの既定 = オーナー自身の地図 */
+/** パラメータ無しで開いたときの既定 = オーナー自身の ORCID の地図 */
 export const DEFAULTS = Object.freeze({
   orcid: '0000-0003-1317-0220',
-  rm: 'yk_frkw',
+  // researchmap は**既定では引かない**。実測で 1.9 秒かかり seeds 段の律速に
+  // なっていた一方、返る 25 論文は ORCID の 34 論文の部分集合で、researchmap に
+  // しか無い論文は 0 件だった。入力欄と機能はそのまま残してあるので、
+  // ORCID を使っていない研究者は `?rm=` を明示すれば従来どおり引ける。
+  rm: '',
   from: null, // null = データの最小年
   to: null, // null = データの最大年
   proj: DEFAULT_PROJECTION,

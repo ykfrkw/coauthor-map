@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import {
   AUTHOR_URL,
+  DEFAULT_EMBED_HEIGHT,
   TOOL_URL,
   assertSnippetIsSafe,
   buildSnippet,
@@ -80,5 +81,53 @@ describe('WAF 対策の検査', () => {
   it('高さは 240px を下回らない', () => {
     expect(buildSnippet(SRC, 10)).toContain('style="height:240px"');
     expect(buildSnippet(SRC, 900)).toContain('style="height:900px"');
+  });
+});
+
+describe('初期高さ', () => {
+  // 720 のままだと本文幅 780px で 250px 以上の空白が地図の下に出て、
+  // スニペットが親ページに置くクレジット行との間が大きく空く。
+  // 実測（幅 776px → 458px / 783px → 462px）に合わせた値を既定にする。
+  it('既定は実測に合わせた 460px', () => {
+    expect(DEFAULT_EMBED_HEIGHT).toBe(460);
+    expect(buildSnippet(SRC)).toContain('style="height:460px"');
+  });
+
+  it('空・不正な入力でも既定の高さに落ちる', () => {
+    for (const value of ['', 'abc', null, undefined]) {
+      expect(buildSnippet(SRC, value)).toContain(
+        `style="height:${DEFAULT_EMBED_HEIGHT}px"`,
+      );
+    }
+  });
+
+  // 自動リサイズ後の高さは本文幅で決まる（地図が幅 × 0.52 で描かれるため）。
+  // 既定値との差が 50px 以内に収まる幅の帯を凍結する。
+  it('本文幅 690〜870px なら最終高さとの差が 50px 以内', () => {
+    // 実測した内訳: 上下の余白 8px + 地図 + 8px + 状態行 30px + 8px。
+    // 地図は幅 × 0.52（上限 520px）。端数の丸めで ±1px ずれる。
+    const modeled = (frameWidth) =>
+      Math.min(520, Math.round((frameWidth - 16) * 0.52)) + 62;
+
+    // ブラウザで実測した値（iframe に入れて embed:height を受けたもの）。
+    for (const [width, actual] of [
+      [360, 322],
+      [640, 387],
+      [700, 419],
+      [776, 458],
+      [783, 462],
+      [800, 471],
+      [1200, 584],
+    ]) {
+      // 幅が狭いと状態行が 3 行に折り返して伸びるので、下側だけ緩く見る。
+      if (width >= 640)
+        expect(Math.abs(modeled(width) - actual)).toBeLessThanOrEqual(2);
+    }
+
+    for (const width of [690, 700, 780, 800, 870]) {
+      expect(
+        Math.abs(modeled(width) - DEFAULT_EMBED_HEIGHT),
+      ).toBeLessThanOrEqual(50);
+    }
   });
 });

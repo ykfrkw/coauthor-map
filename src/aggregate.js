@@ -719,8 +719,10 @@ function restrictToOccupationalTypes({
  * @param {Map<string, import('./types.js').Institution>} input.institutionMaster
  * @param {Record<string, string[]>} [input.orcidAffiliations]  ORCID → 所属名（過去を含む）
  * @param {boolean} [input.preferOccupationalTypes]  種別で候補を絞るか（既定 true。`afftype=off` で false）
- * @returns {{'first-listed': number, orcid: number, fallback: number, none: number, typeFiltered: number}}
- *   規則ごとの人数と、種別の絞り込みが実際に効いた人数
+ * @returns {{'first-listed': number, orcid: number, fallback: number, none: number, typeFiltered: number, pendingOrcids: string[]}}
+ *   規則ごとの人数、種別の絞り込みが実際に効いた人数、そして
+ *   **規則 1 で決まらず ORCID の所属名を要した人の ORCID**（昇順・重複なし）。
+ *   最後の 1 つは呼び手が「ORCID を引きに行くべきか」を判断するために使う。
  */
 export function assignPrimaryAffiliations({
   coauthors,
@@ -737,9 +739,24 @@ export function assignPrimaryAffiliations({
     none: 0,
     typeFiltered: 0,
   };
+  // 規則 1 で決まらなかった人の ORCID。呼び手はこれが空なら ORCID を引かなくてよい。
+  /** @type {Set<string>} */
+  const pendingOrcids = new Set();
   // 座標が無い機関は都市に属さない。同一機関を 1 つのバケツとして扱う。
   const bucketOf = (institutionId) =>
     cityKeyByInstitution.get(institutionId) ?? `institution:${institutionId}`;
+
+  /**
+   * 規則 1 で決まらなかった人を控える。ORCID を持たない人は
+   * 所属名を引いても照合先が無いので数えない。
+   * @param {import('./types.js').Coauthor} coauthor
+   * @param {'first-listed'|'orcid'|'fallback'|null} by
+   */
+  const notePending = (coauthor, by) => {
+    if (by === 'first-listed') return;
+    const key = normalizeOrcid(coauthor.orcid);
+    if (key !== null) pendingOrcids.add(key);
+  };
 
   for (const coauthor of coauthors) {
     const rawEvents = eventsOf(coauthor) ?? [];
@@ -762,25 +779,33 @@ export function assignPrimaryAffiliations({
     });
     coauthor.primaryInstitutionId = decided.institutionId;
     coauthor.primaryBy = decided.by;
+    notePending(coauthor, decided.by);
 
     // 「絞り込みが効いた」= 絞らなければ**別の機関**になっていた、と定義する。
     // 候補が減っただけで結論が同じ人まで数えると、施策の効き目が読めなくなる。
     // 絞り込みが起きた人だけ、絞らない場合の結論も出して突き合わせる。
-    coauthor.primaryTypeFiltered =
-      restricted.filtered &&
-      decidePrimary({
+    if (restricted.filtered) {
+      const unrestricted = decidePrimary({
         coauthor,
         events: rawEvents,
         institutionIds: rawIds,
         bucketOf,
         institutionMaster,
         orcidAffiliations,
-      }).institutionId !== decided.institutionId;
+      });
+      // 絞らない場合の判定も規則 2 に落ちうる。ここを数え漏らすと
+      // ORCID を引かない経路で primaryTypeFiltered だけ変わってしまう。
+      notePending(coauthor, unrestricted.by);
+      coauthor.primaryTypeFiltered =
+        unrestricted.institutionId !== decided.institutionId;
+    } else {
+      coauthor.primaryTypeFiltered = false;
+    }
 
     if (coauthor.primaryTypeFiltered) counts.typeFiltered += 1;
     counts[decided.by ?? 'none'] += 1;
   }
-  return counts;
+  return { ...counts, pendingOrcids: [...pendingOrcids].sort() };
 }
 
 /**
@@ -936,7 +961,9 @@ function uniqueInOrder(values) {
  * @param {'primary'|'all'} [input.pinMode] 主所属の 1 都市だけに置くか（既定 `'primary'`）
  * @param {Record<string, string[]>} [input.orcidAffiliations] ORCID → 所属名。主所属の判定に使う
  * @param {boolean} [input.preferOccupationalTypes] 主所属の候補を勤務先らしい種別に絞るか（既定 true）
- * @returns {import('./types.js').Dataset & { seedAuthorIds: string[] }}
+ * @returns {import('./types.js').Dataset & { seedAuthorIds: string[], pendingOrcidLookups: string[] }}
+ *   `pendingOrcidLookups` は「規則 1 で主所属が決まらず、ORCID の所属名を要した人」の ORCID。
+ *   空なら `orcidAffiliations` を渡しても渡さなくても結果は同じ、という意味になる。
  */
 export function aggregate(input) {
   const {
@@ -1258,6 +1285,7 @@ export function aggregate(input) {
     stats,
     warnings: [...warnings],
     seedAuthorIds,
+    pendingOrcidLookups: primaryCounts.pendingOrcids,
   };
 }
 

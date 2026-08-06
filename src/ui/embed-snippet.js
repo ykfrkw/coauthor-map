@@ -33,6 +33,23 @@ const CLASS_NAME = 'coauthor-map-embed';
  */
 export const URL_WARN_LENGTH = 1800;
 
+/**
+ * 自動リサイズが効くまでの初期高さ（px）。
+ *
+ * **実測値に合わせてある。** ウィジェットの中身は
+ * 上下 8px の余白 + 地図 + 8px + 状態行（2 行 = 30px）+ 8px で、
+ * 地図の高さは（枠幅 − 16）× 0.52（上限 520px）。埋め込み時はウィジェット内の
+ * クレジットを出さないので、その分は入らない。
+ *
+ * 配布先の本文幅は 780px 前後（Kadence の 1290px コンテナ + 右サイドバー +
+ * boxed 余白）で、そこでの実測は 458〜462px だった。720px のままだと
+ * 250px 以上の空白が地図の下に出て、スニペットが親ページに置く
+ * `Made with coauthor-map` との間が大きく空く。
+ *
+ * 幅 690〜870px の範囲なら、自動リサイズ後の最終高さとの差が 50px 以内に収まる。
+ */
+export const DEFAULT_EMBED_HEIGHT = 460;
+
 /** widget.html の URL を今の表示状態から組む */
 export function buildWidgetUrl(state, bounds, base = WIDGET_BASE) {
   const query = stateToQuery(state, bounds);
@@ -119,8 +136,12 @@ export function originOf(src) {
  * @param {number} height  iframe の高さ（px）
  * @param {{autoResize?: boolean}} [options]
  */
-export function buildSnippet(src, height = 720, { autoResize = true } = {}) {
-  const px = Math.max(240, Math.round(Number(height) || 720));
+export function buildSnippet(
+  src,
+  height = DEFAULT_EMBED_HEIGHT,
+  { autoResize = true } = {},
+) {
+  const px = Math.max(240, Math.round(Number(height) || DEFAULT_EMBED_HEIGHT));
   const snippet = `<div style="margin:28px 0;">
   <style>
     .${CLASS_NAME}{display:block;width:100%;border:none;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.08);}
@@ -143,7 +164,7 @@ export function createEmbedPanel({ container, t, getState }) {
   const heightInput = h('input', {
     type: 'text',
     id: 'embed-height',
-    value: '720',
+    value: String(DEFAULT_EMBED_HEIGHT),
     inputmode: 'numeric',
     size: '5',
   });

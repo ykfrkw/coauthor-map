@@ -40,7 +40,9 @@ export function jsonResponse(body, status = 200) {
  * @param {any} [overrides.researchmap]
  * @param {any[]} [overrides.works]
  * @param {any[]} [overrides.institutions]
- * @param {any[]} [overrides.orcidAffiliations]  expanded-search の応答（リクエスト順）
+ * @param {any[]} [overrides.orcidAffiliations]  expanded-search の応答。全ページを
+ *   1 つの索引に畳んでから、**実際に問い合わせられた ORCID の分だけ**返す
+ *   （本物の API と同じ挙動。呼ぶ側がバッチの切り方を変えても答えが動かない）
  * @returns {{ fetchImpl: typeof fetch, calls: string[] }}
  */
 export function createFixtureFetch(overrides = {}) {
@@ -54,11 +56,20 @@ export function createFixtureFetch(overrides = {}) {
     overrides.orcidAffiliations ??
     loadFixture('orcid-expanded-search-pages.json');
 
+  // ORCID → expanded-result の 1 件。ページの切れ目は畳んで持つ。
+  /** @type {Map<string, any>} */
+  const affiliationIndex = new Map();
+  for (const page of affiliationPages) {
+    for (const entry of page?.['expanded-result'] ?? []) {
+      const id = String(entry?.['orcid-id'] ?? '').toUpperCase();
+      if (id) affiliationIndex.set(id, entry);
+    }
+  }
+
   /** @type {string[]} */
   const calls = [];
   let workPageIndex = 0;
   let institutionPageIndex = 0;
-  let affiliationPageIndex = 0;
 
   const fetchImpl = async (url) => {
     const target = String(url);
@@ -66,12 +77,20 @@ export function createFixtureFetch(overrides = {}) {
 
     // 所属の一括検索は works より先に振り分ける（同じホストなので順序が効く）。
     if (target.startsWith('https://pub.orcid.org/v3.0/expanded-search')) {
-      const page = affiliationPages[affiliationPageIndex] ?? {
-        'expanded-result': [],
-        'num-found': 0,
-      };
-      affiliationPageIndex += 1;
-      return jsonResponse(page);
+      // `q=orcid:(A OR B ...)` から問い合わせ対象を取り出し、その分だけ返す。
+      const query = new URL(target).searchParams.get('q') ?? '';
+      const requested = query
+        .replace(/^orcid:\(|\)$/g, '')
+        .split(' OR ')
+        .map((id) => id.trim().toUpperCase())
+        .filter(Boolean);
+      const results = requested
+        .map((id) => affiliationIndex.get(id))
+        .filter(Boolean);
+      return jsonResponse({
+        'expanded-result': results,
+        'num-found': results.length,
+      });
     }
     if (target.startsWith('https://pub.orcid.org/')) {
       return jsonResponse(orcid);
