@@ -17,6 +17,7 @@ import {
   applyCurationToState,
 } from './ui/controls.js';
 import { normalizeDataset, applyCuration, filterDataset } from './ui/derive.js';
+import { normalizeAffiliationTypeMode } from './aggregate.js';
 import { createTableView } from './ui/table.js';
 import { createCurationPanel } from './ui/curation.js';
 import { createAuthorPanel } from './ui/authors.js';
@@ -54,6 +55,14 @@ const STAT_KEYS = [
  */
 export function createApp({ loadDataset, mode = 'full' }) {
   const state = readStateFromUrl();
+  // `afftype=off` は UI に出さない逃げ道（主所属の種別優先を切る）。
+  // controls.js の状態同期には載せないので、ここで直接読む。
+  // `readStateFromUrl` が `afftype` を返すようになったらそちらを優先する。
+  if (state.afftype === undefined) {
+    state.afftype = normalizeAffiliationTypeMode(
+      new URLSearchParams(window.location.search).get('afftype'),
+    );
+  }
   const t = createTranslator();
   applyTheme(state.theme);
   applyStaticI18n(document, t);
@@ -270,6 +279,7 @@ export function createApp({ loadDataset, mode = 'full' }) {
         mergeCoauthors: state.merge,
         pinMode: state.pin,
         useOrcidAffiliations: state.orcidaff !== false,
+        preferOccupationalTypes: state.afftype !== false,
         // データ層が渡すのは安定キー。表示文言に直すのはここだけの仕事
         onProgress: (key, done, total) => {
           const suffix =

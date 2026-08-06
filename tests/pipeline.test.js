@@ -46,13 +46,17 @@ describe('buildDataset', () => {
       institutions: 119,
       geoResolved: 119,
       // 1 人 1 都市に置くようになって 69 → 47（誰の主所属でもない都市が消える）。
-      cities: 47,
+      // さらに主所属を勤務先らしい種別に絞って 47 → 43
+      // （DE|Braunschweig / DE|Berlin / DE|Bonn / US|Orangeburg が消える）。
+      cities: 43,
       countries: 14,
       authorshipRows: 315,
       authorshipsWithoutInstitution: 5,
       coauthorsWithoutInstitution: 2,
       // 主所属の内訳。ORCID の所属名は「先頭所属」で決まらなかった人にしか使わない。
-      primaryBy: { firstListed: 139, orcid: 0, fallback: 4, none: 2 },
+      primaryBy: { firstListed: 142, orcid: 0, fallback: 1, none: 2 },
+      // 種別の絞り込みで主所属が別の機関に変わった人数。
+      primaryTypeFiltered: 18,
       yearMin: 2019,
       yearMax: 2026,
     });
@@ -75,16 +79,16 @@ describe('buildDataset', () => {
 
     expect(byCity.get('JP|Tokyo')).toMatchObject({
       city: 'Tokyo',
-      paperCount: 15,
-      coauthorCount: 19,
+      paperCount: 13,
+      coauthorCount: 18,
     });
     expect(byCity.get('JP|Tokyo').institutions).toHaveLength(9);
 
     expect(byCity.get('JP|Kyoto')).toMatchObject({
-      paperCount: 16,
-      coauthorCount: 17,
+      paperCount: 17,
+      coauthorCount: 18,
     });
-    // 京都を主所属とする 17 人はいずれも京都大学。
+    // 京都を主所属とする 18 人はいずれも京都大学。
     expect(byCity.get('JP|Kyoto').institutions).toHaveLength(1);
 
     expect(byCity.get('CH|Bern')).toMatchObject({
@@ -93,9 +97,10 @@ describe('buildDataset', () => {
     });
     expect(byCity.get('CH|Bern').institutions).toHaveLength(1);
 
+    // Leucht 研の面々が研究コンソーシアム本部からミュンヘンに戻ってくる（11 → 25）。
     expect(byCity.get('DE|Munich')).toMatchObject({
       paperCount: 13,
-      coauthorCount: 11,
+      coauthorCount: 25,
     });
     expect(byCity.get('DE|Munich').institutions).toHaveLength(4);
 
@@ -161,7 +166,7 @@ describe('buildDataset', () => {
       fetchImpl,
       useCache: false,
     });
-    expect(dataset.stats.cities).toBe(47);
+    expect(dataset.stats.cities).toBe(43);
     expect(dataset.stats.primaryBy.orcid).toBe(0);
   });
 
@@ -182,8 +187,8 @@ describe('buildDataset', () => {
     const kyoto = dataset.cities.filter((city) => city.city === 'Kyoto');
     expect(kyoto).toHaveLength(1);
     expect(kyoto[0].key).toBe('JP|Kyoto');
-    expect(kyoto[0].paperCount).toBe(16);
-    expect(kyoto[0].coauthorCount).toBe(17);
+    expect(kyoto[0].paperCount).toBe(17);
+    expect(kyoto[0].coauthorCount).toBe(18);
     // 京都を主所属とする人はいずれも京都大学なので、載る機関は 1 つ。
     expect(kyoto[0].institutions).toHaveLength(1);
     // グループの国コードは非 null の機関から埋まる（country_code が null の
@@ -196,9 +201,10 @@ describe('buildDataset', () => {
     const osaka = dataset.cities.filter((city) => city.city === 'Osaka');
     expect(osaka).toHaveLength(1);
     expect(osaka[0].key).toBe('JP|Osaka');
-    expect(osaka[0].paperCount).toBe(5);
-    expect(osaka[0].coauthorCount).toBe(3);
-    expect(osaka[0].institutions).toHaveLength(3);
+    // Yuki Kataoka の主所属が Santen（company・大阪）から京都大学に移ったので減る。
+    expect(osaka[0].paperCount).toBe(1);
+    expect(osaka[0].coauthorCount).toBe(2);
+    expect(osaka[0].institutions).toHaveLength(2);
     expect(osaka[0].countryCode).toBe('JP');
   });
 

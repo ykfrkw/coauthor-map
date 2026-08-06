@@ -53,7 +53,7 @@ describe('共著者の統合（既定 ON）', () => {
     for (const key of ['institutions', 'countries', 'matchedWorks'])
       expect(merged.stats[key]).toBe(unmerged.stats[key]);
     // 既知解そのもの。ここが動いたら統合ロジックの誤り。
-    expect(merged.stats.cities).toBe(47);
+    expect(merged.stats.cities).toBe(43);
     expect(merged.stats.institutions).toBe(119);
     expect(merged.stats.countries).toBe(14);
     expect(merged.stats.matchedWorks).toBe(34);
@@ -108,11 +108,12 @@ describe('共著者の統合（既定 ON）', () => {
   it('水増しが大きかった都市の共著者数が下がる', () => {
     const after = cityByKey(merged);
     const before = cityByKey(unmerged);
+    // DE|Berlin は主所属の種別優先で誰の主所属でもなくなり、都市ごと消えた
+    // （Berlin にいたのは研究コンソーシアム本部 DZHK だけ）。代わりに Munich が増える。
     for (const [key, expected, was] of [
-      ['DE|Munich', 11, 13],
-      ['DE|Berlin', 4, 7],
-      ['JP|Kyoto', 17, 21],
-      ['JP|Tokyo', 19, 21],
+      ['DE|Munich', 25, 33],
+      ['JP|Kyoto', 18, 22],
+      ['JP|Tokyo', 18, 21],
     ]) {
       expect(after.get(key).coauthorCount).toBe(expected);
       expect(before.get(key).coauthorCount).toBe(was);
@@ -125,7 +126,7 @@ describe('共著者の統合（既定 ON）', () => {
     for (const [key, expected] of [
       ['CH|Bern', 3],
       ['GB|Oxford', 4],
-      ['JP|Osaka', 3],
+      ['JP|Osaka', 2],
     ]) {
       expect(after.get(key).coauthorCount).toBe(expected);
       expect(before.get(key).coauthorCount).toBe(expected);

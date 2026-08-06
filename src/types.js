@@ -44,6 +44,9 @@
  * @property {'first-listed'|'orcid'|'fallback'|null} primaryBy  主所属をどの規則で決めたか。
  * `'first-listed'` = 論文に印字された先頭の所属、`'orcid'` = ORCID の所属名との一致、
  * `'fallback'` = 決め手が無いので機関 ID 昇順で決定的に選んだ
+ * @property {boolean} primaryTypeFiltered  主所属を決める前に候補を勤務先らしい種別
+ * （`education` / `healthcare`）へ絞り込んだか。研究コンソーシアム本部（`facility`）などが
+ * 候補から外れて結論が変わりうる人だけ `true`。`afftype=off` なら常に `false`
  */
 
 /**
@@ -86,6 +89,8 @@
  * @property {number} coauthorsWithoutInstitution    主所属を決められなかった共著者数
  * @property {{firstListed: number, orcid: number, fallback: number, none: number}} primaryBy
  *   主所属をどの規則で決めたかの内訳（人数）
+ * @property {number} primaryTypeFiltered  主所属の候補を勤務先らしい種別に絞り込んだ人数。
+ *   `afftype=off` なら 0
  * @property {number} yearMin
  * @property {number} yearMax
  */
@@ -144,6 +149,9 @@
  *   旧来どおり所属した全都市に置くか（`'all'`）
  * @property {boolean} [useOrcidAffiliations]  ORCID の所属名を主所属の判定に使うか（既定 true）。
  *   取得に失敗しても地図は壊さない（先頭所属の規則だけで決める）
+ * @property {boolean} [preferOccupationalTypes]  主所属の候補を勤務先らしい種別
+ *   （`education` / `healthcare`）へ絞ってから判定するか（既定 true）。
+ *   URL の `afftype=off` で切る。研究コンソーシアム本部（`facility`）が主所属に選ばれるのを防ぐ
  * @property {boolean} [useCache]     sessionStorage の 24 時間キャッシュを使うか（既定 true）
  * @property {(ms: number) => Promise<void>} [sleepImpl]  リトライの待機。テストで実時間を消さないため
  * @property {number} [maxRetries]    429 / 5xx のリトライ上限（既定 3）
