@@ -498,8 +498,17 @@ describe('scope の URL 往復', () => {
     expect(stateToQuery(base())).not.toContain('center');
   });
 
-  it('クエリ無しの既定 URL は従来どおり（scope も center も出ない）', () => {
+  it('クエリ無しの既定 URL は orcid だけ（scope も center も rm も出ない）', () => {
     const query = stateToQuery(readStateFromUrl(''), { from: 2019, to: 2026 });
+    // researchmap は既定の seed から外したので `rm=` は載らない。
+    expect(query).toBe('orcid=0000-0003-1317-0220');
+  });
+
+  it('rm= を明示すれば従来どおり URL に残る', () => {
+    const query = stateToQuery(readStateFromUrl('?rm=yk_frkw'), {
+      from: 2019,
+      to: 2026,
+    });
     expect(query).toBe('orcid=0000-0003-1317-0220&rm=yk_frkw');
   });
 });

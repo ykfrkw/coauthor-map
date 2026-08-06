@@ -148,6 +148,8 @@
  * @property {'primary'|'all'} [pinMode]  共著者を主所属の 1 都市だけに置くか（既定 `'primary'`）、
  *   旧来どおり所属した全都市に置くか（`'all'`）
  * @property {boolean} [useOrcidAffiliations]  ORCID の所属名を主所属の判定に使うか（既定 true）。
+ *   true でも**必要なときしか取りに行かない**。先頭所属の規則で全員決まれば 1 本も投げず、
+ *   決まらない人がいたときだけその人の分を引く。
  *   取得に失敗しても地図は壊さない（先頭所属の規則だけで決める）
  * @property {boolean} [preferOccupationalTypes]  主所属の候補を勤務先らしい種別
  *   （`education` / `healthcare`）へ絞ってから判定するか（既定 true）。

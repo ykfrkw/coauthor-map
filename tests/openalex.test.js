@@ -107,7 +107,8 @@ describe('URL の組み立て', () => {
   });
 
   it('同時実行は MAX_CONCURRENCY を超えない', async () => {
-    expect(MAX_CONCURRENCY).toBe(3);
+    // OpenAlex は 10 req/s 程度を通すので、その半分までを使う。
+    expect(MAX_CONCURRENCY).toBe(5);
 
     /**
      * 同時進行中のリクエスト数の最大値を測るスタブ。
