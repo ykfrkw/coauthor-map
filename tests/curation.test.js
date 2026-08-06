@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 
 import {
@@ -208,5 +210,48 @@ describe('curation の適用', () => {
     });
     expect(dataset.institutions.has(hospital)).toBe(false);
     expect(dataset.institutions.has(university)).toBe(false);
+  });
+});
+
+/**
+ * 名前が null のレコードで地図ごと落ちないことの凍結。
+ *
+ * 実例: ORCID 0000-0002-4934-4352 を読むと、OpenAlex が `name: null` の
+ * 共著者・機関を返す。素の `.name` で localeCompare を呼んでいた並べ替えが
+ * そこで例外を投げ、build() の try が拾って画面には「地図を作れません」だけが
+ * 残っていた（**手直しパネルだけでなく地図も出ない**）。この repo は jsdom を
+ * 入れていないのでパネルを実際に組めない。代わりに、危ない書き方が
+ * ソースに戻っていないことを見る。
+ */
+describe('名前が null のレコード', () => {
+  const SOURCES = ['../src/ui/curation.js', '../src/map/cluster.js'].map(
+    (path) => [
+      path,
+      readFileSync(fileURLToPath(new URL(path, import.meta.url)), 'utf8'),
+    ],
+  );
+
+  it('素の .name に localeCompare を呼んでいない', () => {
+    for (const [path, source] of SOURCES) {
+      expect(source, path).not.toMatch(/\b[a-z]\.name\.localeCompare/);
+    }
+  });
+
+  it('名前を文字列に倒してから比べている', () => {
+    for (const [path, source] of SOURCES) {
+      expect(source, path).toMatch(/(displayName|String\()[^\n]*localeCompare/);
+    }
+  });
+
+  it('並べ替えに null を渡しても投げない', () => {
+    const records = [
+      { name: null, paperCount: 2 },
+      { name: 'Zoe', paperCount: 2 },
+      { name: undefined, paperCount: 1 },
+    ];
+    const byName = (a, b) =>
+      b.paperCount - a.paperCount ||
+      String(a?.name ?? '—').localeCompare(String(b?.name ?? '—'));
+    expect(() => [...records].sort(byName)).not.toThrow();
   });
 });

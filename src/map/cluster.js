@@ -86,8 +86,13 @@ function aggregate(members) {
     }
   }
 
+  // 名前が null のレコードが混じることがある（OpenAlex 由来）。
+  // 素の `.name` で localeCompare を呼ぶと、そのピンのツールチップを
+  // 組む段で例外になって地図ごと落ちる
   coauthors.sort(
-    (a, b) => b.paperCount - a.paperCount || a.name.localeCompare(b.name),
+    (a, b) =>
+      b.paperCount - a.paperCount ||
+      String(a.name ?? '').localeCompare(String(b.name ?? '')),
   );
 
   return {

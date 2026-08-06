@@ -220,11 +220,12 @@ const STRINGS = {
   'embed.height': 'Height (px)',
   'embed.tooLong':
     'This link is {n} characters long. Some blog editors and servers cut links off around 2,000. Raise Main collaborations to drop the smallest collaborations, or clear a few corrections.',
-  // `controls=on` を付ける版。読者が枠の中で自分の地図を作れるようになる代わりに
-  // 枠が 450px ほど高くなるので、既定は表示専用のまま
+  // `controls=on` を付ける版。読者が枠の中でフルツールと同じことを全部できる
+  // 代わりに、枠が 520px ほど高くなる（983 − 460）ので既定は表示専用のまま。
+  // 増分の 3 パネルは折りたたみなので、閉じているあいだの増分は summary 3 行だけ
   'embed.controlsLabel': 'Let readers build their own map',
   'embed.controlsHint':
-    'Adds the ID fields, the main view controls, and this snippet builder inside the frame, so a reader can enter their own ORCID iD and take away their own embed code without leaving your page. The frame needs about 450 more pixels of height.',
+    'Adds the ID fields, the main view controls, and three collapsed panels — corrections, the tables, and this snippet builder — inside the frame, so a reader can enter their own ORCID iD, fix a wrong affiliation, read the map as a table, and take away their own embed code without ever leaving your page. The frame needs about 520 more pixels of height while the panels stay closed.',
   'embed.autoResizeLabel': 'Let the frame set its own height',
   'embed.autoResizeHint':
     'On by default. The snippet carries a small script that follows the height the frame reports, so the map is never cut off or padded. Uncheck it to paste a fixed-height frame instead.',
@@ -238,11 +239,10 @@ const STRINGS = {
   'embed.frozenAt':
     'Stops at {year}: the snippet pins the last year, so papers published later never appear. Drag the last year back to the right end of the slider to let the map keep growing.',
 
-  // `?controls=on` の埋め込みの末尾に置く 1 本のリンク。埋め込みコード生成は
-  // 枠の中に入ったので、**そこにしか無いもの**（補正パネルと集計テーブル）を名指しする。
-  // 「full tool」だけでは、いま見ている枠に何が足りないのか読者に分からない
-  'widget.openFullTool':
-    'Open the full tool to fix wrong affiliations and read the map as tables',
+  // `?controls=on` の埋め込みが持つ補正の折りたたみの見出し。中身は
+  // 「誰を地図に載せるか」（auth.*）と「取り違いの手直し」（cur.*）の 2 段。
+  // summary は閉じた状態で唯一見える行なので、**開けば何ができるのか**を書く
+  'widget.corrections': 'Choose who is on the map, and fix what is wrong',
 
   'load.start': 'Starting...',
   'load.done': 'Done.',

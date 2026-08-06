@@ -19,7 +19,11 @@ import { h, copyText } from './dom.js';
 import { stateToQuery, isEndYearOpen } from './controls.js';
 
 export const WIDGET_BASE = 'https://ykfrkw.github.io/coauthor-map/widget.html';
-/** 自サイト内の表示（index.html のフッタなど）用。スニペットには載せない */
+/**
+ * GitHub Pages 側のフルツールの URL。**スニペットには載せない**（上の理由）。
+ * 埋め込みからフルツールへ飛ばす導線はもう無いので、コード上の参照は
+ * 「クレジット行にこの URL が出ていないこと」を見るテストだけが持つ。
+ */
 export const TOOL_URL = 'https://ykfrkw.github.io/coauthor-map/';
 /** スニペットのクレジット行が指す唯一のリンク先 */
 export const AUTHOR_URL = 'https://yukifurukawa.jp/coauthor-map/';
@@ -55,39 +59,33 @@ export const DEFAULT_EMBED_HEIGHT = 460;
  *
  * 表示専用の中身に加えて、種の入力欄（ORCID / researchmap / Load this researcher）と
  * 表示コントロール 6 つを載せた操作パネルが地図の上に乗り、地図の下に
- * 埋め込みコード生成の折りたたみ（閉じた状態で summary 1 行）が付く。
+ * **折りたたみが 3 つ**（補正 / 集計テーブル / 埋め込みコード生成）付く。
+ * この 3 つでフルツールと同じことが枠の中で全部できるので、外に出る導線は無い。
  *
  * ブラウザで iframe に入れて `embed:height` を受けた実測（自動リサイズ後の最終高さ、
- * **折りたたみは閉じたまま**）:
- *   幅 700px → 882 / 780px → 905 / 870px → 934。
- * 配布先の本文幅は 780px 前後なので、そこでの実測に合わせて 905 を既定にする。
- * 折りたたみを足す前は 847（780px）だったので、閉じた状態の増分は 58px。
+ * **折りたたみは 3 つとも閉じたまま**）:
+ *   幅 690px → 1094 / 700px → 959 / 780px → 983 / 870px → 1012。
+ * 配布先の本文幅は 780px 前後なので、そこでの実測に合わせて 983 を既定にする。
+ * 折りたたみが 1 つだった頃は 905（780px）だったので、2 本増やした分は 78px。
  *
- * 開くと 780px で 1297px まで伸びるが、**開いた高さは既定に載せない**。
- * 開くのは読者が自分でスニペットを取りに行ったときだけで、そこでは
- * embed-height.js の再通知が親の枠を伸ばす（開閉のたびに通知が飛ぶことは
- * ブラウザで確認済み: 905 → 1297 → 905）。
+ * 開いたときの実測（780px、それぞれ 1 つだけ開いた状態）:
+ *   補正 2692 / 集計テーブル 1687 / 埋め込みコード生成 1393、3 つとも開くと 3805。
+ * **開いた高さは既定に載せない。** 開くのは読者が自分で必要になったときだけで、
+ * そこでは embed-height.js の再通知が親の枠を伸ばす（3 つとも開閉のたびに
+ * 通知が飛ぶことはブラウザで確認済み: 983 → 2692 → … → 3805 → 983）。
+ * 全部開いても親側スクリプトの上限 5000px には当たらない。件数で青天井に
+ * 伸びる並び（共著者の一覧・集計表・統合済みレコードの一覧）は、
+ * すべて自分の中でスクロールさせて蓋をしてある（src/css/style.css）。
  *
  * 幅 700px を切ると `.widget-controls-card` の 3 列が 2 列に落ちて操作パネルが
- * 1 行分伸びる（690px で 1016px）。**保証するのは本文幅 700〜870px の帯**で、
- * それより狭い枠は自動リサイズに任せる。
+ * 1 行分伸びる（690px で 1094px）。**保証するのは本文幅 700〜870px の帯**で、
+ * それより狭い枠は自動リサイズに任せる（272px でも横スクロールは出ない）。
  */
-export const CONTROLS_EMBED_HEIGHT = 905;
+export const CONTROLS_EMBED_HEIGHT = 983;
 
 /** widget.html の URL を今の表示状態から組む */
 export function buildWidgetUrl(state, bounds, base = WIDGET_BASE) {
   const query = stateToQuery(state, bounds);
-  return query ? `${base}?${query}` : base;
-}
-
-/**
- * index.html（フルツール）の URL を今の表示状態から組む。
- *
- * `controls` は widget.html だけの話なので落とす。index.html は常に
- * 操作パネルを持っており、付いていても意味が無いうえに URL が長くなる。
- */
-export function buildToolUrl(state, bounds, base = TOOL_URL) {
-  const query = stateToQuery({ ...state, controls: false }, bounds);
   return query ? `${base}?${query}` : base;
 }
 
@@ -370,38 +368,4 @@ export function createEmbedPanel({ container, t, getState }) {
   );
 
   return { refresh };
-}
-
-/**
- * `?controls=on` の埋め込みの末尾に置く、フルツールへの導線。**1 本だけ。**
- *
- * 埋め込みでは出さないもの（補正・集計テーブル・ダウンロード・出典一覧）に
- * 行ける唯一の道なので、**いまの表示状態を引き継いで**飛ばす。
- * 引き継がないと、読者が枠の中で組んだ地図がリンクを踏んだ瞬間に消える。
- * 埋め込みコード生成は枠の中に入ったので、この導線が担う仕事から外れた。
- *
- * 別タブで開く。埋め込み枠の中で遷移すると、記事を読んでいた場所に戻れなくなる。
- *
- * @param {Object} opts
- * @param {HTMLElement} opts.container
- * @param {(k: string, p?: Object) => string} opts.t
- */
-export function createOpenFullToolLink({ container, t }) {
-  const link = h('a', {
-    href: TOOL_URL,
-    target: '_blank',
-    rel: 'noopener',
-    text: t('widget.openFullTool'),
-  });
-  container.append(h('p', { class: 'hint' }, [link]));
-
-  return {
-    /**
-     * @param {Object} state
-     * @param {{from: number, to: number}} [bounds]
-     */
-    refresh(state, bounds) {
-      link.href = buildToolUrl(state, bounds);
-    },
-  };
 }

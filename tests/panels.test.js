@@ -20,9 +20,16 @@ import {
   readStateFromUrl,
   stateToQuery,
 } from '../src/ui/controls.js';
+import { STRINGS } from '../src/ui/i18n.js';
+import * as EMBED_SNIPPET_EXPORTS from '../src/ui/embed-snippet.js';
 
 const APP_SOURCE = readFileSync(
   fileURLToPath(new URL('../src/app.js', import.meta.url)),
+  'utf8',
+);
+
+const EMBED_SOURCE = readFileSync(
+  fileURLToPath(new URL('../src/ui/embed-snippet.js', import.meta.url)),
   'utf8',
 );
 
@@ -62,7 +69,6 @@ describe('widget.html の既定（controls なし）', () => {
   it('操作 UI を出さない（既存の埋め込みの見え方を変えない）', () => {
     expect(panels.controls).toBe(false);
     expect(panels.viewFields).toEqual([]);
-    expect(panels.openFullTool).toBe(false);
   });
 
   it('補正パネル・集計テーブル・埋め込みコード生成・ダウンロードも出さない', () => {
@@ -79,9 +85,8 @@ describe('widget.html の既定（controls なし）', () => {
 describe('widget.html の `?controls=on`', () => {
   const panels = resolvePanels('widget', readStateFromUrl('?controls=on'));
 
-  it('操作 UI とフルツールへの導線が出る', () => {
+  it('操作 UI が出る', () => {
     expect(panels.controls).toBe(true);
-    expect(panels.openFullTool).toBe(true);
   });
 
   it('出す表示コントロールは主要な 6 つだけ', () => {
@@ -99,18 +104,24 @@ describe('widget.html の `?controls=on`', () => {
     expect(panels.viewFields).not.toContain('grainHint');
   });
 
-  // スニペット作りだけのためにフルツールへ飛ばさない。
-  // 折りたたみで置くので、閉じているあいだは地図を押し下げない
-  it('埋め込みコード生成が出る', () => {
+  // ここが今回の肝。**枠の中だけで話が終わる**ようにするため、
+  // 補正（誰を載せるか + 手直し）・集計テーブル・埋め込みコード生成の 3 つを出す。
+  // 3 つとも折りたたみなので、閉じているあいだは地図を押し下げない
+  it('補正パネル・集計テーブル・埋め込みコード生成の 3 つがすべて出る', () => {
+    expect(panels.authors).toBe(true);
+    expect(panels.curation).toBe(true);
+    expect(panels.table).toBe(true);
     expect(panels.embed).toBe(true);
   });
 
-  it('補正パネル・集計テーブル・ダウンロードは `controls=on` でも出ない', () => {
-    expect(panels.curation).toBe(false);
-    expect(panels.table).toBe(false);
+  it('画像のダウンロードと統計の並びは出さない（器を持たない）', () => {
     expect(panels.download).toBe(false);
-    expect(panels.authors).toBe(false);
     expect(panels.stats).toBe(false);
+    expect(panels.mapActions).toBe(false);
+  });
+
+  it('フルツールへ飛ばす導線はもう無い', () => {
+    expect(panels.openFullTool).toBeUndefined();
   });
 });
 
@@ -130,10 +141,6 @@ describe('index.html', () => {
 
   it('`controls=on` が付いていても見え方は変わらない（常に全部出る）', () => {
     expect(resolvePanels('full', { controls: true })).toEqual(panels);
-  });
-
-  it('フルツール自身にはフルツールへの導線を出さない', () => {
-    expect(panels.openFullTool).toBe(false);
   });
 });
 
@@ -155,18 +162,19 @@ describe('app.js は判断表だけを見る', () => {
       ['curation', 'curation'],
       ['export', 'download'],
       ['embed', 'embed'],
-      ['more', 'openFullTool'],
     ]) {
       expect(APP_SOURCE, id).toContain(`panels.${key} ? el('${id}')`);
     }
   });
 
-  // widget.html の #embed は hidden な details の中にある。中身を組む側が
+  // widget.html の 4 つの器は hidden な details の中にある。中身を組む側が
   // 開けないと、パネルは組まれているのに画面に出ない
-  it('埋め込みパネルを組むときは器の hidden を外す', () => {
+  it('折りたたみに入るパネルを組むときは器の hidden を外す', () => {
     expect(APP_SOURCE).toContain(
-      "embedEl.closest('[hidden]')?.removeAttribute('hidden')",
+      "const reveal = (node) => node?.closest('[hidden]')?.removeAttribute('hidden')",
     );
+    for (const name of ['authorsEl', 'tableEl', 'curationEl', 'embedEl'])
+      expect(APP_SOURCE, name).toContain(`reveal(${name})`);
   });
 
   it('mode を直接見る分岐が残っていない', () => {
@@ -174,42 +182,130 @@ describe('app.js は判断表だけを見る', () => {
   });
 });
 
+// 「Open the full tool ...」を消しきったことの凍結。**リンクも、それを組む関数も、
+// 文言も、器も残さない。** どれか 1 つでも生き残ると、埋め込みの中で完結する
+// という今回の作り替えが崩れる（読者が枠の外へ出る道が復活する）
+describe('フルツールへの導線が残っていない', () => {
+  it('文言の表に i18n キーが無い', () => {
+    expect(Object.keys(STRINGS)).not.toContain('widget.openFullTool');
+    for (const value of Object.values(STRINGS))
+      expect(value).not.toContain('Open the full tool');
+  });
+
+  it('生成ロジックが embed-snippet.js に無い', () => {
+    expect(EMBED_SOURCE).not.toContain('createOpenFullToolLink');
+    expect(EMBED_SOURCE).not.toContain('buildToolUrl');
+    expect(EMBED_SNIPPET_EXPORTS.createOpenFullToolLink).toBeUndefined();
+    expect(EMBED_SNIPPET_EXPORTS.buildToolUrl).toBeUndefined();
+  });
+
+  it('app.js が導線を組まない', () => {
+    expect(APP_SOURCE).not.toContain('openFullTool');
+  });
+
+  it('widget.html に器（#more）が無い', () => {
+    expect(WIDGET_HTML).not.toContain('id="more"');
+  });
+});
+
 describe('widget.html の器', () => {
-  it('操作パネルと導線の枠は hidden で置いてある（空の箱を出さない）', () => {
+  /** 折りたたみ 3 つの id と、その中に入る器の id */
+  const PANEL_DETAILS = [
+    ['corrections-panel', ['authors', 'curation']],
+    ['tables-panel', ['table']],
+    ['embed-panel', ['embed']],
+  ];
+
+  it('操作パネルの枠は hidden で置いてある（空の箱を出さない）', () => {
     expect(WIDGET_HTML).toContain('id="controls" hidden');
-    expect(WIDGET_HTML).toContain('id="more" hidden');
   });
 
-  it('埋め込みコード生成の器も hidden の折りたたみで置いてある', () => {
-    expect(WIDGET_HTML).toContain('id="embed-panel" hidden');
-    expect(WIDGET_HTML).toContain('id="embed"');
+  it('補正・集計テーブル・埋め込みコード生成の器が 3 つとも置いてある', () => {
+    for (const [detailsId, inner] of PANEL_DETAILS) {
+      expect(WIDGET_HTML, detailsId).toContain(`id="${detailsId}"`);
+      for (const id of inner) expect(WIDGET_HTML, id).toContain(`id="${id}"`);
+    }
   });
 
-  // 開いた状態で置くと、地図とコントロールが 300px 以上押し下げられる。
+  // 開いた状態で置くと、地図とコントロールが 1000px 以上押し下げられる。
   // `open` 属性を付けないことが「既定は閉じている」の実装そのもの
-  it('折りたたみは既定で閉じている（地図を押し下げない）', () => {
-    const details = WIDGET_HTML.match(/<details[^>]*id="embed-panel"[^>]*>/);
-    expect(details).not.toBeNull();
-    expect(details[0]).not.toContain('open');
-    expect(details[0].startsWith('<details')).toBe(true);
+  it('3 つとも折りたたみで、既定は閉じている（地図を押し下げない）', () => {
+    for (const [detailsId] of PANEL_DETAILS) {
+      const details = WIDGET_HTML.match(
+        new RegExp(`<details[^>]*id="${detailsId}"[^>]*>`, 's'),
+      );
+      expect(details, detailsId).not.toBeNull();
+      expect(details[0], detailsId).not.toContain('open');
+      expect(details[0].startsWith('<details'), detailsId).toBe(true);
+    }
   });
 
-  it('補正・集計テーブル・ダウンロードの器はそもそも無い', () => {
-    for (const id of ['curation', 'table', 'export', 'authors'])
-      expect(WIDGET_HTML).not.toContain(`id="${id}"`);
+  // `?controls=on` が無いときは 3 つとも空のまま。開ける側（app.js）が
+  // 動かない以上、hidden のまま残る
+  it('3 つとも hidden で置いてある（表示専用の埋め込みの高さを動かさない）', () => {
+    for (const [detailsId] of PANEL_DETAILS) {
+      const details = WIDGET_HTML.match(
+        new RegExp(`<details[^>]*id="${detailsId}"[^>]*>`, 's'),
+      );
+      expect(details[0], detailsId).toContain('hidden');
+      expect(details[0], detailsId).toContain('widget-panel-card');
+    }
+  });
+
+  it('画像のダウンロードの器はそもそも無い', () => {
+    expect(WIDGET_HTML).not.toContain('id="export"');
   });
 
   // `.card` の display: grid は [hidden] に勝つ。打ち消しを消すと、中身が空でも
-  // 枠と余白だけが残り、**表示専用の埋め込みが 26px 高くなる**（実測 460 → 486）。
+  // 枠と余白だけが残り、**表示専用の埋め込みが高くなる**（操作パネル 1 枚で
+  // 実測 460 → 486。折りたたみ 3 枚ならその 3 倍が積まれる）。
   it('空の操作パネルは display も落としてある（既存の埋め込みの高さを動かさない）', () => {
     expect(STYLE_CSS).toMatch(
       /\.widget-controls-card\[hidden\]\s*\{\s*display:\s*none;/,
     );
   });
 
-  it('空の埋め込みパネルも display を落としてある', () => {
+  it('空の折りたたみ 3 つも display を落としてある', () => {
     expect(STYLE_CSS).toMatch(
-      /\.widget-embed-card\[hidden\]\s*\{\s*display:\s*none;/,
+      /\.widget-panel-card\[hidden\]\s*\{\s*display:\s*none;/,
     );
+  });
+});
+
+// 埋め込みは本文幅 780px、iframe の中はさらに狭い。**溢れるものは
+// 自分の中でスクロールさせる。** 器の外へ出た瞬間、枠ごと横スクロールする
+describe('狭い枠での収まり', () => {
+  it('集計テーブルは自分の器の中でスクロールする', () => {
+    const rule = STYLE_CSS.match(/\.table-scroll\s*\{([^}]*)\}/);
+    expect(rule).not.toBeNull();
+    expect(rule[1]).toMatch(/overflow:\s*auto;/);
+    expect(rule[1]).toMatch(/min-width:\s*0;/);
+  });
+
+  // 共著者は 145 名になりうる。一覧そのものに上限が無いと、
+  // 開いた折りたたみが embed-height.js の上限（5000px）を押し上げる
+  it('チェックボックス一覧に最大高さとスクロールが付いている（320px 以下）', () => {
+    const rule = STYLE_CSS.match(/\.check-list\s*\{([^}]*)\}/);
+    expect(rule).not.toBeNull();
+    expect(rule[1]).toMatch(/overflow:\s*auto;/);
+    const max = rule[1].match(/max-height:\s*(\d+)px;/);
+    expect(max).not.toBeNull();
+    expect(Number(max[1])).toBeLessThanOrEqual(320);
+  });
+
+  // grid item の既定は min-width: auto。入れ子の grid に 0 を入れておかないと、
+  // 中身が器を押し広げてページごと横スクロールする
+  it('入れ子の grid が中身に押し広げられない', () => {
+    for (const selector of [
+      '.section',
+      '.controls',
+      '.widget-panel-card > \\*',
+    ]) {
+      const rule = STYLE_CSS.match(
+        new RegExp(`\\n${selector}\\s*\\{([^}]*)\\}`),
+      );
+      expect(rule, selector).not.toBeNull();
+      expect(rule[1], selector).toMatch(/min-width:\s*0;/);
+    }
   });
 });
