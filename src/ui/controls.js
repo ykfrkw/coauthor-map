@@ -3,7 +3,7 @@
  *
  * 表示状態はすべて URL クエリに載せる。リロードで復元でき、そのまま共有もできる:
  *   ?orcid=&rm=&from=&to=&proj=&center=&grain=&theme=&size=&scope=&merge=
- *   &min=&xa=&xi=&xd=&pin=&orcidaff=&labels=&legend=
+ *   &min=&xa=&xi=&xd=&pin=&orcidaff=&afftype=&labels=&legend=
  *
  * **手直し（除外）も URL に載せる。** localStorage にしか無いと埋め込みウィジェットに
  * 伝わらず、「画面で直した状態」と「配布した地図」が食い違う。
@@ -64,6 +64,9 @@ export const DEFAULTS = Object.freeze({
   pin: DEFAULT_PIN_MODE,
   // ORCID の所属名を主所属の判定に使うか。既定 ON（`orcidaff=off` で切る）
   orcidaff: true,
+  // 主所属に education / healthcare を優先するか。既定 ON（`afftype=off` で切る）
+  // 切ると研究コンソーシアム本部（type=facility）が主所属に選ばれる旧来の判定に戻る
+  afftype: true,
   // 地図に重なる都市名ラベルを出すか。既定 ON（`labels=off` で消す）
   //
   // **既定を ON にした根拠**: オーナーは「基本的には不要かも」と言っているが、
@@ -284,6 +287,7 @@ export function readStateFromUrl(search = window.location.search) {
     min: parseMinPapers(q.get('min')),
     pin: q.has('pin') ? normalizePinMode(q.get('pin')) : DEFAULTS.pin,
     orcidaff: q.get('orcidaff') !== 'off',
+    afftype: q.get('afftype') !== 'off',
     labels: q.get('labels') !== 'off',
     // 書かれていなければ null のまま。ページ側の既定に判断を譲る
     legend: q.has('legend') ? q.get('legend') !== 'off' : DEFAULTS.legend,
@@ -350,6 +354,7 @@ export function stateToQuery(state, bounds) {
   if (parseMinPapers(state.min) > 1) q.set('min', String(state.min));
   if (state.pin && state.pin !== DEFAULTS.pin) q.set('pin', state.pin);
   if (state.orcidaff === false) q.set('orcidaff', 'off');
+  if (state.afftype === false) q.set('afftype', 'off');
   if (state.labels === false) q.set('labels', 'off');
   // 凡例は「ページ既定に従う（null）」が既定なので、明示されたときだけ書く。
   // これで index.html の見え方をそのまま widget.html に運べる
