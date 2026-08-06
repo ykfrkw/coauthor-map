@@ -882,6 +882,26 @@ th.num {
   gap: var(--space-2) var(--space-3);
 }
 
+/* `?controls=on` のときだけ出る埋め込みコード生成。**折りたたんで置く。**
+ * 開いた分だけ枠が伸びるが、閉じているあいだは summary の 1 行しか占めないので
+ * 地図とコントロールを押し下げない */
+.widget-embed-card {
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+}
+
+/* `controls=on` が無いときは器ごと消す。**`.card` の display: grid が [hidden] に
+ * 勝つ**ので、上の .widget-controls-card と同じ打ち消しが要る */
+.widget-embed-card[hidden] {
+  display: none;
+}
+
+/* 枠の中では縦が高くつく。スニペット欄はページ既定の 190px から詰める
+ * （スクロールすれば全文は読める。読者がやることはコピー 1 回） */
+.widget-embed-card .snippet {
+  min-height: 120px;
+}
+
 /* 記事の本文幅（780px 前後）では 3 列に組む。ページ既定の 2 列だと
  * 種の入力欄が 2 行、表示コントロールが 3 行になって枠が 1000px を超え、
  * 本文のリズムを壊す。3 列なら種が 1 行、コントロールが 2 行に収まる。

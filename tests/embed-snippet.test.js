@@ -4,6 +4,7 @@ import {
   AUTHOR_URL,
   CONTROLS_EMBED_HEIGHT,
   DEFAULT_EMBED_HEIGHT,
+  IFRAME_ALLOW,
   TOOL_URL,
   assertSnippetIsSafe,
   buildSnippet,
@@ -62,6 +63,37 @@ describe('スニペットのクレジット行', () => {
 
   it('iframe の src はクレジット行のリンクとは別扱いで、そのまま入る', () => {
     expect(buildSnippet(SRC)).toContain(`src="${SRC}"`);
+  });
+});
+
+/**
+ * クロスオリジンの iframe では、親が `clipboard-write` を委譲しない限り
+ * `navigator.clipboard.writeText()` が拒否される。`controls=on` の埋め込みは
+ * 枠の中で埋め込みコードを作れるので、これが無いとコピーが黙って落ちる。
+ */
+describe('クリップボードの委譲', () => {
+  it('iframe に allow="clipboard-write" が入る', () => {
+    expect(IFRAME_ALLOW).toBe('clipboard-write');
+    expect(buildSnippet(SRC)).toContain('allow="clipboard-write"');
+    expect(buildSnippet(CONTROLS_SRC)).toContain('allow="clipboard-write"');
+  });
+
+  it('自動リサイズを外した版にも入る', () => {
+    expect(buildSnippet(CONTROLS_SRC, 850, { autoResize: false })).toContain(
+      'allow="clipboard-write"',
+    );
+  });
+
+  // 読み取りまで渡すと、親ページのクリップボードを覗ける経路が開く。
+  // 書き込みだけに絞る
+  it('clipboard-read は委譲しない', () => {
+    expect(buildSnippet(CONTROLS_SRC)).not.toContain('clipboard-read');
+  });
+
+  it('allow は iframe だけに付く（1 か所）', () => {
+    const snippet = buildSnippet(CONTROLS_SRC);
+    expect(snippet.match(/allow="/g)).toHaveLength(1);
+    expect(snippet).toMatch(/<iframe[^>]*allow="clipboard-write"[^>]*>/);
   });
 });
 
@@ -159,19 +191,30 @@ describe('`controls=on` の初期高さ', () => {
     );
   });
 
-  // ブラウザで実際に iframe に入れて embed:height を受けた値。
-  // 初期高さとの差が 50px を超えると、読み込み直後に枠が飛び跳ねて見える。
-  it('本文幅 690〜870px の実測との差が 50px 以内', () => {
+  // ブラウザで実際に iframe に入れて embed:height を受けた値（**折りたたみは
+  // 閉じたまま**）。初期高さとの差が 50px を超えると、読み込み直後に枠が飛び跳ねて見える。
+  it('本文幅 700〜870px の実測（閉じた状態）との差が 50px 以内', () => {
     for (const [width, actual] of [
-      [700, 823],
-      [780, 847],
-      [870, 875],
+      [700, 882],
+      [780, 905],
+      [870, 934],
     ]) {
       expect(
         Math.abs(CONTROLS_EMBED_HEIGHT - actual),
         `width ${width}`,
       ).toBeLessThanOrEqual(50);
     }
+  });
+
+  // 配布先の本文幅そのもの。ここだけは実測に一致させる
+  it('本文幅 780px の実測に一致する', () => {
+    expect(CONTROLS_EMBED_HEIGHT).toBe(905);
+  });
+
+  // 開いた状態（780px で実測 1297px）を初期高さにすると、読者が一度も
+  // 開かないまま 390px の空白を抱えることになる。**閉じた状態を既定にする**
+  it('開いた状態の高さは既定にしない', () => {
+    expect(CONTROLS_EMBED_HEIGHT).toBeLessThan(1297);
   });
 
   it('表示専用より高い（操作パネルの分だけ枠が要る）', () => {

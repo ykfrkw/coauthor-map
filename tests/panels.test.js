@@ -99,11 +99,18 @@ describe('widget.html の `?controls=on`', () => {
     expect(panels.viewFields).not.toContain('grainHint');
   });
 
-  it('補正パネル・集計テーブル・埋め込みコード生成は `controls=on` でも出ない', () => {
+  // スニペット作りだけのためにフルツールへ飛ばさない。
+  // 折りたたみで置くので、閉じているあいだは地図を押し下げない
+  it('埋め込みコード生成が出る', () => {
+    expect(panels.embed).toBe(true);
+  });
+
+  it('補正パネル・集計テーブル・ダウンロードは `controls=on` でも出ない', () => {
     expect(panels.curation).toBe(false);
     expect(panels.table).toBe(false);
-    expect(panels.embed).toBe(false);
     expect(panels.download).toBe(false);
+    expect(panels.authors).toBe(false);
+    expect(panels.stats).toBe(false);
   });
 });
 
@@ -154,6 +161,14 @@ describe('app.js は判断表だけを見る', () => {
     }
   });
 
+  // widget.html の #embed は hidden な details の中にある。中身を組む側が
+  // 開けないと、パネルは組まれているのに画面に出ない
+  it('埋め込みパネルを組むときは器の hidden を外す', () => {
+    expect(APP_SOURCE).toContain(
+      "embedEl.closest('[hidden]')?.removeAttribute('hidden')",
+    );
+  });
+
   it('mode を直接見る分岐が残っていない', () => {
     expect(APP_SOURCE).not.toContain("mode === 'full'");
   });
@@ -165,8 +180,22 @@ describe('widget.html の器', () => {
     expect(WIDGET_HTML).toContain('id="more" hidden');
   });
 
-  it('補正・集計テーブル・埋め込みコード生成の器はそもそも無い', () => {
-    for (const id of ['curation', 'table', 'embed', 'export', 'authors'])
+  it('埋め込みコード生成の器も hidden の折りたたみで置いてある', () => {
+    expect(WIDGET_HTML).toContain('id="embed-panel" hidden');
+    expect(WIDGET_HTML).toContain('id="embed"');
+  });
+
+  // 開いた状態で置くと、地図とコントロールが 300px 以上押し下げられる。
+  // `open` 属性を付けないことが「既定は閉じている」の実装そのもの
+  it('折りたたみは既定で閉じている（地図を押し下げない）', () => {
+    const details = WIDGET_HTML.match(/<details[^>]*id="embed-panel"[^>]*>/);
+    expect(details).not.toBeNull();
+    expect(details[0]).not.toContain('open');
+    expect(details[0].startsWith('<details')).toBe(true);
+  });
+
+  it('補正・集計テーブル・ダウンロードの器はそもそも無い', () => {
+    for (const id of ['curation', 'table', 'export', 'authors'])
       expect(WIDGET_HTML).not.toContain(`id="${id}"`);
   });
 
@@ -175,6 +204,12 @@ describe('widget.html の器', () => {
   it('空の操作パネルは display も落としてある（既存の埋め込みの高さを動かさない）', () => {
     expect(STYLE_CSS).toMatch(
       /\.widget-controls-card\[hidden\]\s*\{\s*display:\s*none;/,
+    );
+  });
+
+  it('空の埋め込みパネルも display を落としてある', () => {
+    expect(STYLE_CSS).toMatch(
+      /\.widget-embed-card\[hidden\]\s*\{\s*display:\s*none;/,
     );
   });
 });

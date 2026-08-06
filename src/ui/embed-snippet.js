@@ -54,17 +54,25 @@ export const DEFAULT_EMBED_HEIGHT = 460;
  * `?controls=on` を付けた埋め込みの初期高さ（px）。**実測値**。
  *
  * 表示専用の中身に加えて、種の入力欄（ORCID / researchmap / Load this researcher）と
- * 表示コントロール 6 つを載せた操作パネルが地図の上に乗る。
+ * 表示コントロール 6 つを載せた操作パネルが地図の上に乗り、地図の下に
+ * 埋め込みコード生成の折りたたみ（閉じた状態で summary 1 行）が付く。
  *
- * ブラウザで iframe に入れて `embed:height` を受けた実測（自動リサイズ後の最終高さ）:
- *   幅 700px → 823 / 780px → 847 / 870px → 875。
- * 配布先の本文幅は 780px 前後なので、そこでの実測に合わせて 850 を既定にする。
+ * ブラウザで iframe に入れて `embed:height` を受けた実測（自動リサイズ後の最終高さ、
+ * **折りたたみは閉じたまま**）:
+ *   幅 700px → 882 / 780px → 905 / 870px → 934。
+ * 配布先の本文幅は 780px 前後なので、そこでの実測に合わせて 905 を既定にする。
+ * 折りたたみを足す前は 847（780px）だったので、閉じた状態の増分は 58px。
  *
- * 幅 690px を切ると `.widget-controls-card` の 3 列が 2 列に落ちて操作パネルが
- * 1 行分伸びる（640px で 932px）。表示専用版の既定と同じく、**保証するのは
- * 本文幅 690〜870px の帯**で、それより狭い枠は自動リサイズに任せる。
+ * 開くと 780px で 1297px まで伸びるが、**開いた高さは既定に載せない**。
+ * 開くのは読者が自分でスニペットを取りに行ったときだけで、そこでは
+ * embed-height.js の再通知が親の枠を伸ばす（開閉のたびに通知が飛ぶことは
+ * ブラウザで確認済み: 905 → 1297 → 905）。
+ *
+ * 幅 700px を切ると `.widget-controls-card` の 3 列が 2 列に落ちて操作パネルが
+ * 1 行分伸びる（690px で 1016px）。**保証するのは本文幅 700〜870px の帯**で、
+ * それより狭い枠は自動リサイズに任せる。
  */
-export const CONTROLS_EMBED_HEIGHT = 850;
+export const CONTROLS_EMBED_HEIGHT = 905;
 
 /** widget.html の URL を今の表示状態から組む */
 export function buildWidgetUrl(state, bounds, base = WIDGET_BASE) {
@@ -183,6 +191,23 @@ export function originOf(src) {
 }
 
 /**
+ * iframe の Permissions Policy 委譲。
+ *
+ * **`controls=on` の埋め込みは枠の中で埋め込みコードを作れる。** その「Copy」は
+ * `navigator.clipboard.writeText()` を呼ぶが、**クロスオリジンの iframe では
+ * 親から `clipboard-write` を委譲されない限り既定で拒否される**
+ * （Permissions Policy の既定の許可リストが `self` のため）。委譲が無いと
+ * コピーが黙って失敗し、読者はスニペットを取り出せない。
+ *
+ * 表示専用の埋め込みには要らない権限だが、**スニペットは 1 種類に保つ**。
+ * 出し分けると、読者が後から `controls=on` に変えたときに `allow` が
+ * 落ちたままになる。`clipboard-write` は書き込みだけで、読み取り
+ * （`clipboard-read`）は委譲しないので、親ページのクリップボードを
+ * 覗かれる経路は開かない。
+ */
+export const IFRAME_ALLOW = 'clipboard-write';
+
+/**
  * スニペット本体。
  *
  * **自動リサイズは既定で入る。** 固定高さだけの版は WordPress 等で
@@ -201,7 +226,7 @@ export function buildSnippet(src, height, { autoResize = true } = {}) {
   <style>
     .${CLASS_NAME}{display:block;width:100%;border:none;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.08);}
   </style>
-  <iframe class="${CLASS_NAME}" title="Co-author map" src="${src}" style="height:${px}px" loading="lazy"></iframe>
+  <iframe class="${CLASS_NAME}" title="Co-author map" src="${src}" style="height:${px}px" loading="lazy" allow="${IFRAME_ALLOW}"></iframe>
   <p style="font-size:13px;margin-top:6px;">Made with <a href="${AUTHOR_URL}">coauthor-map</a></p>
 ${autoResize ? autoResizeScript(originOf(src)) : ''}</div>`;
   return assertSnippetIsSafe(snippet);
@@ -326,7 +351,18 @@ export function createEmbedPanel({ container, t, getState }) {
         text: t('embed.copy'),
         onclick: async () => {
           const ok = await copyText(textarea.value);
-          status.textContent = ok ? t('table.copied') : t('table.copyFailed');
+          if (ok) {
+            status.textContent = t('table.copied');
+            return;
+          }
+          // **このパネルは埋め込み枠の中でも動く。** クロスオリジンの iframe では
+          // 親が `allow="clipboard-write"` を付けていないとクリップボードへの
+          // 書き込みが拒否される（execCommand のフォールバックごと落ちることもある）。
+          // 黙って終わらせると、読者は押したのに何も起きない画面を見ることになるので、
+          // **全選択した状態にして手で取れる形にしてから**そう伝える
+          textarea.focus();
+          textarea.select();
+          status.textContent = t('embed.copyFailed');
         },
       }),
       status,
@@ -339,9 +375,10 @@ export function createEmbedPanel({ container, t, getState }) {
 /**
  * `?controls=on` の埋め込みの末尾に置く、フルツールへの導線。**1 本だけ。**
  *
- * 埋め込みでは出さないもの（補正・集計テーブル・ダウンロード・埋め込みコード生成・
- * 出典一覧）に行ける唯一の道なので、**いまの表示状態を引き継いで**飛ばす。
+ * 埋め込みでは出さないもの（補正・集計テーブル・ダウンロード・出典一覧）に
+ * 行ける唯一の道なので、**いまの表示状態を引き継いで**飛ばす。
  * 引き継がないと、読者が枠の中で組んだ地図がリンクを踏んだ瞬間に消える。
+ * 埋め込みコード生成は枠の中に入ったので、この導線が担う仕事から外れた。
  *
  * 別タブで開く。埋め込み枠の中で遷移すると、記事を読んでいた場所に戻れなくなる。
  *

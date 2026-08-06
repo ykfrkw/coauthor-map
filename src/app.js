@@ -496,6 +496,10 @@ export function createApp({ loadDataset, mode = 'full' }) {
 
     const embedEl = panels.embed ? el('embed') : null;
     if (embedEl) {
+      // widget.html では折りたたみ（details）の器に入っていて、器ごと hidden で
+      // 置いてある。中身を組むと決めた側だけが開ける。index.html の #embed は
+      // hidden な祖先を持たないので、この行は何もしない
+      embedEl.closest('[hidden]')?.removeAttribute('hidden');
       embedPanel = createEmbedPanel({
         container: embedEl,
         t,
@@ -503,7 +507,7 @@ export function createApp({ loadDataset, mode = 'full' }) {
       });
     }
 
-    // 出さないもの（補正・表・ダウンロード・埋め込みコード）への導線はこの 1 本だけ。
+    // 出さないもの（補正・集計テーブル・ダウンロード）への導線はこの 1 本だけ。
     // いまの表示状態をそのまま引き継いで飛ばす
     const moreEl = panels.openFullTool ? el('more') : null;
     if (moreEl) {
