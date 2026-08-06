@@ -215,9 +215,51 @@ export function clampYearRange(from, to, moved) {
   return moved === 'to' ? { from, to: from } : { from: to, to };
 }
 
-/** 年範囲の表示（en dash でつなぐ） */
-export function formatYearRange(from, to) {
-  return `${from} – ${to}`;
+/**
+ * 開始年が「データの最小年に張り付いている」= URL に `from` を焼き込まない状態か。
+ * `stateToQuery` の書き出し条件と**同じ判定をここ 1 か所に置く**。
+ * 表示と URL がずれると「開いているつもりで固定していた」が起きる。
+ * @param {Object} state
+ * @param {{from: number, to: number}} [bounds]
+ * @returns {boolean}
+ */
+export function isStartYearOpen(state, bounds) {
+  return state?.from == null || state.from === bounds?.from;
+}
+
+/**
+ * 終了年が「データの最大年に張り付いている」= URL に `to` を焼き込まない状態か。
+ * **この地図が今後も自動で伸びるかどうかを決めるのはこの 1 つだけ。**
+ * 開始年を上げても新しい論文は載り続けるが、終了年を下げるとそこで止まる。
+ * @param {Object} state
+ * @param {{from: number, to: number}} [bounds]
+ * @returns {boolean}
+ */
+export function isEndYearOpen(state, bounds) {
+  return state?.to == null || state.to === bounds?.to;
+}
+
+/**
+ * 年範囲の表示（en dash でつなぐ）。
+ *
+ * 終了年がデータの最大年と一致するときは、年ではなく `latest` を出す。
+ * 2026 と出ていると「2026 年で止まった地図」に見えるが、実際は URL に `to` を
+ * 書かないので次のアクセスで新しい論文を拾う。**開いていることを画面に出す。**
+ *
+ * 開始側は最小年でも数字のまま出す。`2019 – latest` は履歴書の
+ * `2019 – present` と同じ読み方で自然に読め、データが何年から始まるかも残る。
+ * 左右を揃えて `earliest – latest` にすると、年の情報が消えるうえに
+ * 「どちらの端も同じ意味を持つ」と読めてしまう（止まるのは終了側だけ）。
+ *
+ * @param {number|string} from
+ * @param {number|string} to
+ * @param {{from: number, to: number}} [bounds]   データの年範囲
+ * @param {string} [latestLabel]                  開いているときに出す語
+ */
+export function formatYearRange(from, to, bounds, latestLabel) {
+  const open =
+    bounds != null && latestLabel && Number(to) === Number(bounds.to);
+  return `${from} – ${open ? latestLabel : to}`;
 }
 
 /**
@@ -241,6 +283,35 @@ function intOrNull(raw) {
   if (raw == null || raw === '') return null;
   const n = Number.parseInt(raw, 10);
   return Number.isFinite(n) ? n : null;
+}
+
+/**
+ * 「開いた端」を明示する語。`to=latest` / `from=earliest` と書ける。
+ *
+ * `to` を省くだけでも開いた状態にはなるが、それは**省略でしか表現できない**。
+ * 手で URL を組む人が `?from=2019&to=2026` と両方書くと、2026 で凍った地図に
+ * なってしまう。書いたうえで開いておける逃げ道を用意する。
+ * `stateToQuery` はこの語を書き出さない（開いた状態は無記載のままにして URL を短く保つ）。
+ */
+export const YEAR_OPEN_KEYWORD = Object.freeze({
+  from: 'earliest',
+  to: 'latest',
+});
+
+/**
+ * `from=` / `to=` を読む。開いた端を表す語は null（= 未指定）と同義にする。
+ * @param {string|null} raw
+ * @param {'from'|'to'} which
+ * @returns {number|null}
+ */
+export function parseYearBound(raw, which) {
+  if (
+    String(raw ?? '')
+      .trim()
+      .toLowerCase() === YEAR_OPEN_KEYWORD[which]
+  )
+    return null;
+  return intOrNull(raw);
 }
 
 /** ORCID は数字とハイフンとチェックディジット X だけ。緩めに整える */
@@ -272,8 +343,8 @@ export function readStateFromUrl(search = window.location.search) {
   return {
     orcid: q.has('orcid') ? cleanOrcid(q.get('orcid')) : DEFAULTS.orcid,
     rm: q.has('rm') ? cleanPermalink(q.get('rm')) : DEFAULTS.rm,
-    from: intOrNull(q.get('from')),
-    to: intOrNull(q.get('to')),
+    from: parseYearBound(q.get('from'), 'from'),
+    to: parseYearBound(q.get('to'), 'to'),
     proj: PROJECTIONS.some((p) => p.id === proj) ? proj : DEFAULTS.proj,
     center: q.has('center')
       ? normalizeLongitude(q.get('center'))
@@ -336,10 +407,10 @@ export function stateToQuery(state, bounds) {
   const q = new URLSearchParams();
   if (state.orcid) q.set('orcid', state.orcid);
   if (state.rm) q.set('rm', state.rm);
-  if (state.from != null && state.from !== bounds?.from)
-    q.set('from', String(state.from));
-  if (state.to != null && state.to !== bounds?.to)
-    q.set('to', String(state.to));
+  // 開いた端は書かない。`to=latest` とわざわざ書き出さず無記載のままにして
+  // URL を短く保つ（無記載も `latest` も読み込み側では同じ意味になる）
+  if (!isStartYearOpen(state, bounds)) q.set('from', String(state.from));
+  if (!isEndYearOpen(state, bounds)) q.set('to', String(state.to));
   if (state.proj !== DEFAULTS.proj) q.set('proj', state.proj);
   // 明示された中心は既定値と同じでも書く。書かないと再読み込みで
   // 「明示した」情報が落ち、自動フィットの重心に乗っ取られてしまう
@@ -506,12 +577,26 @@ export function createControls({ container, t, state, onChange, onRebuild }) {
     'aria-label': t('ctrl.yearTo'),
   });
   const yearTrack = h('div', { class: 'range-track', 'aria-hidden': 'true' });
+  // 「右が閉じていない」ことを見た目で言う印。文言だけだと、右のつまみが
+  // トラックの右端にぴったり付いた**閉じた棒**の絵が「ここで止まる」と言い続ける。
+  // 塗りのフェードとこの記号で、開いている / 止まっているを一目で分ける。
+  // 読み上げには出さない（同じ意味は aria-valuetext と output が持っている）
+  const yearOpenMark = h('span', {
+    class: 'range-open-mark',
+    'aria-hidden': 'true',
+    text: '›',
+  });
   const yearRange = h(
     'div',
     { class: 'range-dual', role: 'group', 'aria-labelledby': 'years-label' },
-    [yearTrack, yearFrom, yearTo],
+    [yearTrack, yearFrom, yearTo, yearOpenMark],
   );
   const yearOut = h('output', { for: 'year-from year-to', class: 'hint' });
+  // 「自動で載る」の一言は **output の外** に置く。output は暗黙に
+  // ライブリージョンなので、中に入れるとつまみを 1 目盛り動かすたびに
+  // 説明文まで読み上げられる。年の読み上げは短いままにしておく
+  const yearOpenNote = h('span', { class: 'hint' });
+  const yearCaption = h('div', {}, [yearOut, yearOpenNote]);
 
   /** 選択中の区間をトラックに塗り、つまみの前後関係を決める */
   function paintYearTrack() {
@@ -527,6 +612,32 @@ export function createControls({ container, t, state, onChange, onRebuild }) {
     yearRange.classList.toggle('is-from-on-top', fromPct > 50);
   }
 
+  /**
+   * 年範囲の表示と読み上げを揃える。
+   *
+   * 終了年がデータの最大年のままなら、URL に `to` は焼き込まれず、
+   * 論文が増えれば地図も伸びる。**その状態を目でも耳でも同じ語で伝える**：
+   * `output` は `latest`、つまみは `aria-valuetext` で `latest` と読ませ、
+   * `aria-label` も「開いている」意味を持つほうに差し替える。
+   * 数字（2026）だけを読み上げると、止まった地図と区別が付かない。
+   */
+  function paintYearOut() {
+    const from = Number(yearFrom.value);
+    const to = Number(yearTo.value);
+    const open = isEndYearOpen({ to }, bounds);
+    const latest = t('ctrl.yearLatest');
+    yearOut.textContent = formatYearRange(from, to, bounds, latest);
+    yearOpenNote.textContent = open ? ` · ${t('ctrl.yearsOpenNote')}` : '';
+    // 塗りのフェードと右端の記号を出すのはこのクラス 1 つ
+    yearRange.classList.toggle('is-open-end', open);
+    yearFrom.setAttribute('aria-valuetext', String(from));
+    yearTo.setAttribute('aria-valuetext', open ? latest : String(to));
+    yearTo.setAttribute(
+      'aria-label',
+      open ? t('ctrl.yearToOpen') : t('ctrl.yearTo'),
+    );
+  }
+
   function pushYears(moved) {
     const { from, to } = clampYearRange(
       Number(yearFrom.value),
@@ -535,7 +646,7 @@ export function createControls({ container, t, state, onChange, onRebuild }) {
     );
     yearFrom.value = String(from);
     yearTo.value = String(to);
-    yearOut.textContent = formatYearRange(from, to);
+    paintYearOut();
     paintYearTrack();
     onChange({ from, to });
   }
@@ -674,7 +785,7 @@ export function createControls({ container, t, state, onChange, onRebuild }) {
         text: t('ctrl.years'),
       }),
       yearRange,
-      yearOut,
+      yearCaption,
     ]),
     h('div', { class: 'field' }, [
       h('label', { for: 'grain', text: t('ctrl.grain') }),
@@ -748,7 +859,7 @@ export function createControls({ container, t, state, onChange, onRebuild }) {
     }
     yearFrom.value = String(current?.from ?? min);
     yearTo.value = String(current?.to ?? max);
-    yearOut.textContent = formatYearRange(yearFrom.value, yearTo.value);
+    paintYearOut();
     paintYearTrack();
     return { from: Number(yearFrom.value), to: Number(yearTo.value) };
   }

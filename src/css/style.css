@@ -210,9 +210,11 @@ input[type='range'] {
 
 /* 重ね方は Grid（同じセルに全部置く）。position での重ね置きはしない。
  * 下から順に: トラックの絵 → 開始のつまみ → 終了のつまみ */
+/* 2 列目は「開いている」印の席。**閉じているあいだも空席として確保する**。
+ * 開いた瞬間に列が生えるとトラックの長さが変わり、棒が跳ねて見える */
 .range-dual {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) 2.6em;
   align-items: center;
   min-width: 0;
   min-height: 28px;
@@ -236,6 +238,47 @@ input[type='range'] {
     var(--panel-border) var(--range-to, 100%),
     var(--panel-border) 100%
   );
+}
+
+/* ---- 終了年を固定していないとき ----
+ *
+ * 右のつまみがトラックの右端にぴったり付いた棒は、**その絵だけで
+ * 「この年で止まる」と言ってしまう**。実際は URL に `to` を焼き込まないので
+ * 論文が増えれば地図も伸びる。
+ *
+ * 塗りをトラックの中で溶かしても、つまみが右端に居座るぶん効かない
+ * （溶けた先はつまみに隠れる）。**つまみの外まで棒を続けて薄れさせる**。
+ * 2 列目にその尻尾と `›` を置くので、
+ *   開いている = つまみの右にまだ何かある
+ *   固定した   = つまみの右には何も無い
+ * という一目で分かる対比になる。縮小しても「有る / 無い」は消えない。
+ *
+ * 透明度で作るので 4 テーマとも同じように効く（色を決め打ちしない）。
+ * 動きは使わないので prefers-reduced-motion で分岐する必要がない。 */
+.range-dual .range-open-mark {
+  grid-area: 1 / 2;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--accent);
+  font-size: 1.05em;
+  line-height: 1;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+/* つまみの先へ伸びて消えていく尻尾。トラックと同じ太さ・同じ丸みにして、
+ * 「同じ 1 本の棒が続いている」ように見せる */
+.range-dual .range-open-mark::before {
+  content: '';
+  flex: 1 1 auto;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--accent), transparent);
+}
+
+.range-dual.is-open-end .range-open-mark {
+  visibility: visible;
 }
 
 /* input 側のトラックは透明。掴めるのはつまみだけにして、

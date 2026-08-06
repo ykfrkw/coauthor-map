@@ -16,7 +16,7 @@
  * （配布先の記事に書き手の名前が残ると、書き手が誰なのか読み手が取り違える）。
  */
 import { h, copyText } from './dom.js';
-import { stateToQuery } from './controls.js';
+import { stateToQuery, isEndYearOpen } from './controls.js';
 
 export const WIDGET_BASE = 'https://ykfrkw.github.io/coauthor-map/widget.html';
 /** 自サイト内の表示（index.html のフッタなど）用。スニペットには載せない */
@@ -161,6 +161,11 @@ export function createEmbedPanel({ container, t, getState }) {
 
   const lengthWarning = h('p', { class: 'notice is-error', hidden: true });
 
+  // **貼った地図が将来も伸びるのかどうか**を 1 行で出す。
+  // 終了年を下げたまま配ると、その年で凍った地図が配布先に残る。
+  // 気付ける場所はここしかない（スニペットの見た目からは分からない）
+  const growthNote = h('p', { class: 'hint', role: 'status' });
+
   // 自動リサイズが既定。外したい人のためにチェックボックスを 1 つだけ置く
   const autoResizeToggle = h('input', {
     type: 'checkbox',
@@ -173,6 +178,9 @@ export function createEmbedPanel({ container, t, getState }) {
     const { state, bounds } = getState();
     const autoResize = autoResizeToggle.checked;
     heightNote.textContent = autoResize ? '' : t('embed.fixedHeightNote');
+    growthNote.textContent = isEndYearOpen(state, bounds)
+      ? t('embed.keepsGrowing')
+      : t('embed.frozenAt', { year: state.to });
     try {
       const src = buildWidgetUrl(state, bounds);
       textarea.value = buildSnippet(src, heightInput.value, { autoResize });
@@ -207,6 +215,7 @@ export function createEmbedPanel({ container, t, getState }) {
         h('span', { class: 'hint', text: t('embed.autoResizeHint') }),
       ]),
     ]),
+    growthNote,
     textarea,
     lengthWarning,
     h('div', { class: 'button-row' }, [
