@@ -8,10 +8,8 @@ import {
   TOOL_URL,
   assertSnippetIsSafe,
   buildSnippet,
-  buildToolUrl,
   defaultHeightFor,
 } from '../src/ui/embed-snippet.js';
-import { DEFAULTS } from '../src/ui/controls.js';
 
 const SRC = 'https://ykfrkw.github.io/coauthor-map/widget.html?orcid=0000-0002';
 const CONTROLS_SRC = `${SRC}&controls=on`;
@@ -191,13 +189,13 @@ describe('`controls=on` の初期高さ', () => {
     );
   });
 
-  // ブラウザで実際に iframe に入れて embed:height を受けた値（**折りたたみは
+  // ブラウザで実際に iframe に入れて embed:height を受けた値（**折りたたみ 3 つは
   // 閉じたまま**）。初期高さとの差が 50px を超えると、読み込み直後に枠が飛び跳ねて見える。
   it('本文幅 700〜870px の実測（閉じた状態）との差が 50px 以内', () => {
     for (const [width, actual] of [
-      [700, 882],
-      [780, 905],
-      [870, 934],
+      [700, 959],
+      [780, 983],
+      [870, 1012],
     ]) {
       expect(
         Math.abs(CONTROLS_EMBED_HEIGHT - actual),
@@ -208,13 +206,22 @@ describe('`controls=on` の初期高さ', () => {
 
   // 配布先の本文幅そのもの。ここだけは実測に一致させる
   it('本文幅 780px の実測に一致する', () => {
-    expect(CONTROLS_EMBED_HEIGHT).toBe(905);
+    expect(CONTROLS_EMBED_HEIGHT).toBe(983);
   });
 
-  // 開いた状態（780px で実測 1297px）を初期高さにすると、読者が一度も
-  // 開かないまま 390px の空白を抱えることになる。**閉じた状態を既定にする**
+  // 開いた状態（780px の実測: 補正 2692 / 集計テーブル 1687 /
+  // 埋め込みコード生成 1393、3 つとも開くと 3805）を初期高さにすると、読者が
+  // 一度も開かないまま数百 px の空白を抱えることになる。**閉じた状態を既定にする**
   it('開いた状態の高さは既定にしない', () => {
-    expect(CONTROLS_EMBED_HEIGHT).toBeLessThan(1297);
+    expect(CONTROLS_EMBED_HEIGHT).toBeLessThan(1393);
+  });
+
+  // スニペットが親ページに置く受け側スクリプトは 5000px を超える通知を捨てる。
+  // 3 つとも開いた実測が上限に当たると、枠が伸びずに中身が切れる
+  it('3 つとも開いた実測が親側スクリプトの上限に当たらない', () => {
+    const ALL_OPEN_AT_780 = 3805;
+    expect(buildSnippet(CONTROLS_SRC)).toContain('height > 5000');
+    expect(ALL_OPEN_AT_780).toBeLessThan(5000);
   });
 
   it('表示専用より高い（操作パネルの分だけ枠が要る）', () => {
@@ -249,19 +256,5 @@ describe('遅延読み込みプラグインへの耐性', () => {
     expect(snippet).toContain(
       "document.querySelectorAll('iframe.coauthor-map-embed')",
     );
-  });
-});
-
-describe('フルツールへの導線', () => {
-  it('index.html を指し、いまの表示状態を引き継ぐ', () => {
-    const url = buildToolUrl({ ...DEFAULTS, orcid: '0000-0002-4934-4352' });
-    expect(url.startsWith(TOOL_URL)).toBe(true);
-    expect(url).toContain('orcid=0000-0002-4934-4352');
-  });
-
-  it('`controls` は落とす（フルツールは常に操作パネルを持つ）', () => {
-    const url = buildToolUrl({ ...DEFAULTS, controls: true, theme: 'dark' });
-    expect(url).not.toContain('controls');
-    expect(url).toContain('theme=dark');
   });
 });

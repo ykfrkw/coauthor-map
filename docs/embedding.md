@@ -172,8 +172,10 @@ fixed height you chose.
 
 - The frame renders an `<svg role="img">` with a summary `aria-label`, and every pin is
   reachable with the Tab key.
-- The full page version prints the same numbers as text under the map — by country, by
-  organization, and by year — and those tables can be copied as Markdown or CSV.
+- The same numbers are printed as text under the map — by country, by organization, and
+  by year — and those tables can be copied as Markdown or CSV. A frame carrying
+  `?controls=on` has them too, in a collapsed **The same map as text** panel, so a reader
+  never has to leave your article to read the map as a table.
 - If you need a static image instead of a live frame, use **Download** on the full page.
   SVG and 2x PNG are both produced with the credit baked into the corner.
 

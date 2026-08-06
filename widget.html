@@ -14,14 +14,29 @@
       <div class="map-wrap" id="map"></div>
       <div class="map-legend" id="legend"></div>
       <div id="shown"></div>
-      <!-- Filled in only with ?controls=on; see src/ui/panels.js.
-           Collapsed by default so it does not push the map down. -->
-      <details class="card widget-embed-card" id="embed-panel" hidden>
+      <!-- The three panels below are filled in only with ?controls=on; see
+           src/ui/panels.js. Together they carry everything the full tool does,
+           so nothing here has to send the reader to another page.
+           All three are collapsed by default so they never push the map down. -->
+      <details class="card widget-panel-card" id="corrections-panel" hidden>
+        <summary data-i18n="widget.corrections"></summary>
+        <h2 class="widget-panel-heading" data-i18n="auth.heading"></h2>
+        <div id="authors"></div>
+        <h2 class="widget-panel-heading" data-i18n="cur.heading"></h2>
+        <div id="curation"></div>
+      </details>
+      <details class="card widget-panel-card" id="tables-panel" hidden>
+        <summary data-i18n="table.heading"></summary>
+        <div class="section" id="table"></div>
+      </details>
+      <details
+        class="card widget-panel-card widget-embed-card"
+        id="embed-panel"
+        hidden
+      >
         <summary data-i18n="embed.heading"></summary>
         <div id="embed"></div>
       </details>
-      <!-- Filled in only with ?controls=on; see src/ui/panels.js -->
-      <div id="more" hidden></div>
       <!-- Shown only when this page is opened on its own; see src/main.js -->
       <p class="widget-credit" id="widget-credit" hidden>
         Made with

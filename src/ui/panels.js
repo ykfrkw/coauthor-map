@@ -6,12 +6,17 @@
  * jsdom を入れていないので、実 DOM で「出た / 出ない」を見る手段が無い）。
  *
  * widget.html は既定では表示専用のまま。`?controls=on` のときだけ、
- * 読者が自分の ID を入れて自分の地図を作れるだけの操作 UI を足す。
- * **埋め込みコード生成もそこに含める。** 自分の地図を作った読者が、それを
- * 自分のサイトに貼るコードを得るためだけにフルツールへ飛ばされるのを避ける
- * （折りたたみで置くので、閉じているあいだは地図とコントロールを押し下げない）。
- * 補正パネル・集計テーブル・ダウンロードは `?controls=on` でも出さない
- * （記事本文が担うか、埋め込みには重い）。
+ * **フルツールと同じことが枠の中で全部できるだけの UI を足す。**
+ * 操作パネル（地図の上）と、折りたたみ 3 つ（補正・集計テーブル・埋め込みコード生成）。
+ * 折りたたみは既定で閉じているので、閉じているあいだは summary の 1 行しか占めず、
+ * 地図とコントロールを押し下げない。
+ *
+ * **外へ出る導線は持たない。** 以前は「補正と集計テーブルはフルツールで」という
+ * リンクを末尾に置いていたが、その 2 つが枠の中に入った時点で、記事を読んでいる
+ * 読者を別ページへ飛ばす理由が無くなった。
+ *
+ * 画像のダウンロードだけは出さない（`#export` の器を widget.html に持たない）。
+ * 地図の SVG/PNG は記事本文が担う領域で、枠の中で配る類のものではない。
  */
 
 /** index.html が出す操作パネルの中身 */
@@ -49,7 +54,7 @@ export const WIDGET_VIEW_FIELDS = Object.freeze([
  * @param {{controls?: boolean}} [state]  URL から読んだ状態（`controls` だけ見る）
  * @returns {{controls: boolean, viewFields: readonly string[], mapActions: boolean,
  *   authors: boolean, table: boolean, curation: boolean, download: boolean,
- *   embed: boolean, stats: boolean, openFullTool: boolean}}
+ *   embed: boolean, stats: boolean}}
  */
 export function resolvePanels(mode, state = {}) {
   if (mode !== 'widget') {
@@ -63,7 +68,6 @@ export function resolvePanels(mode, state = {}) {
       download: true,
       embed: true,
       stats: true,
-      openFullTool: false,
     };
   }
 
@@ -74,14 +78,14 @@ export function resolvePanels(mode, state = {}) {
     // 地図の下の「Reset map view」は出さない。ドラッグで動かした状態は
     // 上の操作パネルのどれかを触れば描き直されるので、行を 1 本増やす価値が無い
     mapActions: false,
-    authors: false,
-    table: false,
-    curation: false,
+    // 以下 3 つはすべて折りたたみの中。閉じているあいだは 1 行しか占めない
+    authors: withControls,
+    curation: withControls,
+    table: withControls,
+    // 画像のダウンロードだけは器を持たない（widget.html に #export が無い）
     download: false,
-    // 折りたたみに入れて出す。読者が枠の中で組んだ地図をそのまま配れるようにする
     embed: withControls,
+    // 統計の並びは出さない。同じ数字は地図の下の 1 行（#shown）が持っている
     stats: false,
-    // 出さないものへの導線は 1 本だけ。いまの表示状態を引き継いで飛ばす
-    openFullTool: withControls,
   };
 }

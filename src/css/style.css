@@ -108,9 +108,12 @@ a {
   font-size: var(--fs-sm);
 }
 
+/* grid item の既定は min-width: auto。中身（表・長い機関名）が器より広いと
+ * 器ごと押し広げ、ページ全体が横スクロールする。入れ子の grid には必ず付ける */
 .section {
   display: grid;
   gap: var(--space-3);
+  min-width: 0;
 }
 
 /* ---------- カード / パネル ---------- */
@@ -420,6 +423,7 @@ button[aria-pressed='true'] {
   display: grid;
   gap: var(--space-3);
   grid-template-columns: 1fr;
+  min-width: 0;
 }
 
 @media (min-width: 560px) {
@@ -748,6 +752,10 @@ th.num {
 
 /* ---------- キュレーション ---------- */
 
+/* 共著者は 145 名になりうる。**一覧そのものをスクロールさせる**ことで、
+ * 中身の件数がページの高さに漏れないようにする。埋め込み枠でも同じ器を使うので、
+ * ここの max-height がそのまま枠の高さの予算になる（`?controls=on` の折りたたみは
+ * 一度に 4 つまで並ぶ。tests/panels.test.js が 320px の上限を見張っている） */
 .check-list {
   display: grid;
   gap: 2px;
@@ -882,18 +890,43 @@ th.num {
   gap: var(--space-2) var(--space-3);
 }
 
-/* `?controls=on` のときだけ出る埋め込みコード生成。**折りたたんで置く。**
- * 開いた分だけ枠が伸びるが、閉じているあいだは summary の 1 行しか占めないので
- * 地図とコントロールを押し下げない */
-.widget-embed-card {
+/* `?controls=on` のときだけ出る 3 つの折りたたみ（補正 / 集計テーブル /
+ * 埋め込みコード生成）。**必ず折りたたんで置く。** 開いた分だけ枠は伸びるが、
+ * 閉じているあいだは summary の 1 行しか占めないので地図を押し下げない */
+.widget-panel-card {
   gap: var(--space-2);
   padding: var(--space-2) var(--space-3);
 }
 
 /* `controls=on` が無いときは器ごと消す。**`.card` の display: grid が [hidden] に
- * 勝つ**ので、上の .widget-controls-card と同じ打ち消しが要る */
-.widget-embed-card[hidden] {
+ * 勝つ**ので、上の .widget-controls-card と同じ打ち消しが要る。これが無いと
+ * 表示専用の埋め込みに空の枠が 3 つ積まれて 80px 以上高くなる */
+.widget-panel-card[hidden] {
   display: none;
+}
+
+/* 折りたたみの中身も grid item。min-width: auto のままだと、集計テーブルや
+ * 長い機関名が器を押し広げて枠ごと横スクロールする（.table-scroll の中で
+ * 収まらせるのが狙いなので、外側を伸ばさせない） */
+.widget-panel-card > * {
+  min-width: 0;
+}
+
+/* 枠の中で件数に応じて青天井に伸びる唯一の並びが「統合された共著者」の
+ * チップ一覧（実測: 19 件で 520px）。他の重い並びは .check-list と
+ * .table-scroll が自分でスクロールして止まるので、ここも同じ形に揃える。
+ * 全部開いた高さを embed-height.js の上限（5000px）の内側に保つための蓋 */
+.widget-panel-card .chip-list {
+  max-height: 180px;
+  overflow: auto;
+}
+
+/* 補正の折りたたみは中に 2 段（誰を載せるか / 手直し）持つ。段の見出しは
+ * summary より弱く、中の field-label より強い程度に留める */
+.widget-panel-heading {
+  margin: 0;
+  font-size: var(--fs-sm);
+  font-weight: 650;
 }
 
 /* 枠の中では縦が高くつく。スニペット欄はページ既定の 190px から詰める

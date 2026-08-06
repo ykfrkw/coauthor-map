@@ -30,10 +30,7 @@ import {
   loadCommittedCuration,
 } from './curation.js';
 import { createExportPanel } from './ui/export.js';
-import {
-  createEmbedPanel,
-  createOpenFullToolLink,
-} from './ui/embed-snippet.js';
+import { createEmbedPanel } from './ui/embed-snippet.js';
 import { resolvePanels } from './ui/panels.js';
 
 /** data-i18n が付いた静的要素に文言を流し込む */
@@ -76,6 +73,17 @@ export function createApp({ loadDataset, mode = 'full' }) {
   applyStaticI18n(document, t);
 
   const el = (id) => document.getElementById(id);
+
+  /**
+   * 折りたたみの器ごと hidden で置いてあるパネルを表に出す。
+   *
+   * widget.html の #authors / #curation / #table / #embed は `<details hidden>` の
+   * 中にある。**中身を組むと決めた側だけが器を開ける**（`?controls=on` が無ければ
+   * 空の折りたたみが 3 本並ぶだけになる）。index.html の器は hidden な祖先を
+   * 持たないので、この関数はそこでは何もしない。
+   */
+  const reveal = (node) => node?.closest('[hidden]')?.removeAttribute('hidden');
+
   const mapEl = el('map');
   const legendEl = el('legend');
   const statusEl = el('status');
@@ -105,7 +113,6 @@ export function createApp({ loadDataset, mode = 'full' }) {
   let authorPanel = null;
   let embedPanel = null;
   let tableView = null;
-  let openFullTool = null;
 
   // 読み込み中インジケータ。地図の骨格（同梱の topojson）は先に描いてあるので、
   // 待たせるのはピンだけ。200ms 未満で終わるときは出さない
@@ -264,7 +271,6 @@ export function createApp({ loadDataset, mode = 'full' }) {
     paintShown();
     tableView?.update(view, rawDataset.stats);
     embedPanel?.refresh();
-    openFullTool?.refresh(state, b);
     if (!view.cities.length) setStatus('info', t('map.empty'));
     else setStatus(null, '');
     syncUrl(state, b);
@@ -423,6 +429,7 @@ export function createApp({ loadDataset, mode = 'full' }) {
 
     const authorsEl = panels.authors ? el('authors') : null;
     if (authorsEl) {
+      reveal(authorsEl);
       authorPanel = createAuthorPanel({
         container: authorsEl,
         t,
@@ -445,10 +452,14 @@ export function createApp({ loadDataset, mode = 'full' }) {
     }
 
     const tableEl = panels.table ? el('table') : null;
-    if (tableEl) tableView = createTableView({ container: tableEl, t });
+    if (tableEl) {
+      reveal(tableEl);
+      tableView = createTableView({ container: tableEl, t });
+    }
 
     const curationEl = panels.curation ? el('curation') : null;
     if (curationEl) {
+      reveal(curationEl);
       curationPanel = createCurationPanel({
         container: curationEl,
         t,
@@ -496,23 +507,12 @@ export function createApp({ loadDataset, mode = 'full' }) {
 
     const embedEl = panels.embed ? el('embed') : null;
     if (embedEl) {
-      // widget.html では折りたたみ（details）の器に入っていて、器ごと hidden で
-      // 置いてある。中身を組むと決めた側だけが開ける。index.html の #embed は
-      // hidden な祖先を持たないので、この行は何もしない
-      embedEl.closest('[hidden]')?.removeAttribute('hidden');
+      reveal(embedEl);
       embedPanel = createEmbedPanel({
         container: embedEl,
         t,
         getState: () => ({ state, bounds: bounds() }),
       });
-    }
-
-    // 出さないもの（補正・集計テーブル・ダウンロード）への導線はこの 1 本だけ。
-    // いまの表示状態をそのまま引き継いで飛ばす
-    const moreEl = panels.openFullTool ? el('more') : null;
-    if (moreEl) {
-      moreEl.hidden = false;
-      openFullTool = createOpenFullToolLink({ container: moreEl, t });
     }
   }
 
@@ -524,7 +524,6 @@ export function createApp({ loadDataset, mode = 'full' }) {
     state.centerExplicit = true;
     controls?.syncFromState({ center: centerLon });
     embedPanel?.refresh();
-    openFullTool?.refresh(state, bounds());
     syncUrl(state, bounds());
   });
 
