@@ -213,14 +213,18 @@ const STRINGS = {
   'embed.intro':
     'Copy the snippet below. It embeds the map you are looking at right now, with the current years, projection, and theme.',
   'embed.copy': 'Copy the snippet',
+  // クリップボードへの書き込みが拒否されたとき。**押したのに無反応**に見せない。
+  // 文言を出す時点でテキストエリアは全選択済みなので、次の一手だけを伝える
+  'embed.copyFailed':
+    'This browser blocked the copy. The snippet is selected: press Ctrl+C or Cmd+C to copy it by hand.',
   'embed.height': 'Height (px)',
   'embed.tooLong':
     'This link is {n} characters long. Some blog editors and servers cut links off around 2,000. Raise Main collaborations to drop the smallest collaborations, or clear a few corrections.',
   // `controls=on` を付ける版。読者が枠の中で自分の地図を作れるようになる代わりに
-  // 枠が 300px ほど高くなるので、既定は表示専用のまま
+  // 枠が 450px ほど高くなるので、既定は表示専用のまま
   'embed.controlsLabel': 'Let readers build their own map',
   'embed.controlsHint':
-    'Adds the ID fields and the main view controls inside the frame, so a reader can enter their own ORCID iD without leaving your page. The frame needs about 300 more pixels of height.',
+    'Adds the ID fields, the main view controls, and this snippet builder inside the frame, so a reader can enter their own ORCID iD and take away their own embed code without leaving your page. The frame needs about 450 more pixels of height.',
   'embed.autoResizeLabel': 'Let the frame set its own height',
   'embed.autoResizeHint':
     'On by default. The snippet carries a small script that follows the height the frame reports, so the map is never cut off or padded. Uncheck it to paste a fixed-height frame instead.',
@@ -234,10 +238,11 @@ const STRINGS = {
   'embed.frozenAt':
     'Stops at {year}: the snippet pins the last year, so papers published later never appear. Drag the last year back to the right end of the slider to let the map keep growing.',
 
-  // `?controls=on` の埋め込みの末尾に置く 1 本のリンク。埋め込みでは出さない
-  // 補正・集計テーブル・ダウンロード・埋め込みコード生成への唯一の導線
+  // `?controls=on` の埋め込みの末尾に置く 1 本のリンク。埋め込みコード生成は
+  // 枠の中に入ったので、**そこにしか無いもの**（補正パネルと集計テーブル）を名指しする。
+  // 「full tool」だけでは、いま見ている枠に何が足りないのか読者に分からない
   'widget.openFullTool':
-    'Open the full tool for tables, corrections, and downloads',
+    'Open the full tool to fix wrong affiliations and read the map as tables',
 
   'load.start': 'Starting...',
   'load.done': 'Done.',

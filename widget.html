@@ -14,6 +14,12 @@
       <div class="map-wrap" id="map"></div>
       <div class="map-legend" id="legend"></div>
       <div id="shown"></div>
+      <!-- Filled in only with ?controls=on; see src/ui/panels.js.
+           Collapsed by default so it does not push the map down. -->
+      <details class="card widget-embed-card" id="embed-panel" hidden>
+        <summary data-i18n="embed.heading"></summary>
+        <div id="embed"></div>
+      </details>
       <!-- Filled in only with ?controls=on; see src/ui/panels.js -->
       <div id="more" hidden></div>
       <!-- Shown only when this page is opened on its own; see src/main.js -->
