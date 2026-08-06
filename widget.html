@@ -12,7 +12,14 @@
       <div class="map-wrap" id="map"></div>
       <div class="map-legend" id="legend"></div>
       <div id="shown"></div>
-      <p class="widget-credit">
+      <!--
+        埋め込まれているときは隠す。iframe の内側のリンクは埋め込み先ページからの
+        被リンクにはならない（検索エンジンは iframe 内の文書に帰属させる）ので、
+        効くのはスニペットが親ページに置くクレジット行だけ。内側に残すと同じ行が
+        二重に見えるだけで得るものが無い。単体で開いたときは唯一の表示なので出す。
+        JS を待たずに消せるよう、判定は inline script で先に済ませる。
+      -->
+      <p class="widget-credit" id="widget-credit" hidden>
         Made with
         <a
           href="https://yukifurukawa.jp/coauthor-map/"
@@ -21,6 +28,11 @@
           >coauthor-map</a
         >
       </p>
+      <script>
+        if (window.parent === window) {
+          document.getElementById('widget-credit').hidden = false;
+        }
+      </script>
     </div>
 
     <script type="module" src="/src/main.js"></script>

@@ -4,6 +4,7 @@
  * ここで見るのは**集計の数字に依存しない**ものだけ。
  * 集計結果は別の作業で動きうるので、この一式はそれに巻き込まれないようにする。
  */
+import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 
 import {
@@ -319,5 +320,26 @@ describe('丸の大きさの基準', () => {
     const query = stateToQuery(state, BOUNDS);
     expect(query).toContain('size=papers');
     expect(readStateFromUrl(`?${query}`).size).toBe('papers');
+  });
+});
+
+describe('ウィジェットのクレジット行', () => {
+  const widgetHtml = readFileSync(
+    new URL('../widget.html', import.meta.url),
+    'utf8',
+  );
+
+  it('既定は hidden で、単体表示のときだけ出す', () => {
+    // iframe の内側のリンクは埋め込み先からの被リンクにならない。
+    // 効くのはスニペットが親ページに置く行だけなので、埋め込み時は出さない。
+    expect(widgetHtml).toMatch(/id="widget-credit"[^>]*\shidden/);
+    expect(widgetHtml).toContain('window.parent === window');
+  });
+
+  it('外部リンクは 1 本だけで yukifurukawa.jp/coauthor-map/ を指す', () => {
+    const hrefs = [...widgetHtml.matchAll(/href="(https?:\/\/[^"]+)"/g)].map(
+      (m) => m[1],
+    );
+    expect(hrefs).toEqual(['https://yukifurukawa.jp/coauthor-map/']);
   });
 });
