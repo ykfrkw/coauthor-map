@@ -20,6 +20,15 @@ import {
 import { normalizeDoi, isDoiLike } from '../doi.js';
 
 /**
+ * 一覧に出す名前。**OpenAlex は名前が null のレコードを返すことがある**
+ * （実例: ORCID 0000-0002-4934-4352 の共著者と機関）。素の `.name` で
+ * localeCompare を呼ぶとそこで例外になり、**手直しパネルどころか
+ * 地図の構築ごと落ちる**（build() の try が拾って「地図を作れません」になる）。
+ * 並べ替えと表示の両方をここ 1 か所に通す。authors.js と同じ倒し方。
+ */
+const displayName = (record) => String(record?.name ?? '—');
+
+/**
  * @param {Object} opts
  * @param {HTMLElement} opts.container
  * @param {(k: string, p?: Object) => string} opts.t
@@ -108,10 +117,12 @@ export function createCurationPanel({
       (a, b) => (b.year ?? 0) - (a.year ?? 0),
     );
     const coauthors = [...dataset.coauthors.values()].sort(
-      (a, b) => b.paperCount - a.paperCount || a.name.localeCompare(b.name),
+      (a, b) =>
+        b.paperCount - a.paperCount ||
+        displayName(a).localeCompare(displayName(b)),
     );
     const institutions = [...dataset.institutions.values()].sort((a, b) =>
-      a.name.localeCompare(b.name),
+      displayName(a).localeCompare(displayName(b)),
     );
 
     const papersList = checkList({
@@ -124,13 +135,13 @@ export function createCurationPanel({
       items: coauthors,
       selectedKey: 'excludeAuthorIds',
       idOf: (c) => c.id,
-      labelOf: (c) => `${c.name} (${c.paperCount})`,
+      labelOf: (c) => `${displayName(c)} (${c.paperCount})`,
     });
     const instList = checkList({
       items: institutions,
       selectedKey: 'excludeInstitutionIds',
       idOf: (i) => i.id,
-      labelOf: (i) => `${i.name}${i.city ? ` — ${i.city}` : ''}`,
+      labelOf: (i) => `${displayName(i)}${i.city ? ` — ${i.city}` : ''}`,
     });
 
     // --- DOI の追加 ---
@@ -185,7 +196,7 @@ export function createCurationPanel({
     // --- 機関の統合 ---
     const options = institutions.map((i) =>
       h('option', { value: i.id }, [
-        `${i.name}${i.city ? ` — ${i.city}` : ''}`,
+        `${displayName(i)}${i.city ? ` — ${i.city}` : ''}`,
       ]),
     );
     const mergeFrom = h(
@@ -200,7 +211,7 @@ export function createCurationPanel({
     );
     const mergeChips = h('ul', { class: 'chip-list' });
 
-    const nameOf = (id) => dataset.institutions.get(id)?.name ?? id;
+    const nameOf = (id) => dataset.institutions.get(id)?.name ?? String(id);
 
     function paintMerges() {
       replaceChildren(
