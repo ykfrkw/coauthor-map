@@ -39,10 +39,15 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          # Pages 側のキューが混むと deployment_queued のまま待たされる。既定の
-          # 10 分では足りずに何度も打ち切られた（2026-08-06 に 3 回）。打ち切られると
-          # そのコミット SHA のデプロイが「キャンセル済み」として残り、rerun しても
-          # 同じ SHA を掴んで即 Deployment cancelled になる。抜けるには新しいコミットを
-          # 積むしかないので、そもそも待てる時間を延ばしておく。
-          timeout: 1800000
+        # Pages 側のキューが混むと deployment_queued のまま待たされ、
+        # 「Timeout reached, aborting!」で打ち切られる（2026-08-06 に 4 回）。
+        #
+        # timeout: 1800000 を渡して 30 分に延ばそうとしたが効かなかった。ログ上は
+        # timeout: 1800000 と表示されるのに、実際は 10 分 5 秒で打ち切られる。
+        # deploy-pages 側に上限があるとみられ、入力では延ばせない。
+        #
+        # 打ち切られるとその SHA のデプロイが deployment_cancelled として残り、
+        # rerun も workflow_dispatch も同じ SHA を掴んで即死する。抜けるには
+        # 新しいコミットを積むしかない。滞留が別 SHA に残っている場合は
+        #   gh api -i --method POST repos/OWNER/REPO/pages/deployments/SHA/cancel
+        # で明示的にキャンセルしてから push する（-i を付けないと 204 が空表示になる）。
