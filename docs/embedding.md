@@ -92,7 +92,7 @@ link, to the page that documents the tool.
 | `xd`         | papers to leave out, e.g. `xd=1016/j.eclinm.2026.103988`                    | none                                  |
 | `pin`        | `primary`, `all`                                                            | `primary`                             |
 | `orcidaff`   | `off` to skip the ORCID affiliation lookup                                  | on                                    |
-| `labels`     | `off` to drop the city names drawn over the map                             | on                                    |
+| `labels`     | `on` to draw city names over the ten largest pins                           | off                                   |
 | `legend`     | `on`, `off`                                                                 | on in the full page, off in the frame |
 
 `orcid` and `rm` can be given together; the two publication lists are merged.

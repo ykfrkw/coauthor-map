@@ -70,23 +70,23 @@ describe('年範囲のつまみ', () => {
 });
 
 describe('都市名ラベルの設定', () => {
-  it('既定は表示（ラベルが無いとどこの地図か読めなくなるため）', () => {
-    expect(DEFAULTS.labels).toBe(true);
-    expect(readStateFromUrl('').labels).toBe(true);
+  it('既定は非表示（丸に重なって読みにくくなるため）', () => {
+    expect(DEFAULTS.labels).toBe(false);
+    expect(readStateFromUrl('').labels).toBe(false);
     expect(stateToQuery(readStateFromUrl(''), BOUNDS)).not.toContain('labels=');
   });
 
-  it('labels=off で消え、その状態は URL に載って往復する', () => {
-    const state = readStateFromUrl('?labels=off');
-    expect(state.labels).toBe(false);
-    const query = stateToQuery(state, BOUNDS);
-    expect(query).toContain('labels=off');
-    expect(readStateFromUrl(`?${query}`).labels).toBe(false);
-  });
-
-  it('labels=on と書かれていても既定と同じなので URL には残さない', () => {
+  it('labels=on で出て、その状態は URL に載って往復する', () => {
     const state = readStateFromUrl('?labels=on');
     expect(state.labels).toBe(true);
+    const query = stateToQuery(state, BOUNDS);
+    expect(query).toContain('labels=on');
+    expect(readStateFromUrl(`?${query}`).labels).toBe(true);
+  });
+
+  it('labels=off と書かれていても既定と同じなので URL には残さない', () => {
+    const state = readStateFromUrl('?labels=off');
+    expect(state.labels).toBe(false);
     expect(stateToQuery(state, BOUNDS)).not.toContain('labels=');
   });
 });

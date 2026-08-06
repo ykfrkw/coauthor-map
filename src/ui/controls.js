@@ -67,15 +67,12 @@ export const DEFAULTS = Object.freeze({
   // 主所属に education / healthcare を優先するか。既定 ON（`afftype=off` で切る）
   // 切ると研究コンソーシアム本部（type=facility）が主所属に選ばれる旧来の判定に戻る
   afftype: true,
-  // 地図に重なる都市名ラベルを出すか。既定 ON（`labels=off` で消す）
+  // 地図に重なる都市名ラベルを出すか。既定 OFF（`labels=on` で出す）
   //
-  // **既定を ON にした根拠**: オーナーは「基本的には不要かも」と言っているが、
-  // ラベルを全部落とすと、埋め込みウィジェットには表の併記もツールチップの
-  // 発見手段も無いため「どこが光っているのか分からない丸の集合」になる。
-  // ラベルは元々上位 10 件までで、重なるものは落としてあるので密度も出ない。
-  // 「基本的には不要」という要望は、既定を変えるより 1 クリックで消せる
-  // スイッチ（と埋め込み URL に載る `labels=off`）で満たす。
-  labels: true,
+  // **既定を OFF にした根拠**: オーナーの指示。ラベルは丸に重なって地図を
+  // 読みにくくする。どの都市かはツールチップと下の表で分かるので、常時表示は
+  // 情報の重複でもある。出したい場合はチェックひとつで戻せる。
+  labels: false,
   // 凡例（丸の大きさの目盛り）を出すか。
   // null = ページ既定に従う（index.html は出す / widget.html は出さない）。
   // `legend=on` / `legend=off` を書いたときだけ、そのページ既定を上書きする
@@ -288,7 +285,7 @@ export function readStateFromUrl(search = window.location.search) {
     pin: q.has('pin') ? normalizePinMode(q.get('pin')) : DEFAULTS.pin,
     orcidaff: q.get('orcidaff') !== 'off',
     afftype: q.get('afftype') !== 'off',
-    labels: q.get('labels') !== 'off',
+    labels: q.get('labels') === 'on',
     // 書かれていなければ null のまま。ページ側の既定に判断を譲る
     legend: q.has('legend') ? q.get('legend') !== 'off' : DEFAULTS.legend,
     xa: expandOpenAlexIds(q.get('xa'), 'A'),
@@ -355,7 +352,7 @@ export function stateToQuery(state, bounds) {
   if (state.pin && state.pin !== DEFAULTS.pin) q.set('pin', state.pin);
   if (state.orcidaff === false) q.set('orcidaff', 'off');
   if (state.afftype === false) q.set('afftype', 'off');
-  if (state.labels === false) q.set('labels', 'off');
+  if (state.labels === true) q.set('labels', 'on');
   // 凡例は「ページ既定に従う（null）」が既定なので、明示されたときだけ書く。
   // これで index.html の見え方をそのまま widget.html に運べる
   if (state.legend === true) q.set('legend', 'on');
@@ -587,7 +584,7 @@ export function createControls({ container, t, state, onChange, onRebuild }) {
   const labelsToggle = h('input', {
     type: 'checkbox',
     id: 'map-labels',
-    checked: state.labels !== false,
+    checked: state.labels === true,
   });
   labelsToggle.addEventListener('change', () =>
     onChange({ labels: labelsToggle.checked }),

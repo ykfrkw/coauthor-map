@@ -50,7 +50,7 @@ const STRINGS = {
   'ctrl.labels': 'City labels',
   'ctrl.labelsShow': 'Show city names on the map',
   'ctrl.labelsHint':
-    'Names sit on top of the map for the ten largest pins. Turn them off for a plain map; the setting travels with the embed snippet.',
+    'Draws the city name over the ten largest pins. Off by default so the pins stay readable; every city is still named in the tooltip and the table. The setting travels with the embed snippet.',
   'ctrl.theme': 'Theme',
   'ctrl.reset': 'Reset map view',
   'ctrl.resetHint':
