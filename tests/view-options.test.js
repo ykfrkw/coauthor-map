@@ -8,8 +8,11 @@ import { describe, expect, it } from 'vitest';
 
 import {
   DEFAULTS,
+  YEAR_OPEN_KEYWORD,
   clampYearRange,
   formatYearRange,
+  isEndYearOpen,
+  isStartYearOpen,
   readStateFromUrl,
   stateToQuery,
 } from '../src/ui/controls.js';
@@ -18,6 +21,7 @@ import {
   buildSnippet,
   originOf,
 } from '../src/ui/embed-snippet.js';
+import { STRINGS, createTranslator } from '../src/ui/i18n.js';
 
 const SRC = 'https://ykfrkw.github.io/coauthor-map/widget.html?orcid=0000-0002';
 const BOUNDS = { from: 2019, to: 2026 };
@@ -66,6 +70,141 @@ describe('年範囲のつまみ', () => {
 
   it('表示は en dash でつなぐ', () => {
     expect(formatYearRange(2019, 2026)).toBe('2019 – 2026');
+  });
+});
+
+/**
+ * **この地図は今後も自動で伸びるのか**を、URL と画面の両方で凍結する。
+ *
+ * 終了年をデータの最大年に置いたままなら URL に `to` は書かれず、
+ * 論文が増えれば次のアクセスで反映される。壊れやすいのは
+ * 「URL には書かれていないのに、画面は 2026 で止まったように見える」ズレなので、
+ * URL 側と表示側を同じ describe に並べて一緒に見る。
+ */
+describe('終了年を固定しない状態', () => {
+  it('スライダー未操作なら to= も from= も URL に出ない', () => {
+    const state = readStateFromUrl('');
+    expect(state.from).toBe(null);
+    expect(state.to).toBe(null);
+    const query = stateToQuery(state, BOUNDS);
+    expect(query).not.toContain('to=');
+    expect(query).not.toContain('from=');
+  });
+
+  it('端まで動かしただけ（= 境界と同じ値）でも URL には焼き込まない', () => {
+    // 画面を触ると state.from / state.to には実数が入る。
+    // 境界と同じなら「動かしていない」のと同じ扱いにする
+    const query = stateToQuery(
+      { ...readStateFromUrl(''), from: 2019, to: 2026 },
+      BOUNDS,
+    );
+    expect(query).not.toContain('to=');
+    expect(query).not.toContain('from=');
+  });
+
+  it('終了年を下げると to= が出て、最大に戻すと消える', () => {
+    const state = readStateFromUrl('');
+    state.to = 2024;
+    expect(stateToQuery(state, BOUNDS)).toContain('to=2024');
+    state.to = BOUNDS.to;
+    expect(stateToQuery(state, BOUNDS)).not.toContain('to=');
+  });
+
+  it('開始年を上げると from= が出て、最小に戻すと消える', () => {
+    const state = readStateFromUrl('');
+    state.from = 2022;
+    expect(stateToQuery(state, BOUNDS)).toContain('from=2022');
+    state.from = BOUNDS.from;
+    expect(stateToQuery(state, BOUNDS)).not.toContain('from=');
+  });
+
+  it('isEndYearOpen / isStartYearOpen が URL の書き出し条件と一致する', () => {
+    for (const [from, to] of [
+      [null, null],
+      [2019, 2026],
+      [2022, 2026],
+      [2019, 2024],
+      [2022, 2024],
+    ]) {
+      const state = { ...readStateFromUrl(''), from, to };
+      const query = stateToQuery(state, BOUNDS);
+      expect(isStartYearOpen(state, BOUNDS)).toBe(!query.includes('from='));
+      expect(isEndYearOpen(state, BOUNDS)).toBe(!query.includes('to='));
+    }
+  });
+
+  it('?to=latest は to 未指定と同じ状態になる', () => {
+    expect(readStateFromUrl('?to=latest').to).toBe(null);
+    expect(readStateFromUrl('?to=latest')).toEqual(readStateFromUrl(''));
+    // 大文字・前後の空白でも同じ
+    expect(readStateFromUrl('?to=LATEST').to).toBe(null);
+    expect(readStateFromUrl('?to=%20latest%20').to).toBe(null);
+  });
+
+  it('?from=earliest も from 未指定と同じ状態になる', () => {
+    expect(readStateFromUrl('?from=earliest').from).toBe(null);
+    expect(readStateFromUrl('?from=earliest')).toEqual(readStateFromUrl(''));
+    expect(readStateFromUrl('?from=EARLIEST').from).toBe(null);
+  });
+
+  it('語は読むだけで書き出さない（URL を短く保つ）', () => {
+    const query = stateToQuery(
+      readStateFromUrl('?from=earliest&to=latest'),
+      BOUNDS,
+    );
+    expect(query).not.toContain('latest');
+    expect(query).not.toContain('earliest');
+    expect(query).not.toContain('to=');
+    expect(query).not.toContain('from=');
+  });
+
+  it('語は互いに入れ替わらない（to=earliest / from=latest は年ではないので落とす）', () => {
+    // どちらも数字にならないので null = 未指定に倒れる。
+    // 「反対側の語を書いたら別の意味になる」余地を作らない
+    expect(readStateFromUrl('?to=earliest').to).toBe(null);
+    expect(readStateFromUrl('?from=latest').from).toBe(null);
+  });
+
+  it('表示は、開いているときは年ではなく latest になる', () => {
+    // 開いている: 右端は年を出さない
+    expect(formatYearRange(2019, 2026, BOUNDS, 'latest')).toBe('2019 – latest');
+    expect(formatYearRange(2022, 2026, BOUNDS, 'latest')).toBe('2022 – latest');
+    // 固定している: 従来どおり年
+    expect(formatYearRange(2019, 2024, BOUNDS, 'latest')).toBe('2019 – 2024');
+    // 開始側は最小年でも数字のまま（`2019 – present` と同じ読み方に揃える）
+    expect(formatYearRange(2019, 2026, BOUNDS, 'latest')).not.toContain(
+      'earliest',
+    );
+    // つまみの value は文字列で来るので、型が違っても判定できること
+    expect(formatYearRange('2019', '2026', BOUNDS, 'latest')).toBe(
+      '2019 – latest',
+    );
+  });
+
+  it('画面に出す語と URL に書ける語が同じ（利用者が結び付けられる）', () => {
+    expect(STRINGS['ctrl.yearLatest']).toBe(YEAR_OPEN_KEYWORD.to);
+    expect(readStateFromUrl(`?to=${STRINGS['ctrl.yearLatest']}`).to).toBe(null);
+  });
+
+  it('読み上げも「2026」ではなく latest になる', () => {
+    const t = createTranslator();
+    expect(t('ctrl.yearLatest')).toBe('latest');
+    // aria-label 側も「開いている」意味を持つ
+    expect(t('ctrl.yearToOpen')).toMatch(/open/i);
+    expect(t('ctrl.yearToOpen')).not.toBe(t('ctrl.yearTo'));
+  });
+
+  it('埋め込みパネルの 1 行が、開いているときと固定したときで別のことを言う', () => {
+    const t = createTranslator();
+    const open = t('embed.keepsGrowing');
+    const frozen = t('embed.frozenAt', { year: 2024 });
+    expect(open).not.toBe(frozen);
+    // 開いている: 自動で載ることを言う
+    expect(open).toMatch(/by itself|automatic/i);
+    // 固定: 何年で止まるかと、戻し方を言う
+    expect(frozen).toContain('2024');
+    expect(frozen).not.toContain('2,024'); // 年に桁区切りを付けない
+    expect(frozen).toMatch(/drag/i);
   });
 });
 

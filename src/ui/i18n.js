@@ -26,6 +26,11 @@ const STRINGS = {
   'ctrl.years': 'Years',
   'ctrl.yearFrom': 'First year',
   'ctrl.yearTo': 'Last year',
+  // 終了年をデータの最大年に置いたままのときに、年の代わりに出す語。
+  // `?to=latest` と書ける値でもあるので、画面の語と URL の語を同じにしておく
+  'ctrl.yearLatest': 'latest',
+  'ctrl.yearToOpen': 'Last year, open ended',
+  'ctrl.yearsOpenNote': 'new papers appear automatically',
   'ctrl.grain': 'Grouping',
   'grain.country': 'Country',
   'grain.city': 'City',
@@ -216,6 +221,13 @@ const STRINGS = {
     'On by default. The snippet carries a small script that follows the height the frame reports, so the map is never cut off or padded. Uncheck it to paste a fixed-height frame instead.',
   'embed.fixedHeightNote':
     'Fixed height. The map is cut off if it needs more room than this.',
+  // 貼った地図が将来も伸びるのかどうか。1 行で言い切る。
+  // 意図せず終了年を下げたまま配って地図を凍らせるのを防ぐのが目的
+  'embed.keepsGrowing':
+    'Keeps growing: the snippet carries no end year, so a paper added to the record later appears on the map by itself.',
+  // 年は {year} で渡す。{n} だと桁区切りが入って 2,026 になる
+  'embed.frozenAt':
+    'Stops at {year}: the snippet pins the last year, so papers published later never appear. Drag the last year back to the right end of the slider to let the map keep growing.',
 
   'load.start': 'Starting...',
   'load.done': 'Done.',

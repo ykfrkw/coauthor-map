@@ -77,7 +77,7 @@ link, to the page that documents the tool.
 | ------------ | --------------------------------------------------------------------------- | ------------------------------------- |
 | `orcid`      | ORCID iD, e.g. `0000-0003-1317-0220`                                        | owner's map                           |
 | `rm`         | researchmap permalink, e.g. `yk_frkw`                                       | owner's map                           |
-| `from`, `to` | publication years                                                           | the full range in the data            |
+| `from`, `to` | publication years; `earliest` / `latest` for an open end                    | the full range in the data            |
 | `proj`       | `equalEarth`, `naturalEarth`, `equirectangular`, `mercator`, `orthographic` | `equalEarth`                          |
 | `center`     | center longitude, `-180`…`180`                                              | `140`, unless `scope` fits the map    |
 | `scope`      | `auto`, `country`, `region`, `world`                                        | `auto`                                |
@@ -94,6 +94,22 @@ link, to the page that documents the tool.
 | `legend`     | `on`, `off`                                                                 | on in the full page, off in the frame |
 
 `orcid` and `rm` can be given together; the two publication lists are merged.
+
+### The map keeps itself up to date
+
+Leave `from` and `to` out and the map always covers everything the record holds. It is
+rebuilt in the visitor's browser on every view, so a paper added to the ORCID record next
+year turns up on the embedded map by itself — nobody has to touch the snippet.
+
+The generator never writes an end year you did not choose: as long as the last year sits
+at the right end of the slider, `to` stays out of the link, and the slider reads
+`2019 – latest` rather than a year. Drag the last year down and the link pins it
+(`to=2024`), which is what you want for a map of one project or one period — but that map
+stops there. Drag it back to the right end to reopen it.
+
+When you write a link by hand, `to=latest` and `from=earliest` mean the same as leaving
+the parameter out, so `?orcid=…&from=earliest&to=latest` stays open forever. Writing
+`?from=2019&to=2026` freezes the map at 2026.
 
 Every co-author sits at **one** primary affiliation, so nobody appears in two cities.
 The primary affiliation is the one printed first on their papers with you
