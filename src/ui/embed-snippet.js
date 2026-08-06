@@ -50,10 +50,48 @@ export const URL_WARN_LENGTH = 1800;
  */
 export const DEFAULT_EMBED_HEIGHT = 460;
 
+/**
+ * `?controls=on` を付けた埋め込みの初期高さ（px）。**実測値**。
+ *
+ * 表示専用の中身に加えて、種の入力欄（ORCID / researchmap / Load this researcher）と
+ * 表示コントロール 6 つを載せた操作パネルが地図の上に乗る。
+ *
+ * ブラウザで iframe に入れて `embed:height` を受けた実測（自動リサイズ後の最終高さ）:
+ *   幅 700px → 823 / 780px → 847 / 870px → 875。
+ * 配布先の本文幅は 780px 前後なので、そこでの実測に合わせて 850 を既定にする。
+ *
+ * 幅 690px を切ると `.widget-controls-card` の 3 列が 2 列に落ちて操作パネルが
+ * 1 行分伸びる（640px で 932px）。表示専用版の既定と同じく、**保証するのは
+ * 本文幅 690〜870px の帯**で、それより狭い枠は自動リサイズに任せる。
+ */
+export const CONTROLS_EMBED_HEIGHT = 850;
+
 /** widget.html の URL を今の表示状態から組む */
 export function buildWidgetUrl(state, bounds, base = WIDGET_BASE) {
   const query = stateToQuery(state, bounds);
   return query ? `${base}?${query}` : base;
+}
+
+/**
+ * index.html（フルツール）の URL を今の表示状態から組む。
+ *
+ * `controls` は widget.html だけの話なので落とす。index.html は常に
+ * 操作パネルを持っており、付いていても意味が無いうえに URL が長くなる。
+ */
+export function buildToolUrl(state, bounds, base = TOOL_URL) {
+  const query = stateToQuery({ ...state, controls: false }, bounds);
+  return query ? `${base}?${query}` : base;
+}
+
+/**
+ * その src に見合う初期高さを返す。**表示専用と `controls=on` で出し分ける。**
+ * @param {string} src
+ * @returns {number}
+ */
+export function defaultHeightFor(src) {
+  return /[?&]controls=on(&|$)/.test(String(src ?? ''))
+    ? CONTROLS_EMBED_HEIGHT
+    : DEFAULT_EMBED_HEIGHT;
 }
 
 /**
@@ -85,6 +123,15 @@ export function assertSnippetIsSafe(snippet) {
  *  - source: 1 ページに地図を 2 つ貼ったとき、投げた枠だけを伸ばす
  *
  * `<style>` の外なので、比較演算子の大なり記号は WAF の検査対象にならない。
+ *
+ * **遅延読み込みプラグイン対策も同じ script が持つ。** 配布先のブログには
+ * 配信時に `src` を `data-src` に移して `lazyload` クラスを足すプラグインが
+ * 入っている。枠の特定は `.coauthor-map-embed` クラスで行っているので
+ * リサイズ自体は書き換わっても動くが、プラグインの JS が落ちると
+ * `data-src` のまま `src` が入らず地図が出ない。その場合に備えて
+ * **自分の origin の data-src だけ** src に移す。iframe には `loading="lazy"` が
+ * 付いたままなので、src を戻しても実際の取得は表示域に近づくまで起きない。
+ *
  * @param {string} origin  widget.html の origin
  */
 function autoResizeScript(origin) {
@@ -93,6 +140,17 @@ function autoResizeScript(origin) {
       if (window.coauthorMapEmbedResize) return;
       window.coauthorMapEmbedResize = true;
       var ORIGIN = '${origin}';
+      function adoptDataSrc() {
+        var frames = document.querySelectorAll('iframe.${CLASS_NAME}');
+        for (var i = 0; i < frames.length; i++) {
+          var lazy = frames[i].getAttribute('data-src');
+          if (!lazy || frames[i].getAttribute('src')) continue;
+          if (lazy.indexOf(ORIGIN + '/') !== 0) continue;
+          frames[i].setAttribute('src', lazy);
+        }
+      }
+      adoptDataSrc();
+      window.addEventListener('load', adoptDataSrc);
       window.addEventListener('message', function (event) {
         if (event.origin !== ORIGIN) return;
         var data = event.data;
@@ -133,15 +191,12 @@ export function originOf(src) {
  * どちらの版でも書いておく。
  *
  * @param {string} src     widget.html の URL
- * @param {number} height  iframe の高さ（px）
+ * @param {number} [height]  iframe の高さ（px）。省くと src に見合う既定に落ちる
  * @param {{autoResize?: boolean}} [options]
  */
-export function buildSnippet(
-  src,
-  height = DEFAULT_EMBED_HEIGHT,
-  { autoResize = true } = {},
-) {
-  const px = Math.max(240, Math.round(Number(height) || DEFAULT_EMBED_HEIGHT));
+export function buildSnippet(src, height, { autoResize = true } = {}) {
+  const fallback = defaultHeightFor(src);
+  const px = Math.max(240, Math.round(Number(height) || fallback));
   const snippet = `<div style="margin:28px 0;">
   <style>
     .${CLASS_NAME}{display:block;width:100%;border:none;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.08);}
@@ -195,6 +250,18 @@ export function createEmbedPanel({ container, t, getState }) {
   });
   const heightNote = h('span', { class: 'hint' });
 
+  // 読者が自分の ID を入れて自分の地図を作れる版（`controls=on`）にするか。
+  // 既定は表示専用のまま（記事に貼る枠は小さいほうが本文のリズムを壊さない）
+  const controlsToggle = h('input', {
+    type: 'checkbox',
+    id: 'embed-controls',
+  });
+
+  /** 高さ欄に既定値が入ったままか（手で書き換えていたら尊重する） */
+  const isDefaultHeight = () =>
+    heightInput.value === String(DEFAULT_EMBED_HEIGHT) ||
+    heightInput.value === String(CONTROLS_EMBED_HEIGHT);
+
   function refresh() {
     const { state, bounds } = getState();
     const autoResize = autoResizeToggle.checked;
@@ -203,7 +270,12 @@ export function createEmbedPanel({ container, t, getState }) {
       ? t('embed.keepsGrowing')
       : t('embed.frozenAt', { year: state.to });
     try {
-      const src = buildWidgetUrl(state, bounds);
+      const src = buildWidgetUrl(
+        { ...state, controls: controlsToggle.checked },
+        bounds,
+      );
+      // 操作 UI の有無で必要な高さが 300px 以上変わる。既定のままなら追従させる
+      if (isDefaultHeight()) heightInput.value = String(defaultHeightFor(src));
       textarea.value = buildSnippet(src, heightInput.value, { autoResize });
       // 手直しを URL に載せる以上、長くなりすぎることがある。黙って切らずに知らせる
       const tooLong = src.length > URL_WARN_LENGTH;
@@ -219,6 +291,7 @@ export function createEmbedPanel({ container, t, getState }) {
 
   heightInput.addEventListener('input', refresh);
   autoResizeToggle.addEventListener('change', refresh);
+  controlsToggle.addEventListener('change', refresh);
 
   container.append(
     h('p', { class: 'hint', text: t('embed.intro') }),
@@ -234,6 +307,13 @@ export function createEmbedPanel({ container, t, getState }) {
           h('span', { text: t('embed.autoResizeLabel') }),
         ]),
         h('span', { class: 'hint', text: t('embed.autoResizeHint') }),
+      ]),
+      h('div', { class: 'field' }, [
+        h('label', { class: 'check-row', for: 'embed-controls' }, [
+          controlsToggle,
+          h('span', { text: t('embed.controlsLabel') }),
+        ]),
+        h('span', { class: 'hint', text: t('embed.controlsHint') }),
       ]),
     ]),
     growthNote,
@@ -254,4 +334,37 @@ export function createEmbedPanel({ container, t, getState }) {
   );
 
   return { refresh };
+}
+
+/**
+ * `?controls=on` の埋め込みの末尾に置く、フルツールへの導線。**1 本だけ。**
+ *
+ * 埋め込みでは出さないもの（補正・集計テーブル・ダウンロード・埋め込みコード生成・
+ * 出典一覧）に行ける唯一の道なので、**いまの表示状態を引き継いで**飛ばす。
+ * 引き継がないと、読者が枠の中で組んだ地図がリンクを踏んだ瞬間に消える。
+ *
+ * 別タブで開く。埋め込み枠の中で遷移すると、記事を読んでいた場所に戻れなくなる。
+ *
+ * @param {Object} opts
+ * @param {HTMLElement} opts.container
+ * @param {(k: string, p?: Object) => string} opts.t
+ */
+export function createOpenFullToolLink({ container, t }) {
+  const link = h('a', {
+    href: TOOL_URL,
+    target: '_blank',
+    rel: 'noopener',
+    text: t('widget.openFullTool'),
+  });
+  container.append(h('p', { class: 'hint' }, [link]));
+
+  return {
+    /**
+     * @param {Object} state
+     * @param {{from: number, to: number}} [bounds]
+     */
+    refresh(state, bounds) {
+      link.href = buildToolUrl(state, bounds);
+    },
+  };
 }

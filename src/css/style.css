@@ -864,6 +864,34 @@ th.num {
   color: var(--muted);
 }
 
+/* `?controls=on` のときだけ出る操作パネル。埋め込み枠の中では縦が高くつくので、
+ * カードの余白と行間を index.html より一段詰める */
+.widget-controls-card {
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+}
+
+/* `controls=on` が無いときは器ごと消す。**`.card` の display: grid が [hidden] に
+ * 勝つ**ので明示しないと、中身が空でも枠と余白だけが残り、表示専用の埋め込みが
+ * 26px ほど高くなる（凡例と同じ罠。上の .map-legend[hidden] を参照） */
+.widget-controls-card[hidden] {
+  display: none;
+}
+
+.widget-controls-card .controls {
+  gap: var(--space-2) var(--space-3);
+}
+
+/* 記事の本文幅（780px 前後）では 3 列に組む。ページ既定の 2 列だと
+ * 種の入力欄が 2 行、表示コントロールが 3 行になって枠が 1000px を超え、
+ * 本文のリズムを壊す。3 列なら種が 1 行、コントロールが 2 行に収まる。
+ * ページ既定の 3 列は 900px からなので、ここだけ早めに切り替える */
+@media (min-width: 700px) {
+  .widget-controls-card .controls {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
 .widget-controls {
   display: flex;
   flex-wrap: wrap;

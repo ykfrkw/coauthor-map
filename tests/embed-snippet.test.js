@@ -2,13 +2,18 @@ import { describe, expect, it } from 'vitest';
 
 import {
   AUTHOR_URL,
+  CONTROLS_EMBED_HEIGHT,
   DEFAULT_EMBED_HEIGHT,
   TOOL_URL,
   assertSnippetIsSafe,
   buildSnippet,
+  buildToolUrl,
+  defaultHeightFor,
 } from '../src/ui/embed-snippet.js';
+import { DEFAULTS } from '../src/ui/controls.js';
 
 const SRC = 'https://ykfrkw.github.io/coauthor-map/widget.html?orcid=0000-0002';
+const CONTROLS_SRC = `${SRC}&controls=on`;
 
 /** スニペット中の `<a href="...">テキスト</a>` を全部拾う */
 function anchors(snippet) {
@@ -129,5 +134,91 @@ describe('初期高さ', () => {
         Math.abs(modeled(width) - DEFAULT_EMBED_HEIGHT),
       ).toBeLessThanOrEqual(50);
     }
+  });
+});
+
+describe('`controls=on` の初期高さ', () => {
+  it('表示専用と操作 UI 付きで出し分ける', () => {
+    expect(defaultHeightFor(SRC)).toBe(DEFAULT_EMBED_HEIGHT);
+    expect(defaultHeightFor(CONTROLS_SRC)).toBe(CONTROLS_EMBED_HEIGHT);
+    // クエリの先頭に来ても拾う
+    expect(
+      defaultHeightFor('https://example.test/widget.html?controls=on'),
+    ).toBe(CONTROLS_EMBED_HEIGHT);
+    // 値が違うものを取り違えない
+    expect(defaultHeightFor(`${SRC}&controls=off`)).toBe(DEFAULT_EMBED_HEIGHT);
+    expect(defaultHeightFor('')).toBe(DEFAULT_EMBED_HEIGHT);
+  });
+
+  it('高さを渡さないスニペットは src に見合う高さになる', () => {
+    expect(buildSnippet(SRC)).toContain(
+      `style="height:${DEFAULT_EMBED_HEIGHT}px"`,
+    );
+    expect(buildSnippet(CONTROLS_SRC)).toContain(
+      `style="height:${CONTROLS_EMBED_HEIGHT}px"`,
+    );
+  });
+
+  // ブラウザで実際に iframe に入れて embed:height を受けた値。
+  // 初期高さとの差が 50px を超えると、読み込み直後に枠が飛び跳ねて見える。
+  it('本文幅 690〜870px の実測との差が 50px 以内', () => {
+    for (const [width, actual] of [
+      [700, 823],
+      [780, 847],
+      [870, 875],
+    ]) {
+      expect(
+        Math.abs(CONTROLS_EMBED_HEIGHT - actual),
+        `width ${width}`,
+      ).toBeLessThanOrEqual(50);
+    }
+  });
+
+  it('表示専用より高い（操作パネルの分だけ枠が要る）', () => {
+    expect(CONTROLS_EMBED_HEIGHT).toBeGreaterThan(DEFAULT_EMBED_HEIGHT);
+  });
+});
+
+describe('遅延読み込みプラグインへの耐性', () => {
+  const snippet = buildSnippet(CONTROLS_SRC);
+
+  it('data-src しか無い枠を src に戻すフォールバックが入っている', () => {
+    expect(snippet).toContain("getAttribute('data-src')");
+    expect(snippet).toContain("setAttribute('src', lazy)");
+    // 読み込みが終わってから差し込むプラグインにも間に合わせる
+    expect(snippet).toContain("window.addEventListener('load', adoptDataSrc)");
+  });
+
+  it('自分の origin の data-src しか採用しない', () => {
+    expect(snippet).toContain("lazy.indexOf(ORIGIN + '/') !== 0");
+  });
+
+  it('既にある src を上書きしない', () => {
+    expect(snippet).toContain("if (!lazy || frames[i].getAttribute('src'))");
+  });
+
+  it('高さ通知の origin と source の検証は残っている', () => {
+    expect(snippet).toContain('if (event.origin !== ORIGIN) return;');
+    expect(snippet).toContain('frames[i].contentWindow === event.source');
+  });
+
+  it('枠の特定はクラス名で行う（lazyload クラスが足されても拾える）', () => {
+    expect(snippet).toContain(
+      "document.querySelectorAll('iframe.coauthor-map-embed')",
+    );
+  });
+});
+
+describe('フルツールへの導線', () => {
+  it('index.html を指し、いまの表示状態を引き継ぐ', () => {
+    const url = buildToolUrl({ ...DEFAULTS, orcid: '0000-0002-4934-4352' });
+    expect(url.startsWith(TOOL_URL)).toBe(true);
+    expect(url).toContain('orcid=0000-0002-4934-4352');
+  });
+
+  it('`controls` は落とす（フルツールは常に操作パネルを持つ）', () => {
+    const url = buildToolUrl({ ...DEFAULTS, controls: true, theme: 'dark' });
+    expect(url).not.toContain('controls');
+    expect(url).toContain('theme=dark');
   });
 });

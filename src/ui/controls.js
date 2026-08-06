@@ -15,6 +15,7 @@
  * パラメータ無しで開いたときはオーナー自身の地図を出す。
  */
 import { h, selectEl } from './dom.js';
+import { FULL_VIEW_FIELDS } from './panels.js';
 import {
   PROJECTIONS,
   CENTER_PRESETS,
@@ -85,6 +86,10 @@ export const DEFAULTS = Object.freeze({
   // null = ページ既定に従う（index.html は出す / widget.html は出さない）。
   // `legend=on` / `legend=off` を書いたときだけ、そのページ既定を上書きする
   legend: null,
+  // 埋め込みウィジェットに操作 UI を足すか。既定 OFF（`controls=on` で出す）。
+  // ON にすると読者が自分の ORCID を入れて自分の地図を作れる。
+  // index.html は常に操作パネルを持つので、この値を見ない
+  controls: false,
   // 手直し（除外）。URL に載せて埋め込み先まで運ぶ
   xa: [], // 除外した共著者の OpenAlex 著者 ID
   xi: [], // 除外した機関の OpenAlex 機関 ID
@@ -367,6 +372,8 @@ export function readStateFromUrl(search = window.location.search) {
     labels: q.get('labels') === 'on',
     // 書かれていなければ null のまま。ページ側の既定に判断を譲る
     legend: q.has('legend') ? q.get('legend') !== 'off' : DEFAULTS.legend,
+    // 書かれたときだけ ON。`controls=off` や空文字は既定（OFF）のまま
+    controls: q.get('controls') === 'on',
     xa: expandOpenAlexIds(q.get('xa'), 'A'),
     xi: expandOpenAlexIds(q.get('xi'), 'I'),
     xd: expandDois(q.get('xd')),
@@ -436,6 +443,10 @@ export function stateToQuery(state, bounds) {
   // これで index.html の見え方をそのまま widget.html に運べる
   if (state.legend === true) q.set('legend', 'on');
   else if (state.legend === false) q.set('legend', 'off');
+  // 操作 UI は既定 OFF。ON のときだけ書く。
+  // **ウィジェット自身の URL にも残す**（残さないと syncUrl が消してしまい、
+  // 枠を再読み込みしたとたん操作 UI が消える）
+  if (state.controls === true) q.set('controls', 'on');
   // 手直しは短縮形で載せる。1 件も無ければ書かない
   const authors = shortenOpenAlexIds(state.xa ?? [], 'A');
   if (authors) q.set('xa', authors);
@@ -462,11 +473,24 @@ export function syncUrl(state, bounds) {
  * @param {Object} opts.state
  * @param {(patch: Object) => void} opts.onChange   表示だけ変わる操作
  * @param {(seeds: {orcid: string, rm: string}) => void} opts.onRebuild  データを取り直す操作
+ * @param {readonly string[]} [opts.viewFields]  出す表示コントロールと並び順。
+ *   既定は index.html の全部（`FULL_VIEW_FIELDS`）。`?controls=on` の埋め込みは
+ *   `WIDGET_VIEW_FIELDS` を渡して主要なものだけに絞る。
+ *
+ * 種の入力欄（ORCID / researchmap / Load this researcher）は**どちらでも同じ**。
+ * 読者が自分の地図を作る唯一の入口なので、絞り込みの対象にしない。
  *
  * 「表示を初期に戻す」ボタンはここには無い。地図の真下に置くので
  * `createMapActions` が持つ（Load this researcher との役割の違いを見せるため）。
  */
-export function createControls({ container, t, state, onChange, onRebuild }) {
+export function createControls({
+  container,
+  t,
+  state,
+  onChange,
+  onRebuild,
+  viewFields = FULL_VIEW_FIELDS,
+}) {
   let bounds = {
     from: state.from ?? 1990,
     to: state.to ?? new Date().getFullYear(),
@@ -781,62 +805,79 @@ export function createControls({ container, t, state, onChange, onRebuild }) {
   }
   updateHints(state.proj);
 
-  const viewForm = h('div', { class: 'controls' }, [
-    h('div', { class: 'field' }, [
-      h('span', {
-        id: 'years-label',
-        class: 'field-label',
-        text: t('ctrl.years'),
-      }),
-      yearRange,
-      yearCaption,
-    ]),
-    h('div', { class: 'field' }, [
-      h('label', { for: 'grain', text: t('ctrl.grain') }),
-      h('div', { class: 'map-legend' }, [
-        h('span', { text: t('grain.country') }),
-        h('span', { text: '←→' }),
-        h('span', { text: t('grain.city') }),
+  // 表示コントロールは id で引ける形にしておく。どれを出すかは呼び出し側が
+  // `viewFields` で決める（埋め込みでは主要なものだけに絞る）
+  const viewFieldBuilders = {
+    years: () =>
+      h('div', { class: 'field' }, [
+        h('span', {
+          id: 'years-label',
+          class: 'field-label',
+          text: t('ctrl.years'),
+        }),
+        yearRange,
+        yearCaption,
       ]),
-      grainSlider,
-      grainOut,
-    ]),
-    h('div', { class: 'field' }, [
-      h('span', { class: 'field-label', text: t('ctrl.size') }),
-      h('div', { class: 'segmented' }, sizeButtons),
-    ]),
-    h('div', { class: 'field' }, [
-      h('span', { class: 'field-label', text: t('ctrl.labels') }),
-      h('label', { class: 'check-row', for: 'map-labels' }, [
-        labelsToggle,
-        h('span', { text: t('ctrl.labelsShow') }),
+    grain: () =>
+      h('div', { class: 'field' }, [
+        h('label', { for: 'grain', text: t('ctrl.grain') }),
+        h('div', { class: 'map-legend' }, [
+          h('span', { text: t('grain.country') }),
+          h('span', { text: '←→' }),
+          h('span', { text: t('grain.city') }),
+        ]),
+        grainSlider,
+        grainOut,
       ]),
-      h('span', { class: 'hint', text: t('ctrl.labelsHint') }),
-    ]),
-    h('div', { class: 'field' }, [
-      h('label', { for: 'proj', text: t('ctrl.projection') }),
-      projSelect,
-      projHint,
-    ]),
-    h('div', { class: 'field' }, [
-      h('label', { for: 'scope', text: t('ctrl.scope') }),
-      scopeSelect,
-      h('span', { class: 'hint', text: t('ctrl.scopeHint') }),
-    ]),
-    h('div', { class: 'field' }, [
-      h('label', { for: 'center', text: t('ctrl.center') }),
-      centerPreset,
-      centerSlider,
-      centerOut,
-    ]),
-    h('div', { class: 'field' }, [
-      h('label', { for: 'theme', text: t('ctrl.theme') }),
-      themeSelect,
-    ]),
-    h('div', { class: 'field-wide' }, [
-      h('p', { class: 'hint', text: t('grain.hint') }),
-    ]),
-  ]);
+    size: () =>
+      h('div', { class: 'field' }, [
+        h('span', { class: 'field-label', text: t('ctrl.size') }),
+        h('div', { class: 'segmented' }, sizeButtons),
+      ]),
+    labels: () =>
+      h('div', { class: 'field' }, [
+        h('span', { class: 'field-label', text: t('ctrl.labels') }),
+        h('label', { class: 'check-row', for: 'map-labels' }, [
+          labelsToggle,
+          h('span', { text: t('ctrl.labelsShow') }),
+        ]),
+        h('span', { class: 'hint', text: t('ctrl.labelsHint') }),
+      ]),
+    proj: () =>
+      h('div', { class: 'field' }, [
+        h('label', { for: 'proj', text: t('ctrl.projection') }),
+        projSelect,
+        projHint,
+      ]),
+    scope: () =>
+      h('div', { class: 'field' }, [
+        h('label', { for: 'scope', text: t('ctrl.scope') }),
+        scopeSelect,
+        h('span', { class: 'hint', text: t('ctrl.scopeHint') }),
+      ]),
+    center: () =>
+      h('div', { class: 'field' }, [
+        h('label', { for: 'center', text: t('ctrl.center') }),
+        centerPreset,
+        centerSlider,
+        centerOut,
+      ]),
+    theme: () =>
+      h('div', { class: 'field' }, [
+        h('label', { for: 'theme', text: t('ctrl.theme') }),
+        themeSelect,
+      ]),
+    grainHint: () =>
+      h('div', { class: 'field-wide' }, [
+        h('p', { class: 'hint', text: t('grain.hint') }),
+      ]),
+  };
+
+  const viewForm = h(
+    'div',
+    { class: 'controls' },
+    viewFields.map((id) => viewFieldBuilders[id]?.() ?? null),
+  );
 
   container.append(seedForm, viewForm);
 
